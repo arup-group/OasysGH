@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OasysGH", "OasysGH\OasysGH.csproj", "{91D4A455-C8B6-4BA7-AF38-C38489F730FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OasysGHTests", "OasysGHTests\OasysGHTests.csproj", "{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
