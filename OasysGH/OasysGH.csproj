@@ -52,7 +52,7 @@
     <Compile Include="Components\GH_OasysDropDownComponent.cs" />
     <Compile Include="Components\Helpers\DeSerialization.cs" />
     <Compile Include="Components\Helpers\PostHog.cs" />
-    <Compile Include="Components\Helpers\SetOutput.cs" />
+    <Compile Include="Components\Helpers\Output.cs" />
     <Compile Include="Components\GH_OasysTaskCapableComponent.cs" />
     <Compile Include="Parameters\GH_OasysGoo.cs" />
     <Compile Include="Parameters\Helpers\ObjectExtension.cs" />
