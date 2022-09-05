@@ -109,7 +109,6 @@ steps:
     releaseNotesInline: |
       Created from commit https://github.com/arup-group/Compos-Grasshopper/commit/$(Build.SourceVersion)
     assets: |
-      $(System.DefaultWorkingDirectory)/**/*.yak
       $(Build.ArtifactStagingDirectory)/**/*.nupkg
       $(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg
     assetUploadMode: 'replace'
