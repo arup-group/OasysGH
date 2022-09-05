@@ -10,12 +10,12 @@ namespace OasysGH.Components
     {
     }
 
-    internal List<List<string>> DropDownItems;
-    internal List<string> SelectedItems;
-    internal List<string> SpacerDescriptions;
-    internal bool IsInitialised = false;
-    internal bool ExpireDownStream = true;
-    internal Dictionary<int, List<int>> ExistingOutputsSerialized = new Dictionary<int, List<int>>() { { 0, new List<int>() { 0 } } }; // new dictionary with key = 0 (inputid) and list of serialized ints with initial one item = 0
+    public List<List<string>> DropDownItems;
+    public List<string> SelectedItems;
+    public List<string> SpacerDescriptions;
+    public bool IsInitialised = false;
+    public bool ExpireDownStream = true;
+    public Dictionary<int, List<int>> ExistingOutputsSerialized = new Dictionary<int, List<int>>() { { 0, new List<int>() { 0 } } }; // new dictionary with key = 0 (inputid) and list of serialized ints with initial one item = 0
 
     #region UI
     public override void CreateAttributes()
@@ -26,23 +26,23 @@ namespace OasysGH.Components
       m_attributes = new UI.DropDownComponentAttributes(this, this.SetSelected, this.DropDownItems, this.SelectedItems, this.SpacerDescriptions);
     }
 
-    protected override void ExpireDownStreamObjects()
+    public new void ExpireDownStreamObjects()
     {
       if (this.ExpireDownStream)
         base.ExpireDownStreamObjects();
     }
 
-    internal abstract void InitialiseDropdowns();
+    public abstract void InitialiseDropdowns();
 
-    internal abstract void SetSelected(int i, int j);
+    public abstract void SetSelected(int i, int j);
 
-    internal virtual void UpdateUIFromSelectedItems()
+    public virtual void UpdateUIFromSelectedItems()
     {
       this.CreateAttributes();
       this.UpdateUI();
     }
 
-    internal virtual void UpdateUI()
+    public virtual void UpdateUI()
     {
       (this as IGH_VariableParameterComponent).VariableParameterMaintenance();
       this.ExpireSolution(true);
