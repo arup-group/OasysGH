@@ -44,16 +44,16 @@ steps:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/**/coverage.cobertura.xml'
     pathToSources: '$(System.DefaultWorkingDirectory)'
 
-- powershell: |
-    $coverage_file = (Resolve-Path $(System.DefaultWorkingDirectory)/results/*/coverage.cobertura.xml).Path
-    echo $coverage_file
-    Copy-Item $coverage_file $(System.DefaultWorkingDirectory)\results\coverage.xml
-    ls $(System.DefaultWorkingDirectory)\results\
-    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage.xml --flags unittests
-  env:
-    CODECOV_TOKEN: $(CODECOV_TOKEN)
-  displayName: Upload Code Coverage to codecovio
-  failOnStderr: true
+#- powershell: |
+#    $coverage_file = (Resolve-Path $(System.DefaultWorkingDirectory)/results/*/coverage.cobertura.xml).Path
+#    echo $coverage_file
+#    Copy-Item $coverage_file $(System.DefaultWorkingDirectory)\results\coverage.xml
+#    ls $(System.DefaultWorkingDirectory)\results\
+#    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage.xml --flags unittests
+#  env:
+#    CODECOV_TOKEN: $(CODECOV_TOKEN)
+#  displayName: Upload Code Coverage to codecovio
+#  failOnStderr: true
 
 - task: PowerShell@2
   displayName: Check for existing tags
