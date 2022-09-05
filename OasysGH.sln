@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OasysGH", "OasysGH.csproj", "{91D4A455-C8B6-4BA7-AF38-C38489F730FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OasysGH", "OasysGH\OasysGH.csproj", "{91D4A455-C8B6-4BA7-AF38-C38489F730FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

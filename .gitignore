@@ -3,8 +3,6 @@
 ################################################################################
 
 /OasysGH/.vs/OasysGH
-/OasysGH/obj/Debug
-/OasysGH/packages
-/.vs/OasysGH/FileContentIndex
-/.vs/OasysGH/v17
+/OasysGH/obj
 /.vs
+packages/
