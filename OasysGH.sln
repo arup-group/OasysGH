@@ -9,18 +9,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OasysGHTests", "OasysGHTest
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Debug|x64.ActiveCfg = Debug|x64
+		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Debug|x64.Build.0 = Debug|x64
+		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Release|x64.ActiveCfg = Release|x64
+		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Release|x64.Build.0 = Release|x64
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Debug|x64.ActiveCfg = Debug|x64
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Debug|x64.Build.0 = Debug|x64
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Release|x64.ActiveCfg = Release|x64
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
