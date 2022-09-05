@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OasysGH", "OasysGH\OasysGH.csproj", "{91D4A455-C8B6-4BA7-AF38-C38489F730FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OasysGHTests", "OasysGHTests\OasysGHTests.csproj", "{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Debug|x64.ActiveCfg = Debug|x64
+		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Debug|x64.Build.0 = Debug|x64
+		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Release|x64.ActiveCfg = Release|x64
+		{91D4A455-C8B6-4BA7-AF38-C38489F730FD}.Release|x64.Build.0 = Release|x64
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Debug|x64.ActiveCfg = Debug|x64
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Debug|x64.Build.0 = Debug|x64
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Release|x64.ActiveCfg = Release|x64
+		{74399D43-FEDC-4CD9-AB06-8D9B4D5FA994}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C384319C-8522-421B-AFCB-BFC54FC35D74}
+	EndGlobalSection
+EndGlobal
