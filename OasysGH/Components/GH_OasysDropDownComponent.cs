@@ -14,6 +14,8 @@ namespace OasysGH.Components
     internal List<string> SelectedItems;
     internal List<string> SpacerDescriptions;
     internal bool IsInitialised = false;
+    internal bool ExpireDownStream = true;
+    internal Dictionary<int, List<int>> ExistingOutputsSerialized = new Dictionary<int, List<int>>() { { 0, new List<int>() { 0 } } }; // new dictionary with key = 0 (inputid) and list of serialized ints with initial one item = 0
 
     #region UI
     public override void CreateAttributes()
@@ -26,11 +28,9 @@ namespace OasysGH.Components
 
     protected override void ExpireDownStreamObjects()
     {
-      if (UpdateOutput)
+      if (this.ExpireDownStream)
         base.ExpireDownStreamObjects();
     }
-    internal bool UpdateOutput = true;
-    internal Dictionary<int, List<int>> ExistingOutputsSerialized = new Dictionary<int, List<int>>() { { 0, new List<int>() { 0 } } }; // new dictionary with key = 0 (inputid) and list of serialized ints with initial one item = 0
 
     internal abstract void InitialiseDropdowns();
 

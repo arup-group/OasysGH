@@ -20,15 +20,15 @@ namespace OasysGH.Helpers
       if (!owner.ExistingOutputsSerialized.ContainsKey(inputid))
       {
         owner.ExistingOutputsSerialized[inputid] = new List<int>() { outputsSerialized };
-        owner.UpdateOutput = true;
+        owner.ExpireDownStream = true;
       }
       else if (owner.ExistingOutputsSerialized[inputid][0] != outputsSerialized)
       {
         owner.ExistingOutputsSerialized[inputid][0] = outputsSerialized;
-        owner.UpdateOutput = true;
+        owner.ExpireDownStream = true;
       }
       else
-        owner.UpdateOutput = false;
+        owner.ExpireDownStream = false;
     }
     public static void SetList<GH_Goo>(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, List<GH_Goo> data)
     {
@@ -37,7 +37,7 @@ namespace OasysGH.Helpers
       if (!owner.ExistingOutputsSerialized.ContainsKey(inputid))
       {
         owner.ExistingOutputsSerialized.Add(inputid, new List<int>());
-        owner.UpdateOutput = true;
+        owner.ExpireDownStream = true;
       }
 
       for (int i = 0; i < data.Count; i++)
@@ -45,16 +45,16 @@ namespace OasysGH.Helpers
         int outputsSerialized = data[i].GetHashCode(); //JsonConvert.SerializeObject(data[i], converter).GetHashCode();
         if (owner.ExistingOutputsSerialized[inputid].Count == i)
         {
-          owner.UpdateOutput = true;
+          owner.ExpireDownStream = true;
           owner.ExistingOutputsSerialized[inputid].Add(outputsSerialized);
         }
         else if (owner.ExistingOutputsSerialized[inputid][i] != outputsSerialized)
         {
-          owner.UpdateOutput = true;
+          owner.ExpireDownStream = true;
           owner.ExistingOutputsSerialized[inputid][i] = outputsSerialized;
         }
         else
-          owner.UpdateOutput = false;
+          owner.ExpireDownStream = false;
       }
 
     }
@@ -66,7 +66,7 @@ namespace OasysGH.Helpers
       if (!owner.ExistingOutputsSerialized.ContainsKey(inputid))
       {
         owner.ExistingOutputsSerialized.Add(inputid, new List<int>());
-        owner.UpdateOutput = true;
+        owner.ExpireDownStream = true;
       }
 
       int counter = 0;
@@ -80,19 +80,19 @@ namespace OasysGH.Helpers
           int outputsSerialized = data[i].GetHashCode(); //JsonConvert.SerializeObject(data[i], converter).GetHashCode();
           if (owner.ExistingOutputsSerialized[inputid].Count == i)
           {
-            owner.UpdateOutput = true;
+            owner.ExpireDownStream = true;
             owner.ExistingOutputsSerialized[inputid].Add(outputsSerialized);
             break;
           }
 
           if (owner.ExistingOutputsSerialized[inputid][i] != outputsSerialized)
           {
-            owner.UpdateOutput = true;
+            owner.ExpireDownStream = true;
             owner.ExistingOutputsSerialized[inputid][i] = outputsSerialized;
             break;
           }
 
-          owner.UpdateOutput = false;
+          owner.ExpireDownStream = false;
         }
         counter = data.Count;
       }
