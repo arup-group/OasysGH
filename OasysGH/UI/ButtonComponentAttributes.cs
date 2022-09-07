@@ -6,10 +6,9 @@ using Grasshopper.Kernel;
 using System;
 using System.Drawing;
 using System.Collections.Generic;
-using OasysGH.UI;
 using OasysGH.UI.Helpers;
 
-namespace ÒasysGH.UI
+namespace OasysGH.UI
 {
   /// <summary>
   /// Class to create custom component UI with a button
