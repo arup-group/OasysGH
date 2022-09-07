@@ -70,8 +70,7 @@ namespace OasysGH.Components
     #endregion
 
     #region IGH_VariableParameterComponent null implementation
-    public virtual void VariableParameterMaintenance()
-    { }
+    public virtual void VariableParameterMaintenance() { }
 
     bool IGH_VariableParameterComponent.CanInsertParameter(GH_ParameterSide side, int index) => false;
 

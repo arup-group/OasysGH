@@ -11,10 +11,13 @@ namespace OasysGH.Parameters
     {
       get
       {
-        if (IsValid) { return string.Empty; }
-        return IsValid.ToString();
+        if (IsValid)
+          return string.Empty;
+        else
+          return IsValid.ToString();
       }
     }
+
     public GH_OasysGoo(T item)
     {
       if (item == null)
@@ -22,6 +25,7 @@ namespace OasysGH.Parameters
       else
         this.Value = (T)item.Duplicate();
     }
+
     public override string ToString()
     {
       if (Value == null)
@@ -48,12 +52,14 @@ namespace OasysGH.Parameters
       target = default;
       return false;
     }
+
     public override bool CastFrom(object source)
     {
       // This function is called when Grasshopper needs to convert other data 
       // into our custom class.
 
-      if (source == null) { return false; }
+      if (source == null)
+        return false;
 
       //Cast from this type
       if (typeof(T).IsAssignableFrom(source.GetType()))

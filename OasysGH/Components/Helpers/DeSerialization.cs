@@ -1,26 +1,27 @@
 ﻿using System.Collections.Generic;
+using GH_IO.Serialization;
 
 namespace OasysGH.Helpers
 {
   internal class DeSerialization
   {
-    internal static GH_IO.Serialization.GH_IWriter WriteDropDownComponents(ref GH_IO.Serialization.GH_IWriter writer, List<List<string>> DropDownItems, List<string> selecteditems, List<string> spacerDescriptions)
+    internal static GH_IWriter WriteDropDownComponents(ref GH_IWriter writer, List<List<string>> dropDownItems, List<string> selectedItems, List<string> spacerDescriptions)
     {
       // to save the dropdownlist content, spacer list and selection list 
       // loop through the lists and save number of lists as well
-      bool dropdown = false;
-      if (DropDownItems != null)
+      bool dropDown = false;
+      if (dropDownItems != null)
       {
-        writer.SetInt32("dropdownCount", DropDownItems.Count);
-        for (int i = 0; i < DropDownItems.Count; i++)
+        writer.SetInt32("dropdownCount", dropDownItems.Count);
+        for (int i = 0; i < dropDownItems.Count; i++)
         {
-          writer.SetInt32("dropdowncontentsCount" + i, DropDownItems[i].Count);
-          for (int j = 0; j < DropDownItems[i].Count; j++)
-            writer.SetString("dropdowncontents" + i + j, DropDownItems[i][j]);
+          writer.SetInt32("dropdowncontentsCount" + i, dropDownItems[i].Count);
+          for (int j = 0; j < dropDownItems[i].Count; j++)
+            writer.SetString("dropdowncontents" + i + j, dropDownItems[i][j]);
         }
-        dropdown = true;
+        dropDown = true;
       }
-      writer.SetBoolean("dropdown", dropdown);
+      writer.SetBoolean("dropdown", dropDown);
 
       // spacer list
       bool spacer = false;
@@ -35,11 +36,11 @@ namespace OasysGH.Helpers
 
       // selection list
       bool select = false;
-      if (selecteditems != null)
+      if (selectedItems != null)
       {
-        writer.SetInt32("selectionCount", selecteditems.Count);
-        for (int i = 0; i < selecteditems.Count; i++)
-          writer.SetString("selectioncontents" + i, selecteditems[i]);
+        writer.SetInt32("selectionCount", selectedItems.Count);
+        for (int i = 0; i < selectedItems.Count; i++)
+          writer.SetString("selectioncontents" + i, selectedItems[i]);
         select = true;
       }
       writer.SetBoolean("select", select);
@@ -47,7 +48,7 @@ namespace OasysGH.Helpers
       return writer;
     }
 
-    internal static void ReadDropDownComponents(ref GH_IO.Serialization.GH_IReader reader, ref List<List<string>> DropDownItems, ref List<string> selecteditems, ref List<string> spacerDescriptions)
+    internal static void ReadDropDownComponents(ref GH_IReader reader, ref List<List<string>> DropDownItems, ref List<string> selecteditems, ref List<string> spacerDescriptions)
     {
       // dropdown content list
       if (reader.GetBoolean("dropdown"))
@@ -56,20 +57,20 @@ namespace OasysGH.Helpers
         DropDownItems = new List<List<string>>();
         for (int i = 0; i < dropdownCount; i++)
         {
-          int dropdowncontentsCount = reader.GetInt32("dropdowncontentsCount" + i);
-          List<string> tempcontent = new List<string>();
-          for (int j = 0; j < dropdowncontentsCount; j++)
-            tempcontent.Add(reader.GetString("dropdowncontents" + i + j));
-          DropDownItems.Add(tempcontent);
+          int dropDownContentsCount = reader.GetInt32("dropdowncontentsCount" + i);
+          List<string> tempContent = new List<string>();
+          for (int j = 0; j < dropDownContentsCount; j++)
+            tempContent.Add(reader.GetString("dropdowncontents" + i + j));
+          DropDownItems.Add(tempContent);
         }
       }
 
       // spacer list
       if (reader.GetBoolean("spacer"))
       {
-        int dropdownspacerCount = reader.GetInt32("spacerCount");
+        int dropDownSpacerCount = reader.GetInt32("spacerCount");
         spacerDescriptions = new List<string>();
-        for (int i = 0; i < dropdownspacerCount; i++)
+        for (int i = 0; i < dropDownSpacerCount; i++)
           spacerDescriptions.Add(reader.GetString("spacercontents" + i));
       }
 
