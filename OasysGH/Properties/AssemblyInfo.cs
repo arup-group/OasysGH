@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("OasysGH")]
-[assembly: AssemblyDescription("OasysGH provides a common framework for .NET (RhinoCommon) plugin development for Rhino 6 and later")]
+[assembly: AssemblyDescription("OasysGH provides a common framework for .NET (RhinoCommon) plugin development for Rhino 6 and later.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Oasys")]
 [assembly: AssemblyProduct("OasysGH")]
