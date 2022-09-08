@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Oasys")]
 [assembly: AssemblyProduct("OasysGH")]
-[assembly: AssemblyCopyright("Copyright © Oasys 2022")]
+[assembly: AssemblyCopyright("Copyright © Oasys 1985 - 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
