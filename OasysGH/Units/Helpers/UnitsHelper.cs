@@ -44,6 +44,27 @@ namespace OasysGH.Units.Helpers
       return new Area(1, unitSystem).Unit;
     }
 
+    public static VolumeUnit GetVolumeUnit(LengthUnit unit)
+    {
+      switch (unit)
+      {
+        case LengthUnit.Millimeter:
+          return VolumeUnit.CubicMillimeter;
+        case LengthUnit.Centimeter:
+          return VolumeUnit.CubicCentimeter;
+        case LengthUnit.Meter:
+          return VolumeUnit.CubicMeter;
+        case LengthUnit.Foot:
+          return VolumeUnit.CubicFoot;
+        case LengthUnit.Inch:
+          return VolumeUnit.CubicInch;
+      }
+      // fallback:
+      BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
+      UnitSystem unitSystem = new UnitSystem(baseUnits);
+      return new Volume(1, unitSystem).Unit;
+    }
+
     public static AreaMomentOfInertiaUnit GetAreaMomentOfInertiaUnit(LengthUnit unit)
     {
       switch (unit)
@@ -147,6 +168,61 @@ namespace OasysGH.Units.Helpers
       return kNperM.Unit;
     }
 
+    public static PressureUnit GetForcePerAreaUnit(ForceUnit forceUnit, LengthUnit lengthUnit)
+    {
+      switch (forceUnit)
+      {
+        case ForceUnit.Newton:
+          switch (lengthUnit)
+          {
+            case LengthUnit.Millimeter:
+              return PressureUnit.NewtonPerSquareMillimeter;
+            case LengthUnit.Centimeter:
+              return PressureUnit.NewtonPerSquareCentimeter;
+            case LengthUnit.Meter:
+              return PressureUnit.NewtonPerSquareMeter;
+          }
+          break;
+        case ForceUnit.Kilonewton:
+          switch (lengthUnit)
+          {
+            case LengthUnit.Millimeter:
+              return PressureUnit.KilonewtonPerSquareMillimeter;
+            case LengthUnit.Centimeter:
+              return PressureUnit.KilonewtonPerSquareCentimeter;
+            case LengthUnit.Meter:
+              return PressureUnit.KilonewtonPerSquareMeter;
+          }
+          break;
+        case ForceUnit.Meganewton:
+          switch (lengthUnit)
+          {
+            case LengthUnit.Meter:
+              return PressureUnit.MeganewtonPerSquareMeter;
+          }
+          break;
+        case ForceUnit.KilopoundForce:
+          switch (lengthUnit)
+          {
+            case LengthUnit.Inch:
+              return PressureUnit.KilopoundForcePerSquareInch;
+            case LengthUnit.Foot:
+              return PressureUnit.KilopoundForcePerSquareFoot;
+          }
+          break;
+        case ForceUnit.PoundForce:
+          switch (lengthUnit)
+          {
+            case LengthUnit.Inch:
+              return PressureUnit.PoundForcePerSquareInch;
+            case LengthUnit.Foot:
+              return PressureUnit.PoundForcePerSquareFoot;
+          }
+          break;
+      }
+      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to force per area");
+    }
+
     public static DensityUnit GetDensityUnit(MassUnit massUnit, LengthUnit lengthUnit)
     {
       Mass mass = Mass.From(1, massUnit);
@@ -184,6 +260,7 @@ namespace OasysGH.Units.Helpers
       }
       return LinearDensityUnit.KilogramPerMeter;
     }
+
 
     public static List<string> GetFilteredAbbreviations(EngineeringUnits unit)
     {

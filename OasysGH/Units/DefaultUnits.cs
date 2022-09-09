@@ -47,16 +47,18 @@ namespace OasysGH.Units
 
     public static LengthUnit LengthUnitSection { get; set; } = LengthUnit.Centimeter;
     public static LengthUnit LengthUnitResult = LengthUnit.Millimeter;
-    
-    internal static AreaUnit SectionAreaUnit = UnitsHelper.GetAreaUnit(LengthUnitSection);
 
-    internal static AreaMomentOfInertiaUnit SectionAreaMomentOfInertiaUnit = UnitsHelper.GetAreaMomentOfInertiaUnit(LengthUnitSection);
+    public static AreaUnit SectionAreaUnit = UnitsHelper.GetAreaUnit(LengthUnitSection);
+    public static VolumeUnit VolumeUnit = UnitsHelper.GetVolumeUnit(LengthUnitSection);
+
+    public static AreaMomentOfInertiaUnit SectionAreaMomentOfInertiaUnit = UnitsHelper.GetAreaMomentOfInertiaUnit(LengthUnitSection);
 
     public static VolumePerLengthUnit VolumePerLengthUnit = UnitsHelper.GetVolumePerLengthUnit(LengthUnitSection);
 
     public static ForceUnit ForceUnit { get; set; } = ForceUnit.Kilonewton;
 
     public static ForcePerLengthUnit ForcePerLengthUnit = UnitsHelper.GetForcePerLengthUnit(ForceUnit, LengthUnitGeometry);
+    public static PressureUnit ForcePerAreaUnit = UnitsHelper.GetForcePerAreaUnit(ForceUnit, LengthUnitGeometry);
 
     public static MomentUnit MomentUnit { get; set; } = MomentUnit.KilonewtonMeter;
 
