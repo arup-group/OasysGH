@@ -80,8 +80,7 @@ namespace GH_UnitNumber.Components
       // convert unit to selected output
       this.ConvertedUnitNumber = new OasysGH.Units.GH_UnitNumber(inUnitNumber.Value.ToUnit(this.SelectedUnit));
 
-      // set output data
-      DA.SetData(0, this.ConvertedUnitNumber);
+      OasysGH.Helpers.Output.SetItem(this, DA, 0, this.ConvertedUnitNumber);
     }
 
     #region Custom UI

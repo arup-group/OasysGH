@@ -143,7 +143,7 @@ namespace GH_UnitNumber.Components
 
         OasysGH.Units.GH_UnitNumber unitNumber = new OasysGH.Units.GH_UnitNumber(this.Quantity);
 
-        DA.SetData(0, unitNumber);
+        OasysGH.Helpers.Output.SetItem(this, DA, 0, unitNumber);
       }
     }
 
