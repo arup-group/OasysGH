@@ -141,7 +141,7 @@ namespace GH_UnitNumber.Components
             throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
         }
 
-        GH_UnitNumber unitNumber = new GH_UnitNumber(Quantity);
+        OasysGH.Units.GH_UnitNumber unitNumber = new OasysGH.Units.GH_UnitNumber(this.Quantity);
 
         DA.SetData(0, unitNumber);
       }

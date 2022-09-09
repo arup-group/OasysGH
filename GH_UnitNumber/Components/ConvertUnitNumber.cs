@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using OasysGH.Components;
+using OasysGH.Units;
 
 namespace GH_UnitNumber.Components
 {
@@ -39,15 +40,15 @@ namespace GH_UnitNumber.Components
     protected override void SolveInstance(IGH_DataAccess DA)
     {
       // get input
-      GH_UnitNumber inUnitNumber = null;
+      OasysGH.Units.GH_UnitNumber inUnitNumber = null;
 
       GH_ObjectWrapper gh_typ = new GH_ObjectWrapper();
       if (DA.GetData(0, ref gh_typ))
       {
         // try cast directly to quantity type
-        if (gh_typ.Value is GH_UnitNumber)
+        if (gh_typ.Value is OasysGH.Units.GH_UnitNumber)
         {
-          inUnitNumber = (GH_UnitNumber)gh_typ.Value;
+          inUnitNumber = (OasysGH.Units.GH_UnitNumber)gh_typ.Value;
           if (this.ConvertedUnitNumber == null || !this.ConvertedUnitNumber.Value.QuantityInfo.UnitType.Equals(inUnitNumber.Value.QuantityInfo.UnitType))
           {
             this.UnitDictionary = new Dictionary<string, Enum>();
@@ -77,14 +78,14 @@ namespace GH_UnitNumber.Components
       this.SelectedUnit = this.UnitDictionary[SelectedItems.Last()];
 
       // convert unit to selected output
-      this.ConvertedUnitNumber = new GH_UnitNumber(inUnitNumber.Value.ToUnit(this.SelectedUnit));
+      this.ConvertedUnitNumber = new OasysGH.Units.GH_UnitNumber(inUnitNumber.Value.ToUnit(this.SelectedUnit));
 
       // set output data
       DA.SetData(0, this.ConvertedUnitNumber);
     }
 
     #region Custom UI
-    GH_UnitNumber ConvertedUnitNumber;
+    OasysGH.Units.GH_UnitNumber ConvertedUnitNumber;
     Dictionary<string, Enum> UnitDictionary;
     Enum SelectedUnit;
     bool ComingFromSave = false;

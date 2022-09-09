@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
-using OasysGH.Parameters;
 
 namespace GH_UnitNumber
 {
   /// <summary>
   /// This class provides a Parameter interface for the CustomGoo type.
   /// </summary>
-  public class GH_UnitNumberParameter : GH_PersistentParam<GH_UnitNumber>
+  public class GH_UnitNumberParameter : GH_PersistentParam<OasysGH.Units.GH_UnitNumber>
   {
     public GH_UnitNumberParameter()
-      : base(new GH_InstanceDescription(GH_UnitNumber.Name, GH_UnitNumber.NickName, "Maintains a collection of " + GH_UnitNumber.Description + " data", "Params", "Primitive"))
+      : base(new GH_InstanceDescription(OasysGH.Units.GH_UnitNumber.Name, OasysGH.Units.GH_UnitNumber.NickName, "Maintains a collection of " + OasysGH.Units.GH_UnitNumber.Description + " data", "Params", "Primitive"))
     {
     }
 
@@ -22,11 +20,11 @@ namespace GH_UnitNumber
 
     protected override System.Drawing.Bitmap Icon => Properties.Resources.UnitParam;
 
-    protected override GH_GetterResult Prompt_Plural(ref List<GH_UnitNumber> values)
+    protected override GH_GetterResult Prompt_Plural(ref List<OasysGH.Units.GH_UnitNumber> values)
     {
       return GH_GetterResult.cancel;
     }
-    protected override GH_GetterResult Prompt_Singular(ref GH_UnitNumber value)
+    protected override GH_GetterResult Prompt_Singular(ref OasysGH.Units.GH_UnitNumber value)
     {
       return GH_GetterResult.cancel;
     }

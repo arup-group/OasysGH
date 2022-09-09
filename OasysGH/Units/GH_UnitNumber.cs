@@ -1,10 +1,9 @@
-﻿using GH_IO.Types;
-using Grasshopper.Kernel;
+﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using OasysGH.Parameters;
 using UnitsNet;
 
-namespace GH_UnitNumber
+namespace OasysGH.Units
 {
   /// <summary>
   /// Goo wrapper class, makes sure UnitsNet and OasysUnits <see cref="IQuantity"/> can be used in Grasshopper.
