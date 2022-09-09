@@ -1,4 +1,6 @@
 ﻿.vs
+GH_UnitNumber/bin
+GH_UnitNumber/obj
 OasysGH/bin
 OasysGH/obj
 OasysGHTests/bin
