@@ -1,4 +1,6 @@
 ﻿using Grasshopper.Kernel;
+using OasysGH.Helpers;
+using OasysGH;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +9,26 @@ using System.Threading.Tasks;
 
 namespace GH_UnitNumber
 {
+  public class AddReferencePriority : GH_AssemblyPriority
+  {
+    public override GH_LoadingInstruction PriorityLoad()
+    {
+      // ### Setup OasysGH ###
+      GH_PluginInfo.PluginName = GH_UnitNumberAssemblyInfo.PluginName;
+      GH_PluginInfo.ProductName = GH_UnitNumberAssemblyInfo.ProductName;
+      GH_PluginInfo.PostHogApiKey = "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs";
+
+      // ### Setup Units ###
+      //Units.SetupUnitsDuringLoad();
+
+      PostHog.PluginLoaded();
+
+      // subscribe to rhino closing event
+      //Rhino.RhinoApp.Closing += CloseFile;
+
+      return GH_LoadingInstruction.Proceed;
+    }
+  }
   public class GH_UnitNumberAssemblyInfo : GH_AssemblyInfo
   {
     internal static Guid GUID = new Guid("6080a841-4f35-4182-9922-f40a66977a69");
