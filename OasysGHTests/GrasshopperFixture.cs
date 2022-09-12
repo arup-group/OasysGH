@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using GH_UnitNumber;
+using OasysGH;
+using Xunit;
 
 namespace Rhino.Test
 {
@@ -13,8 +13,8 @@ namespace Rhino.Test
     private object _DocIO { get; set; }
     private object _Doc { get; set; }
     private bool _isDisposed;
-    protected string FilePath { get; private set; }
-
+    private static string _linkFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Grasshopper", "Libraries");
+    private static string _linkFileName = "OasysGhTests.ghlink";
     static GrasshopperFixture()
     {
       // This MUST be included in a static constructor to ensure that no Rhino DLLs
@@ -23,10 +23,25 @@ namespace Rhino.Test
       // assemblies to be loaded before this is called.
       RhinoInside.Resolver.Initialize();
     }
-    public GrasshopperFixture(string GHFilePath)
+    public GrasshopperFixture()
     {
-      FilePath = GHFilePath;
+      AddPluginToGH();
+
       InitializeCore();
+
+      OasysGHInfo.PluginName = AssemblyInfo.PluginName;
+      OasysGHInfo.ProductName = AssemblyInfo.ProductName;
+
+      // setup headless units
+      OasysGH.Units.Helpers.Setup.SetupUnitsDuringLoad(true);
+    }
+
+    public void AddPluginToGH()
+    {
+      Directory.CreateDirectory(_linkFilePath);
+      StreamWriter writer = File.CreateText(Path.Combine(_linkFilePath, _linkFileName));
+      writer.Write(Environment.CurrentDirectory);
+      writer.Close();
     }
 
     protected virtual void Dispose(bool disposing)
@@ -58,6 +73,7 @@ namespace Rhino.Test
       // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
       Dispose(disposing: true);
       GC.SuppressFinalize(this);
+      File.Delete(Path.Combine(_linkFilePath, _linkFileName));
     }
 
     public Rhino.Runtime.InProcess.RhinoCore Core
@@ -83,35 +99,6 @@ namespace Rhino.Test
         if (null == _DocIO) InitializeDocIO();
         return _DocIO as Grasshopper.Kernel.GH_DocumentIO;
       }
-    }
-
-    public Grasshopper.Kernel.GH_Document Doc
-    {
-      get
-      {
-        if (null == _Doc && null != FilePath)
-          _Doc = LoadGrasshopperDoc(FilePath);
-        return _Doc as Grasshopper.Kernel.GH_Document;
-      }
-    }
-
-    public Grasshopper.Kernel.GH_Document LoadGrasshopperDoc(string filePath)
-    {
-      if (null != _Doc)
-        return Doc;
-      if (!DocIO.Open(filePath))
-        throw new InvalidOperationException("File Loading Failed");
-      else
-      {
-        var doc = DocIO.Document;
-        _Doc = doc;
-
-        // Documents are typically only enabled when they are loaded
-        // into the Grasshopper canvas. In this case we -may- want to
-        // make sure our document is enabled before using it.
-        doc.Enabled = true;
-      }
-      return Doc;
     }
 
     void InitializeCore()
@@ -145,6 +132,11 @@ namespace Rhino.Test
     }
   }
 
+  [CollectionDefinition("GrasshopperFixture collection")]
+  public class GrasshopperCollection : ICollectionFixture<GrasshopperFixture>
+  {
+    // This class has no code, and is never created. Its purpose is simply
+    // to be the place to apply [CollectionDefinition] and all the
+    // ICollectionFixture<> interfaces.
+  }
 }
-
-

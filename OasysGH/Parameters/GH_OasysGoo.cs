@@ -5,7 +5,7 @@ namespace OasysGH.Parameters
   public abstract class GH_OasysGoo<T> : GH_Goo<T>
   {
     public override string TypeName => typeof(T).Name.TrimStart(new char[] { 'I' });
-    public override string TypeDescription => GH_PluginInfo.ProductName + " " + this.TypeName + " Parameter";
+    public override string TypeDescription => OasysGHInfo.ProductName + " " + this.TypeName + " Parameter";
     public override bool IsValid => (this.Value == null) ? false : true;
     public override string IsValidWhyNot
     {
@@ -31,7 +31,7 @@ namespace OasysGH.Parameters
       if (Value == null)
         return "Null";
       else
-        return GH_PluginInfo.ProductName + " " + TypeName + " {" + Value.ToString() + "}";
+        return OasysGHInfo.ProductName + " " + TypeName + " {" + Value.ToString() + "}";
     }
 
     #region casting methods

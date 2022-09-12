@@ -312,7 +312,7 @@ namespace GH_UnitNumber.Components
           break;
 
         case EngineeringUnits.Volume:
-          this.Quantity = new Volume(Val, DefaultUnits.VolumeUnit);
+          this.Quantity = new Volume(Val, DefaultUnits.SectionVolumeUnit);
           break;
 
         case EngineeringUnits.AreaMomentOfInertia:

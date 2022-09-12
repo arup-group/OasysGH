@@ -6,12 +6,12 @@ using GH_UnitNumber;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle(GH_UnitNumberAssemblyInfo.PluginName)]
-[assembly: AssemblyDescription(GH_UnitNumberAssemblyInfo.Company + " " + GH_UnitNumberAssemblyInfo.ProductName + " Grasshopper plugin")]
+[assembly: AssemblyTitle(AssemblyInfo.PluginName)]
+[assembly: AssemblyDescription(AssemblyInfo.Company + " " + AssemblyInfo.ProductName + " Grasshopper plugin")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany(GH_UnitNumberAssemblyInfo.Company)]
-[assembly: AssemblyProduct(GH_UnitNumberAssemblyInfo.ProductName)]
-[assembly: AssemblyCopyright(GH_UnitNumberAssemblyInfo.Copyright)]
+[assembly: AssemblyCompany(AssemblyInfo.Company)]
+[assembly: AssemblyProduct(AssemblyInfo.ProductName)]
+[assembly: AssemblyCopyright(AssemblyInfo.Copyright)]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,5 +33,7 @@ using GH_UnitNumber;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(GH_UnitNumberAssemblyInfo.Vers)]
-[assembly: AssemblyFileVersion(GH_UnitNumberAssemblyInfo.Vers + ".0")]
+[assembly: AssemblyVersion(AssemblyInfo.Vers)]
+[assembly: AssemblyFileVersion(AssemblyInfo.Vers + ".0")]
+
+[assembly: InternalsVisibleTo("OasysGHTests")]
