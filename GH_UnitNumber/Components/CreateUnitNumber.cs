@@ -37,7 +37,7 @@ namespace GH_UnitNumber.Components
     }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager)
     {
-      pManager.AddGenericParameter("UnitNumber", "UN", "Number converted to selected unit", GH_ParamAccess.item);
+      pManager.AddParameter(new GH_UnitNumberParameter());
     }
     #endregion
 

@@ -10,16 +10,18 @@ namespace GH_UnitNumber
   public class GH_UnitNumberParameter : GH_PersistentParam<OasysGH.Units.GH_UnitNumber>
   {
     public GH_UnitNumberParameter()
-      : base(new GH_InstanceDescription(OasysGH.Units.GH_UnitNumber.Name, OasysGH.Units.GH_UnitNumber.NickName, "Maintains a collection of " + OasysGH.Units.GH_UnitNumber.Description + " data", "Params", "Primitive"))
-    {
-    }
-
+      : base(new GH_InstanceDescription(
+        OasysGH.Units.GH_UnitNumber.Name, 
+        OasysGH.Units.GH_UnitNumber.NickName, 
+        OasysGH.Units.GH_UnitNumber.Description, 
+        "Params", 
+        "Primitive"))
+    { }
+    public override string InstanceDescription => OasysGH.Units.GH_UnitNumber.Description;
+    public override string TypeName => OasysGH.Units.GH_UnitNumber.Name;
     public override Guid ComponentGuid => new Guid("007d8fa3-aeb6-492a-b885-4736925f22a8");
-
     public override GH_Exposure Exposure => GH_Exposure.quinary | GH_Exposure.obscure;
-
     protected override System.Drawing.Bitmap Icon => Properties.Resources.UnitParam;
-
     protected override GH_GetterResult Prompt_Plural(ref List<OasysGH.Units.GH_UnitNumber> values)
     {
       return GH_GetterResult.cancel;
@@ -46,7 +48,6 @@ namespace GH_UnitNumber
       };
       return item;
     }
-
     #region preview methods
     public bool Hidden
     {
@@ -58,5 +59,4 @@ namespace GH_UnitNumber
     }
     #endregion
   }
-
 }

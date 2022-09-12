@@ -5,6 +5,7 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using OasysGH.Components;
 using OasysGH.Units;
+using UnitsNet;
 
 namespace GH_UnitNumber.Components
 {
@@ -28,12 +29,12 @@ namespace GH_UnitNumber.Components
 
     protected override void RegisterInputParams(GH_InputParamManager pManager)
     {
-      pManager.AddGenericParameter("UnitNumber", "UN", "Number with a unit to be converted into another unit", GH_ParamAccess.item);
+      pManager.AddParameter(new GH_UnitNumberParameter());
       pManager[0].Optional = true;
     }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager)
     {
-      pManager.AddGenericParameter("UnitNumber", "UN", "Number converted to selected unit", GH_ParamAccess.item);
+      pManager.AddParameter(new GH_UnitNumberParameter());
     }
     #endregion
 
