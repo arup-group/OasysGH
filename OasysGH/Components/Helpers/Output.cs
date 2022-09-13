@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using OasysGH.Units;
 using UnitsNet.Serialization.JsonNet;
 using UnitsNet;
+using System;
 
 namespace OasysGH.Helpers
 {
@@ -39,7 +40,7 @@ namespace OasysGH.Helpers
         owner.ExpireDownStream = false;
     }
 
-    public static void SetList(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, List<object> data)
+    public static void SetList<T>(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, List<T> data)
     {
       DA.SetDataList(inputid, data);
 
@@ -54,7 +55,7 @@ namespace OasysGH.Helpers
         int outputsSerialized = 0;
         if (data.GetType() == typeof(GH_UnitNumber))
         {
-          IQuantity quantity = ((GH_UnitNumber)data[i]).Value;
+          IQuantity quantity = ((GH_UnitNumber)(object)data[i]).Value;
           outputsSerialized = JsonConvert.SerializeObject(quantity, converter).GetHashCode();
         }
         else
@@ -76,7 +77,7 @@ namespace OasysGH.Helpers
 
     }
 
-    public static void SetTree(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, DataTree<object> dataTree)
+    public static void SetTree<T>(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, DataTree<T> dataTree)
     {
       DA.SetDataTree(inputid, dataTree);
 
@@ -89,13 +90,13 @@ namespace OasysGH.Helpers
       int counter = 0;
       for (int p = 0; p < dataTree.Paths.Count; p++)
       {
-        List<object> data = dataTree.Branch(dataTree.Paths[p]);
+        List<T> data = dataTree.Branch(dataTree.Paths[p]);
         for (int i = counter; i < data.Count - counter; i++)
         {
           int outputsSerialized = 0;
           if (data.GetType() == typeof(GH_UnitNumber))
           {
-            IQuantity quantity = ((GH_UnitNumber)data[i]).Value;
+            IQuantity quantity = ((GH_UnitNumber)(object)data[i]).Value;
             outputsSerialized = JsonConvert.SerializeObject(quantity, converter).GetHashCode();
           }
           else
