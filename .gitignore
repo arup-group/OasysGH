@@ -6,3 +6,4 @@
 /OasysGHTests/bin
 /OasysGHTests/obj
 /packages
+*.bak
