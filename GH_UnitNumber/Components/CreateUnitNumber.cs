@@ -5,9 +5,9 @@ using Grasshopper.Kernel;
 using UnitsNet;
 using OasysGH.Components;
 using OasysGH.Units;
+using OasysGH.Units.Helpers;
 using UnitsNet.Units;
 using Oasys.Units;
-using System.IO;
 
 namespace GH_UnitNumber.Components
 {

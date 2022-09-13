@@ -5,7 +5,7 @@ using UnitsNet;
 using UnitsNet.Units;
 using Oasys.Units;
 
-namespace OasysGH.Units
+namespace OasysGH.Units.Helpers
 {
   public enum EngineeringUnits
   {
