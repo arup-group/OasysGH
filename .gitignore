@@ -1,6 +1,11 @@
 ﻿.vs
-OasysGH/bin
-OasysGH/obj
-OasysGHTests/bin
-OasysGHTests/obj
-packages/
+/GH_UnitNumber/bin
+/GH_UnitNumber/obj
+/OasysGH/bin
+/OasysGH/obj
+/OasysGHTests/bin
+/OasysGHTests/obj
+/packages
+*.bak
+/GH_UnitNumberTests/obj
+/GH_UnitNumberTests/bin

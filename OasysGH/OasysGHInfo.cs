@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OasysGH
+﻿namespace OasysGH
 {
-  public class GH_PluginInfo
+  public class OasysGHInfo
   {
     public static string ProductName { get; set; } = "";
     public static string PluginName { get; set; } = "";

@@ -22,9 +22,9 @@ namespace OasysGH.Helpers
       Dictionary<string, object> properties = new Dictionary<string, object>() {
         { "distinct_id", user.userName },
         { "user", user },
-        { "pluginName", GH_PluginInfo.PluginName },
-        { "version", GH_PluginInfo.Version },
-        { "isBeta", GH_PluginInfo.IsBeta },
+        { "pluginName", OasysGHInfo.PluginName },
+        { "version", OasysGHInfo.Version },
+        { "isBeta", OasysGHInfo.IsBeta },
       };
 
       if (additionalProperties != null)
@@ -93,7 +93,7 @@ namespace OasysGH.Helpers
     private class PhContainer
     {
       [JsonProperty("api_key")]
-      string api_key { get; set; } = GH_PluginInfo.PostHogApiKey;
+      string api_key { get; set; } = OasysGHInfo.PostHogApiKey;
       [JsonProperty("event")]
       string ph_event { get; set; }
       [JsonProperty("timestamp")]

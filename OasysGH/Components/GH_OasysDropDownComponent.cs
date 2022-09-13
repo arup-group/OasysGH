@@ -26,7 +26,7 @@ namespace OasysGH.Components
       m_attributes = new UI.DropDownComponentAttributes(this, this.SetSelected, this.DropDownItems, this.SelectedItems, this.SpacerDescriptions);
     }
 
-    public new void ExpireDownStreamObjects()
+    protected override void ExpireDownStreamObjects()
     {
       if (this.ExpireDownStream)
         base.ExpireDownStreamObjects();
