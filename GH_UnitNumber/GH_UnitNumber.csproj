@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Components\ConvertUnitNumber.cs" />
     <Compile Include="Components\CreateUnitNumber.cs" />
+    <Compile Include="Components\TestComponent.cs" />
     <Compile Include="GH_UnitNumberAssemblyInfo.cs" />
     <Compile Include="Parameter\GH_UnitNumberParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

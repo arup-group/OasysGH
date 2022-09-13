@@ -24,6 +24,7 @@ namespace OasysGH.Helpers
     public static IQuantity UnitNumber<T>(GH_Component owner, IGH_DataAccess DA, int inputid, T unit, bool isOptional = false) where T : Enum
     {
       GH_UnitNumber unitNumber = null;
+      IQuantity zeroReturn = null;
       GH_ObjectWrapper gh_typ = new GH_ObjectWrapper();
       if (DA.GetData(inputid, ref gh_typ))
       {
@@ -36,7 +37,8 @@ namespace OasysGH.Helpers
           {
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Error in " + owner.Params.Input[inputid].NickName + " input: Wrong unit type"
                 + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be " + typeof(T));
-            return null;
+            Quantity.TryFrom(0, unit, out zeroReturn);
+            return zeroReturn;
           }
           else
             return unitNumber.Value;
@@ -51,7 +53,8 @@ namespace OasysGH.Helpers
           else
           {
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
-            return null;
+            Quantity.TryFrom(0, unit, out zeroReturn);
+            return zeroReturn;
           }
         }
 
@@ -65,18 +68,22 @@ namespace OasysGH.Helpers
           else
           {
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
-            return null;
+            Quantity.TryFrom(0, unit, out zeroReturn);
+            return zeroReturn;
           }
         }
         else
         {
           owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
-          return null;
+          Quantity.TryFrom(0, unit, out zeroReturn);
+          return zeroReturn;
         }
       }
-      else if (!isOptional)
+      else if (!owner.Params.Input[inputid].Optional)
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
-      return null;
+
+      Quantity.TryFrom(0, unit, out zeroReturn);
+      return zeroReturn;
     }
 
     /// <summary>
@@ -88,13 +95,11 @@ namespace OasysGH.Helpers
     /// <param name="inputid"></param>
     /// <param name="unit"></param>
     /// <returns></returns>
-    internal static List<IQuantity> UnitNumberList<T>(GH_Component owner, IGH_DataAccess DA, int inputid, T unit) where T : Enum
+    public static List<IQuantity> UnitNumberList<T>(GH_Component owner, IGH_DataAccess DA, int inputid, T unit) where T : Enum
     {
       List<IQuantity> items = new List<IQuantity>();
       List<GH_ObjectWrapper> gh_typs = new List<GH_ObjectWrapper>();
-
-      if (owner.Params.Input[inputid].Sources.Count == 0 & owner.Params.Input[inputid].Optional)
-        return null;
+      IQuantity zeroReturn = null;
 
       if (DA.GetDataList(inputid, gh_typs))
       {
@@ -109,7 +114,8 @@ namespace OasysGH.Helpers
             if (!unitNumber.Value.QuantityInfo.UnitType.Equals(typeof(T)))
             {
               owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Error in " + owner.Params.Input[inputid].NickName + " input (index " + i + " (" + gh_typs[i].Value.GetType().Name + ")): Wrong unit type " + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be " + typeof(T));
-              items.Add(null);
+              Quantity.TryFrom(0, unit, out zeroReturn);
+              items.Add(zeroReturn);
             }
             else
               items.Add(unitNumber.Value);
@@ -124,7 +130,8 @@ namespace OasysGH.Helpers
             else
             {
               owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Unable to convert " + owner.Params.Input[inputid].NickName + " (index " + i + ") to UnitNumber");
-              items.Add(null);
+              Quantity.TryFrom(0, unit, out zeroReturn);
+              items.Add(zeroReturn);
             }
           }
 
@@ -138,24 +145,25 @@ namespace OasysGH.Helpers
             else
             {
               owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Unable to convert " + owner.Params.Input[inputid].NickName + " (index " + i + ") to UnitNumber");
-              items.Add(null);
+              Quantity.TryFrom(0, unit, out zeroReturn);
+              items.Add(zeroReturn);
             }
           }
 
           else
           {
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Unable to convert " + owner.Params.Input[inputid].NickName + " (index " + i + ") to UnitNumber");
-            items.Add(null);
+            Quantity.TryFrom(0, unit, out zeroReturn);
+            items.Add(zeroReturn);
           }
-
         }
         return items;
       }
-      else
+      else if (!owner.Params.Input[inputid].Optional)
       {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
-      return null;
+      return items;
     }
 
     /// <summary>
@@ -222,7 +230,7 @@ namespace OasysGH.Helpers
         }
         return items;
       }
-      else
+      else if (!owner.Params.Input[inputid].Optional)
       {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }

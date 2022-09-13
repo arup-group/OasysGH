@@ -53,7 +53,7 @@ namespace OasysGH.Helpers
       for (int i = 0; i < data.Count; i++)
       {
         int outputsSerialized = 0;
-        if (data.GetType() == typeof(GH_UnitNumber))
+        if (data[i].GetType() == typeof(GH_UnitNumber))
         {
           IQuantity quantity = ((GH_UnitNumber)(object)data[i]).Value;
           outputsSerialized = JsonConvert.SerializeObject(quantity, converter).GetHashCode();
@@ -94,7 +94,7 @@ namespace OasysGH.Helpers
         for (int i = counter; i < data.Count - counter; i++)
         {
           int outputsSerialized = 0;
-          if (data.GetType() == typeof(GH_UnitNumber))
+          if (data[i].GetType() == typeof(GH_UnitNumber))
           {
             IQuantity quantity = ((GH_UnitNumber)(object)data[i]).Value;
             outputsSerialized = JsonConvert.SerializeObject(quantity, converter).GetHashCode();
