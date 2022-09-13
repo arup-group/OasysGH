@@ -44,9 +44,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GH_UnitNumberTests\GH_UnitNumber_Example01.cs" />
-    <Compile Include="GH_UnitNumberTests\Helper\ComponentHelper.cs" />
-    <Compile Include="GH_UnitNumberTests\Helper\Helper.cs" />
     <Compile Include="GrasshopperFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
