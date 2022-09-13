@@ -36,4 +36,4 @@ using GH_UnitNumber;
 [assembly: AssemblyVersion(AssemblyInfo.Vers)]
 [assembly: AssemblyFileVersion(AssemblyInfo.Vers + ".0")]
 
-[assembly: InternalsVisibleTo("OasysGHTests")]
+[assembly: InternalsVisibleTo("GH_UnitNumberTests")]

@@ -7,3 +7,5 @@
 /OasysGHTests/obj
 /packages
 *.bak
+/GH_UnitNumberTests/obj
+/GH_UnitNumberTests/bin

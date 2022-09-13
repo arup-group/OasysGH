@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OasysGHTests", "OasysGHTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GH_UnitNumber", "GH_UnitNumber\GH_UnitNumber.csproj", "{056C79E7-CB04-4B57-B7F3-849D4A80BCBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GH_UnitNumberTests", "GH_UnitNumberTests\GH_UnitNumberTests.csproj", "{A02C85AF-9588-4653-8BE6-15427DAC40E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -27,6 +29,10 @@ Global
 		{056C79E7-CB04-4B57-B7F3-849D4A80BCBC}.Debug|x64.Build.0 = Debug|x64
 		{056C79E7-CB04-4B57-B7F3-849D4A80BCBC}.Release|x64.ActiveCfg = Release|x64
 		{056C79E7-CB04-4B57-B7F3-849D4A80BCBC}.Release|x64.Build.0 = Release|x64
+		{A02C85AF-9588-4653-8BE6-15427DAC40E0}.Debug|x64.ActiveCfg = Debug|x64
+		{A02C85AF-9588-4653-8BE6-15427DAC40E0}.Debug|x64.Build.0 = Debug|x64
+		{A02C85AF-9588-4653-8BE6-15427DAC40E0}.Release|x64.ActiveCfg = Release|x64
+		{A02C85AF-9588-4653-8BE6-15427DAC40E0}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
