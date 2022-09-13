@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
-using UnitsNet;
 using UnitsNet.Units;
 using Oasys.Units;
+using System.Collections.Generic;
 
 namespace OasysGH.Units.Helpers
 {
@@ -35,13 +34,13 @@ namespace OasysGH.Units.Helpers
 
   public class FilteredUnits
   {
-    public static ReadOnlyCollection<string> FilteredAngleUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredAngleUnits = new List<string>(new[]
     {
       AngleUnit.Radian.ToString(),
       AngleUnit.Degree.ToString()
     });
 
-    public static ReadOnlyCollection<string> FilteredLengthUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredLengthUnits = new List<string>(new[]
     {
       LengthUnit.Millimeter.ToString(),
       LengthUnit.Centimeter.ToString(),
@@ -50,7 +49,7 @@ namespace OasysGH.Units.Helpers
       LengthUnit.Foot.ToString()
     });
 
-    public static ReadOnlyCollection<string> FilteredAreaUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredAreaUnits = new List<string>(new[]
     {
       AreaUnit.SquareMillimeter.ToString(),
       AreaUnit.SquareCentimeter.ToString(),
@@ -59,7 +58,7 @@ namespace OasysGH.Units.Helpers
       AreaUnit.SquareFoot.ToString()
     });
 
-    public static ReadOnlyCollection<string> FilteredVolumeUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredVolumeUnits = new List<string>(new[]
     {
       VolumeUnit.CubicMillimeter.ToString(),
       VolumeUnit.CubicCentimeter.ToString(),
@@ -68,7 +67,7 @@ namespace OasysGH.Units.Helpers
       VolumeUnit.CubicFoot.ToString()
     });
 
-    public static ReadOnlyCollection<string> FilteredAreaMomentOfInertiaUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredAreaMomentOfInertiaUnits = new List<string>(new[]
     {
       AreaMomentOfInertiaUnit.MillimeterToTheFourth.ToString(),
       AreaMomentOfInertiaUnit.CentimeterToTheFourth.ToString(),
@@ -78,9 +77,9 @@ namespace OasysGH.Units.Helpers
     });
 
 
-    public static ReadOnlyCollection<string> FilteredCurvatureUnits = new ReadOnlyCollection<string>(Enum.GetNames(typeof(CurvatureUnit)).Skip(1).ToList());
+    public static List<string> FilteredCurvatureUnits = new List<string>(Enum.GetNames(typeof(CurvatureUnit)).Skip(1).ToList());
 
-    public static ReadOnlyCollection<string> FilteredForceUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredForceUnits = new List<string>(new[]
     {
       ForceUnit.Newton.ToString(),
       ForceUnit.Kilonewton.ToString(),
@@ -90,7 +89,7 @@ namespace OasysGH.Units.Helpers
       ForceUnit.TonneForce.ToString()
     });
 
-    public static ReadOnlyCollection<string> FilteredForcePerLengthUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredForcePerLengthUnits = new List<string>(new[]
     {
       ForcePerLengthUnit.NewtonPerMillimeter.ToString(),
       ForcePerLengthUnit.NewtonPerCentimeter.ToString(),
@@ -109,7 +108,7 @@ namespace OasysGH.Units.Helpers
       ForcePerLengthUnit.KilopoundForcePerFoot.ToString()
     });
 
-    public static ReadOnlyCollection<string> FilteredForcePerAreaUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredForcePerAreaUnits = new List<string>(new[]
     {
       PressureUnit.NewtonPerSquareMillimeter.ToString(),
       PressureUnit.NewtonPerSquareCentimeter.ToString(),
@@ -122,13 +121,13 @@ namespace OasysGH.Units.Helpers
       PressureUnit.KilopoundForcePerSquareInch.ToString(),
     });
 
-    public static ReadOnlyCollection<string> FilteredAxialStiffnessUnits = new ReadOnlyCollection<string>(Enum.GetNames(typeof(AxialStiffnessUnit)).Skip(1).ToList());
+    public static List<string> FilteredAxialStiffnessUnits = new List<string>(Enum.GetNames(typeof(AxialStiffnessUnit)).Skip(1).ToList());
 
-    public static ReadOnlyCollection<string> FilteredBendingStiffnessUnits = new ReadOnlyCollection<string>(Enum.GetNames(typeof(BendingStiffnessUnit)).Skip(1).ToList());
+    public static List<string> FilteredBendingStiffnessUnits = new List<string>(Enum.GetNames(typeof(BendingStiffnessUnit)).Skip(1).ToList());
 
-    public static ReadOnlyCollection<string> FilteredMomentUnits = new ReadOnlyCollection<string>(Enum.GetNames(typeof(MomentUnit)).Skip(1).ToList());
+    public static List<string> FilteredMomentUnits = new List<string>(Enum.GetNames(typeof(MomentUnit)).Skip(1).ToList());
 
-    public static ReadOnlyCollection<string> FilteredStressUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredStressUnits = new List<string>(new[]
     {
       PressureUnit.Pascal.ToString(),
       PressureUnit.Kilopascal.ToString(),
@@ -141,9 +140,9 @@ namespace OasysGH.Units.Helpers
       PressureUnit.KilopoundForcePerSquareInch.ToString()
     });
 
-    public static ReadOnlyCollection<string> FilteredStrainUnits = new ReadOnlyCollection<string>(Enum.GetNames(typeof(StrainUnit)).Skip(1).ToList());
+    public static List<string> FilteredStrainUnits = new List<string>(Enum.GetNames(typeof(StrainUnit)).Skip(1).ToList());
 
-    public static ReadOnlyCollection<string> FilteredMassUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredMassUnits = new List<string>(new[]
     {
       MassUnit.Gram.ToString(),
       MassUnit.Kilogram.ToString(),
@@ -155,7 +154,7 @@ namespace OasysGH.Units.Helpers
       MassUnit.Slug.ToString()
     });
 
-    public static ReadOnlyCollection<string> FilteredDensityUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredDensityUnits = new List<string>(new[]
     {
       DensityUnit.GramPerCubicMillimeter.ToString(),
       DensityUnit.GramPerCubicCentimeter.ToString(),
@@ -172,14 +171,14 @@ namespace OasysGH.Units.Helpers
       DensityUnit.KilopoundPerCubicInch.ToString(),
     });
 
-    public static ReadOnlyCollection<string> FilteredTemperatureUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredTemperatureUnits = new List<string>(new[]
     {
       TemperatureUnit.DegreeCelsius.ToString(),
       TemperatureUnit.Kelvin.ToString(),
       TemperatureUnit.DegreeFahrenheit.ToString(),
     });
 
-    public static ReadOnlyCollection<string> FilteredVelocityUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredVelocityUnits = new List<string>(new[]
     {
       SpeedUnit.MillimeterPerSecond.ToString(),
       SpeedUnit.CentimeterPerSecond.ToString(),
@@ -190,7 +189,7 @@ namespace OasysGH.Units.Helpers
       SpeedUnit.MilePerHour.ToString(),
     });
 
-    public static ReadOnlyCollection<string> FilteredAccelerationUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredAccelerationUnits = new List<string>(new[]
     {
       AccelerationUnit.MillimeterPerSecondSquared.ToString(),
       AccelerationUnit.CentimeterPerSecondSquared.ToString(),
@@ -200,7 +199,7 @@ namespace OasysGH.Units.Helpers
       AccelerationUnit.InchPerSecondSquared.ToString(),
     });
 
-    public static ReadOnlyCollection<string> FilteredEnergyUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredEnergyUnits = new List<string>(new[]
     {
       EnergyUnit.Joule.ToString(),
       EnergyUnit.Kilojoule.ToString(),
@@ -212,7 +211,7 @@ namespace OasysGH.Units.Helpers
       EnergyUnit.BritishThermalUnit.ToString(),
     });
 
-    public static ReadOnlyCollection<string> FilteredTimeUnits = new ReadOnlyCollection<string>(new[]
+    public static List<string> FilteredTimeUnits = new List<string>(new[]
     {
       DurationUnit.Millisecond.ToString(),
       DurationUnit.Second.ToString(),
@@ -221,6 +220,6 @@ namespace OasysGH.Units.Helpers
       DurationUnit.Day.ToString(),
     });
 
-    public static ReadOnlyCollection<string> FilteredRatioUnits = new ReadOnlyCollection<string>(Enum.GetNames(typeof(RatioUnit)).Skip(1).ToList());
+    public static List<string> FilteredRatioUnits = new List<string>(Enum.GetNames(typeof(RatioUnit)).Skip(1).ToList());
   }
 }
