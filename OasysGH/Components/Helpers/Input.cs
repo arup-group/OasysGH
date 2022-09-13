@@ -3,15 +3,11 @@ using Grasshopper.Kernel.Types;
 using System;
 using System.Collections.Generic;
 using UnitsNet;
-using UnitsNet.Units;
-using Oasys.Units;
 using OasysGH.Units;
-using System.Globalization;
-using GH_IO.Types;
 
 namespace OasysGH.Helpers
 {
-  class Input
+  public class Input
   {
     /// <summary>
     /// Helper method to get UnitNumber input parameter item

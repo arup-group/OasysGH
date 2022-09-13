@@ -59,7 +59,7 @@
     <Compile Include="Components\Helpers\Output.cs" />
     <Compile Include="Components\GH_OasysTaskCapableComponent.cs" />
     <Compile Include="Parameters\GH_OasysGoo.cs" />
-    <Compile Include="Parameters\Helpers\ObjectExtension.cs" />
+    <Compile Include="Parameters\ObjectExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Bool6ComponentAttributes.cs" />
     <Compile Include="UI\ButtonComponentAttributes.cs" />
