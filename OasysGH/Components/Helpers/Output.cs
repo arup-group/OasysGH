@@ -7,28 +7,39 @@ using OasysGH.Units;
 using UnitsNet.Serialization.JsonNet;
 using UnitsNet;
 using System;
+using Grasshopper.Kernel.Types;
 
 namespace OasysGH.Helpers
 {
   public class Output
   {
     private static UnitsNetIQuantityJsonConverter converter = new UnitsNetIQuantityJsonConverter();
-    public static void SetItem(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, object data)
+    public static void SetItem<T>(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, T data) where T : IGH_Goo
     {
       DA.SetData(inputid, data);
 
-      int outputsSerialized = 0;
+      string outputsSerialized = "";
       if (data.GetType() == typeof(GH_UnitNumber))
       {
-        IQuantity quantity = ((GH_UnitNumber)data).Value;
-        outputsSerialized = JsonConvert.SerializeObject(quantity, converter).GetHashCode();
+        IQuantity quantity = ((GH_UnitNumber)(object)data).Value;
+        outputsSerialized = JsonConvert.SerializeObject(quantity, converter);
       }
       else
-        outputsSerialized = JsonConvert.SerializeObject(data, converter).GetHashCode();
+      {
+        var obj = ((T)(object)data).ScriptVariable();
+        try
+        {
+          outputsSerialized = JsonConvert.SerializeObject(obj);
+        }
+        catch (Exception)
+        {
+          outputsSerialized = data.GetHashCode().ToString();
+        }
+      }
 
       if (!owner.ExistingOutputsSerialized.ContainsKey(inputid))
       {
-        owner.ExistingOutputsSerialized[inputid] = new List<int>() { outputsSerialized };
+        owner.ExistingOutputsSerialized[inputid] = new List<string>() { outputsSerialized };
         owner.ExpireDownStream = true;
       }
       else if (owner.ExistingOutputsSerialized[inputid][0] != outputsSerialized)
@@ -40,26 +51,36 @@ namespace OasysGH.Helpers
         owner.ExpireDownStream = false;
     }
 
-    public static void SetList<T>(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, List<T> data)
+    public static void SetList<T>(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, List<T> data) where T : IGH_Goo
     {
       DA.SetDataList(inputid, data);
 
       if (!owner.ExistingOutputsSerialized.ContainsKey(inputid))
       {
-        owner.ExistingOutputsSerialized.Add(inputid, new List<int>());
+        owner.ExistingOutputsSerialized.Add(inputid, new List<string>());
         owner.ExpireDownStream = true;
       }
 
       for (int i = 0; i < data.Count; i++)
       {
-        int outputsSerialized = 0;
+        string outputsSerialized = "";
         if (data[i].GetType() == typeof(GH_UnitNumber))
         {
           IQuantity quantity = ((GH_UnitNumber)(object)data[i]).Value;
-          outputsSerialized = JsonConvert.SerializeObject(quantity, converter).GetHashCode();
+          outputsSerialized = JsonConvert.SerializeObject(quantity, converter);
         }
         else
-          outputsSerialized = JsonConvert.SerializeObject(data, converter).GetHashCode();
+        {
+          var obj = ((T)(object)data[i]).ScriptVariable();
+          try
+          {
+            outputsSerialized = JsonConvert.SerializeObject(obj);
+          }
+          catch (Exception)
+          {
+            outputsSerialized = data[i].GetHashCode().ToString();
+          }
+        }
         
         if (owner.ExistingOutputsSerialized[inputid].Count == i)
         {
@@ -74,16 +95,15 @@ namespace OasysGH.Helpers
         else
           owner.ExpireDownStream = false;
       }
-
     }
 
-    public static void SetTree<T>(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, DataTree<T> dataTree)
+    public static void SetTree<T>(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int inputid, DataTree<T> dataTree) where T : IGH_Goo
     {
       DA.SetDataTree(inputid, dataTree);
 
       if (!owner.ExistingOutputsSerialized.ContainsKey(inputid))
       {
-        owner.ExistingOutputsSerialized.Add(inputid, new List<int>());
+        owner.ExistingOutputsSerialized.Add(inputid, new List<string>());
         owner.ExpireDownStream = true;
       }
 
@@ -93,15 +113,25 @@ namespace OasysGH.Helpers
         List<T> data = dataTree.Branch(dataTree.Paths[p]);
         for (int i = counter; i < data.Count - counter; i++)
         {
-          int outputsSerialized = 0;
+          string outputsSerialized = "";
           if (data[i].GetType() == typeof(GH_UnitNumber))
           {
             IQuantity quantity = ((GH_UnitNumber)(object)data[i]).Value;
-            outputsSerialized = JsonConvert.SerializeObject(quantity, converter).GetHashCode();
+            outputsSerialized = JsonConvert.SerializeObject(quantity, converter);
           }
           else
-            outputsSerialized = JsonConvert.SerializeObject(data, converter).GetHashCode();
-          
+          {
+            var obj = ((T)(object)data[i]).ScriptVariable();
+            try
+            {
+              outputsSerialized = JsonConvert.SerializeObject(obj);
+            }
+            catch (Exception)
+            {
+              outputsSerialized = data[i].GetHashCode().ToString();
+            }
+          }
+
           if (owner.ExistingOutputsSerialized[inputid].Count == i)
           {
             owner.ExpireDownStream = true;
