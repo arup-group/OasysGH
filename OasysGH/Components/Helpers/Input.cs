@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using UnitsNet;
 using OasysGH.Units;
+using System.Globalization;
+using UnitsNet.Units;
 
 namespace OasysGH.Helpers
 {
@@ -221,6 +223,154 @@ namespace OasysGH.Helpers
         return items;
       }
       else
+      {
+        owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
+      }
+      return null;
+    }
+
+    /// <summary>
+    /// Helper method to get either Length or Ratio input
+    /// </summary>
+    /// <param name="owner"></param>
+    /// <param name="DA"></param>
+    /// <param name="inputid"></param>
+    /// <param name="lengthUnit"></param>
+    /// <param name="isOptional"></param>
+    /// <returns></returns>
+    public static IQuantity LengthOrRatio(GH_Component owner, IGH_DataAccess DA, int inputid, LengthUnit lengthUnit, bool isOptional = false)
+    {
+      GH_UnitNumber unitNumber = null;
+      GH_ObjectWrapper gh_typ = new GH_ObjectWrapper();
+      if (DA.GetData(inputid, ref gh_typ))
+      {
+        // try cast directly to quantity type
+        if (gh_typ.Value is GH_UnitNumber)
+        {
+          unitNumber = (GH_UnitNumber)gh_typ.Value;
+          // check that unit is of right type
+          if (!unitNumber.Value.QuantityInfo.UnitType.Equals(typeof(LengthUnit)) &&
+            !unitNumber.Value.QuantityInfo.UnitType.Equals(typeof(RatioUnit)))
+          {
+            owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Error in " + owner.Params.Input[inputid].NickName + " input: Wrong unit type"
+                + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be Length or Ratio");
+            return null;
+          }
+        }
+        // try cast to double
+        else if (GH_Convert.ToDouble(gh_typ.Value, out double val, GH_Conversion.Both))
+        {
+          // create new quantity from default units
+          if (val < 0)
+            unitNumber = new GH_UnitNumber(new Ratio(Math.Abs(val), RatioUnit.DecimalFraction).ToUnit(RatioUnit.Percent));
+          else
+            unitNumber = new GH_UnitNumber(new Length(val, lengthUnit));
+        }
+        // try cast to text
+        else if (GH_Convert.ToString(gh_typ.Value, out string txt, GH_Conversion.Both))
+        {
+          if (txt.EndsWith("%"))
+          {
+            NumberFormatInfo noComma = CultureInfo.InvariantCulture.NumberFormat;
+            unitNumber = new GH_UnitNumber(new Ratio(Convert.ToDouble(txt.Replace("%", string.Empty).Replace(" ", string.Empty), noComma), RatioUnit.Percent));
+          }
+          else if (Length.TryParse(txt, out Length parsed))
+            unitNumber = new GH_UnitNumber(parsed);
+          else if (Length.TryParseFeetInches(txt, out Length parsedFeetInches))
+            unitNumber = new GH_UnitNumber(parsedFeetInches);
+          else
+          {
+            owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
+            return Length.Zero;
+          }
+        }
+        else
+        {
+          owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
+          return null;
+        }
+      }
+      else if (!isOptional)
+        owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
+      else
+      {
+        if (unitNumber == null)
+          return null;
+      }
+
+      return unitNumber.Value;
+    }
+
+    /// <summary>
+    /// Helper method to get a list of either Length or Ratio inputs
+    /// </summary>
+    /// <param name="owner"></param>
+    /// <param name="DA"></param>
+    /// <param name="inputid"></param>
+    /// <param name="lengthUnit"></param>
+    /// <param name="isOptional"></param>
+    /// <returns></returns>
+    public static List<IQuantity> LengthsOrRatios(GH_Component owner, IGH_DataAccess DA, int inputid, LengthUnit lengthUnit, bool isOptional = false)
+    {
+      List<IQuantity> lengths = new List<IQuantity>();
+      List<GH_ObjectWrapper> gh_typs = new List<GH_ObjectWrapper>();
+      if (DA.GetDataList(inputid, gh_typs))
+      {
+        for (int i = 0; i < gh_typs.Count; i++)
+        {
+          GH_UnitNumber unitNumber = null;
+          // try cast directly to quantity type
+          if (gh_typs[i].Value is GH_UnitNumber)
+          {
+            unitNumber = (GH_UnitNumber)gh_typs[i].Value;
+            // check that unit is of right type
+            if (!unitNumber.Value.QuantityInfo.UnitType.Equals(typeof(LengthUnit)) &&
+              !unitNumber.Value.QuantityInfo.UnitType.Equals(typeof(RatioUnit)))
+            {
+              owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Error in " + owner.Params.Input[inputid].NickName + " (item " + i + ") input: Wrong unit type"
+                  + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be Length or Ratio");
+            }
+            else
+            {
+              lengths.Add(unitNumber.Value);
+            }
+          }
+          // try cast to double
+          else if (GH_Convert.ToDouble(gh_typs[i].Value, out double val, GH_Conversion.Both))
+          {
+            // create new quantity from default units
+            if (val < 0)
+              lengths.Add(new Ratio(Math.Abs(val), RatioUnit.DecimalFraction));
+            else
+              lengths.Add(new Length(val, lengthUnit));
+          }
+          // try cast to text
+          else if (GH_Convert.ToString(gh_typs[i].Value, out string txt, GH_Conversion.Both))
+          {
+            NumberFormatInfo noComma = CultureInfo.InvariantCulture.NumberFormat;
+            if (txt.EndsWith("%"))
+            {
+              lengths.Add(new Ratio(Convert.ToDouble(txt.Replace("%", string.Empty).Replace(" ", string.Empty), noComma), RatioUnit.Percent));
+            }
+            else if (Length.TryParse(txt, noComma, out Length parsed))
+              lengths.Add(parsed);
+            else if (Length.TryParseFeetInches(txt, out Length parsedFeetInches, noComma))
+              lengths.Add(parsedFeetInches);
+            else
+            {
+              owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Unable to convert " + owner.Params.Input[inputid].NickName + " (item " + i + ") to UnitNumber");
+              continue;
+            }
+          }
+          else
+          {
+            owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Unable to convert " + owner.Params.Input[inputid].NickName + " (item " + i + ") to UnitNumber");
+            continue;
+          }
+        }
+        return lengths;
+      }
+      else if (!isOptional)
       {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
