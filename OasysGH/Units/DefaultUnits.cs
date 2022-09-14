@@ -48,8 +48,11 @@ namespace OasysGH.Units
     public static ForceUnit ForceUnit { get; set; } = ForceUnit.Kilonewton;
     public static MomentUnit MomentUnit { get; set; } = MomentUnit.KilonewtonMeter;
     public static PressureUnit StressUnit { get; set; } = PressureUnit.Megapascal;
-    public static StrainUnit StrainUnit { get; set; } = StrainUnit.MilliStrain;
+    public static StrainUnit StrainUnitResult { get; set; } = StrainUnit.MilliStrain;
+    public static StrainUnit StrainUnitSection { get; set; } = StrainUnit.MilliStrain;
     public static AxialStiffnessUnit AxialStiffnessUnit { get; set; } = AxialStiffnessUnit.Kilonewton;
+    public static ForcePerLengthUnit ForcePerLengthUnit { get; set; } = ForcePerLengthUnit.KilonewtonPerMeter;
+    public static PressureUnit ForcePerAreaUnit { get; set; } = PressureUnit.KilonewtonPerSquareMeter;
     public static BendingStiffnessUnit BendingStiffnessUnit { get; set; } = BendingStiffnessUnit.KilonewtonSquareMeter;
     public static MassUnit MassUnit { get; set; } = MassUnit.Tonne;
     public static TemperatureUnit TemperatureUnit { get; set; } = TemperatureUnit.DegreeCelsius;
@@ -60,15 +63,13 @@ namespace OasysGH.Units
     public static DurationUnit TimeShortUnit { get; set; } = DurationUnit.Second;
     public static DurationUnit TimeMediumUnit { get; set; } = DurationUnit.Minute;
     public static DurationUnit TimeLongUnit { get; set; } = DurationUnit.Day;
-
-    public static ForcePerLengthUnit ForcePerLengthUnit = UnitsHelper.GetForcePerLengthUnit(ForceUnit, LengthUnitGeometry);
-    public static PressureUnit ForcePerAreaUnit = UnitsHelper.GetForcePerAreaUnit(ForceUnit, LengthUnitGeometry);
-    public static AreaUnit SectionAreaUnit = UnitsHelper.GetAreaUnit(LengthUnitSection);
-    public static VolumeUnit SectionVolumeUnit = UnitsHelper.GetVolumeUnit(LengthUnitSection);
-    public static AreaMomentOfInertiaUnit SectionAreaMomentOfInertiaUnit = UnitsHelper.GetAreaMomentOfInertiaUnit(LengthUnitSection);
-    public static VolumePerLengthUnit VolumePerLengthUnit = UnitsHelper.GetVolumePerLengthUnit(LengthUnitSection);
-    public static DensityUnit DensityUnit = UnitsHelper.GetDensityUnit(MassUnit, LengthUnitGeometry);
-    public static LinearDensityUnit LinearDensityUnit = UnitsHelper.GetLinearDensityUnit(MassUnit, LengthUnitGeometry);
-    public static CurvatureUnit CurvatureUnit { get; set; } = (CurvatureUnit)Enum.Parse(typeof(CurvatureUnit), "Per" + LengthUnitGeometry.ToString());
+    public static AreaUnit SectionAreaUnit { get; set; } = AreaUnit.SquareCentimeter;
+    public static VolumeUnit SectionVolumeUnit { get; set; } = VolumeUnit.CubicCentimeter;
+    public static PressureUnit YoungsModulusUnit { get; set; } = PressureUnit.Gigapascal;
+    public static AreaMomentOfInertiaUnit SectionAreaMomentOfInertiaUnit { get; set; } = AreaMomentOfInertiaUnit.CentimeterToTheFourth;
+    public static VolumePerLengthUnit VolumePerLengthUnit { get; set; } = VolumePerLengthUnit.CubicMeterPerMeter;
+    public static DensityUnit DensityUnit { get; set; } = DensityUnit.KilogramPerCubicMeter;
+    public static LinearDensityUnit LinearDensityUnit { get; set; } = LinearDensityUnit.KilogramPerMeter;
+    public static CurvatureUnit CurvatureUnit { get; set; } = CurvatureUnit.PerMeter;
   }
 }
