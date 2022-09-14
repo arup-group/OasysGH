@@ -15,7 +15,7 @@ namespace OasysGH.Components
     public List<string> SpacerDescriptions;
     public bool IsInitialised = false;
     public bool ExpireDownStream = true;
-    public Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>() { { 0, new List<string>() { "" } } }; // new dictionary with key = 0 (inputid) and list of serialized ints with initial one item = 0
+    public Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>() { { 0, new List<string>() { "" } } }; 
 
     #region UI
     public override void CreateAttributes()
