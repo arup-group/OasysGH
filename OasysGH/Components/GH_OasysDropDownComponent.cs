@@ -1,21 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
+using Newtonsoft.Json;
 using OasysGH.Components;
+using OasysGH.Units;
+using UnitsNet;
+using UnitsNet.Serialization.JsonNet;
 
 namespace OasysGH.Components
 {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent
   {
-    public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
-    {
-    }
-
+    private static readonly UnitsNetIQuantityJsonConverter Converter = new UnitsNetIQuantityJsonConverter();
     public List<List<string>> DropDownItems;
     public List<string> SelectedItems;
     public List<string> SpacerDescriptions;
     public bool IsInitialised = false;
     public bool ExpireDownStream = true;
-    public Dictionary<int, List<int>> ExistingOutputsSerialized = new Dictionary<int, List<int>>() { { 0, new List<int>() { 0 } } }; // new dictionary with key = 0 (inputid) and list of serialized ints with initial one item = 0
+    public Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>() { { 0, new List<string>() { "" } } };
+
+    public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
+    {
+    }
 
     #region UI
     public override void CreateAttributes()
@@ -52,6 +59,48 @@ namespace OasysGH.Components
     #endregion
 
     #region (de)serialization
+    public void CheckExpireDownstream<T>(T data, int outputIndex, int index) where T : IGH_Goo
+    {
+      if (!this.ExistingOutputsSerialized.ContainsKey(outputIndex))
+        this.ExistingOutputsSerialized.Add(outputIndex, new List<string>());
+
+      string outputsSerialized = "";
+      if (data.GetType() == typeof(GH_UnitNumber))
+      {
+        // use IQuantity converter if data is a IQuantity (struct)
+        IQuantity quantity = ((GH_UnitNumber)(object)data).Value;
+        outputsSerialized = JsonConvert.SerializeObject(quantity, Converter);
+      }
+      else
+      {
+        var obj = ((T)(object)data).ScriptVariable();
+        try
+        {
+          outputsSerialized = JsonConvert.SerializeObject(obj);
+        }
+        catch (Exception)
+        {
+          outputsSerialized = data.GetHashCode().ToString();
+        }
+      }
+
+      if (this.ExistingOutputsSerialized[outputIndex].Count == index)
+      {
+        this.ExpireDownStream = true;
+        this.ExistingOutputsSerialized[outputIndex].Add(outputsSerialized);
+        return;
+      }
+
+      if (this.ExistingOutputsSerialized[outputIndex][index] != outputsSerialized)
+      {
+        this.ExpireDownStream = true;
+        this.ExistingOutputsSerialized[outputIndex][index] = outputsSerialized;
+        return;
+      }
+
+      this.ExpireDownStream = false;
+    }
+
     public override bool Write(GH_IO.Serialization.GH_IWriter writer)
     {
       Helpers.DeSerialization.WriteDropDownComponents(ref writer, this.DropDownItems, this.SelectedItems, this.SpacerDescriptions);
