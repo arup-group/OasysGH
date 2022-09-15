@@ -48,8 +48,9 @@ namespace OasysGH.Units
     public static ForceUnit ForceUnit { get; set; } = ForceUnit.Kilonewton;
     public static MomentUnit MomentUnit { get; set; } = MomentUnit.KilonewtonMeter;
     public static PressureUnit StressUnit { get; set; } = PressureUnit.Megapascal;
+    public static PressureUnit MaterialStrengthUnit { get; set; } = PressureUnit.Megapascal;
     public static StrainUnit StrainUnitResult { get; set; } = StrainUnit.MilliStrain;
-    public static StrainUnit StrainUnitSection { get; set; } = StrainUnit.MilliStrain;
+    public static StrainUnit MaterialStrainUnit { get; set; } = StrainUnit.MilliStrain;
     public static AxialStiffnessUnit AxialStiffnessUnit { get; set; } = AxialStiffnessUnit.Kilonewton;
     public static ForcePerLengthUnit ForcePerLengthUnit { get; set; } = ForcePerLengthUnit.KilonewtonPerMeter;
     public static PressureUnit ForcePerAreaUnit { get; set; } = PressureUnit.KilonewtonPerSquareMeter;

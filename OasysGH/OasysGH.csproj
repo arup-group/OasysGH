@@ -51,7 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Helpers\Input.cs" />
-    <Compile Include="OasysGHInfo.cs" />
+    <Compile Include="Initialise.cs" />
+    <Compile Include="OasysPluginInfo.cs" />
     <Compile Include="Components\GH_OasysComponent.cs" />
     <Compile Include="Components\GH_OasysDropDownComponent.cs" />
     <Compile Include="Components\Helpers\DeSerialization.cs" />
@@ -66,18 +67,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\Bool6ComponentAttributes.cs" />
-    <Compile Include="UI\ButtonComponentAttributes.cs" />
-    <Compile Include="UI\DropDownSliderComponentAttributes.cs" />
-    <Compile Include="UI\Colours.cs" />
-    <Compile Include="UI\DropDownCheckBoxesComponentAttributes.cs" />
-    <Compile Include="UI\DropDownComponentAttributes.cs" />
-    <Compile Include="UI\Helpers\ButtonAttributes.cs" />
-    <Compile Include="UI\Helpers\WidthAttributes.cs" />
-    <Compile Include="UI\ReleasesComponentAttributes.cs" />
-    <Compile Include="UI\SliderComponentAttributes.cs" />
-    <Compile Include="UI\SupportComponentAttributes.cs" />
-    <Compile Include="UI\ThreeButtonAtrributes.cs" />
+    <Compile Include="ComponentAttributes\Bool6ComponentAttributes.cs" />
+    <Compile Include="ComponentAttributes\ButtonComponentAttributes.cs" />
+    <Compile Include="ComponentAttributes\DropDownSliderComponentAttributes.cs" />
+    <Compile Include="ComponentAttributes\Colours.cs" />
+    <Compile Include="ComponentAttributes\DropDownCheckBoxesComponentAttributes.cs" />
+    <Compile Include="ComponentAttributes\DropDownComponentAttributes.cs" />
+    <Compile Include="ComponentAttributes\Helpers\ButtonAttributes.cs" />
+    <Compile Include="ComponentAttributes\Helpers\WidthAttributes.cs" />
+    <Compile Include="ComponentAttributes\ReleasesComponentAttributes.cs" />
+    <Compile Include="ComponentAttributes\SliderComponentAttributes.cs" />
+    <Compile Include="ComponentAttributes\SupportComponentAttributes.cs" />
+    <Compile Include="ComponentAttributes\ThreeButtonAtrributes.cs" />
     <Compile Include="Units\DefaultUnits.cs" />
     <Compile Include="Units\GH_UnitNumber.cs" />
     <Compile Include="Units\Helpers\FilteredUnits.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Units\UI\DefaultUnitsForm.Designer.cs">
       <DependentUpon>DefaultUnitsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Units\UI\MainMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Grasshopper">
