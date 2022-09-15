@@ -6,6 +6,7 @@ using Grasshopper.Kernel.Types;
 using OasysGH.Components;
 using OasysGH.Units;
 using UnitsNet;
+using OasysGH;
 
 namespace GH_UnitNumber.Components
 {
@@ -23,6 +24,7 @@ namespace GH_UnitNumber.Components
     public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.obscure;
 
     protected override System.Drawing.Bitmap Icon => Properties.Resources.ConvertUnitNumber;
+    public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
     #endregion
 
     #region Input and output

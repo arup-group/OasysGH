@@ -8,6 +8,7 @@ using OasysGH.Units;
 using OasysGH.Units.Helpers;
 using UnitsNet.Units;
 using Oasys.Units;
+using OasysGH;
 
 namespace GH_UnitNumber.Components
 {
@@ -26,8 +27,8 @@ namespace GH_UnitNumber.Components
             "Util")
     { this.Hidden = true; } // sets the initial state of the component to hidden
     public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.obscure;
-
     protected override System.Drawing.Bitmap Icon => Properties.Resources.CreateUnitNumber;
+    public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
     #endregion
 
     #region Input and output
@@ -340,7 +341,7 @@ namespace GH_UnitNumber.Components
           break;
 
         case EngineeringUnits.Strain:
-          this.Quantity = new Strain(Val, DefaultUnits.StrainUnit);
+          this.Quantity = new Strain(Val, DefaultUnits.StrainUnitResult);
           break;
 
         case EngineeringUnits.AxialStiffness:

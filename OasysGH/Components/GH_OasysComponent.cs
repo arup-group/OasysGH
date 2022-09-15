@@ -9,6 +9,8 @@ namespace OasysGH.Components
     {
     }
 
+    abstract public OasysPluginInfo PluginInfo { get; }
+
     public override void AddedToDocument(GH_Document document)
     {
       PostHog.AddedToDocument(this);

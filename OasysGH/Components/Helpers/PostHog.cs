@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Grasshopper.Kernel;
 using Newtonsoft.Json;
+using OasysGH.Components;
+using Rhino.PlugIns;
 
 namespace OasysGH.Helpers
 {
@@ -14,7 +16,7 @@ namespace OasysGH.Helpers
     private static HttpClient _phClient = new HttpClient();
     internal static User CurrentUser = new User();
 
-    public static async Task<HttpResponseMessage> SendToPostHog(string eventName, Dictionary<string, object> additionalProperties = null)
+    public static async Task<HttpResponseMessage> SendToPostHog(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> additionalProperties = null)
     {
       // posthog ADS plugin requires a user object
       User user = CurrentUser;
@@ -22,9 +24,9 @@ namespace OasysGH.Helpers
       Dictionary<string, object> properties = new Dictionary<string, object>() {
         { "distinct_id", user.userName },
         { "user", user },
-        { "pluginName", OasysGHInfo.PluginName },
-        { "version", OasysGHInfo.Version },
-        { "isBeta", OasysGHInfo.IsBeta },
+        { "pluginName", pluginInfo.PluginName },
+        { "version", pluginInfo.Version },
+        { "isBeta", pluginInfo.IsBeta },
       };
 
       if (additionalProperties != null)
@@ -33,24 +35,30 @@ namespace OasysGH.Helpers
           properties.Add(key, additionalProperties[key]);
       }
 
-      var container = new PhContainer(eventName, properties);
+      var container = new PhContainer(pluginInfo, eventName, properties);
       var body = JsonConvert.SerializeObject(container);
       var content = new StringContent(body, Encoding.UTF8, "application/json");
       var response = await _phClient.PostAsync("https://posthog.insights.arup.com/capture/", content);
       return response;
     }
 
-    public static void AddedToDocument(GH_Component component)
+    public static void AddedToDocument(GH_OasysComponent component)
+    {
+      AddedToDocument(component, component.PluginInfo);
+    }
+
+    public static void AddedToDocument(GH_Component component, OasysPluginInfo pluginInfo)
     {
       string eventName = "AddedToDocument";
       Dictionary<string, object> properties = new Dictionary<string, object>()
       {
         { "componentName", component.Name },
       };
-      _ = SendToPostHog(eventName, properties);
+      _ = SendToPostHog(pluginInfo, eventName, properties);
     }
 
-    public static void ModelIO(string interactionType, int size = 0)
+
+    public static void ModelIO(OasysPluginInfo pluginInfo, string interactionType, int size = 0)
     {
       string eventName = "ModelIO";
       Dictionary<string, object> properties = new Dictionary<string, object>()
@@ -58,10 +66,10 @@ namespace OasysGH.Helpers
         { "interactionType", interactionType },
         { "size", size },
       };
-      _ = SendToPostHog(eventName, properties);
+      _ = SendToPostHog(pluginInfo, eventName, properties);
     }
 
-    public static void PluginLoaded(string error = "")
+    public static void PluginLoaded(OasysPluginInfo pluginInfo, string error = "")
     {
       string eventName = "PluginLoaded";
 
@@ -73,10 +81,14 @@ namespace OasysGH.Helpers
         { "rhinoServiceRelease", Rhino.RhinoApp.ExeServiceRelease },
         { "loadingError", error },
       };
-      _ = SendToPostHog(eventName, properties);
+      _ = SendToPostHog(pluginInfo, eventName, properties);
     }
 
-    internal static void RemovedFromDocument(GH_Component component)
+    internal static void RemovedFromDocument(GH_OasysComponent component)
+    {
+      RemovedFromDocument(component, component.PluginInfo);
+    }
+    internal static void RemovedFromDocument(GH_Component component, OasysPluginInfo pluginInfo)
     {
       if (component.Attributes.Selected)
       {
@@ -86,25 +98,26 @@ namespace OasysGH.Helpers
           { "componentName", component.Name },
           { "runCount", component.RunCount },
         };
-        _ = SendToPostHog(eventName, properties);
+        _ = SendToPostHog(pluginInfo, eventName, properties);
       }
     }
 
     private class PhContainer
     {
       [JsonProperty("api_key")]
-      string api_key { get; set; } = OasysGHInfo.PostHogApiKey;
+      string api_key { get; set; }
       [JsonProperty("event")]
       string ph_event { get; set; }
       [JsonProperty("timestamp")]
       DateTime ph_timestamp { get; set; }
       public Dictionary<string, object> properties { get; set; }
 
-      public PhContainer(string eventName, Dictionary<string, object> properties)
+      public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties)
       {
         this.ph_event = eventName;
         this.properties = properties;
         this.ph_timestamp = DateTime.UtcNow;
+        this.api_key = pluginInfo.PostHogApiKey;
       }
     }
   }
