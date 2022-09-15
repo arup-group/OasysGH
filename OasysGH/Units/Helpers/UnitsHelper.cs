@@ -396,6 +396,11 @@ namespace OasysGH.Units.Helpers
             abbreviations.Add(Volume.GetAbbreviation((VolumeUnit)Enum.Parse(typeof(VolumeUnit), unitstring)));
           return abbreviations;
 
+        case EngineeringUnits.VolumePerLength:
+          foreach (string unitstring in FilteredUnits.FilteredVolumePerLengthUnits)
+            abbreviations.Add(VolumePerLength.GetAbbreviation((VolumePerLengthUnit)Enum.Parse(typeof(VolumePerLengthUnit), unitstring)));
+          return abbreviations;
+
         case EngineeringUnits.AreaMomentOfInertia:
           foreach (string unitstring in FilteredUnits.FilteredAreaMomentOfInertiaUnits)
             abbreviations.Add(AreaMomentOfInertia.GetAbbreviation((AreaMomentOfInertiaUnit)Enum.Parse(typeof(AreaMomentOfInertiaUnit), unitstring)));
@@ -454,6 +459,11 @@ namespace OasysGH.Units.Helpers
         case EngineeringUnits.Density:
           foreach (string unitstring in FilteredUnits.FilteredDensityUnits)
             abbreviations.Add(Density.GetAbbreviation((DensityUnit)Enum.Parse(typeof(DensityUnit), unitstring)));
+          return abbreviations;
+
+        case EngineeringUnits.LinearDensity:
+          foreach (string unitstring in FilteredUnits.FilteredLinearDensityUnits)
+            abbreviations.Add(LinearDensity.GetAbbreviation((LinearDensityUnit)Enum.Parse(typeof(LinearDensityUnit), unitstring)));
           return abbreviations;
 
         case EngineeringUnits.Temperature:

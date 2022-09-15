@@ -31,14 +31,21 @@ namespace OasysGH.Units.Helpers
       Grasshopper.Instances.Settings.SetValue("OasysUseRhinoLengthGeometryUnit", DefaultUnits.UseRhinoLengthGeometryUnit);
       
       Grasshopper.Instances.Settings.SetValue("OasysLengthUnitSection", DefaultUnits.LengthUnitSection.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysSectionAreaUnit", DefaultUnits.SectionAreaUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysSectionVolumeUnit", DefaultUnits.SectionVolumeUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysSectionAreaMomentOfInertiaUnit", DefaultUnits.SectionAreaMomentOfInertiaUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysDensityUnit", DefaultUnits.DensityUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysLinearDensityUnit", DefaultUnits.LinearDensityUnit.ToString());
 
       Grasshopper.Instances.Settings.SetValue("OasysLengthUnitResult", DefaultUnits.LengthUnitResult.ToString());
       
       Grasshopper.Instances.Settings.SetValue("OasysForceUnit", DefaultUnits.ForceUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysForcePerLengthUnit", DefaultUnits.ForcePerLengthUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysForcePerAreaUnit", DefaultUnits.ForcePerAreaUnit.ToString());
 
       Grasshopper.Instances.Settings.SetValue("OasysMomentUnit", DefaultUnits.MomentUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysStressUnit", DefaultUnits.StressUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysStressUnit", DefaultUnits.StressUnitResult.ToString());
 
       Grasshopper.Instances.Settings.SetValue("OasysMaterialStrengthUnit", DefaultUnits.MaterialStrengthUnit.ToString());
 
@@ -101,7 +108,7 @@ namespace OasysGH.Units.Helpers
       DefaultUnits.MomentUnit = (Oasys.Units.MomentUnit)Enum.Parse(typeof(Oasys.Units.MomentUnit),
       Grasshopper.Instances.Settings.GetValue("OasysMomentUnit", string.Empty));
 
-      DefaultUnits.StressUnit = (UnitsNet.Units.PressureUnit)Enum.Parse(typeof(UnitsNet.Units.PressureUnit),
+      DefaultUnits.StressUnitResult = (UnitsNet.Units.PressureUnit)Enum.Parse(typeof(UnitsNet.Units.PressureUnit),
       Grasshopper.Instances.Settings.GetValue("OasysStressUnit", string.Empty));
 
       DefaultUnits.MaterialStrengthUnit = (UnitsNet.Units.PressureUnit)Enum.Parse(typeof(UnitsNet.Units.PressureUnit),
@@ -151,7 +158,27 @@ namespace OasysGH.Units.Helpers
 
       DefaultUnits.TimeLongUnit = (UnitsNet.Units.DurationUnit)Enum.Parse(typeof(UnitsNet.Units.DurationUnit),
       Grasshopper.Instances.Settings.GetValue("OasysTimeLongUnit", string.Empty));
-      
+
+      DefaultUnits.ForcePerLengthUnit = (UnitsNet.Units.ForcePerLengthUnit)Enum.Parse(typeof(UnitsNet.Units.ForcePerLengthUnit),
+      Grasshopper.Instances.Settings.GetValue("OasysForcePerLengthUnit", string.Empty));
+
+      DefaultUnits.ForcePerAreaUnit = (UnitsNet.Units.PressureUnit)Enum.Parse(typeof(UnitsNet.Units.PressureUnit),
+      Grasshopper.Instances.Settings.GetValue("OasysForcePerAreaUnit", string.Empty));
+
+      DefaultUnits.SectionAreaUnit = (UnitsNet.Units.AreaUnit)Enum.Parse(typeof(UnitsNet.Units.AreaUnit),
+      Grasshopper.Instances.Settings.GetValue("OasysSectionAreaUnit", string.Empty));
+
+      DefaultUnits.SectionVolumeUnit = (UnitsNet.Units.VolumeUnit)Enum.Parse(typeof(UnitsNet.Units.VolumeUnit),
+      Grasshopper.Instances.Settings.GetValue("OasysSectionVolumeUnit", string.Empty));
+
+      DefaultUnits.SectionAreaMomentOfInertiaUnit = (UnitsNet.Units.AreaMomentOfInertiaUnit)Enum.Parse(typeof(UnitsNet.Units.AreaMomentOfInertiaUnit),
+      Grasshopper.Instances.Settings.GetValue("OasysSectionAreaMomentOfInertiaUnit", string.Empty));
+
+      DefaultUnits.DensityUnit = (UnitsNet.Units.DensityUnit)Enum.Parse(typeof(UnitsNet.Units.DensityUnit),
+      Grasshopper.Instances.Settings.GetValue("OasysDensityUnit", string.Empty));
+
+      DefaultUnits.LinearDensityUnit = (UnitsNet.Units.LinearDensityUnit)Enum.Parse(typeof(UnitsNet.Units.LinearDensityUnit),
+      Grasshopper.Instances.Settings.GetValue("OasysLinearDensityUnit", string.Empty));
       return true;
     }
   }

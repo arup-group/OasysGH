@@ -337,7 +337,7 @@ namespace GH_UnitNumber.Components
           break;
 
         case EngineeringUnits.Stress:
-          this.Quantity = new Pressure(Val, DefaultUnits.StressUnit);
+          this.Quantity = new Pressure(Val, DefaultUnits.StressUnitResult);
           break;
 
         case EngineeringUnits.Strain:

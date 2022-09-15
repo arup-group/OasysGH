@@ -24,6 +24,8 @@ namespace OasysGH.Units.Helpers
     Curvature,
     Mass,
     Density,
+    LinearDensity,
+    VolumePerLength,
     Temperature,
     Velocity,
     Acceleration,
@@ -127,6 +129,14 @@ namespace OasysGH.Units.Helpers
 
     public static List<string> FilteredMomentUnits = new List<string>(Enum.GetNames(typeof(MomentUnit)).Skip(1).ToList());
 
+    public static List<string> FilteredLinearDensityUnits = new List<string>(Enum.GetNames(typeof(LinearDensityUnit)).Skip(1).ToList());
+
+    public static List<string> FilteredVolumePerLengthUnits = new List<string>(new[]
+    {
+      VolumePerLengthUnit.CubicMeterPerMeter.ToString(),
+      VolumePerLengthUnit.CubicYardPerFoot.ToString()
+    });
+
     public static List<string> FilteredStressUnits = new List<string>(new[]
     {
       PressureUnit.Pascal.ToString(),
@@ -137,7 +147,8 @@ namespace OasysGH.Units.Helpers
       PressureUnit.NewtonPerSquareMeter.ToString(),
       PressureUnit.PoundForcePerSquareInch.ToString(),
       PressureUnit.PoundForcePerSquareFoot.ToString(),
-      PressureUnit.KilopoundForcePerSquareInch.ToString()
+      PressureUnit.KilopoundForcePerSquareInch.ToString(),
+      PressureUnit.KilopoundForcePerSquareFoot.ToString()
     });
 
     public static List<string> FilteredStrainUnits = new List<string>(Enum.GetNames(typeof(StrainUnit)).Skip(1).ToList());
@@ -169,6 +180,7 @@ namespace OasysGH.Units.Helpers
       DensityUnit.PoundPerCubicInch.ToString(),
       DensityUnit.KilopoundPerCubicFoot.ToString(),
       DensityUnit.KilopoundPerCubicInch.ToString(),
+      DensityUnit.SlugPerCubicFoot.ToString(),
     });
 
     public static List<string> FilteredTemperatureUnits = new List<string>(new[]
