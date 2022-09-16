@@ -13,6 +13,8 @@ namespace OasysGH.Units
     public static string Name => "UnitNumber";
     public static string NickName => "UN";
     public static string Description => "A value with a unit measure";
+    public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
+
     public GH_UnitNumber(IQuantity item) : base(item) { }
     public override IGH_Goo Duplicate() => new GH_UnitNumber(this.Value);
 

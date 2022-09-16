@@ -13,15 +13,27 @@ namespace GH_UnitNumber
   {
     public override GH_LoadingInstruction PriorityLoad()
     {
-      // ### Setup OasysGH ###
-      OasysGHInfo.PluginName = AssemblyInfo.PluginName;
-      OasysGHInfo.ProductName = AssemblyInfo.ProductName;
-      OasysGHInfo.PostHogApiKey = "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs";
-
       // ### Setup Units ###
-      OasysGH.Units.Helpers.Setup.SetupUnitsDuringLoad();
+      Utility.InitialiseMainMenuAndDefaultUnits();
 
       return GH_LoadingInstruction.Proceed;
+    }
+  }
+  internal sealed class GH_UnitNumberPluginInfo
+  {
+    private static readonly Lazy<OasysPluginInfo> lazy =
+        new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
+          AssemblyInfo.ProductName, 
+          AssemblyInfo.PluginName, 
+          AssemblyInfo.Vers,
+          AssemblyInfo.isBeta, 
+          "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
+          ));
+
+    public static OasysPluginInfo Instance { get { return lazy.Value; } }
+
+    private GH_UnitNumberPluginInfo()
+    {
     }
   }
   public class AssemblyInfo : GH_AssemblyInfo
