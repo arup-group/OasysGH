@@ -1,7 +1,5 @@
-﻿using Oasys.Units;
+﻿using System;
 using Rhino;
-using System;
-using OasysGH.Units.Helpers;
 using static OasysGH.Units.DefaultUnits;
 
 namespace OasysGH.Units
@@ -21,6 +19,7 @@ namespace OasysGH.Units
         SaveSettings();
       }
     }
+
     internal static void SaveSettings()
     {
       Grasshopper.Instances.Settings.SetValue("OasysAngle", DefaultUnits.AngleUnit.ToString());
