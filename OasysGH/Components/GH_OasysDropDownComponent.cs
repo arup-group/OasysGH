@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Newtonsoft.Json;
-using OasysGH.Components;
 using OasysGH.Units;
-using UnitsNet;
+using OasysUnitsNet;
 using UnitsNet.Serialization.JsonNet;
 
 namespace OasysGH.Components

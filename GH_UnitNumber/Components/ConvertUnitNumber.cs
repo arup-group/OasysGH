@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using OasysGH.Components;
-using OasysGH.Units;
-using UnitsNet;
+using OasysUnitsNet;
 using OasysGH;
 
 namespace GH_UnitNumber.Components
@@ -55,7 +54,7 @@ namespace GH_UnitNumber.Components
           if (this.ConvertedUnitNumber == null || !this.ConvertedUnitNumber.Value.QuantityInfo.UnitType.Equals(inUnitNumber.Value.QuantityInfo.UnitType))
           {
             this.UnitDictionary = new Dictionary<string, Enum>();
-            foreach (UnitsNet.UnitInfo unit in inUnitNumber.Value.QuantityInfo.UnitInfos)
+            foreach (UnitInfo unit in inUnitNumber.Value.QuantityInfo.UnitInfos)
               this.UnitDictionary.Add(unit.Name, unit.Value);
             
             this.DropDownItems[0] = this.UnitDictionary.Keys.ToList();

@@ -2,13 +2,12 @@
 using System.Linq;
 using System.Collections.Generic;
 using Grasshopper.Kernel;
-using UnitsNet;
+using OasysGH;
 using OasysGH.Components;
 using OasysGH.Units;
 using OasysGH.Units.Helpers;
-using UnitsNet.Units;
-using Oasys.Units;
-using OasysGH;
+using OasysUnitsNet;
+using OasysUnitsNet.Units;
 
 namespace GH_UnitNumber.Components
 {

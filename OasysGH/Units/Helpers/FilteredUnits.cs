@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
-using UnitsNet.Units;
-using Oasys.Units;
+using OasysUnitsNet.Units;
 using System.Collections.Generic;
 
 namespace OasysGH.Units.Helpers
@@ -130,7 +129,17 @@ namespace OasysGH.Units.Helpers
 
     public static List<string> FilteredMomentUnits = new List<string>(Enum.GetNames(typeof(MomentUnit)).Skip(1).ToList());
 
-    public static List<string> FilteredLinearDensityUnits = new List<string>(Enum.GetNames(typeof(LinearDensityUnit)).Skip(1).ToList());
+    public static List<string> FilteredLinearDensityUnits = new List<string>(new[]
+    {
+      LinearDensityUnit.GramPerMillimeter.ToString(),
+      LinearDensityUnit.GramPerCentimeter.ToString(),
+      LinearDensityUnit.GramPerMeter.ToString(),
+      LinearDensityUnit.KilogramPerMillimeter.ToString(),
+      LinearDensityUnit.KilogramPerCentimeter.ToString(),
+      LinearDensityUnit.KilogramPerMeter.ToString(),
+      LinearDensityUnit.PoundPerInch.ToString(),
+      LinearDensityUnit.PoundPerFoot.ToString(),
+    });
 
     public static List<string> FilteredVolumePerLengthUnits = new List<string>(new[]
     {
@@ -162,7 +171,6 @@ namespace OasysGH.Units.Helpers
       MassUnit.Kilotonne.ToString(),
       MassUnit.Pound.ToString(),
       MassUnit.Kilopound.ToString(),
-      MassUnit.LongTon.ToString(),
       MassUnit.Slug.ToString()
     });
 

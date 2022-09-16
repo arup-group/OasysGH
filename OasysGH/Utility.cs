@@ -11,7 +11,6 @@ namespace OasysGH
       {
         if (!(bool)UnitsLoaded)
         {
-
           Grasshopper.Instances.CanvasCreated += LoadMainMenu.OnStartup;
           Units.Utility.SetupUnitsDuringLoad();
           UnitsLoaded = true;

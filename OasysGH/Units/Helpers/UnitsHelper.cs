@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnitsNet.Units;
-using UnitsNet;
-using OasysGH.Units;
-using Oasys.Units;
+using OasysUnitsNet.Units;
+using OasysUnitsNet;
 
 namespace OasysGH.Units.Helpers
 {
@@ -82,7 +77,7 @@ namespace OasysGH.Units.Helpers
       }
       // fallback:
       BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      UnitsNet.UnitSystem unitSystem = new UnitsNet.UnitSystem(baseUnits);
+      OasysUnitsNet.UnitSystem unitSystem = new OasysUnitsNet.UnitSystem(baseUnits);
       return new AreaMomentOfInertia(1, unitSystem).Unit;
     }
 
@@ -390,7 +385,7 @@ namespace OasysGH.Units.Helpers
           foreach (string unitstring in FilteredUnits.FilteredAreaUnits)
             abbreviations.Add(Area.GetAbbreviation((AreaUnit)Enum.Parse(typeof(AreaUnit), unitstring)));
           return abbreviations;
-        
+
         case EngineeringUnits.Volume:
           foreach (string unitstring in FilteredUnits.FilteredVolumeUnits)
             abbreviations.Add(Volume.GetAbbreviation((VolumeUnit)Enum.Parse(typeof(VolumeUnit), unitstring)));
@@ -428,7 +423,12 @@ namespace OasysGH.Units.Helpers
 
         case EngineeringUnits.Stress:
           foreach (string unitstring in FilteredUnits.FilteredStressUnits)
-            abbreviations.Add(Pressure.GetAbbreviation((PressureUnit)Enum.Parse(typeof(PressureUnit), unitstring)));
+          {
+            string abb = Pressure.GetAbbreviation((PressureUnit)Enum.Parse(typeof(PressureUnit), unitstring));
+            if (abb.StartsWith("lb"))
+              abb = abb.Insert(2, "f");
+            abbreviations.Add(abb);
+          }
           return abbreviations;
 
         case EngineeringUnits.Strain:
@@ -453,17 +453,32 @@ namespace OasysGH.Units.Helpers
 
         case EngineeringUnits.Mass:
           foreach (string unitstring in FilteredUnits.FilteredMassUnits)
-            abbreviations.Add(Mass.GetAbbreviation((MassUnit)Enum.Parse(typeof(MassUnit), unitstring)));
+          {
+            string abb = Mass.GetAbbreviation((MassUnit)Enum.Parse(typeof(MassUnit), unitstring));
+            if (abb.StartsWith("lb"))
+              abb = abb.Insert(2, "m");
+            abbreviations.Add(abb);
+          }
           return abbreviations;
 
         case EngineeringUnits.Density:
           foreach (string unitstring in FilteredUnits.FilteredDensityUnits)
-            abbreviations.Add(Density.GetAbbreviation((DensityUnit)Enum.Parse(typeof(DensityUnit), unitstring)));
+          {
+            string abb = Density.GetAbbreviation((DensityUnit)Enum.Parse(typeof(DensityUnit), unitstring));
+            if (abb.StartsWith("lb"))
+              abb = abb.Insert(2, "m");
+            abbreviations.Add(abb);
+          }
           return abbreviations;
 
         case EngineeringUnits.LinearDensity:
           foreach (string unitstring in FilteredUnits.FilteredLinearDensityUnits)
-            abbreviations.Add(LinearDensity.GetAbbreviation((LinearDensityUnit)Enum.Parse(typeof(LinearDensityUnit), unitstring)));
+          {
+            string abb = LinearDensity.GetAbbreviation((LinearDensityUnit)Enum.Parse(typeof(LinearDensityUnit), unitstring));
+            if (abb.StartsWith("lb"))
+              abb = abb.Insert(2, "m");
+            abbreviations.Add(abb);
+          }
           return abbreviations;
 
         case EngineeringUnits.Temperature:

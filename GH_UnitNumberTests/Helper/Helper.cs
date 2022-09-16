@@ -1,6 +1,7 @@
 ﻿using System;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
+using Grasshopper.Kernel.Types;
 using Xunit;
 
 namespace GH_UnitNumberTests.Helpers
@@ -22,6 +23,28 @@ namespace GH_UnitNumberTests.Helpers
               if (obj2.InstanceGuid == componentguid)
               {
                 return (GH_Component)obj2;
+              }
+            }
+          }
+        }
+      }
+      return null;
+    }
+    public static GH_Param<T> FindComponentInDocumentByGroup<T>(GH_Document doc, string groupIdentifier) where T : class, IGH_Goo
+    {
+      foreach (var obj in doc.Objects)
+      {
+        if (obj is GH_Group group)
+        {
+          if (group.NickName == groupIdentifier)
+          {
+            Guid componentguid = group.ObjectIDs[0];
+
+            foreach (var obj2 in (doc.Objects))
+            {
+              if (obj2.InstanceGuid == componentguid)
+              {
+                return (GH_Param<T>)obj2;
               }
             }
           }
