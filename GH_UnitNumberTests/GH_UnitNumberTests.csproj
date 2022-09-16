@@ -2,10 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-
+    <Nullable>enable</Nullable>
+    
     <IsPackable>false</IsPackable>
 
     <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +28,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GH_UnitNumber\GH_UnitNumber.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -2,10 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-
+    <Nullable>enable</Nullable>
+    
     <IsPackable>false</IsPackable>
 
     <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +30,13 @@
     <ProjectReference Include="..\GH_UnitNumber\GH_UnitNumber.csproj" />
     <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <PropertyGroup>
     <PostBuildEvent>Copy "$(TargetDir)GH_UnitNumber.dll" "$(TargetDir)GH_UnitNumber.gha"</PostBuildEvent>
   </PropertyGroup>
