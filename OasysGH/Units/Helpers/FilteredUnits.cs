@@ -121,6 +121,7 @@ namespace OasysGH.Units.Helpers
       PressureUnit.PoundForcePerSquareInch.ToString(),
       PressureUnit.PoundForcePerSquareFoot.ToString(),
       PressureUnit.KilopoundForcePerSquareInch.ToString(),
+      PressureUnit.KilopoundForcePerSquareFoot.ToString(),
     });
 
     public static List<string> FilteredAxialStiffnessUnits = new List<string>(Enum.GetNames(typeof(AxialStiffnessUnit)).Skip(1).ToList());

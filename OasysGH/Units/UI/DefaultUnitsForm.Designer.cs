@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DefaultUnitsForm));
       this.button1 = new System.Windows.Forms.Button();
       this.button2 = new System.Windows.Forms.Button();
       this.button5 = new System.Windows.Forms.Button();
@@ -95,7 +96,6 @@
       this.useRhinoLengthUnit = new System.Windows.Forms.CheckBox();
       this.useRhinoTolerance = new System.Windows.Forms.CheckBox();
       this.label1 = new System.Windows.Forms.Label();
-      this.pictureBox1 = new System.Windows.Forms.PictureBox();
       this.panel1 = new System.Windows.Forms.Panel();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.panel2 = new System.Windows.Forms.Panel();
@@ -110,7 +110,6 @@
       this.defaultUnitsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.filteredUnitsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.toleranceUpDown)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.panel1.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
       this.panel2.SuspendLayout();
@@ -129,7 +128,7 @@
       // 
       this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.button1.Location = new System.Drawing.Point(12, 344);
+      this.button1.Location = new System.Drawing.Point(12, 356);
       this.button1.Name = "button1";
       this.button1.Size = new System.Drawing.Size(75, 23);
       this.button1.TabIndex = 0;
@@ -141,7 +140,7 @@
       // 
       this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.button2.Location = new System.Drawing.Point(93, 344);
+      this.button2.Location = new System.Drawing.Point(93, 356);
       this.button2.Name = "button2";
       this.button2.Size = new System.Drawing.Size(75, 23);
       this.button2.TabIndex = 1;
@@ -150,7 +149,8 @@
       // 
       // button5
       // 
-      this.button5.Location = new System.Drawing.Point(454, 344);
+      this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button5.Location = new System.Drawing.Point(535, 356);
       this.button5.Name = "button5";
       this.button5.Size = new System.Drawing.Size(50, 23);
       this.button5.TabIndex = 6;
@@ -160,7 +160,8 @@
       // 
       // button6
       // 
-      this.button6.Location = new System.Drawing.Point(288, 344);
+      this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button6.Location = new System.Drawing.Point(369, 356);
       this.button6.Name = "button6";
       this.button6.Size = new System.Drawing.Size(50, 23);
       this.button6.TabIndex = 7;
@@ -170,7 +171,8 @@
       // 
       // button4
       // 
-      this.button4.Location = new System.Drawing.Point(399, 344);
+      this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button4.Location = new System.Drawing.Point(480, 356);
       this.button4.Name = "button4";
       this.button4.Size = new System.Drawing.Size(50, 23);
       this.button4.TabIndex = 5;
@@ -180,7 +182,8 @@
       // 
       // button3
       // 
-      this.button3.Location = new System.Drawing.Point(343, 344);
+      this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button3.Location = new System.Drawing.Point(424, 356);
       this.button3.Name = "button3";
       this.button3.Size = new System.Drawing.Size(50, 23);
       this.button3.TabIndex = 4;
@@ -194,9 +197,9 @@
       this.label2.Location = new System.Drawing.Point(3, 32);
       this.label2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(98, 13);
+      this.label2.Size = new System.Drawing.Size(100, 13);
       this.label2.TabIndex = 1;
-      this.label2.Text = "Section dimensions";
+      this.label2.Text = "Section Dimensions";
       // 
       // label3
       // 
@@ -281,7 +284,7 @@
       // lengthSectionComboBox
       // 
       this.lengthSectionComboBox.FormattingEnabled = true;
-      this.lengthSectionComboBox.Location = new System.Drawing.Point(112, 27);
+      this.lengthSectionComboBox.Location = new System.Drawing.Point(113, 27);
       this.lengthSectionComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.lengthSectionComboBox.Name = "lengthSectionComboBox";
       this.lengthSectionComboBox.Size = new System.Drawing.Size(69, 21);
@@ -290,7 +293,7 @@
       // areaComboBox
       // 
       this.areaComboBox.FormattingEnabled = true;
-      this.areaComboBox.Location = new System.Drawing.Point(112, 54);
+      this.areaComboBox.Location = new System.Drawing.Point(113, 54);
       this.areaComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.areaComboBox.Name = "areaComboBox";
       this.areaComboBox.Size = new System.Drawing.Size(69, 21);
@@ -299,7 +302,7 @@
       // volumeComboBox
       // 
       this.volumeComboBox.FormattingEnabled = true;
-      this.volumeComboBox.Location = new System.Drawing.Point(112, 81);
+      this.volumeComboBox.Location = new System.Drawing.Point(113, 81);
       this.volumeComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.volumeComboBox.Name = "volumeComboBox";
       this.volumeComboBox.Size = new System.Drawing.Size(69, 21);
@@ -308,7 +311,7 @@
       // momentOfInertiaComboBox
       // 
       this.momentOfInertiaComboBox.FormattingEnabled = true;
-      this.momentOfInertiaComboBox.Location = new System.Drawing.Point(112, 108);
+      this.momentOfInertiaComboBox.Location = new System.Drawing.Point(113, 108);
       this.momentOfInertiaComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.momentOfInertiaComboBox.Name = "momentOfInertiaComboBox";
       this.momentOfInertiaComboBox.Size = new System.Drawing.Size(69, 21);
@@ -317,7 +320,7 @@
       // massComboBox
       // 
       this.massComboBox.FormattingEnabled = true;
-      this.massComboBox.Location = new System.Drawing.Point(112, 135);
+      this.massComboBox.Location = new System.Drawing.Point(113, 135);
       this.massComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.massComboBox.Name = "massComboBox";
       this.massComboBox.Size = new System.Drawing.Size(69, 21);
@@ -326,7 +329,7 @@
       // densityComboBox
       // 
       this.densityComboBox.FormattingEnabled = true;
-      this.densityComboBox.Location = new System.Drawing.Point(112, 162);
+      this.densityComboBox.Location = new System.Drawing.Point(113, 162);
       this.densityComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.densityComboBox.Name = "densityComboBox";
       this.densityComboBox.Size = new System.Drawing.Size(69, 21);
@@ -335,7 +338,7 @@
       // linearDensityComboBox
       // 
       this.linearDensityComboBox.FormattingEnabled = true;
-      this.linearDensityComboBox.Location = new System.Drawing.Point(112, 189);
+      this.linearDensityComboBox.Location = new System.Drawing.Point(113, 189);
       this.linearDensityComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.linearDensityComboBox.Name = "linearDensityComboBox";
       this.linearDensityComboBox.Size = new System.Drawing.Size(69, 21);
@@ -344,7 +347,7 @@
       // volumePerLengthComboBox
       // 
       this.volumePerLengthComboBox.FormattingEnabled = true;
-      this.volumePerLengthComboBox.Location = new System.Drawing.Point(112, 216);
+      this.volumePerLengthComboBox.Location = new System.Drawing.Point(113, 216);
       this.volumePerLengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.volumePerLengthComboBox.Name = "volumePerLengthComboBox";
       this.volumePerLengthComboBox.Size = new System.Drawing.Size(69, 21);
@@ -363,7 +366,7 @@
       // youngsModulusComboBox
       // 
       this.youngsModulusComboBox.FormattingEnabled = true;
-      this.youngsModulusComboBox.Location = new System.Drawing.Point(112, 297);
+      this.youngsModulusComboBox.Location = new System.Drawing.Point(113, 297);
       this.youngsModulusComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.youngsModulusComboBox.Name = "youngsModulusComboBox";
       this.youngsModulusComboBox.Size = new System.Drawing.Size(69, 21);
@@ -382,7 +385,7 @@
       // materialStrainComboBox
       // 
       this.materialStrainComboBox.FormattingEnabled = true;
-      this.materialStrainComboBox.Location = new System.Drawing.Point(112, 270);
+      this.materialStrainComboBox.Location = new System.Drawing.Point(113, 270);
       this.materialStrainComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.materialStrainComboBox.Name = "materialStrainComboBox";
       this.materialStrainComboBox.Size = new System.Drawing.Size(69, 21);
@@ -391,7 +394,7 @@
       // materialStrengthComboBox
       // 
       this.materialStrengthComboBox.FormattingEnabled = true;
-      this.materialStrengthComboBox.Location = new System.Drawing.Point(112, 243);
+      this.materialStrengthComboBox.Location = new System.Drawing.Point(113, 243);
       this.materialStrengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.materialStrengthComboBox.Name = "materialStrengthComboBox";
       this.materialStrengthComboBox.Size = new System.Drawing.Size(69, 21);
@@ -423,10 +426,10 @@
       // displacementComboBox
       // 
       this.displacementComboBox.FormattingEnabled = true;
-      this.displacementComboBox.Location = new System.Drawing.Point(112, 27);
+      this.displacementComboBox.Location = new System.Drawing.Point(113, 27);
       this.displacementComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.displacementComboBox.Name = "displacementComboBox";
-      this.displacementComboBox.Size = new System.Drawing.Size(70, 21);
+      this.displacementComboBox.Size = new System.Drawing.Size(69, 21);
       this.displacementComboBox.TabIndex = 53;
       // 
       // label25
@@ -442,10 +445,10 @@
       // stressComboBox
       // 
       this.stressComboBox.FormattingEnabled = true;
-      this.stressComboBox.Location = new System.Drawing.Point(112, 54);
+      this.stressComboBox.Location = new System.Drawing.Point(113, 54);
       this.stressComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.stressComboBox.Name = "stressComboBox";
-      this.stressComboBox.Size = new System.Drawing.Size(70, 21);
+      this.stressComboBox.Size = new System.Drawing.Size(69, 21);
       this.stressComboBox.TabIndex = 54;
       // 
       // label32
@@ -461,10 +464,10 @@
       // strainComboBox
       // 
       this.strainComboBox.FormattingEnabled = true;
-      this.strainComboBox.Location = new System.Drawing.Point(112, 81);
+      this.strainComboBox.Location = new System.Drawing.Point(113, 81);
       this.strainComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.strainComboBox.Name = "strainComboBox";
-      this.strainComboBox.Size = new System.Drawing.Size(70, 21);
+      this.strainComboBox.Size = new System.Drawing.Size(69, 21);
       this.strainComboBox.TabIndex = 62;
       // 
       // label26
@@ -480,10 +483,10 @@
       // axialStiffnessComboBox
       // 
       this.axialStiffnessComboBox.FormattingEnabled = true;
-      this.axialStiffnessComboBox.Location = new System.Drawing.Point(112, 108);
+      this.axialStiffnessComboBox.Location = new System.Drawing.Point(113, 108);
       this.axialStiffnessComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.axialStiffnessComboBox.Name = "axialStiffnessComboBox";
-      this.axialStiffnessComboBox.Size = new System.Drawing.Size(70, 21);
+      this.axialStiffnessComboBox.Size = new System.Drawing.Size(69, 21);
       this.axialStiffnessComboBox.TabIndex = 55;
       // 
       // label27
@@ -499,10 +502,10 @@
       // bendingStiffnessComboBox
       // 
       this.bendingStiffnessComboBox.FormattingEnabled = true;
-      this.bendingStiffnessComboBox.Location = new System.Drawing.Point(112, 135);
+      this.bendingStiffnessComboBox.Location = new System.Drawing.Point(113, 135);
       this.bendingStiffnessComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.bendingStiffnessComboBox.Name = "bendingStiffnessComboBox";
-      this.bendingStiffnessComboBox.Size = new System.Drawing.Size(70, 21);
+      this.bendingStiffnessComboBox.Size = new System.Drawing.Size(69, 21);
       this.bendingStiffnessComboBox.TabIndex = 56;
       // 
       // label28
@@ -518,10 +521,10 @@
       // velocityComboBox
       // 
       this.velocityComboBox.FormattingEnabled = true;
-      this.velocityComboBox.Location = new System.Drawing.Point(112, 162);
+      this.velocityComboBox.Location = new System.Drawing.Point(113, 162);
       this.velocityComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.velocityComboBox.Name = "velocityComboBox";
-      this.velocityComboBox.Size = new System.Drawing.Size(70, 21);
+      this.velocityComboBox.Size = new System.Drawing.Size(69, 21);
       this.velocityComboBox.TabIndex = 57;
       // 
       // label29
@@ -537,10 +540,10 @@
       // accelerationComboBox
       // 
       this.accelerationComboBox.FormattingEnabled = true;
-      this.accelerationComboBox.Location = new System.Drawing.Point(112, 189);
+      this.accelerationComboBox.Location = new System.Drawing.Point(113, 189);
       this.accelerationComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.accelerationComboBox.Name = "accelerationComboBox";
-      this.accelerationComboBox.Size = new System.Drawing.Size(70, 21);
+      this.accelerationComboBox.Size = new System.Drawing.Size(69, 21);
       this.accelerationComboBox.TabIndex = 58;
       // 
       // label30
@@ -556,10 +559,10 @@
       // energyComboBox
       // 
       this.energyComboBox.FormattingEnabled = true;
-      this.energyComboBox.Location = new System.Drawing.Point(112, 216);
+      this.energyComboBox.Location = new System.Drawing.Point(113, 216);
       this.energyComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.energyComboBox.Name = "energyComboBox";
-      this.energyComboBox.Size = new System.Drawing.Size(70, 21);
+      this.energyComboBox.Size = new System.Drawing.Size(69, 21);
       this.energyComboBox.TabIndex = 59;
       // 
       // label31
@@ -575,10 +578,10 @@
       // curvatureComboBox
       // 
       this.curvatureComboBox.FormattingEnabled = true;
-      this.curvatureComboBox.Location = new System.Drawing.Point(112, 243);
+      this.curvatureComboBox.Location = new System.Drawing.Point(113, 243);
       this.curvatureComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.curvatureComboBox.Name = "curvatureComboBox";
-      this.curvatureComboBox.Size = new System.Drawing.Size(70, 21);
+      this.curvatureComboBox.Size = new System.Drawing.Size(69, 21);
       this.curvatureComboBox.TabIndex = 60;
       // 
       // label22
@@ -594,7 +597,7 @@
       // temperatureComboBox
       // 
       this.temperatureComboBox.FormattingEnabled = true;
-      this.temperatureComboBox.Location = new System.Drawing.Point(112, 135);
+      this.temperatureComboBox.Location = new System.Drawing.Point(113, 135);
       this.temperatureComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.temperatureComboBox.Name = "temperatureComboBox";
       this.temperatureComboBox.Size = new System.Drawing.Size(69, 21);
@@ -613,7 +616,7 @@
       // momentComboBox
       // 
       this.momentComboBox.FormattingEnabled = true;
-      this.momentComboBox.Location = new System.Drawing.Point(112, 108);
+      this.momentComboBox.Location = new System.Drawing.Point(113, 108);
       this.momentComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.momentComboBox.Name = "momentComboBox";
       this.momentComboBox.Size = new System.Drawing.Size(69, 21);
@@ -632,7 +635,7 @@
       // forcePerAreaComboBox
       // 
       this.forcePerAreaComboBox.FormattingEnabled = true;
-      this.forcePerAreaComboBox.Location = new System.Drawing.Point(112, 81);
+      this.forcePerAreaComboBox.Location = new System.Drawing.Point(113, 81);
       this.forcePerAreaComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.forcePerAreaComboBox.Name = "forcePerAreaComboBox";
       this.forcePerAreaComboBox.Size = new System.Drawing.Size(69, 21);
@@ -651,7 +654,7 @@
       // forcePerLengthComboBox
       // 
       this.forcePerLengthComboBox.FormattingEnabled = true;
-      this.forcePerLengthComboBox.Location = new System.Drawing.Point(112, 54);
+      this.forcePerLengthComboBox.Location = new System.Drawing.Point(113, 54);
       this.forcePerLengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.forcePerLengthComboBox.Name = "forcePerLengthComboBox";
       this.forcePerLengthComboBox.Size = new System.Drawing.Size(69, 21);
@@ -670,7 +673,7 @@
       // forceComboBox
       // 
       this.forceComboBox.FormattingEnabled = true;
-      this.forceComboBox.Location = new System.Drawing.Point(112, 27);
+      this.forceComboBox.Location = new System.Drawing.Point(113, 27);
       this.forceComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.forceComboBox.Name = "forceComboBox";
       this.forceComboBox.Size = new System.Drawing.Size(69, 21);
@@ -713,7 +716,7 @@
       // lengthComboBox
       // 
       this.lengthComboBox.FormattingEnabled = true;
-      this.lengthComboBox.Location = new System.Drawing.Point(112, 27);
+      this.lengthComboBox.Location = new System.Drawing.Point(113, 27);
       this.lengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
       this.lengthComboBox.Name = "lengthComboBox";
       this.lengthComboBox.Size = new System.Drawing.Size(69, 21);
@@ -738,7 +741,7 @@
             0,
             0,
             131072});
-      this.toleranceUpDown.Location = new System.Drawing.Point(112, 84);
+      this.toleranceUpDown.Location = new System.Drawing.Point(113, 84);
       this.toleranceUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -790,17 +793,6 @@
       this.label1.Text = "Properties";
       this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
       // 
-      // pictureBox1
-      // 
-      this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.pictureBox1.Image = global::OasysGH.Properties.Resources.Units1;
-      this.pictureBox1.Location = new System.Drawing.Point(534, 344);
-      this.pictureBox1.Name = "pictureBox1";
-      this.pictureBox1.Size = new System.Drawing.Size(51, 23);
-      this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-      this.pictureBox1.TabIndex = 3;
-      this.pictureBox1.TabStop = false;
-      // 
       // panel1
       // 
       this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -813,8 +805,8 @@
       // tableLayoutPanel2
       // 
       this.tableLayoutPanel2.ColumnCount = 2;
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.91892F));
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.08108F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
       this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
       this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
       this.tableLayoutPanel2.Controls.Add(this.lengthSectionComboBox, 1, 1);
@@ -841,18 +833,18 @@
       this.tableLayoutPanel2.Location = new System.Drawing.Point(-1, -1);
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
       this.tableLayoutPanel2.RowCount = 12;
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
       this.tableLayoutPanel2.Size = new System.Drawing.Size(185, 326);
       this.tableLayoutPanel2.TabIndex = 69;
       // 
@@ -868,8 +860,8 @@
       // tableLayoutPanel3
       // 
       this.tableLayoutPanel3.ColumnCount = 2;
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.23957F));
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.76043F));
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
       this.tableLayoutPanel3.Controls.Add(this.label13, 0, 0);
       this.tableLayoutPanel3.Controls.Add(this.label14, 0, 1);
       this.tableLayoutPanel3.Controls.Add(this.useRhinoLengthUnit, 0, 2);
@@ -900,8 +892,8 @@
       // tableLayoutPanel5
       // 
       this.tableLayoutPanel5.ColumnCount = 2;
-      this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.37083F));
-      this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.62917F));
+      this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
       this.tableLayoutPanel5.Controls.Add(this.label23, 0, 0);
       this.tableLayoutPanel5.Controls.Add(this.label24, 0, 1);
       this.tableLayoutPanel5.Controls.Add(this.displacementComboBox, 1, 1);
@@ -934,7 +926,7 @@
       this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
       this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
       this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.Size = new System.Drawing.Size(187, 273);
+      this.tableLayoutPanel5.Size = new System.Drawing.Size(185, 273);
       this.tableLayoutPanel5.TabIndex = 69;
       // 
       // panel4
@@ -949,8 +941,8 @@
       // tableLayoutPanel4
       // 
       this.tableLayoutPanel4.ColumnCount = 2;
-      this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.6026F));
-      this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.3974F));
+      this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
       this.tableLayoutPanel4.Controls.Add(this.label17, 0, 0);
       this.tableLayoutPanel4.Controls.Add(this.label18, 0, 1);
       this.tableLayoutPanel4.Controls.Add(this.forceComboBox, 1, 1);
@@ -971,7 +963,7 @@
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
-      this.tableLayoutPanel4.Size = new System.Drawing.Size(187, 164);
+      this.tableLayoutPanel4.Size = new System.Drawing.Size(185, 164);
       this.tableLayoutPanel4.TabIndex = 69;
       // 
       // tableLayoutPanel1
@@ -992,10 +984,10 @@
       this.description.AutoSize = true;
       this.description.Location = new System.Drawing.Point(3, 4);
       this.description.Name = "description";
-      this.description.Size = new System.Drawing.Size(160, 39);
+      this.description.Size = new System.Drawing.Size(165, 39);
       this.description.TabIndex = 0;
-      this.description.Text = "Default unit settings will apply to new components and when displaying results in" +
-    " Rhino";
+      this.description.Text = "Default unit settings apply only to new components and when displaying results in" +
+    " Rhino.";
       // 
       // rhinoUnitBindingSource
       // 
@@ -1015,7 +1007,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.button2;
-      this.ClientSize = new System.Drawing.Size(595, 379);
+      this.ClientSize = new System.Drawing.Size(595, 391);
       this.Controls.Add(this.tableLayoutPanel1);
       this.Controls.Add(this.button5);
       this.Controls.Add(this.button3);
@@ -1024,11 +1016,11 @@
       this.Controls.Add(this.panel4);
       this.Controls.Add(this.panel2);
       this.Controls.Add(this.panel1);
-      this.Controls.Add(this.pictureBox1);
       this.Controls.Add(this.button2);
       this.Controls.Add(this.button1);
       this.Controls.Add(this.panel3);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "DefaultUnitsForm";
@@ -1037,7 +1029,6 @@
       this.TransparencyKey = System.Drawing.Color.LimeGreen;
       this.Load += new System.EventHandler(this.DefaultUnitsForm_Load);
       ((System.ComponentModel.ISupportInitialize)(this.toleranceUpDown)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.panel1.ResumeLayout(false);
       this.tableLayoutPanel2.ResumeLayout(false);
       this.tableLayoutPanel2.PerformLayout();
@@ -1121,7 +1112,6 @@
         private System.Windows.Forms.ComboBox curvatureComboBox;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.ComboBox strainComboBox;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
