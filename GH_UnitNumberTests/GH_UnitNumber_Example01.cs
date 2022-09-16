@@ -6,6 +6,7 @@ using Xunit;
 using GH_UnitNumberTests.Helpers;
 using OasysUnitsNet;
 using OasysUnitsNet.Units;
+using static GH_IO.VersionNumber;
 
 namespace GH_UnitNumberTests
 {
@@ -32,7 +33,8 @@ namespace GH_UnitNumberTests
       GH_Document doc = Document();
       GH_Param<OasysGH.Units.GH_UnitNumber> param = Helper.FindComponentInDocumentByGroup<OasysGH.Units.GH_UnitNumber>(doc, "Check1");
       Assert.NotNull(param);
-      OasysGH.Units.GH_UnitNumber output = ParameterTestHelper.GetOutput(param);
+      param.CollectData();
+      OasysGH.Units.GH_UnitNumber output = (OasysGH.Units.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
       Assert.Equal(new Length(15, LengthUnit.Millimeter), output.Value);
     }
 
@@ -42,8 +44,9 @@ namespace GH_UnitNumberTests
       GH_Document doc = Document();
       GH_Param<GH_Number> param = Helper.FindComponentInDocumentByGroup<GH_Number>(doc, "Check2");
       Assert.NotNull(param);
-      GH_Number output = ParameterTestHelper.GetOutput(param);
-      Assert.Equal(0.15, output.Value);
+      param.CollectData();
+      GH_Number output = (GH_Number)param.VolatileData.get_Branch(0)[0];
+      Assert.Equal(1.5, output.Value);
     }
 
     [Fact]
