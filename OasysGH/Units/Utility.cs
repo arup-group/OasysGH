@@ -1,11 +1,12 @@
 ﻿using Oasys.Units;
 using Rhino;
 using System;
+using OasysGH.Units.Helpers;
 using static OasysGH.Units.DefaultUnits;
 
-namespace OasysGH.Units.Helpers
+namespace OasysGH.Units
 {
-  public class Setup
+  public static class Utility
   {
     public static void SetupUnitsDuringLoad(bool headless = false)
     {

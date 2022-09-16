@@ -29,11 +29,11 @@ namespace Rhino.Test
 
       InitializeCore();
 
-      OasysGHInfo.PluginName = AssemblyInfo.PluginName;
-      OasysGHInfo.ProductName = AssemblyInfo.ProductName;
+      //OasysGHInfo.PluginName = AssemblyInfo.PluginName;
+      //OasysGHInfo.ProductName = AssemblyInfo.ProductName;
 
       // setup headless units
-      OasysGH.Units.Helpers.Setup.SetupUnitsDuringLoad(true);
+      OasysGH.Units.Utility.SetupUnitsDuringLoad(true);
     }
 
     public void AddPluginToGH()

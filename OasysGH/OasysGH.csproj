@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Helpers\Input.cs" />
-    <Compile Include="Initialise.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="OasysPluginInfo.cs" />
     <Compile Include="Components\GH_OasysComponent.cs" />
     <Compile Include="Components\GH_OasysDropDownComponent.cs" />
@@ -83,7 +83,7 @@
     <Compile Include="Units\GH_UnitNumber.cs" />
     <Compile Include="Units\Helpers\FilteredUnits.cs" />
     <Compile Include="Units\Helpers\RhinoUnit.cs" />
-    <Compile Include="Units\Helpers\Setup.cs" />
+    <Compile Include="Units\Utility.cs" />
     <Compile Include="Units\Helpers\UnitsHelper.cs" />
     <Compile Include="Units\UI\DefaultUnitsForm.cs">
       <SubType>Form</SubType>

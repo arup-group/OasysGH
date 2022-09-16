@@ -33,7 +33,7 @@ namespace Rhino.Test
       //OasysGHInfo.ProductName = AssemblyInfo.ProductName;
 
       // setup headless units
-      OasysGH.Units.Helpers.Setup.SetupUnitsDuringLoad(true);
+      OasysGH.Units.Utility.SetupUnitsDuringLoad(true);
     }
 
     public void AddPluginToGH()

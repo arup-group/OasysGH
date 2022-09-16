@@ -379,7 +379,7 @@ namespace OasysGH.Units.UI
       DefaultUnits.Tolerance = new Length((double)this.toleranceUpDown.Value, useRhinoTolerance.Checked ? RhinoUnit.GetRhinoLengthUnit() : DefaultUnits.LengthUnitGeometry);
       DefaultUnits.UseRhinoTolerance = useRhinoTolerance.Checked;
 
-      Setup.SaveSettings();
+      Utility.SaveSettings();
     }
 
     private void DefaultUnitsForm_Load(object sender, EventArgs e)

@@ -14,7 +14,7 @@ namespace GH_UnitNumber
     public override GH_LoadingInstruction PriorityLoad()
     {
       // ### Setup Units ###
-      Initialise.MainMenuAndDefaultUnits();
+      Utility.InitialiseMainMenuAndDefaultUnits();
 
       return GH_LoadingInstruction.Proceed;
     }

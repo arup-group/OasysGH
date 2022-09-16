@@ -1,20 +1,19 @@
-﻿using Grasshopper.GUI.Canvas;
-using OasysGH.Units.UI.MainMenu;
+﻿using OasysGH.Units.UI.MainMenu;
 using OasysGH.Units.Helpers;
 
 namespace OasysGH
 {
-  public class Initialise
+  public static class Utility
   {
     private static object unitsLoaded = false;
-    public static void MainMenuAndDefaultUnits()
+    public static void InitialiseMainMenuAndDefaultUnits()
     {
       if (!(bool)unitsLoaded)
       {
         lock (unitsLoaded) // lock so that only one plugin will load this:
         {
           Grasshopper.Instances.CanvasCreated += LoadMainMenu.OnStartup;
-          Setup.SetupUnitsDuringLoad();
+          Units.Utility.SetupUnitsDuringLoad();
           unitsLoaded = true;
         }
       }
