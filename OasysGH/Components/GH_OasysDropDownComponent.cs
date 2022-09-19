@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Eto.Forms;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Newtonsoft.Json;
 using OasysGH.Units;
 using OasysUnitsNet;
-using UnitsNet.Serialization.JsonNet;
+using OasysUnitsNet.Serialization.JsonNet;
 
 namespace OasysGH.Components
 {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent
   {
-    private static readonly UnitsNetIQuantityJsonConverter Converter = new UnitsNetIQuantityJsonConverter();
+    private static readonly OasysUnitsNetIQuantityJsonConverter Converter = new OasysUnitsNetIQuantityJsonConverter();
     public List<List<string>> DropDownItems;
     public List<string> SelectedItems;
     public List<string> SpacerDescriptions;
     public bool IsInitialised = false;
-    public bool ExpireDownStream = true;
-    public Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>() { { 0, new List<string>() { "" } } };
+    public bool AlwaysExpireDownStream = false;
+    public Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>();
+    
+    private bool ExpireDownStream = true;
+    private Dictionary<int, List<bool>> OutputsAreExpired = new Dictionary<int, List<bool>>();
+    private Dictionary<int, bool> OutputIsExpired = new Dictionary<int, bool>();
 
     public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
     {
@@ -30,12 +36,6 @@ namespace OasysGH.Components
         this.InitialiseDropdowns();
 
       m_attributes = new UI.DropDownComponentAttributes(this, this.SetSelected, this.DropDownItems, this.SelectedItems, this.SpacerDescriptions);
-    }
-
-    protected override void ExpireDownStreamObjects()
-    {
-      if (this.ExpireDownStream)
-        base.ExpireDownStreamObjects();
     }
 
     public abstract void InitialiseDropdowns();
@@ -57,11 +57,50 @@ namespace OasysGH.Components
     }
     #endregion
 
-    #region (de)serialization
-    public void CheckExpireDownstream<T>(T data, int outputIndex, int index) where T : IGH_Goo
+    #region expire downstream
+    protected override void ExpireDownStreamObjects()
+    {
+      if (AlwaysExpireDownStream)
+        base.ExpireDownStreamObjects();
+
+      SetExpireDownStream();
+      if (this.OutputIsExpired.Count > 0)
+      {
+        for (int outputIndex = 0; outputIndex < this.Params.Output.Count; outputIndex++)
+        {
+          if (this.OutputIsExpired[outputIndex])
+          {
+            IGH_Param item = this.Params.Output[outputIndex];
+            item.ExpireSolution(recompute: false);
+          }
+        }
+      }
+      else
+        base.ExpireDownStreamObjects();
+    }
+
+    private void SetExpireDownStream()
+    {
+      if (this.OutputsAreExpired != null && this.OutputsAreExpired.Count > 0)
+      {
+        this.OutputIsExpired = new Dictionary<int, bool>();
+        for (int outputIndex = 0; outputIndex < this.Params.Output.Count; outputIndex++)
+        {
+          if (this.OutputsAreExpired.ContainsKey(outputIndex))
+            this.OutputIsExpired.Add(outputIndex, OutputsAreExpired[outputIndex].Any(c => c == true));
+          else
+            this.OutputIsExpired.Add(outputIndex, true);
+        }
+      }
+    }
+
+    public void OutputChanged<T>(T data, int outputIndex, int index) where T : IGH_Goo
     {
       if (!this.ExistingOutputsSerialized.ContainsKey(outputIndex))
+      {
         this.ExistingOutputsSerialized.Add(outputIndex, new List<string>());
+        this.OutputsAreExpired.Add(outputIndex, new List<bool>());
+      }
 
       string outputsSerialized = "";
       if (data.GetType() == typeof(GH_UnitNumber))
@@ -85,21 +124,22 @@ namespace OasysGH.Components
 
       if (this.ExistingOutputsSerialized[outputIndex].Count == index)
       {
-        this.ExpireDownStream = true;
         this.ExistingOutputsSerialized[outputIndex].Add(outputsSerialized);
+        this.OutputsAreExpired[outputIndex].Add(true);
         return;
       }
 
       if (this.ExistingOutputsSerialized[outputIndex][index] != outputsSerialized)
       {
-        this.ExpireDownStream = true;
         this.ExistingOutputsSerialized[outputIndex][index] = outputsSerialized;
+        this.OutputsAreExpired[outputIndex][index] = true;
         return;
       }
-
-      this.ExpireDownStream = false;
+      this.OutputsAreExpired[outputIndex][index] = false;
     }
 
+    #endregion
+    #region (de)serialization
     public override bool Write(GH_IO.Serialization.GH_IWriter writer)
     {
       Helpers.DeSerialization.WriteDropDownComponents(ref writer, this.DropDownItems, this.SelectedItems, this.SpacerDescriptions);
