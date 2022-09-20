@@ -4,8 +4,8 @@ using System.IO;
 using System.Reflection;
 using Xunit;
 using GH_UnitNumberTests.Helpers;
-using OasysUnitsNet;
-using OasysUnitsNet.Units;
+using OasysUnits;
+using OasysUnits.Units;
 using static GH_IO.VersionNumber;
 
 namespace GH_UnitNumberTests

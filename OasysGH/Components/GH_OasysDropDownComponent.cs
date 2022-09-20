@@ -6,14 +6,14 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Newtonsoft.Json;
 using OasysGH.Units;
-using OasysUnitsNet;
-using OasysUnitsNet.Serialization.JsonNet;
+using OasysUnits;
+using OasysUnits.Serialization.JsonNet;
 
 namespace OasysGH.Components
 {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent
   {
-    private static readonly OasysUnitsNetIQuantityJsonConverter Converter = new OasysUnitsNetIQuantityJsonConverter();
+    private static readonly OasysUnitsIQuantityJsonConverter Converter = new OasysUnitsIQuantityJsonConverter();
     public List<List<string>> DropDownItems;
     public List<string> SelectedItems;
     public List<string> SpacerDescriptions;
@@ -61,7 +61,10 @@ namespace OasysGH.Components
     protected override void ExpireDownStreamObjects()
     {
       if (AlwaysExpireDownStream)
+      {
         base.ExpireDownStreamObjects();
+        return;
+      }
 
       SetExpireDownStream();
       if (this.OutputIsExpired.Count > 0)

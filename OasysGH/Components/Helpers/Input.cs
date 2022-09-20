@@ -2,10 +2,10 @@
 using Grasshopper.Kernel.Types;
 using System;
 using System.Collections.Generic;
-using OasysUnitsNet;
+using OasysUnits;
 using OasysGH.Units;
 using System.Globalization;
-using OasysUnitsNet.Units;
+using OasysUnits.Units;
 
 namespace OasysGH.Helpers
 {

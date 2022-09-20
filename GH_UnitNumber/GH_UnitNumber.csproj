@@ -44,8 +44,8 @@
     <Reference Include="Grasshopper, Version=6.27.20176.5000, Culture=neutral, PublicKeyToken=dda4f5ec2cd80803, processorArchitecture=MSIL">
       <HintPath>..\packages\Grasshopper.6.27.20176.5001\lib\net45\Grasshopper.dll</HintPath>
     </Reference>
-    <Reference Include="OasysUnitsNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=f8601875a1f041da, processorArchitecture=MSIL">
-      <HintPath>..\packages\OasysUnitsNet.4.145.0\lib\net47\OasysUnitsNet.dll</HintPath>
+    <Reference Include="OasysUnits, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f8601875a1f041da, processorArchitecture=MSIL">
+      <HintPath>..\packages\OasysUnits.1.0.0\lib\net47\OasysUnits.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.UI, Version=6.27.20176.5000, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
       <HintPath>..\packages\RhinoCommon.6.27.20176.5001\lib\net45\Rhino.UI.dll</HintPath>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using OasysGH.Components;
-using OasysUnitsNet;
+using OasysUnits;
 using OasysGH;
 
 namespace GH_UnitNumber.Components

@@ -1,7 +1,7 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using OasysGH.Parameters;
-using OasysUnitsNet;
+using OasysUnits;
 
 namespace OasysGH.Units
 {

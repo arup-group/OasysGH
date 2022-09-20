@@ -6,8 +6,8 @@ using OasysGH;
 using OasysGH.Components;
 using OasysGH.Units;
 using OasysGH.Units.Helpers;
-using OasysUnitsNet;
-using OasysUnitsNet.Units;
+using OasysUnits;
+using OasysUnits.Units;
 
 namespace GH_UnitNumber.Components
 {

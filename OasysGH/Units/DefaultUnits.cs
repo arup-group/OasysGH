@@ -1,7 +1,7 @@
 ﻿using System;
 using Rhino;
-using OasysUnitsNet;
-using OasysUnitsNet.Units;
+using OasysUnits;
+using OasysUnits.Units;
 using OasysGH.Units.Helpers;
 
 namespace OasysGH.Units

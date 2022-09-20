@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using OasysUnitsNet.Units;
-using OasysUnitsNet;
+using OasysUnits.Units;
+using OasysUnits;
 
 namespace OasysGH.Units.Helpers
 {
@@ -77,7 +77,7 @@ namespace OasysGH.Units.Helpers
       }
       // fallback:
       BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      OasysUnitsNet.UnitSystem unitSystem = new OasysUnitsNet.UnitSystem(baseUnits);
+      UnitSystem unitSystem = new UnitSystem(baseUnits);
       return new AreaMomentOfInertia(1, unitSystem).Unit;
     }
 
