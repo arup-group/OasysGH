@@ -77,7 +77,7 @@
     <Compile Include="ComponentAttributes\SupportComponentAttributes.cs" />
     <Compile Include="ComponentAttributes\ThreeButtonAtrributes.cs" />
     <Compile Include="Units\DefaultUnits.cs" />
-    <Compile Include="Units\GH_UnitNumber.cs" />
+    <Compile Include="Parameters\GH_UnitNumber.cs" />
     <Compile Include="Units\Helpers\FilteredUnits.cs" />
     <Compile Include="Units\Helpers\RhinoUnit.cs" />
     <Compile Include="Units\Utility.cs" />
