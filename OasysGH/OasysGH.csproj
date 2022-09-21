@@ -93,6 +93,7 @@
       <DependentUpon>DefaultUnitsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Units\UI\MainMenu.cs" />
+    <Compile Include="YakInstall.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Grasshopper">
