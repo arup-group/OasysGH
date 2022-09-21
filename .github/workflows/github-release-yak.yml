@@ -1,4 +1,4 @@
-name: Push ComposGH yak package
+name: Push GH_UnitNumber yak package
 
 # On run when release is published
 on:
