@@ -3,9 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
+using OasysGH;
 using OasysGH.Components;
 using OasysUnits;
-using OasysGH;
 
 namespace GH_UnitNumber.Components
 {
