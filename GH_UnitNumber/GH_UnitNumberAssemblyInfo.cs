@@ -13,9 +13,8 @@ namespace GH_UnitNumber
   {
     public override GH_LoadingInstruction PriorityLoad()
     {
-      // ### Setup Units ###
-      Utility.InitialiseMainMenuAndDefaultUnits();
-
+      // ### Load OasysGH ###
+      Utility.InitialiseMainMenuAndDefaultUnits(false);
       return GH_LoadingInstruction.Proceed;
     }
   }
