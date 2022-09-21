@@ -93,8 +93,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)UnitNumber.gha"
-Del "$(TargetPath)"
+    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)UnitNumber.gha
+
 Copy "$(ProjectDir)\Properties\Icons\UnitNumberLogo64.png" "$(TargetDir)UnitNumberIcon.png"</PostBuildEvent>
   </PropertyGroup>
 </Project>

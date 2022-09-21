@@ -34,9 +34,9 @@ steps:
   env:
     MSBUILDDISABLENODEREUSE: 1
 
-#- powershell: |
-#    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\3.1.2\build --results-directory .\results --no-restore --logger trx .\OasysGHTests\bin\x64\Release\OasysGHTests.dll
-#  displayName: dotnet test
+- powershell: |
+    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\3.1.2\build --results-directory .\results --no-restore --logger trx .\GH_UnitNumberTests\bin\x64\Release\net48\GH_UnitNumberTests.dll
+  displayName: dotnet test
 
 - task: PublishCodeCoverageResults@1
   inputs:
@@ -44,16 +44,16 @@ steps:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/**/coverage.cobertura.xml'
     pathToSources: '$(System.DefaultWorkingDirectory)'
 
-#- powershell: |
-#    $coverage_file = (Resolve-Path $(System.DefaultWorkingDirectory)/results/*/coverage.cobertura.xml).Path
-#    echo $coverage_file
-#    Copy-Item $coverage_file $(System.DefaultWorkingDirectory)\results\coverage.xml
-#    ls $(System.DefaultWorkingDirectory)\results\
-#    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage.xml --flags unittests
-#  env:
-#    CODECOV_TOKEN: $(CODECOV_TOKEN)
-#  displayName: Upload Code Coverage to codecovio
-#  failOnStderr: true
+- powershell: |
+    $coverage_file = (Resolve-Path $(System.DefaultWorkingDirectory)/results/*/coverage.cobertura.xml).Path
+    echo $coverage_file
+    Copy-Item $coverage_file $(System.DefaultWorkingDirectory)\results\coverage.xml
+    ls $(System.DefaultWorkingDirectory)\results\
+    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage.xml --flags unitNumber
+  env:
+    CODECOV_TOKEN: $(CODECOV_TOKEN)
+  displayName: Upload Code Coverage to codecovio
+  failOnStderr: true
 
 - task: PowerShell@2
   displayName: Check for existing tags
