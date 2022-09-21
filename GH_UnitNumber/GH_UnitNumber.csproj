@@ -115,6 +115,6 @@
   <Import Project="..\packages\Grasshopper.6.27.20176.5001\build\net45\Grasshopper.targets" Condition="Exists('..\packages\Grasshopper.6.27.20176.5001\build\net45\Grasshopper.targets')" />
   <PropertyGroup>
     <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)GH_UnitNumber.gha"
-Copy "$(SolutionDir)lib\OasysUnits.dll" "$(TargetDir)OasysUnits.dll"</PostBuildEvent>
+Copy "$(ProjectDir)\Properties\Icons\UnitNumberLogo64.png" "$(TargetDir)UnitNumberIcon.png"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -42,15 +42,15 @@ namespace GH_UnitNumber.Components
     protected override void SolveInstance(IGH_DataAccess DA)
     {
       // get input
-      OasysGH.Units.GH_UnitNumber inUnitNumber = null;
+      OasysGH.Parameters.GH_UnitNumber inUnitNumber = null;
 
       GH_ObjectWrapper gh_typ = new GH_ObjectWrapper();
       if (DA.GetData(0, ref gh_typ))
       {
         // try cast directly to quantity type
-        if (gh_typ.Value is OasysGH.Units.GH_UnitNumber)
+        if (gh_typ.Value is OasysGH.Parameters.GH_UnitNumber)
         {
-          inUnitNumber = (OasysGH.Units.GH_UnitNumber)gh_typ.Value;
+          inUnitNumber = (OasysGH.Parameters.GH_UnitNumber)gh_typ.Value;
           if (this.ConvertedUnitNumber == null || !this.ConvertedUnitNumber.Value.QuantityInfo.UnitType.Equals(inUnitNumber.Value.QuantityInfo.UnitType))
           {
             this.UnitDictionary = new Dictionary<string, Enum>();
@@ -80,13 +80,13 @@ namespace GH_UnitNumber.Components
       this.SelectedUnit = this.UnitDictionary[SelectedItems.Last()];
 
       // convert unit to selected output
-      this.ConvertedUnitNumber = new OasysGH.Units.GH_UnitNumber(inUnitNumber.Value.ToUnit(this.SelectedUnit));
+      this.ConvertedUnitNumber = new OasysGH.Parameters.GH_UnitNumber(inUnitNumber.Value.ToUnit(this.SelectedUnit));
 
       OasysGH.Helpers.Output.SetItem(this, DA, 0, this.ConvertedUnitNumber);
     }
 
     #region Custom UI
-    OasysGH.Units.GH_UnitNumber ConvertedUnitNumber;
+    OasysGH.Parameters.GH_UnitNumber ConvertedUnitNumber;
     Dictionary<string, Enum> UnitDictionary;
     Enum SelectedUnit;
     bool ComingFromSave = false;
