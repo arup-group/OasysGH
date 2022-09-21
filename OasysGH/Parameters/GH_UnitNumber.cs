@@ -6,7 +6,7 @@ using OasysUnits;
 namespace OasysGH.Parameters
 {
   /// <summary>
-  /// Goo wrapper class, makes sure OasysUnitsNet and OasysUnits <see cref="IQuantity"/> can be used in Grasshopper.
+  /// Goo wrapper class, makes sure OasysUnits and OasysUnits <see cref="IQuantity"/> can be used in Grasshopper.
   /// </summary>
   public class GH_UnitNumber : GH_OasysGoo<IQuantity>
   {
