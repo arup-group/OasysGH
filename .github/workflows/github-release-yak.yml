@@ -1,4 +1,4 @@
-name: Push ComposGH yak package
+name: Push UnitNumber yak package
 
 # On run when release is published
 on:
@@ -15,7 +15,7 @@ jobs:
         uses: i3h/download-release-asset@v1
         with:
           owner: ${{ github.repository_owner }}
-          repo: OasysGH
+          repo: GH_UnitNumber
           tag: ${{ github.event.release.tag_name }}
           file: /.*\.yak/
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -23,4 +23,4 @@ jobs:
       - name: Push yak file
         run: |
           curl https://files.mcneel.com/yak/tools/latest/yak.exe -o yak.exe
-          #ls *.yak |% {.\yak push $_.FullName}
+          ls *.yak |% {.\yak push $_.FullName}
