@@ -2,13 +2,12 @@
 using System.Linq;
 using System.Collections.Generic;
 using Grasshopper.Kernel;
-using UnitsNet;
+using OasysGH;
 using OasysGH.Components;
 using OasysGH.Units;
 using OasysGH.Units.Helpers;
-using UnitsNet.Units;
-using Oasys.Units;
-using OasysGH;
+using OasysUnits;
+using OasysUnits.Units;
 
 namespace GH_UnitNumber.Components
 {
@@ -142,7 +141,7 @@ namespace GH_UnitNumber.Components
             throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
         }
 
-        OasysGH.Units.GH_UnitNumber unitNumber = new OasysGH.Units.GH_UnitNumber(this.Quantity);
+        OasysGH.Parameters.GH_UnitNumber unitNumber = new OasysGH.Parameters.GH_UnitNumber(this.Quantity);
 
         OasysGH.Helpers.Output.SetItem(this, DA, 0, unitNumber);
       }

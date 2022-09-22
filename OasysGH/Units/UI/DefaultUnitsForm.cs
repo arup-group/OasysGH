@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using UnitsNet;
-using UnitsNet.Units;
+using OasysUnits;
+using OasysUnits.Units;
 using OasysGH.Units.Helpers;
-using OasysGH.Units;
-using Oasys.Units;
-using Rhino;
+
 
 namespace OasysGH.Units.UI
 {
@@ -240,12 +233,12 @@ namespace OasysGH.Units.UI
         VolumeUnit.CubicFoot,
         AreaMomentOfInertiaUnit.InchToTheFourth,
         MassUnit.Pound,
-        DensityUnit.PoundPerCubicInch,
+        DensityUnit.PoundPerCubicFoot,
         LinearDensityUnit.PoundPerFoot,
         VolumePerLengthUnit.CubicYardPerFoot,
         PressureUnit.KilopoundForcePerSquareInch,
         StrainUnit.Percent,
-        PressureUnit.KilopoundForcePerSquareFoot,
+        PressureUnit.KilopoundForcePerSquareInch,
         LengthUnit.Foot,
         ForceUnit.KilopoundForce,
         ForcePerLengthUnit.KilopoundForcePerFoot,
@@ -253,14 +246,14 @@ namespace OasysGH.Units.UI
         MomentUnit.KilopoundForceFoot,
         TemperatureUnit.DegreeFahrenheit,
         LengthUnit.Inch,
-        PressureUnit.KilopoundForcePerSquareFoot,
+        PressureUnit.KilopoundForcePerSquareInch,
         StrainUnit.Percent,
         AxialStiffnessUnit.KilopoundForce,
         BendingStiffnessUnit.PoundForceSquareFoot,
         SpeedUnit.FootPerSecond,
         AccelerationUnit.FootPerSecondSquared,
         EnergyUnit.FootPound,
-        CurvatureUnit.PerFoot));
+        CurvatureUnit.PerInch));
     }
 
     private void kipin_Click(object sender, EventArgs e)
@@ -271,7 +264,7 @@ namespace OasysGH.Units.UI
         VolumeUnit.CubicInch,
         AreaMomentOfInertiaUnit.InchToTheFourth,
         MassUnit.Pound,
-        DensityUnit.PoundPerCubicInch,
+        DensityUnit.PoundPerCubicFoot,
         LinearDensityUnit.PoundPerInch,
         VolumePerLengthUnit.CubicYardPerFoot,
         PressureUnit.KilopoundForcePerSquareInch,
@@ -294,7 +287,6 @@ namespace OasysGH.Units.UI
         CurvatureUnit.PerInch));
     }
 
-
     private void UpdateSelectedFromUnitSystem(UnitSystem unit)
     {
       // Properties
@@ -302,9 +294,18 @@ namespace OasysGH.Units.UI
       SetSelectedDropdown(this.areaComboBox, AreaAbbr, Area.GetAbbreviation(unit.SectionAreaUnit));
       SetSelectedDropdown(this.volumeComboBox, VolumeAbbr, Volume.GetAbbreviation(unit.SectionVolumeUnit));
       SetSelectedDropdown(this.momentOfInertiaComboBox, InertiaAbbr, AreaMomentOfInertia.GetAbbreviation(unit.SectionAreaMomentOfInertiaUnit));
-      SetSelectedDropdown(this.massComboBox, MassAbbr, Mass.GetAbbreviation(unit.MassUnit));
-      SetSelectedDropdown(this.densityComboBox, DensityAbbr, Density.GetAbbreviation(unit.DensityUnit));
-      SetSelectedDropdown(this.linearDensityComboBox, LinearDensityAbbr, LinearDensity.GetAbbreviation(unit.LinearDensityUnit));
+      string abbMass = Mass.GetAbbreviation(unit.MassUnit);
+      if (abbMass.StartsWith("lb"))
+        abbMass = abbMass.Insert(2, "m");
+      SetSelectedDropdown(this.massComboBox, MassAbbr, abbMass);
+      string abbDensity = Density.GetAbbreviation(unit.DensityUnit);
+      if (abbDensity.StartsWith("lb"))
+        abbDensity = abbDensity.Insert(2, "m");
+      SetSelectedDropdown(this.densityComboBox, DensityAbbr, abbDensity);
+      string abbLinearDensity = LinearDensity.GetAbbreviation(unit.LinearDensityUnit);
+      if (abbLinearDensity.StartsWith("lb"))
+        abbLinearDensity = abbLinearDensity.Insert(2, "m");
+      SetSelectedDropdown(this.linearDensityComboBox, LinearDensityAbbr, abbLinearDensity);
       SetSelectedDropdown(this.volumePerLengthComboBox, VolPerLengthAbbr, VolumePerLength.GetAbbreviation(unit.VolumePerLengthUnit));
       SetSelectedDropdown(this.materialStrengthComboBox, PressureAbbr, Pressure.GetAbbreviation(unit.MaterialStrengthUnit));
       SetSelectedDropdown(this.materialStrainComboBox, StrainAbbr, Strain.GetAbbreviation(unit.MaterialStrainUnit));
@@ -354,22 +355,28 @@ namespace OasysGH.Units.UI
       DefaultUnits.SectionVolumeUnit = Volume.ParseUnit(volumeComboBox.Text);
       DefaultUnits.SectionAreaMomentOfInertiaUnit = AreaMomentOfInertia.ParseUnit(momentOfInertiaComboBox.Text);
       DefaultUnits.MassUnit = Mass.ParseUnit(massComboBox.Text);
-      DefaultUnits.DensityUnit = Density.ParseUnit(densityComboBox.Text);
-      DefaultUnits.LinearDensityUnit = LinearDensity.ParseUnit(linearDensityComboBox.Text);
+      string abbDensity = densityComboBox.Text;
+      if (abbDensity.StartsWith("lbm"))
+        abbDensity = abbDensity.Remove(2, 1);
+      DefaultUnits.DensityUnit = Density.ParseUnit(abbDensity);
+      string abbLinearDensity = linearDensityComboBox.Text;
+      if (abbLinearDensity.StartsWith("lbm"))
+        abbLinearDensity = abbLinearDensity.Remove(2, 1);
+      DefaultUnits.LinearDensityUnit = LinearDensity.ParseUnit(abbLinearDensity);
       DefaultUnits.VolumePerLengthUnit = VolumePerLength.ParseUnit(volumePerLengthComboBox.Text);
       DefaultUnits.MaterialStrengthUnit = Pressure.ParseUnit(materialStrengthComboBox.Text);
-      DefaultUnits.MaterialStrainUnit = Strain.ParseUnit(materialStrainComboBox.Text, null);
+      DefaultUnits.MaterialStrainUnit = Strain.ParseUnit(materialStrainComboBox.Text);
       DefaultUnits.YoungsModulusUnit = Pressure.ParseUnit(youngsModulusComboBox.Text);
       DefaultUnits.LengthUnitGeometry = Length.ParseUnit(lengthComboBox.Text);
       DefaultUnits.UseRhinoLengthGeometryUnit = useRhinoLengthUnit.Checked;
-      DefaultUnits.ForceUnit = Force.ParseUnit(materialStrengthComboBox.Text);
+      DefaultUnits.ForceUnit = Force.ParseUnit(forceComboBox.Text);
       DefaultUnits.ForcePerLengthUnit = ForcePerLength.ParseUnit(forcePerLengthComboBox.Text);
       DefaultUnits.ForcePerAreaUnit = Pressure.ParseUnit(forcePerAreaComboBox.Text);
       DefaultUnits.MomentUnit = Moment.ParseUnit(momentComboBox.Text);
       DefaultUnits.TemperatureUnit = Temperature.ParseUnit(temperatureComboBox.Text);
       DefaultUnits.LengthUnitResult = Length.ParseUnit(displacementComboBox.Text);
       DefaultUnits.StressUnitResult = Pressure.ParseUnit(stressComboBox.Text);
-      DefaultUnits.StrainUnitResult = Strain.ParseUnit(materialStrainComboBox.Text, null);
+      DefaultUnits.StrainUnitResult = Strain.ParseUnit(strainComboBox.Text);
       DefaultUnits.AxialStiffnessUnit = AxialStiffness.ParseUnit(axialStiffnessComboBox.Text);
       DefaultUnits.BendingStiffnessUnit = BendingStiffness.ParseUnit(bendingStiffnessComboBox.Text);
       DefaultUnits.VelocityUnit = Speed.ParseUnit(velocityComboBox.Text);

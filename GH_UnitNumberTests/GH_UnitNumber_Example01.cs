@@ -3,8 +3,10 @@ using Grasshopper.Kernel.Types;
 using System.IO;
 using System.Reflection;
 using Xunit;
-using UnitsNet;
 using GH_UnitNumberTests.Helpers;
+using OasysUnits;
+using OasysUnits.Units;
+using static GH_IO.VersionNumber;
 
 namespace GH_UnitNumberTests
 {
@@ -13,8 +15,8 @@ namespace GH_UnitNumberTests
   {
     public static GH_Document Document()
     {
-      string fileName = "GH_UnitNumber_" + MethodBase.GetCurrentMethod().DeclaringType + ".gh";
-      fileName = fileName.Replace("IntegrationTests.", string.Empty).Replace("Test", string.Empty);
+      string fileName = MethodBase.GetCurrentMethod().DeclaringType.ToString().Replace(".", "_") + ".gh";
+      fileName = fileName.Replace("Tests", string.Empty).Replace("Test", string.Empty);
 
       string solutiondir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName;
       string path = Path.Combine(solutiondir, "ExampleFiles");
@@ -29,20 +31,22 @@ namespace GH_UnitNumberTests
     public void Check1()
     {
       GH_Document doc = Document();
-      GH_Component comp = Helper.FindComponentInDocumentByGroup(doc, "Check1");
-      Assert.NotNull(comp);
-      OasysGH.Units.GH_UnitNumber output = (OasysGH.Units.GH_UnitNumber)ComponentTestHelper.GetOutput(comp);
-      Assert.Equal(new Length(15, UnitsNet.Units.LengthUnit.Millimeter), output.Value);
+      GH_Param<OasysGH.Parameters.GH_UnitNumber> param = Helper.FindComponentInDocumentByGroup<OasysGH.Parameters.GH_UnitNumber>(doc, "Check1");
+      Assert.NotNull(param);
+      param.CollectData();
+      OasysGH.Parameters.GH_UnitNumber output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
+      Assert.Equal(new Length(15, LengthUnit.Millimeter), output.Value);
     }
 
     [Fact]
     public void Check2()
     {
       GH_Document doc = Document();
-      GH_Component comp = Helper.FindComponentInDocumentByGroup(doc, "Check2");
-      Assert.NotNull(comp);
-      GH_Number output = (GH_Number)ComponentTestHelper.GetOutput(comp);
-      Assert.Equal(0.15, output.Value);
+      GH_Param<GH_Number> param = Helper.FindComponentInDocumentByGroup<GH_Number>(doc, "Check2");
+      Assert.NotNull(param);
+      param.CollectData();
+      GH_Number output = (GH_Number)param.VolatileData.get_Branch(0)[0];
+      Assert.Equal(1.5, output.Value);
     }
 
     [Fact]
