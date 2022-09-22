@@ -15,7 +15,7 @@ jobs:
         uses: i3h/download-release-asset@v1
         with:
           owner: ${{ github.repository_owner }}
-          repo: GH_UnitNumber
+          repo: OasysGH
           tag: ${{ github.event.release.tag_name }}
           file: /.*\.yak/
           token: ${{ secrets.GITHUB_TOKEN }}
