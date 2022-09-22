@@ -1,11 +1,6 @@
 ﻿using Grasshopper.Kernel;
-using OasysGH.Helpers;
 using OasysGH;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GH_UnitNumber
 {
@@ -13,9 +8,8 @@ namespace GH_UnitNumber
   {
     public override GH_LoadingInstruction PriorityLoad()
     {
-      // ### Setup Units ###
-      Utility.InitialiseMainMenuAndDefaultUnits();
-
+      // ### Load OasysGH ###
+      Utility.InitialiseMainMenuAndDefaultUnits(false);
       return GH_LoadingInstruction.Proceed;
     }
   }
@@ -44,8 +38,8 @@ namespace GH_UnitNumber
     internal const string Contact = "https://www.oasys-software.com/";
     internal const string Vers = "0.1.0";
     internal static bool isBeta = true;
-    internal const string ProductName = "Units";
-    internal const string PluginName = "GH_UnitNumber";
+    internal const string ProductName = "OasysUnits";
+    internal const string PluginName = "UnitNumber";
 
     public override string Name
     {
