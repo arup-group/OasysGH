@@ -38,8 +38,8 @@ namespace GH_UnitNumber
     internal const string Contact = "https://www.oasys-software.com/";
     internal const string Vers = "0.2.9";
     internal static bool isBeta = true;
-    internal const string ProductName = "OasysUnits";
-    internal const string PluginName = "OasysUnits";
+    internal const string ProductName = "UnitNumber";
+    internal const string PluginName = "UnitNumber";
 
     public override string Name
     {
