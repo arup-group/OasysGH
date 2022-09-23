@@ -37,6 +37,8 @@
     </None>
   </ItemGroup>
 
+  <Import Project="PreBuild.targets" />
+
   <PropertyGroup>
     <PostBuildEvent>Copy "$(TargetDir)GH_UnitNumber.dll" "$(TargetDir)GH_UnitNumber.gha"</PostBuildEvent>
   </PropertyGroup>
