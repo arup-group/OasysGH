@@ -71,6 +71,7 @@
   <ItemGroup>
     <PackageReference Include="Grasshopper">
       <Version>6.27.20176.5001</Version>
+      <ExcludeAssets>"runtime"</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="OasysUnits">
       <Version>1.0.0</Version>

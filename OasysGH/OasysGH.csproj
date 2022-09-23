@@ -98,6 +98,7 @@
   <ItemGroup>
     <PackageReference Include="Grasshopper">
       <Version>6.27.20176.5001</Version>
+      <ExcludeAssets>"runtime"</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
