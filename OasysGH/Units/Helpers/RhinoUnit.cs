@@ -13,6 +13,8 @@ namespace OasysGH.Units.Helpers
   {
     public static Length GetRhinoTolerance()
     {
+      if (RhinoDoc.ActiveDoc == null)
+        return new Length(0.01, LengthUnit.Meter);
       LengthUnit lengthUnit = GetRhinoLengthUnit();
       double tolerance = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
       return new Length(tolerance, lengthUnit);
@@ -20,6 +22,8 @@ namespace OasysGH.Units.Helpers
 
     public static LengthUnit GetRhinoLengthUnit()
     {
+      if (RhinoDoc.ActiveDoc == null)
+        return LengthUnit.Meter;
       return GetRhinoLengthUnit(RhinoDoc.ActiveDoc.ModelUnitSystem);
     }
 
