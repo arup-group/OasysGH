@@ -49,6 +49,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Yak.Core">
+      <HintPath>..\..\..\..\..\..\Program Files\Rhino 7\System\Yak.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Helpers\Input.cs" />
@@ -98,7 +102,6 @@
   <ItemGroup>
     <PackageReference Include="Grasshopper">
       <Version>6.27.20176.5001</Version>
-      <ExcludeAssets>"runtime"</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
