@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using GH_UnitNumber;
 using OasysGH;
 using Xunit;
 
@@ -28,9 +27,6 @@ namespace Rhino.Test
       AddPluginToGH();
 
       InitializeCore();
-
-      //OasysGHInfo.PluginName = AssemblyInfo.PluginName;
-      //OasysGHInfo.ProductName = AssemblyInfo.ProductName;
 
       // setup headless units
       OasysGH.Units.Utility.SetupUnitsDuringLoad(true);

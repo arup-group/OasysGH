@@ -92,6 +92,7 @@
     <None Include="Properties\Icons\CreateUnitNumber.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="PreBuild.targets" />
   <PropertyGroup>
     <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)UnitNumber.gha"
 Copy "$(ProjectDir)\Properties\Icons\UnitNumberLogo64.png" "$(TargetDir)UnitNumberIcon.png"</PostBuildEvent>

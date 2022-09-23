@@ -1,8 +1,5 @@
 ﻿using System;
 using System.IO;
-using OasysUnits;
-using GH_UnitNumber;
-using OasysGH;
 using Xunit;
 
 namespace Rhino.Test
@@ -15,7 +12,7 @@ namespace Rhino.Test
     private object _Doc { get; set; }
     private bool _isDisposed;
     private static string _linkFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Grasshopper", "Libraries");
-    private static string _linkFileName = "OasysGhTests.ghlink";
+    private static string _linkFileName = "GH_UnitNumberTests.ghlink";
     static GrasshopperFixture()
     {
       // This MUST be included in a static constructor to ensure that no Rhino DLLs
@@ -29,9 +26,6 @@ namespace Rhino.Test
       AddPluginToGH();
 
       InitializeCore();
-
-      //OasysGHInfo.PluginName = AssemblyInfo.PluginName;
-      //OasysGHInfo.ProductName = AssemblyInfo.ProductName;
 
       // setup headless units
       OasysGH.Units.Utility.SetupUnitsDuringLoad(true);

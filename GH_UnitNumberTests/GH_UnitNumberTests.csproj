@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rhino.Inside" Version="7.0.0" />
+    <PackageReference Include="Rhino.Inside" Version="7.0.0"/>
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,7 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GH_UnitNumber\GH_UnitNumber.csproj" />
+    <ProjectReference Include="..\GH_UnitNumber\GH_UnitNumber.csproj">
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +37,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <Import Project="PreBuild.targets" />
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="Copy &quot;$(TargetDir)GH_UnitNumber.dll&quot; &quot;$(TargetDir)GH_UnitNumber.gha&quot;" />
