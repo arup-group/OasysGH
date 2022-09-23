@@ -4,10 +4,6 @@
   <Target Name="PreventFooSDKCopyLocal" AfterTargets="ResolveReferences">
     <ItemGroup>
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Grasshopper'" />
-    </ItemGroup>
-  </Target>
-  <Target Name="PreventFooSDKCopyLocal" AfterTargets="ResolveReferences">
-    <ItemGroup>
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'RhinoCommon'" />
     </ItemGroup>
   </Target>
