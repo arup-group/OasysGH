@@ -129,4 +129,5 @@
     <None Include="Properties\Icons\Units.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="PreBuild.targets" />
 </Project>
