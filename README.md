@@ -3,7 +3,14 @@
 ## Contents
 1. [Introduction](#introduction)
 1. [How to use](#how-to-use)
+    1. [Shared units](#shared-units)
 1. [Content overview](#content-overview)
+    1. [Units](#units)
+    1. [Component Attributes](#component-attributes)
+    1. [Abstract component classes](#abstract-component-classes)
+    1. [Abstract parameter classes](#abstract-parameter-classes)
+    1. [Input helpers](#input-helpers)
+    1. [Output helpers](#output-helpers)
 
 ## Introduction
 OasysGH is a library with shared content for Oasys Grasshopper plugins. 
@@ -169,3 +176,27 @@ public class GH_UnitNumber : GH_OasysGoo<IQuantity>
 
 #### GH_OasysGeometryGoo
 This class is still to be implemented, but is in the making...
+
+### Input helpers
+OasysGH provides helper methods to get generic input parameters. This enables a single line of code in SolveInstance to retreive custom input parameters in a coherent way that will act similar to how Grasshopper acts to build-in parameters (same type of errors/warnings). For instance a UnitNumber length input can be retrieved like this:
+```cs
+Length inputLength = (Length)Input.UnitNumber(this, DA, 0, this.LengthUnit);
+```
+
+The helpers include methods for getting:
+- `GenericGoo<T>` (item input)
+- `List<GenericGoo<T>>` (list input)
+- `UnitNumber` (item input)
+- `List<UnitNumber>` (list input)
+
+The UnitNumber inputs are special in the sense that they include additional helpers to cast from `string` (text) and `double` (number) inputs, allowing users to input `IQuanity` as either a:
+- UnitNumber
+- Number (unit will be taken from the dropdown or you can implement a static unit like `Hertz` for `FrequencyUnit`)
+- Text (for instance `15 kNm` or `130mm`)
+
+![image](https://user-images.githubusercontent.com/25223248/191968096-a536d2a2-7001-4f00-a338-fb2b7906e343.png)
+
+In the image above, the unit for the Height input (cm) is taken from dropdown. Note that the text inputs can be either with or without space between value and unit. Not shown is the example of inputting another UnitNumber.
+
+### Output helpers
+In order to prevent the dropdown components to continuously expire downstream components, OasysGH provides helper functions to set outputs as item, list or tree which will only expire the output if the output has actually been changed. This allows the user to toggle the dropdown lists without the entire Grasshopper script having to recalculate.
