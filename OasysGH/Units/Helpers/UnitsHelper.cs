@@ -365,6 +365,20 @@ namespace OasysGH.Units.Helpers
       return LinearDensityUnit.KilogramPerMeter;
     }
 
+    public static CoefficientOfThermalExpansionUnit GetCoefficientOfThermalExpansionUnit(TemperatureUnit temperatureUnit)
+    {
+      switch (temperatureUnit)
+      {
+        case TemperatureUnit.Kelvin:
+          return CoefficientOfThermalExpansionUnit.InverseKelvin;
+        case TemperatureUnit.DegreeFahrenheit:
+          return CoefficientOfThermalExpansionUnit.InverseDegreeFahrenheit;
+        case TemperatureUnit.DegreeCelsius:
+        default:
+          return CoefficientOfThermalExpansionUnit.InverseDegreeCelsius;
+      }
+    }
+
 
     public static List<string> GetFilteredAbbreviations(EngineeringUnits unit)
     {

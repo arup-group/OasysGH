@@ -75,17 +75,7 @@ namespace OasysGH.Units
     {
       get
       {
-        switch (DefaultUnits.TemperatureUnit)
-        {
-          case TemperatureUnit.DegreeCelsius:
-            return CoefficientOfThermalExpansionUnit.InverseDegreeCelsius;
-          case TemperatureUnit.Kelvin:
-            return CoefficientOfThermalExpansionUnit.InverseKelvin;
-          case TemperatureUnit.DegreeFahrenheit:
-            return CoefficientOfThermalExpansionUnit.InverseDegreeFahrenheit;
-          default:
-            return CoefficientOfThermalExpansionUnit.Undefined;
-        }
+        return UnitsHelper.GetCoefficientOfThermalExpansionUnit(DefaultUnits.TemperatureUnit);
       }
     }
   }
