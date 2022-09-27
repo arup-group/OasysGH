@@ -56,6 +56,7 @@ namespace OasysGH.Units
     public static BendingStiffnessUnit BendingStiffnessUnit { get; set; } = BendingStiffnessUnit.KilonewtonSquareMeter;
     public static MassUnit MassUnit { get; set; } = MassUnit.Tonne;
     public static TemperatureUnit TemperatureUnit { get; set; } = TemperatureUnit.DegreeCelsius;
+    public static CoefficientOfThermalExpansionUnit CoefficientOfThermalExpansionUnit { get; set; } = CoefficientOfThermalExpansionUnit.InverseKelvin;
     public static SpeedUnit VelocityUnit { get; set; } = SpeedUnit.MeterPerSecond;
     public static AccelerationUnit AccelerationUnit { get; set; } = AccelerationUnit.MeterPerSecondSquared;
     public static EnergyUnit EnergyUnit { get; set; } = EnergyUnit.Megajoule;
