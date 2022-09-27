@@ -40,23 +40,6 @@ namespace OasysGH.Units
         m_length_geometry = value;
       }
     }
-    public static CoefficientOfThermalExpansionUnit CoefficientOfThermalExpansionUnit
-    {
-      get
-      {
-        switch (DefaultUnits.TemperatureUnit)
-        {
-          case TemperatureUnit.DegreeCelsius:
-            return CoefficientOfThermalExpansionUnit.InverseDegreeCelsius;
-          case TemperatureUnit.Kelvin:
-            return CoefficientOfThermalExpansionUnit.InverseKelvin;
-          case TemperatureUnit.DegreeFahrenheit:
-            return CoefficientOfThermalExpansionUnit.InverseDegreeFahrenheit;
-          default:
-            return CoefficientOfThermalExpansionUnit.Undefined;
-        }
-      }
-    }
     private static LengthUnit m_length_geometry = LengthUnit.Meter;
     public static bool UseRhinoLengthGeometryUnit { get; set; } = true;
     public static LengthUnit LengthUnitSection { get; set; } = LengthUnit.Centimeter;
@@ -88,5 +71,22 @@ namespace OasysGH.Units
     public static DensityUnit DensityUnit { get; set; } = DensityUnit.KilogramPerCubicMeter;
     public static LinearDensityUnit LinearDensityUnit { get; set; } = LinearDensityUnit.KilogramPerMeter;
     public static CurvatureUnit CurvatureUnit { get; set; } = CurvatureUnit.PerMeter;
+    public static CoefficientOfThermalExpansionUnit CoefficientOfThermalExpansionUnit
+    {
+      get
+      {
+        switch (DefaultUnits.TemperatureUnit)
+        {
+          case TemperatureUnit.DegreeCelsius:
+            return CoefficientOfThermalExpansionUnit.InverseDegreeCelsius;
+          case TemperatureUnit.Kelvin:
+            return CoefficientOfThermalExpansionUnit.InverseKelvin;
+          case TemperatureUnit.DegreeFahrenheit:
+            return CoefficientOfThermalExpansionUnit.InverseDegreeFahrenheit;
+          default:
+            return CoefficientOfThermalExpansionUnit.Undefined;
+        }
+      }
+    }
   }
 }
