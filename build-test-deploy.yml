@@ -15,6 +15,9 @@ steps:
 - powershell: Remove-Item -Path C:\Users\**\AppData\Roaming\Grasshopper\Libraries\*.ghlink
   displayName: 'Delete orphan .ghlink files'
 
+- powershell: Remove-Item -Path 'C:\Users\**\AppData\Roaming\McNeel\Rhinoceros\packages' -Recurse
+  displayName: 'Delete Rhino plugins'
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2

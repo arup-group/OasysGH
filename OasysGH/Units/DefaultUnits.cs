@@ -71,5 +71,12 @@ namespace OasysGH.Units
     public static DensityUnit DensityUnit { get; set; } = DensityUnit.KilogramPerCubicMeter;
     public static LinearDensityUnit LinearDensityUnit { get; set; } = LinearDensityUnit.KilogramPerMeter;
     public static CurvatureUnit CurvatureUnit { get; set; } = CurvatureUnit.PerMeter;
+    public static CoefficientOfThermalExpansionUnit CoefficientOfThermalExpansionUnit
+    {
+      get
+      {
+        return UnitsHelper.GetCoefficientOfThermalExpansionUnit(DefaultUnits.TemperatureUnit);
+      }
+    }
   }
 }
