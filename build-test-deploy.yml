@@ -115,6 +115,7 @@ steps:
   inputs:
     command: 'pack'
     packagesToPack: 'OasysGH/*.csproj'
+    includeSymbols: true
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'dotSeparatedTag'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
