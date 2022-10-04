@@ -106,15 +106,13 @@ steps:
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
   displayName: Package yak
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'pack'
-    packagesToPack: 'OasysGH/*.csproj'
-    includeSymbols: true
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'dotSeparatedTag'
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
+- powershell: |
+    cd OasysGH
+    dotnet pack *.csproj -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+  condition: succeeded()
   displayName: Package NuGet
+
+#condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
 
 - task: GitHubRelease@1
   inputs:
@@ -130,7 +128,7 @@ steps:
     assets: |
       $(System.DefaultWorkingDirectory)/**/*.yak
       $(Build.ArtifactStagingDirectory)/**/*.nupkg
-      $(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg
+      $(Build.ArtifactStagingDirectory)/**/*.snupkg
     assetUploadMode: 'replace'
     isDraft: true
     isPreRelease: true
