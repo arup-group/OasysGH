@@ -20,4 +20,4 @@ jobs:
           
       - name: Push nupkg file to nuget.org
         run: |
-          dotnet nuget push "*.nupkg *.symbols.nupkg" --api-key ${{ SECRETS.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "*.nupkg" --api-key ${{ SECRETS.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
