@@ -108,7 +108,7 @@ steps:
 
 - powershell: |
     cd OasysGH
-    dotnet pack *.csproj -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
+    dotnet pack OasysGH.csproj -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
   condition: succeeded()
   displayName: Package NuGet
 
