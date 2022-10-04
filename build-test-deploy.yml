@@ -108,7 +108,7 @@ steps:
 
 - powershell: |
     cd OasysGH
-    C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\MSBuild.exe OasysGH.csproj /t:pack /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
+    & 'C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\MSBuild.exe' OasysGH.csproj /t:pack /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg  
   condition: succeeded()
   displayName: Package NuGet
 
