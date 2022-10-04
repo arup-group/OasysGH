@@ -4,7 +4,7 @@
   <!-- NuGet properties -->
   <PropertyGroup>
     <PackageId>OasysGH</PackageId>
-    <Version>0.3.5-beta</Version>
+    <Version>0.3.6-beta</Version>
     <Authors>Oasys</Authors>
     <Title>OasysGH</Title>
     <Description>OasysGH is a library with shared content for Oasys Grasshopper plugins.</Description>
@@ -15,7 +15,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>oasys grasshopper</PackageTags>
-    <PackageReleaseNotes>This is a release of OasysGH 0.3.5-beta.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a release of OasysGH 0.3.6-beta.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
