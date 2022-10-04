@@ -1,10 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!-- NuGet properties -->
   <PropertyGroup>
-    <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
+    <PackageId>OasysGH</PackageId>
+    <Version>0.3.5-beta</Version>
+    <Authors>Oasys</Authors>
+    <Title>OasysGH</Title>
+    <Description>OasysGH is a library with shared content for Oasys Grasshopper plugins.</Description>
+    <Copyright>Copyright 2022 Oasys.</Copyright>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>oasys grasshopper</PackageTags>
+    <PackageReleaseNotes>This is a release of OasysGH 0.3.5-beta.</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{91D4A455-C8B6-4BA7-AF38-C38489F730FD}</ProjectGuid>
@@ -18,7 +31,6 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -107,6 +119,10 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
+    <PackageReference Include="NuGet.Build.Tasks.Pack">
+      <Version>6.3.0</Version>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="OasysUnits">
       <Version>1.0.0</Version>
     </PackageReference>
@@ -115,10 +131,6 @@
     </PackageReference>
     <PackageReference Include="System.DirectoryServices.AccountManagement">
       <Version>5.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="6.3.0" PrivateAssets="all" />
-    <PackageReference Include="System.Resources.Extensions">
-      <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
