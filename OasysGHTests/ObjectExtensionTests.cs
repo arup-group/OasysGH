@@ -60,6 +60,22 @@ namespace OasysGHTests
       Duplicates.AreEqual(original, duplicate);
     }
 
+    [Fact]
+    public void EqualsTest3()
+    {
+      Force quantity = new Force(1, ForceUnit.Kilonewton);
+      Force force = new Force(2, ForceUnit.Decanewton);
+      IList<IQuantity> iQuantities = new List<IQuantity>() { Force.Zero, new Length(100, LengthUnit.Millimeter) };
+      IList<Length> structs = new List<Length>() { Length.Zero, new Length(100, LengthUnit.Millimeter) };
+
+      TestObjectWithFields grandChild = new TestObjectWithFields(true, 1.0, 1, "a", TestEnum.Value1, quantity, force, new List<TestObjectWithFields>(), iQuantities, structs);
+      TestObjectWithFields original = new TestObjectWithFields(new TestObjectWithFields(grandChild));
+
+      TestObjectWithFields duplicate = (TestObjectWithFields)original.Duplicate(true);
+
+      Duplicates.AreEqual(original, duplicate);
+    }
+
     public static IEnumerable<object[]> GetDataEqualsTest2()
     {
       var allData = new List<object[]>
@@ -170,7 +186,6 @@ namespace OasysGHTests
     internal IList<IQuantity> IQuantities { get; set; } = new List<IQuantity>();
     internal IList<Length> Structs { get; set; } = new List<Length>();
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public TestObject() { }
 
     public TestObject(TestObject child)
@@ -182,9 +197,48 @@ namespace OasysGHTests
     {
       this.Children = children;
     }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     internal TestObject(bool b, double d, int i, string s, TestEnum testEnum, IQuantity quantity, Force force, IList<TestObject> children, IList<IQuantity> iQuantities, IList<Length> structs)
+    {
+      this.B = b;
+      this.D = d;
+      this.I = i;
+      this.S = s;
+      this.TestEnum = testEnum;
+      this.IQuantity = quantity;
+      this.Force = force;
+      this.Children = children;
+      this.IQuantities = iQuantities;
+      this.Structs = structs;
+    }
+  }
+
+  public class TestObjectWithFields
+  {
+    internal bool B;
+    internal double D;
+    internal int I;
+    internal string S;
+    internal TestEnum TestEnum;
+    internal IQuantity IQuantity;
+    internal Force Force;
+    internal IList<TestObjectWithFields> Children = new List<TestObjectWithFields>();
+    internal IList<IQuantity> IQuantities = new List<IQuantity>();
+    internal IList<Length> Structs = new List<Length>();
+
+    public TestObjectWithFields() { }
+
+    public TestObjectWithFields(TestObjectWithFields child)
+    {
+      this.Children = new List<TestObjectWithFields>() { child };
+    }
+
+    public TestObjectWithFields(IList<TestObjectWithFields> children)
+    {
+      this.Children = children;
+    }
+
+    internal TestObjectWithFields(bool b, double d, int i, string s, TestEnum testEnum, IQuantity quantity, Force force, IList<TestObjectWithFields> children, IList<IQuantity> iQuantities, IList<Length> structs)
     {
       this.B = b;
       this.D = d;
