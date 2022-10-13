@@ -111,15 +111,12 @@ steps:
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
   displayName: Package yak
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'pack'
-    packagesToPack: 'OasysGH/*.csproj'
-    includeSymbols: true
-    versioningScheme: 'byEnvVar'
-    versionEnvVar: 'dotSeparatedTag'
+- powershell: |
+    cd OasysGH
+    & 'C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\MSBuild.exe' OasysGH.csproj /t:pack /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg  
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
   displayName: Package NuGet
+
 
 - task: GitHubRelease@1
   inputs:
@@ -134,8 +131,8 @@ steps:
       Created from commit https://github.com/arup-group/OasysGH/commit/$(Build.SourceVersion)
     assets: |
       $(System.DefaultWorkingDirectory)/**/*.yak
-      $(Build.ArtifactStagingDirectory)/**/*.nupkg
-      $(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg
+      $(System.DefaultWorkingDirectory)/**/*.nupkg
+      $(System.DefaultWorkingDirectory)/**/*.snupkg
     assetUploadMode: 'replace'
     isDraft: true
     isPreRelease: true
