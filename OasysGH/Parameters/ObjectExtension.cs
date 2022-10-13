@@ -10,8 +10,33 @@ namespace OasysGH
   {
     public static object Duplicate(this object objSource, bool duplicateFields = false)
     {
+      if (objSource == null)
+        return null;
+
       // get the type of source object and create a new instance of that type
       Type typeSource = objSource.GetType();
+
+      MethodInfo nativeDuplicate = typeSource.GetMethod("Duplicate");
+      if (nativeDuplicate != null)
+      {
+        ParameterInfo[] parameters = nativeDuplicate.GetParameters();
+        object[] parametersArray = parameters.Length == 0 ? null : new object[parameters.Length];
+        if (parameters.Length > 0)
+        {
+          for (int i = 0; i < parameters.Length; i++)
+          {
+            if (parameters[i].IsOptional)
+              parametersArray[i] = parameters[i].DefaultValue;
+          }
+        }
+        try
+        {
+          return nativeDuplicate.Invoke(objSource, parametersArray);
+        }
+        catch (Exception)
+        {
+        }
+      }
 
       object objTarget = Activator.CreateInstance(typeSource);
 
