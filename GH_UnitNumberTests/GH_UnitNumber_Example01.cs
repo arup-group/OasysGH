@@ -6,7 +6,6 @@ using Xunit;
 using GH_UnitNumberTests.Helpers;
 using OasysUnits;
 using OasysUnits.Units;
-using static GH_IO.VersionNumber;
 
 namespace GH_UnitNumberTests
 {
