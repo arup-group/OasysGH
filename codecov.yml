@@ -1,0 +1,8 @@
+codecov:
+    notify:
+        after_n_builds: 2
+flags:
+  unitnumber:
+    carryforward: false
+  oasysgh:
+    carryforward: false
