@@ -33,7 +33,7 @@ namespace OasysGH.Parameters
       if (Value == null)
         return "Null";
       else
-        return PluginInfo.ProductName + " " + TypeName + " {" + Value.ToString() + "}";
+        return PluginInfo.ProductName + " " + TypeName + " (" + Value.ToString() + ")";
     }
 
     #region casting methods
