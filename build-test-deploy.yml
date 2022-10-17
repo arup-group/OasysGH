@@ -57,8 +57,8 @@ steps:
     Copy-Item $coverage_file_oasysgh $(System.DefaultWorkingDirectory)\results\coverage_oasysgh.xml
     $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe
-    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_unitnumber.xml --flags unitnumber
-    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_oasysgh.xml --flags oasysgh
+    codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_unitnumber.xml --flags unitnumber
+    codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_oasysgh.xml --flags oasysgh
   env:
     CODECOV_TOKEN: $(CODECOV_TOKEN)
   displayName: Upload Code Coverage to codecovio
