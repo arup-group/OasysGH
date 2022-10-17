@@ -120,7 +120,6 @@ steps:
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
   displayName: Package NuGet
 
-
 - task: GitHubRelease@1
   inputs:
     gitHubConnection: 'github.com_peterjgrainger'
