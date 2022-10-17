@@ -36,7 +36,7 @@ namespace GH_UnitNumber
     internal const string Company = "Oasys";
     internal const string Copyright = "Copyright © Oasys 1985 - 2022";
     internal const string Contact = "https://www.oasys-software.com/";
-    internal const string Vers = "0.3.10";
+    internal const string Vers = "0.3.11";
     internal static bool isBeta = true;
     internal const string ProductName = "UnitNumber";
     internal const string PluginName = "UnitNumber";
