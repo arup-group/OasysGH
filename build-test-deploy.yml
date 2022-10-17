@@ -58,6 +58,7 @@ steps:
     $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe
     ls $(System.DefaultWorkingDirectory)\
+    cd $(System.DefaultWorkingDirectory)\
     codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_unitnumber.xml --flags unitnumber
     codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_oasysgh.xml --flags oasysgh
   env:
