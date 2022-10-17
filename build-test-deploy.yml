@@ -48,20 +48,22 @@ steps:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/**/coverage.cobertura.xml'
     pathToSources: '$(System.DefaultWorkingDirectory)'
 
-#- powershell: |
-#    $coverage_file_unitnumber = (Resolve-Path $(System.DefaultWorkingDirectory)/results/unitnumber/*/coverage.cobertura.xml).Path
-#    echo $coverage_file_unitnumber
-#    $coverage_file_oasysgh = (Resolve-Path $(System.DefaultWorkingDirectory)/results/oasysgh/*/coverage.cobertura.xml).Path
-#    echo $coverage_file_oasysgh
-#    Copy-Item $coverage_file_unitnumber $(System.DefaultWorkingDirectory)\results\coverage_unitnumber.xml
-#    Copy-Item $coverage_file_oasysgh $(System.DefaultWorkingDirectory)\results\coverage_oasysgh.xml
-#    ls $(System.DefaultWorkingDirectory)\results\
-#    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_unitnumber.xml --flags unitnumber
-#    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_oasysgh.xml --flags oasysgh
-#  env:
-#    CODECOV_TOKEN: $(CODECOV_TOKEN)
-#  displayName: Upload Code Coverage to codecovio
-#  failOnStderr: true
+- powershell: |
+    $ProgressPreference = 'SilentlyContinue'
+    Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe
+    $coverage_file_unitnumber = (Resolve-Path $(System.DefaultWorkingDirectory)/results/unitnumber/*/coverage.cobertura.xml).Path
+    echo $coverage_file_unitnumber
+    $coverage_file_oasysgh = (Resolve-Path $(System.DefaultWorkingDirectory)/results/oasysgh/*/coverage.cobertura.xml).Path
+    echo $coverage_file_oasysgh
+    Copy-Item $coverage_file_unitnumber $(System.DefaultWorkingDirectory)\results\coverage_unitnumber.xml
+    Copy-Item $coverage_file_oasysgh $(System.DefaultWorkingDirectory)\results\coverage_oasysgh.xml
+    ls $(System.DefaultWorkingDirectory)\results\
+    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_unitnumber.xml --flags unitnumber
+    codecov -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_oasysgh.xml --flags oasysgh
+  env:
+    CODECOV_TOKEN: $(CODECOV_TOKEN)
+  displayName: Upload Code Coverage to codecovio
+  failOnStderr: true
 
 - task: PowerShell@2
   displayName: Check for existing tags
