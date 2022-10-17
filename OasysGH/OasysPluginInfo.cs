@@ -22,7 +22,7 @@ namespace OasysGH
 
   internal sealed class PluginInfo
   {
-    internal const string Version = "0.3.8";
+    internal const string Version = "0.3.9";
 
     private static readonly Lazy<OasysPluginInfo> lazy =
         new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
