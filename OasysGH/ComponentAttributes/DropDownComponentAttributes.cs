@@ -386,6 +386,11 @@ namespace OasysGH.UI
           RectangleF rec = BorderBound[i];
           if (rec.Contains(e.CanvasLocation))
           {
+            bool selected = comp.Attributes.Selected;
+            comp.Attributes.Selected = true;
+            comp.OnPingDocument().BringSelectionToTop();
+            comp.Attributes.Selected = selected;
+
             unfolded[i] = !unfolded[i];
             // close any other dropdowns that may be unfolded
             for (int j = 0; j < unfolded.Count; j++)
