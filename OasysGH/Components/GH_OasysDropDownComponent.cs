@@ -21,7 +21,6 @@ namespace OasysGH.Components
     public bool AlwaysExpireDownStream = false;
     public Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>();
     
-    private bool ExpireDownStream = true;
     private Dictionary<int, List<bool>> OutputsAreExpired = new Dictionary<int, List<bool>>();
     private Dictionary<int, bool> OutputIsExpired = new Dictionary<int, bool>();
 

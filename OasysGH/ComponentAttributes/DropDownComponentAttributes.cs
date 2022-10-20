@@ -21,7 +21,7 @@ namespace OasysGH.UI
   /// </summary>
   public class DropDownComponentAttributes : GH_ComponentAttributes
   {
-    public DropDownComponentAttributes(GH_OasysDropDownComponent owner, Action<int, int> clickHandle, List<List<string>> dropdownContents, List<string> selections, List<string> spacerTexts = null, List<string> initialdescriptions = null) : base(owner)
+    public DropDownComponentAttributes(GH_Component owner, Action<int, int> clickHandle, List<List<string>> dropdownContents, List<string> selections, List<string> spacerTexts = null, List<string> initialdescriptions = null) : base(owner)
     {
       dropdownlists = dropdownContents;
       spacerTxts = spacerTexts;
