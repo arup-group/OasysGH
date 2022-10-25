@@ -19,14 +19,19 @@ namespace OasysGH
       PostHogApiKey = postHogApiKey;
     }
   }
+  public static class OasysGHVersion
+  {
+    // this is the one place to set the version in VS:
+    // also update the version manually in OasysGH.csproj
+    public const string Version = "0.3.13";
+    public const bool IsBeta = true;
+  }
 
   internal sealed class PluginInfo
   {
-    internal const string Version = "0.3.12";
-
     private static readonly Lazy<OasysPluginInfo> lazy =
         new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
-          "Oasys Shared Grasshopper", "OasysGH", Version, true, "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
+          "Oasys Shared Grasshopper", "OasysGH", OasysGHVersion.Version, OasysGHVersion.IsBeta, "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
           ));
 
     public static OasysPluginInfo Instance { get { return lazy.Value; } }
