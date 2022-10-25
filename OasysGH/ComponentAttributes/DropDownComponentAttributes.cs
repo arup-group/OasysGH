@@ -21,7 +21,7 @@ namespace OasysGH.UI
   /// </summary>
   public class DropDownComponentAttributes : GH_ComponentAttributes
   {
-    public DropDownComponentAttributes(GH_OasysDropDownComponent owner, Action<int, int> clickHandle, List<List<string>> dropdownContents, List<string> selections, List<string> spacerTexts = null, List<string> initialdescriptions = null) : base(owner)
+    public DropDownComponentAttributes(GH_Component owner, Action<int, int> clickHandle, List<List<string>> dropdownContents, List<string> selections, List<string> spacerTexts = null, List<string> initialdescriptions = null) : base(owner)
     {
       dropdownlists = dropdownContents;
       spacerTxts = spacerTexts;
@@ -386,6 +386,11 @@ namespace OasysGH.UI
           RectangleF rec = BorderBound[i];
           if (rec.Contains(e.CanvasLocation))
           {
+            bool selected = comp.Attributes.Selected;
+            comp.Attributes.Selected = true;
+            comp.OnPingDocument().BringSelectionToTop();
+            comp.Attributes.Selected = selected;
+
             unfolded[i] = !unfolded[i];
             // close any other dropdowns that may be unfolded
             for (int j = 0; j < unfolded.Count; j++)

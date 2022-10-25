@@ -6,7 +6,7 @@ namespace OasysGH.Parameters
   {
     abstract public OasysPluginInfo PluginInfo { get; }
 
-    public override string TypeName => typeof(T).Name.TrimStart(new char[] { 'I' });
+    public override string TypeName => typeof(T).Name.TrimStart('I').TrimStart('G', 's', 'a').TrimStart('A', 'd', 'S', 'e', 'c');
     public override string TypeDescription => PluginInfo.ProductName + " " + this.TypeName + " Parameter";
     public override bool IsValid => (this.Value == null) ? false : true;
     public override string IsValidWhyNot
@@ -33,7 +33,7 @@ namespace OasysGH.Parameters
       if (Value == null)
         return "Null";
       else
-        return PluginInfo.ProductName + " " + TypeName + " {" + Value.ToString() + "}";
+        return PluginInfo.ProductName + " " + TypeName + " (" + Value.ToString() + ")";
     }
 
     #region casting methods
