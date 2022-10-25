@@ -50,9 +50,10 @@ namespace OasysGH.Helpers
 
     internal static void ReadDropDownComponents(ref GH_IReader reader, ref List<List<string>> DropDownItems, ref List<string> selecteditems, ref List<string> spacerDescriptions)
     {
-      // dropdown content list
+      // skip reading anything if dropdown hasnt been set by write method
       if (reader.ItemExists("dropdown"))
       {
+        // dropdown content list
         if (reader.GetBoolean("dropdown"))
         {
           int dropdownCount = reader.GetInt32("dropdownCount");
