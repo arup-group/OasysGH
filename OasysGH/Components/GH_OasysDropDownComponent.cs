@@ -141,6 +141,7 @@ namespace OasysGH.Components
     }
 
     #endregion
+
     #region (de)serialization
     public override bool Write(GH_IO.Serialization.GH_IWriter writer)
     {

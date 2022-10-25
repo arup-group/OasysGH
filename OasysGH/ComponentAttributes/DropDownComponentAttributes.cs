@@ -370,7 +370,7 @@ namespace OasysGH.UI
     {
       if (e.Button == MouseButtons.Left)
       {
-        GH_OasysDropDownComponent comp = Owner as GH_OasysDropDownComponent;
+        GH_Component comp = Owner as GH_Component;
         if (drag)
         {
           // if drag was true then we release it here:
@@ -466,7 +466,7 @@ namespace OasysGH.UI
           if (e.Button == MouseButtons.Left)
           {
             RectangleF rec = scrollBar;
-            GH_OasysDropDownComponent comp = Owner as GH_OasysDropDownComponent;
+            GH_Component comp = Owner as GH_Component;
             if (rec.Contains(e.CanvasLocation))
             {
               dragMouseStartY = e.CanvasLocation.Y;
@@ -483,7 +483,7 @@ namespace OasysGH.UI
     {
       if (drag)
       {
-        GH_OasysDropDownComponent comp = Owner as GH_OasysDropDownComponent;
+        GH_Component comp = Owner as GH_Component;
 
         deltaY = e.CanvasLocation.Y - dragMouseStartY;
 
