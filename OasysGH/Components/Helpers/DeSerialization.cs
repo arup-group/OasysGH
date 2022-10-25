@@ -51,36 +51,39 @@ namespace OasysGH.Helpers
     internal static void ReadDropDownComponents(ref GH_IReader reader, ref List<List<string>> DropDownItems, ref List<string> selecteditems, ref List<string> spacerDescriptions)
     {
       // dropdown content list
-      if (reader.GetBoolean("dropdown"))
+      if (reader.ItemExists("dropdown"))
       {
-        int dropdownCount = reader.GetInt32("dropdownCount");
-        DropDownItems = new List<List<string>>();
-        for (int i = 0; i < dropdownCount; i++)
+        if (reader.GetBoolean("dropdown"))
         {
-          int dropDownContentsCount = reader.GetInt32("dropdowncontentsCount" + i);
-          List<string> tempContent = new List<string>();
-          for (int j = 0; j < dropDownContentsCount; j++)
-            tempContent.Add(reader.GetString("dropdowncontents" + i + j));
-          DropDownItems.Add(tempContent);
+          int dropdownCount = reader.GetInt32("dropdownCount");
+          DropDownItems = new List<List<string>>();
+          for (int i = 0; i < dropdownCount; i++)
+          {
+            int dropDownContentsCount = reader.GetInt32("dropdowncontentsCount" + i);
+            List<string> tempContent = new List<string>();
+            for (int j = 0; j < dropDownContentsCount; j++)
+              tempContent.Add(reader.GetString("dropdowncontents" + i + j));
+            DropDownItems.Add(tempContent);
+          }
         }
-      }
 
-      // spacer list
-      if (reader.GetBoolean("spacer"))
-      {
-        int dropDownSpacerCount = reader.GetInt32("spacerCount");
-        spacerDescriptions = new List<string>();
-        for (int i = 0; i < dropDownSpacerCount; i++)
-          spacerDescriptions.Add(reader.GetString("spacercontents" + i));
-      }
+        // spacer list
+        if (reader.GetBoolean("spacer"))
+        {
+          int dropDownSpacerCount = reader.GetInt32("spacerCount");
+          spacerDescriptions = new List<string>();
+          for (int i = 0; i < dropDownSpacerCount; i++)
+            spacerDescriptions.Add(reader.GetString("spacercontents" + i));
+        }
 
-      // selection list
-      if (reader.GetBoolean("select"))
-      {
-        int selectionsCount = reader.GetInt32("selectionCount");
-        selecteditems = new List<string>();
-        for (int i = 0; i < selectionsCount; i++)
-          selecteditems.Add(reader.GetString("selectioncontents" + i));
+        // selection list
+        if (reader.GetBoolean("select"))
+        {
+          int selectionsCount = reader.GetInt32("selectionCount");
+          selecteditems = new List<string>();
+          for (int i = 0; i < selectionsCount; i++)
+            selecteditems.Add(reader.GetString("selectioncontents" + i));
+        }
       }
     }
   }
