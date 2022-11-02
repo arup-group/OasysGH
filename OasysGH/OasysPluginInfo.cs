@@ -23,7 +23,7 @@ namespace OasysGH
   {
     // this is the one place to set the version in VS:
     // also update the version manually in OasysGH.csproj
-    public const string Version = "0.3.13";
+    public const string Version = "0.3.14";
     public const bool IsBeta = true;
   }
 
