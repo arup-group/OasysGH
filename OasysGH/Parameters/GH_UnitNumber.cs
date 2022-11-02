@@ -1,6 +1,5 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
-using OasysGH.Parameters;
 using OasysUnits;
 
 namespace OasysGH.Parameters
