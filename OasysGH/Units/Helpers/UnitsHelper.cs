@@ -7,7 +7,6 @@ namespace OasysGH.Units.Helpers
 {
   public class UnitsHelper
   {
-    private static BaseUnits SI = UnitSystem.SI.BaseUnits;
     public static int SignificantDigits
     {
       get
@@ -17,6 +16,7 @@ namespace OasysGH.Units.Helpers
             (decimal)DefaultUnits.Tolerance.As(DefaultUnits.LengthUnitGeometry))[3])[2];
       }
     }
+    private static BaseUnits SI = UnitSystem.SI.BaseUnits;
 
     public static AreaUnit GetAreaUnit(LengthUnit unit)
     {
@@ -379,7 +379,6 @@ namespace OasysGH.Units.Helpers
       }
     }
 
-
     public static List<string> GetFilteredAbbreviations(EngineeringUnits unit)
     {
       List<string> abbreviations = new List<string>();
@@ -528,6 +527,19 @@ namespace OasysGH.Units.Helpers
         default:
           throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
       }
+    }
+
+    /// <summary>
+    /// Tries to parse a units abbreviation or string representation.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="unitType"></param>
+    /// <returns></returns>
+    public static Enum Parse(string value, Type unitType)
+    {
+      if (UnitParser.Default.TryParse(value, unitType, out Enum unit))
+        return unit;
+      return (Enum)Enum.Parse(unitType, value);
     }
   }
 }

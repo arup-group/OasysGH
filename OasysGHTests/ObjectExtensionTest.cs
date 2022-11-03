@@ -7,8 +7,8 @@ using Xunit;
 
 namespace OasysGHTests
 {
-    [Collection("ComposAPI Fixture collection")]
-  public class ObjectExtensionTests
+  [Collection("ComposAPI Fixture collection")]
+  public class ObjectExtensionTest
   {
     [Fact]
     public void DuplicateTest1()
