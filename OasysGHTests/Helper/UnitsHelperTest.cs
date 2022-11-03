@@ -19,7 +19,7 @@ namespace OasysGHTests.Helper
     public void ParseTest(string value, LengthUnit expectedUnit)
     {
       // Act
-      var unit = UnitsHelper.Parse(value, typeof(LengthUnit));
+      var unit = UnitsHelper.Parse(typeof(LengthUnit), value);
 
       // Assert
       Assert.Equal(expectedUnit, unit);
@@ -31,7 +31,7 @@ namespace OasysGHTests.Helper
     public void ParseExceptionTest(string value)
     {
       // Act & Assert
-      Assert.Throws<ArgumentException>(() => UnitsHelper.Parse(value, typeof(LengthUnit)));
+      Assert.Throws<ArgumentException>(() => UnitsHelper.Parse(typeof(LengthUnit), value));
     }
   }
 }

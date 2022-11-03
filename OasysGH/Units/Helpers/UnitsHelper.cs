@@ -532,10 +532,10 @@ namespace OasysGH.Units.Helpers
     /// <summary>
     /// Tries to parse a units abbreviation or string representation.
     /// </summary>
-    /// <param name="value"></param>
     /// <param name="unitType"></param>
+    /// <param name="value"></param>
     /// <returns></returns>
-    public static Enum Parse(string value, Type unitType)
+    public static Enum Parse(Type unitType, string value)
     {
       if (UnitParser.Default.TryParse(value, unitType, out Enum unit))
         return unit;
