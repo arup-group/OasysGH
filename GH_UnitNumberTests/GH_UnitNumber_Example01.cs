@@ -1,11 +1,11 @@
-﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
-using Xunit;
 using GH_UnitNumberTests.Helpers;
+using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using OasysUnits;
 using OasysUnits.Units;
+using Xunit;
 
 namespace GH_UnitNumberTests
 {
@@ -30,7 +30,7 @@ namespace GH_UnitNumberTests
     public void Check1()
     {
       GH_Document doc = Document();
-      GH_Param<OasysGH.Parameters.GH_UnitNumber> param = Helper.FindComponentInDocumentByGroup<OasysGH.Parameters.GH_UnitNumber>(doc, "Check1");
+      IGH_Param param = Helper.FindParameter(doc, "Check1");
       Assert.NotNull(param);
       param.CollectData();
       OasysGH.Parameters.GH_UnitNumber output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -41,7 +41,7 @@ namespace GH_UnitNumberTests
     public void Check2()
     {
       GH_Document doc = Document();
-      GH_Param<GH_Number> param = Helper.FindComponentInDocumentByGroup<GH_Number>(doc, "Check2");
+      IGH_Param param = Helper.FindParameter(doc, "Check2");
       Assert.NotNull(param);
       param.CollectData();
       GH_Number output = (GH_Number)param.VolatileData.get_Branch(0)[0];
