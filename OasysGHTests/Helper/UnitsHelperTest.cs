@@ -8,18 +8,20 @@ namespace OasysGHTests.Helper
   public class UnitsHelperTest
   {
     [Theory]
-    [InlineData("mm", LengthUnit.Millimeter)]
-    [InlineData("cm", LengthUnit.Centimeter)]
-    [InlineData("m", LengthUnit.Meter)]
-    [InlineData("in", LengthUnit.Inch)]
-    [InlineData("Millimeter", LengthUnit.Millimeter)]
-    [InlineData("Centimeter", LengthUnit.Centimeter)]
-    [InlineData("Meter", LengthUnit.Meter)]
-    [InlineData("Inch", LengthUnit.Inch)]
-    public void ParseTest(string value, LengthUnit expectedUnit)
+    [InlineData("mm", typeof(LengthUnit), LengthUnit.Millimeter)]
+    [InlineData("cm", typeof(LengthUnit), LengthUnit.Centimeter)]
+    [InlineData("m", typeof(LengthUnit), LengthUnit.Meter)]
+    [InlineData("in", typeof(LengthUnit), LengthUnit.Inch)]
+    [InlineData("Millimeter", typeof(LengthUnit), LengthUnit.Millimeter)]
+    [InlineData("Centimeter", typeof(LengthUnit), LengthUnit.Centimeter)]
+    [InlineData("Meter", typeof(LengthUnit), LengthUnit.Meter)]
+    [InlineData("Inch", typeof(LengthUnit), LengthUnit.Inch)]
+    [InlineData("slug/ft³", typeof(DensityUnit), DensityUnit.SlugPerCubicFoot)]
+    [InlineData("lb/ft²", typeof(PressureUnit), PressureUnit.PoundForcePerSquareFoot)]
+    public void ParseTest(string value, Type unitType, Enum expectedUnit)
     {
       // Act
-      var unit = UnitsHelper.Parse(typeof(LengthUnit), value);
+      var unit = UnitsHelper.Parse(unitType, value);
 
       // Assert
       Assert.Equal(expectedUnit, unit);

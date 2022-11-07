@@ -436,12 +436,7 @@ namespace OasysGH.Units.Helpers
 
         case EngineeringUnits.Stress:
           foreach (string unitstring in FilteredUnits.FilteredStressUnits)
-          {
-            string abb = Pressure.GetAbbreviation((PressureUnit)Enum.Parse(typeof(PressureUnit), unitstring));
-            if (abb.StartsWith("lb"))
-              abb = abb.Insert(2, "f");
-            abbreviations.Add(abb);
-          }
+            abbreviations.Add(Pressure.GetAbbreviation((PressureUnit)Enum.Parse(typeof(PressureUnit), unitstring)));
           return abbreviations;
 
         case EngineeringUnits.Strain:
@@ -466,32 +461,17 @@ namespace OasysGH.Units.Helpers
 
         case EngineeringUnits.Mass:
           foreach (string unitstring in FilteredUnits.FilteredMassUnits)
-          {
-            string abb = Mass.GetAbbreviation((MassUnit)Enum.Parse(typeof(MassUnit), unitstring));
-            if (abb.StartsWith("lb"))
-              abb = abb.Insert(2, "m");
-            abbreviations.Add(abb);
-          }
+            abbreviations.Add(Mass.GetAbbreviation((MassUnit)Enum.Parse(typeof(MassUnit), unitstring)));
           return abbreviations;
 
         case EngineeringUnits.Density:
           foreach (string unitstring in FilteredUnits.FilteredDensityUnits)
-          {
-            string abb = Density.GetAbbreviation((DensityUnit)Enum.Parse(typeof(DensityUnit), unitstring));
-            if (abb.StartsWith("lb"))
-              abb = abb.Insert(2, "m");
-            abbreviations.Add(abb);
-          }
+            abbreviations.Add(Density.GetAbbreviation((DensityUnit)Enum.Parse(typeof(DensityUnit), unitstring)));
           return abbreviations;
 
         case EngineeringUnits.LinearDensity:
           foreach (string unitstring in FilteredUnits.FilteredLinearDensityUnits)
-          {
-            string abb = LinearDensity.GetAbbreviation((LinearDensityUnit)Enum.Parse(typeof(LinearDensityUnit), unitstring));
-            if (abb.StartsWith("lb"))
-              abb = abb.Insert(2, "m");
-            abbreviations.Add(abb);
-          }
+            abbreviations.Add(LinearDensity.GetAbbreviation((LinearDensityUnit)Enum.Parse(typeof(LinearDensityUnit), unitstring)));
           return abbreviations;
 
         case EngineeringUnits.Temperature:
