@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Grasshopper.Kernel;
+using OasysUnits;
 
 namespace GH_UnitNumber
 {
@@ -58,5 +61,19 @@ namespace GH_UnitNumber
       get { return false; }
     }
     #endregion
+
+    protected override OasysGH.Parameters.GH_UnitNumber PreferredCast(object data)
+    {
+      if (GH_Convert.ToString(data, out string txt, GH_Conversion.Both))
+      {
+        var types = Quantity.Infos.Select(x => x.ValueType).ToList();
+        foreach (var type in types)
+        {
+          if (Quantity.TryParse(type, txt, out IQuantity quantity))
+            return new OasysGH.Parameters.GH_UnitNumber(quantity);
+        }
+      }
+      return base.PreferredCast(data);
+    }
   }
 }
