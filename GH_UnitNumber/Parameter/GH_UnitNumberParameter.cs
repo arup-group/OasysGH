@@ -73,15 +73,11 @@ namespace GH_UnitNumber
         Type bendingStiffness = types.Where(t => t.Name == "BendingStiffness").ToList()[0];
         types.Remove(bendingStiffness);
         
-        LoopThroughTypes:
         foreach (Type type in types)
         {
           if (Quantity.TryParse(type, txt, out IQuantity quantity))
             return new OasysGH.Parameters.GH_UnitNumber(quantity);
         }
-
-        if (txt[txt.Length - 1] == 's')
-          goto LoopThroughTypes;
 
         List<Type> alternativeTypes = new List<Type>();
         types.Add(axialStiffness);
