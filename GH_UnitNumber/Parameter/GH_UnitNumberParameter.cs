@@ -66,12 +66,34 @@ namespace GH_UnitNumber
     {
       if (GH_Convert.ToString(data, out string txt, GH_Conversion.Both))
       {
-        var types = Quantity.Infos.Select(x => x.ValueType).ToList();
-        foreach (var type in types)
+        List<Type> types = Quantity.Infos.Select(x => x.ValueType).ToList();
+        
+        Type axialStiffness = types.Where(t => t.Name == "AxialStiffness").ToList()[0];
+        types.Remove(axialStiffness);
+        Type bendingStiffness = types.Where(t => t.Name == "BendingStiffness").ToList()[0];
+        types.Remove(bendingStiffness);
+        
+        LoopThroughTypes:
+        foreach (Type type in types)
         {
           if (Quantity.TryParse(type, txt, out IQuantity quantity))
             return new OasysGH.Parameters.GH_UnitNumber(quantity);
         }
+
+        if (txt[txt.Length - 1] == 's')
+          goto LoopThroughTypes;
+
+        List<Type> alternativeTypes = new List<Type>();
+        types.Add(axialStiffness);
+        types.Add(bendingStiffness);
+        foreach (Type type in alternativeTypes)
+        {
+          if (Quantity.TryParse(type, txt, out IQuantity quantity))
+            return new OasysGH.Parameters.GH_UnitNumber(quantity);
+        }
+
+        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to cast " + txt + " to any know quantity. Input a string like '15 mm' or '12.4 slug'");
+        return null;
       }
       return base.PreferredCast(data);
     }
