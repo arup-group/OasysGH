@@ -20,7 +20,7 @@ namespace GH_UnitNumber.Components
     #region Name and Ribbon Layout
     // This region handles how the component in displayed on the ribbon
     // including name, exposure level and icon
-    public override Guid ComponentGuid => new Guid("9e7a3b43-eb15-4f2b-9023-e1582ec63ed2");
+    public override Guid ComponentGuid => new Guid("267b3293-f4ac-48ab-ab66-2d194c86aa52");
     public ConvertUnitNumber()
       : base("Convert UnitNumber", "ConvertUnit", "Convert a unit number (quantity) into another unit",
             "Params",
