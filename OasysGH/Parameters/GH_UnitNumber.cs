@@ -13,7 +13,7 @@ namespace OasysGH.Parameters
   {
     public static string Name => "UnitNumber";
     public static string NickName => "UN";
-    public static string Description => "A value with a unit measure";
+    public static string Description => "A value with a unit measure. Note that this is not a text but an actual object, you can convert this into other units using the 'ConvertUnitNumber' component.";
     public override OasysPluginInfo PluginInfo => OasysGH.PluginInfo.Instance;
 
     public GH_UnitNumber(IQuantity item) : base(item) { }
