@@ -20,7 +20,7 @@ namespace GH_UnitNumber.Components
             "Params",
             "Util")
     { this.Hidden = true; } // sets the initial state of the component to hidden
-    public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.obscure;
+    public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.hidden;
 
     protected override System.Drawing.Bitmap Icon => Properties.Resources.ConvertUnitNumber;
     public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
