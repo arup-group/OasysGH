@@ -12,6 +12,8 @@
     <PackageIcon>UnitNumberLogo64.png</PackageIcon>
     <Version>0.4.3-beta</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <BaseOutputPath>bin\</BaseOutputPath>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
@@ -53,7 +55,6 @@
   <ItemGroup>
     <None Include="Properties\Icons\CreateUnitNumber.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="PreBuild.targets" />
   <ItemGroup>
     <None Include="Properties\Icons\UnitNumberLogo64.png" Pack="true" PackagePath="" />
