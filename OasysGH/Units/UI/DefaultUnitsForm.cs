@@ -294,18 +294,9 @@ namespace OasysGH.Units.UI
       SetSelectedDropdown(this.areaComboBox, AreaAbbr, Area.GetAbbreviation(unit.SectionAreaUnit));
       SetSelectedDropdown(this.volumeComboBox, VolumeAbbr, Volume.GetAbbreviation(unit.SectionVolumeUnit));
       SetSelectedDropdown(this.momentOfInertiaComboBox, InertiaAbbr, AreaMomentOfInertia.GetAbbreviation(unit.SectionAreaMomentOfInertiaUnit));
-      string abbMass = Mass.GetAbbreviation(unit.MassUnit);
-      if (abbMass.StartsWith("lb"))
-        abbMass = abbMass.Insert(2, "m");
-      SetSelectedDropdown(this.massComboBox, MassAbbr, abbMass);
-      string abbDensity = Density.GetAbbreviation(unit.DensityUnit);
-      if (abbDensity.StartsWith("lb"))
-        abbDensity = abbDensity.Insert(2, "m");
-      SetSelectedDropdown(this.densityComboBox, DensityAbbr, abbDensity);
-      string abbLinearDensity = LinearDensity.GetAbbreviation(unit.LinearDensityUnit);
-      if (abbLinearDensity.StartsWith("lb"))
-        abbLinearDensity = abbLinearDensity.Insert(2, "m");
-      SetSelectedDropdown(this.linearDensityComboBox, LinearDensityAbbr, abbLinearDensity);
+      SetSelectedDropdown(this.massComboBox, MassAbbr, Mass.GetAbbreviation(unit.MassUnit));
+      SetSelectedDropdown(this.densityComboBox, DensityAbbr, Density.GetAbbreviation(unit.DensityUnit));
+      SetSelectedDropdown(this.linearDensityComboBox, LinearDensityAbbr, LinearDensity.GetAbbreviation(unit.LinearDensityUnit));
       SetSelectedDropdown(this.volumePerLengthComboBox, VolPerLengthAbbr, VolumePerLength.GetAbbreviation(unit.VolumePerLengthUnit));
       SetSelectedDropdown(this.materialStrengthComboBox, PressureAbbr, Pressure.GetAbbreviation(unit.MaterialStrengthUnit));
       SetSelectedDropdown(this.materialStrainComboBox, StrainAbbr, Strain.GetAbbreviation(unit.MaterialStrainUnit));
@@ -355,14 +346,8 @@ namespace OasysGH.Units.UI
       DefaultUnits.SectionVolumeUnit = Volume.ParseUnit(volumeComboBox.Text);
       DefaultUnits.SectionAreaMomentOfInertiaUnit = AreaMomentOfInertia.ParseUnit(momentOfInertiaComboBox.Text);
       DefaultUnits.MassUnit = Mass.ParseUnit(massComboBox.Text);
-      string abbDensity = densityComboBox.Text;
-      if (abbDensity.StartsWith("lbm"))
-        abbDensity = abbDensity.Remove(2, 1);
-      DefaultUnits.DensityUnit = Density.ParseUnit(abbDensity);
-      string abbLinearDensity = linearDensityComboBox.Text;
-      if (abbLinearDensity.StartsWith("lbm"))
-        abbLinearDensity = abbLinearDensity.Remove(2, 1);
-      DefaultUnits.LinearDensityUnit = LinearDensity.ParseUnit(abbLinearDensity);
+      DefaultUnits.DensityUnit = Density.ParseUnit(densityComboBox.Text);
+      DefaultUnits.LinearDensityUnit = LinearDensity.ParseUnit(linearDensityComboBox.Text);
       DefaultUnits.VolumePerLengthUnit = VolumePerLength.ParseUnit(volumePerLengthComboBox.Text);
       DefaultUnits.MaterialStrengthUnit = Pressure.ParseUnit(materialStrengthComboBox.Text);
       DefaultUnits.MaterialStrainUnit = Strain.ParseUnit(materialStrainComboBox.Text);
