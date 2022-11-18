@@ -300,9 +300,9 @@ namespace OasysGH.Units.Helpers
           switch (lengthUnit)
           {
             case LengthUnit.Inch:
-              return MomentUnit.PoundForceFoot;
-            case LengthUnit.Foot:
               return MomentUnit.PoundForceInch;
+            case LengthUnit.Foot:
+              return MomentUnit.PoundForceFoot;
           }
           break;
       }
