@@ -1,6 +1,8 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using OasysUnits;
+using System.Linq;
+using System.Reflection;
 
 namespace OasysGH.Parameters
 {
@@ -11,7 +13,7 @@ namespace OasysGH.Parameters
   {
     public static string Name => "UnitNumber";
     public static string NickName => "UN";
-    public static string Description => "A value with a unit measure";
+    public static string Description => "A value with a unit measure. Note that this is not a text but an actual object, you can convert this into other units using the 'ConvertUnitNumber' component.";
     public override OasysPluginInfo PluginInfo => OasysGH.PluginInfo.Instance;
 
     public GH_UnitNumber(IQuantity item) : base(item) { }
@@ -60,10 +62,18 @@ namespace OasysGH.Parameters
         return true;
       }
 
+      // Try parse from string
       if (GH_Convert.ToString(source, out string txt, GH_Conversion.Both))
       {
-        // TODO: a way to generically Parse text into quantity without knowing unit
-        
+        var types = Quantity.Infos.Select(x => x.ValueType).ToList();
+        foreach (var type in types)
+        {
+          if (Quantity.TryParse(type, txt, out IQuantity quantity))
+          {
+            Value= quantity;
+            return true;
+          }
+        }
       }
 
       return false;

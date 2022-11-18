@@ -84,11 +84,11 @@ namespace OasysGH.Helpers
       _ = SendToPostHog(pluginInfo, eventName, properties);
     }
 
-    internal static void RemovedFromDocument(GH_OasysComponent component)
+    public static void RemovedFromDocument(GH_OasysComponent component)
     {
       RemovedFromDocument(component, component.PluginInfo);
     }
-    internal static void RemovedFromDocument(GH_Component component, OasysPluginInfo pluginInfo)
+    public static void RemovedFromDocument(GH_Component component, OasysPluginInfo pluginInfo)
     {
       if (component.Attributes.Selected)
       {
