@@ -1,54 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <!-- NuGet properties -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>OasysGH</PackageId>
-    <Version>0.4.3-beta</Version>
-    <Authors>Oasys</Authors>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
     <Title>OasysGH</Title>
-    <Description>OasysGH is a library with shared content for Oasys Grasshopper plugins.</Description>
-    <Copyright>Copyright 2022 Oasys.</Copyright>
-    <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
+	  <Company>Oasys</Company>
+    <Copyright>Copyright © Oasys 2022</Copyright>
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>0.4.3-beta</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageTags>oasys grasshopper</PackageTags>
+    <Description>OasysGH is a library with shared content for Oasys Grasshopper plugins.</Description>
     <PackageReleaseNotes>This is a release of OasysGH 0.4.3-beta.</PackageReleaseNotes>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
-    <ProjectGuid>{91D4A455-C8B6-4BA7-AF38-C38489F730FD}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OasysGH</RootNamespace>
-    <AssemblyName>OasysGH</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
+    <PackageTags>oasys grasshopper</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -68,82 +34,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Helpers\Input.cs" />
-    <Compile Include="Parameters\GH_OasysGeometricGoo.cs" />
-    <Compile Include="Parameters\GH_OasysPersistentGeometryParam.cs" />
-    <Compile Include="Parameters\GH_OasysPersistentParam.cs" />
-    <Compile Include="Utility.cs" />
-    <Compile Include="OasysPluginInfo.cs" />
-    <Compile Include="Components\GH_OasysComponent.cs" />
-    <Compile Include="Components\GH_OasysDropDownComponent.cs" />
-    <Compile Include="Components\Helpers\DeSerialization.cs" />
-    <Compile Include="Components\Helpers\PostHog.cs" />
-    <Compile Include="Components\Helpers\Output.cs" />
-    <Compile Include="Components\GH_OasysTaskCapableComponent.cs" />
-    <Compile Include="Parameters\GH_OasysGoo.cs" />
-    <Compile Include="Parameters\ObjectExtension.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ComponentAttributes\Bool6ComponentAttributes.cs" />
-    <Compile Include="ComponentAttributes\ButtonComponentAttributes.cs" />
-    <Compile Include="ComponentAttributes\DropDownSliderComponentAttributes.cs" />
-    <Compile Include="ComponentAttributes\Colours.cs" />
-    <Compile Include="ComponentAttributes\DropDownCheckBoxesComponentAttributes.cs" />
-    <Compile Include="ComponentAttributes\DropDownComponentAttributes.cs" />
-    <Compile Include="ComponentAttributes\Helpers\ButtonAttributes.cs" />
-    <Compile Include="ComponentAttributes\Helpers\WidthAttributes.cs" />
-    <Compile Include="ComponentAttributes\ReleasesComponentAttributes.cs" />
-    <Compile Include="ComponentAttributes\SliderComponentAttributes.cs" />
-    <Compile Include="ComponentAttributes\SupportComponentAttributes.cs" />
-    <Compile Include="ComponentAttributes\ThreeButtonAtrributes.cs" />
-    <Compile Include="Units\DefaultUnits.cs" />
-    <Compile Include="Parameters\GH_UnitNumber.cs" />
-    <Compile Include="Units\Helpers\FilteredUnits.cs" />
-    <Compile Include="Units\Helpers\RhinoUnit.cs" />
-    <Compile Include="Units\Utility.cs" />
-    <Compile Include="Units\Helpers\UnitsHelper.cs" />
-    <Compile Include="Units\UI\DefaultUnitsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Units\UI\DefaultUnitsForm.Designer.cs">
-      <DependentUpon>DefaultUnitsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Units\UI\MainMenu.cs" />
-    <Compile Include="YakInstall.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Grasshopper">
-      <Version>6.27.20176.5001</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="NuGet.Build.Tasks.Pack">
-      <Version>6.3.0</Version>
+    <PackageReference Include="Grasshopper" Version="6.27.20176.5001" IncludeAssets="compile;build">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="OasysUnits">
-      <Version>1.0.0</Version>
+    <PackageReference Include="RhinoCommon" Version="6.27.20176.5001">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>compile;build</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OasysUnits.Serialization.JsonNet">
-      <Version>1.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.DirectoryServices.AccountManagement">
-      <Version>5.0.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Units\UI\DefaultUnitsForm.resx">
-      <DependentUpon>DefaultUnitsForm.cs</DependentUpon>
-    </EmbeddedResource>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="OasysUnits" Version="1.0.0" />
+    <PackageReference Include="OasysUnits.Serialization.JsonNet" Version="1.0.0" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Icons\Units.ico" />
@@ -151,6 +52,5 @@
   <ItemGroup>
     <None Include="Properties\Icons\Units.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="PreBuild.targets" />
 </Project>
