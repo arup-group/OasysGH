@@ -72,7 +72,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-        $versionInfo = $(Get-Item .\OasysGH\bin\x64\Release\OasysGH.dll).VersionInfo
+        $versionInfo = $(Get-Item .\OasysGH\bin\x64\Release\net48\OasysGH.dll).VersionInfo
         echo $versionInfo
         $fullVersion = [array]${versionInfo}.FileVersion.split('.')
         $currentTime = $(Get-Date -Format "dddd MM/dd/yyyy HH:mm")
@@ -101,7 +101,7 @@ steps:
     ignoreLASTEXITCODE: true
 
 - powershell: |
-    cd GH_UnitNumber\bin\x64
+    cd GH_UnitNumber\bin\x64\Release
     curl https://files.mcneel.com/yak/tools/latest/yak.exe -o yak.exe
     .\yak version
     cd Release
