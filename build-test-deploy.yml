@@ -104,7 +104,7 @@ steps:
     cd GH_UnitNumber\bin\x64\Release
     curl https://files.mcneel.com/yak/tools/latest/yak.exe -o yak.exe
     .\yak version
-    cd Release
+    cd net48
     ..\yak spec
     Add-Content manifest.yml 'icon: UnitNumberIcon.png'
     ..\yak build --platform win
