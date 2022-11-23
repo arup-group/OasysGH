@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using OasysUnits.Units;
 using OasysUnits;
+using System.Threading;
+using System.Globalization;
 
 namespace OasysGH.Units.Helpers
 {
@@ -517,9 +519,106 @@ namespace OasysGH.Units.Helpers
     /// <returns></returns>
     public static Enum Parse(Type unitType, string value)
     {
+      CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
+      return UnitsHelper.Parse(unitType, value, culture);
+    }
+
+    /// <summary>
+    /// Tries to parse a units abbreviation or string representation.
+    /// </summary>
+    /// <param name="unitType"></param>
+    /// <param name="value"></param>
+    /// <param name="currentUICulture"></param>
+    /// <returns></returns>
+    public static Enum Parse(Type unitType, string value, CultureInfo currentUICulture)
+    {
       if (UnitParser.Default.TryParse(value, unitType, out Enum unit))
         return unit;
-      return (Enum)Enum.Parse(unitType, value);
+      try
+      {
+        return (Enum)Enum.Parse(unitType, value, true);
+      }
+      catch (ArgumentException)
+      {
+        // try to use current culture to parse unit abbreviation
+        switch (unitType)
+        {
+          case Type _ when unitType == typeof(AccelerationUnit):
+            return Acceleration.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(AngleUnit):
+            return Angle.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(AreaMomentOfInertiaUnit):
+            return AreaMomentOfInertia.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(AreaUnit):
+            return Area.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(AxialStiffnessUnit):
+            return AxialStiffness.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(BendingStiffnessUnit):
+            return BendingStiffness.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(CoefficientOfThermalExpansionUnit):
+            return CoefficientOfThermalExpansion.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(CurvatureUnit):
+            return Curvature.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(DensityUnit):
+            return Density.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(DurationUnit):
+            return Duration.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(EnergyUnit):
+            return Energy.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(ForcePerLengthUnit):
+            return ForcePerLength.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(ForceUnit):
+            return Force.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(MassUnit):
+            return Mass.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(MomentUnit):
+            return Moment.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(LengthUnit):
+            return Length.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(LinearDensityUnit):
+            return LinearDensity.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(PressureUnit):
+            return Pressure.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(RatioUnit):
+            return Ratio.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(SpeedUnit):
+            return Speed.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(StrainUnit):
+            return Strain.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(TemperatureUnit):
+            return Temperature.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(VolumePerLengthUnit):
+            return VolumePerLength.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(VolumeUnit):
+            return Volume.ParseUnit(value, currentUICulture);
+
+          default:
+            throw new ArgumentException();
+        }
+      }
     }
   }
 }
