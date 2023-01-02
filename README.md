@@ -1,5 +1,13 @@
 # OasysGH
 
+![Downloads](https://img.shields.io/nuget/dt/oasysgh?style=flat-square) [![Install plugin](https://img.shields.io/badge/install-Food4Rhino-green?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADxSURBVHgB3ZTtDcIgEIaPxgHqBnUCV3CEbmA3cAVXcIJ2A0foCm7QOoHdAF8SGgFpORB/6JO8oSUH3Acc0ZcRHCMpZYmhgSYhREe5wQGtfNHHrOVGIK1FgJgUTLvLwnceVA3m/FAkG44RMjJh74kSsHKZ4qHhhLcu3Bok838HjHq8QVtop7/zgBpX0Fm3hnnuIHmU2r7RKmMO5nD1tZTgk1dRYRgoAXV1C2ezEzRAtTF9pDTGtxkn5NYJOYTKe6UdfMxOxr7kDrpDe8iMktdhAx7Wjq11u5b2ZEfg89C0/7gXKY/X/rmbrNE7ti0nRb/PEyfNcxAV2WX+AAAAAElFTkSuQmCC)](https://www.food4rhino.com/en/app/unitnumber)
+
+A library with shared content for Oasys Grasshopper plugins.
+
+| Latest | CI Pipeline | Deployment | Dependencies |
+| ------ | ----------- | ---------- | ------------ |
+| [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/arup-group/OasysGH?include_prereleases&logo=github&style=flat-square)](https://github.com/arup-group/OasysGH/releases) <br /> ![Yak](https://img.shields.io/badge/dynamic/json?color=blue&label=Yak&prefix=v&query=version&url=https%3A%2F%2Fyak.rhino3d.com%2Fpackages%2Funitnumber&logo=rhinoceros&style=flat-square) <br /> ![Nuget](https://img.shields.io/nuget/vpre/oasysgh?logo=nuget&style=flat-square) | [![Build Status](https://dev.azure.com/oasys-software/OASYS%20libraries/_apis/build/status/arup-group.OasysGH?branchName=main?style=flat-square)](https://dev.azure.com/oasys-software/OASYS%20libraries/_build/latest?definitionId=140&branchName=main) <br /> ![Azure DevOps builds](https://img.shields.io/azure-devops/build/oasys-software/89fd051d-5c77-48bf-9b0e-05bca3e3e596/140?logo=azurepipelines&style=flat-square) <br /> ![GitHub branch checks state](https://img.shields.io/github/checks-status/arup-group/oasysgh/main?logo=github&style=flat-square) | ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/arup-group/oasysgh/github-release-yak.yml?label=yak&logo=rhinoceros&style=flat-square) <br /> ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/arup-group/oasysgh/github-release-nuget.yml?label=nuget&logo=nuget&style=flat-square) | ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/arup-group/oasysgh?logo=nuget&style=flat-square) |
+
 ## Contents
 1. [Introduction](#introduction)
 1. [How to use](#how-to-use)
