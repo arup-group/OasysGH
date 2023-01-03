@@ -1,5 +1,13 @@
 # OasysGH
 
+![Downloads](https://img.shields.io/nuget/dt/oasysgh?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAB3SURBVHgB7ZRBDoAgDASr8SH8/1PwE6yHJogEd5UeNMyNpN2hhFTEmQUtzMqpUUH6VnFmCqbASaBfPuaKRk1NhAXu6G1Ca4oOR21gHIyEDyckz8MByfvwjoQLty5Qcht+yUMEDGXe91fFVh5GPpNhEyQZT5JfsAN5UByV3bhHmAAAAABJRU5ErkJggg==) [![Install plugin](https://img.shields.io/badge/install-Food4Rhino-green?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADxSURBVHgB3ZTtDcIgEIaPxgHqBnUCV3CEbmA3cAVXcIJ2A0foCm7QOoHdAF8SGgFpORB/6JO8oSUH3Acc0ZcRHCMpZYmhgSYhREe5wQGtfNHHrOVGIK1FgJgUTLvLwnceVA3m/FAkG44RMjJh74kSsHKZ4qHhhLcu3Bok838HjHq8QVtop7/zgBpX0Fm3hnnuIHmU2r7RKmMO5nD1tZTgk1dRYRgoAXV1C2ezEzRAtTF9pDTGtxkn5NYJOYTKe6UdfMxOxr7kDrpDe8iMktdhAx7Wjq11u5b2ZEfg89C0/7gXKY/X/rmbrNE7ti0nRb/PEyfNcxAV2WX+AAAAAElFTkSuQmCC)](https://www.food4rhino.com/en/app/unitnumber)
+
+A library with shared content for Oasys Grasshopper plugins.
+
+| Latest | CI Pipeline | Deployment | Dependencies |
+| ------ | ----------- | ---------- | ------------ |
+| [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/arup-group/OasysGH?include_prereleases&logo=github&style=flat-square)](https://github.com/arup-group/OasysGH/releases) <br /> ![Yak](https://img.shields.io/badge/dynamic/json?color=blue&label=yak&prefix=v&query=version&url=https%3A%2F%2Fyak.rhino3d.com%2Fpackages%2Funitnumber&logo=rhinoceros&style=flat-square) <br /> ![Nuget](https://img.shields.io/nuget/vpre/oasysgh?logo=nuget&style=flat-square) | ![Azure DevOps builds](https://img.shields.io/azure-devops/build/oasys-software/89fd051d-5c77-48bf-9b0e-05bca3e3e596/140?logo=azurepipelines&style=flat-square&label=Azure%20Pipelines) | ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/arup-group/oasysgh/github-release-yak.yml?label=Push%20UnitNumber%20Yak%20package&logo=rhinoceros&style=flat-square) <br /> ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/arup-group/oasysgh/github-release-nuget.yml?label=Push%20OasysGH%20NuGet%20package&logo=nuget&style=flat-square) | ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/arup-group/oasysgh?logo=nuget&style=flat-square) <br /> ![Dependents (via libraries.io)](https://img.shields.io/librariesio/dependents/nuget/oasysgh?logo=librariesdotio&logoColor=white) |
+
 ## Contents
 1. [Introduction](#introduction)
 1. [How to use](#how-to-use)
@@ -200,3 +208,6 @@ In the image above, the unit for the Height input (cm) is taken from dropdown. N
 
 ### Output helpers
 In order to prevent the dropdown components to continuously expire downstream components, OasysGH provides helper functions to set outputs as item, list or tree which will only expire the output if the output has actually been changed. This allows the user to toggle the dropdown lists without the entire Grasshopper script having to recalculate.
+
+## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?&style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADLSURBVHgB7ZPRDcIwDESvnYAROgIbkA1ghG7CKDACTNBs0m5QNgiO5I/IuLGLhJCgT7JUWXe5OHKBvyIxazytckhIC8gghQDHLYf0PoN1eFe7jZzE45NPdC6+T/Bj+yh5J8adc09oXiawfG0lOYt62FR9ZcBRMQfY+Hw8mmQWGu2Jqr6mNEOhIaRG6y35yieKiu4Gm+jy8S5feeRcF+cWmT43WoBFiw+zBXw/oNGavGY91YFqz+1OyB5UE9edKtK/NcEDBYxpPSN+kidmAJvClBsULQAAAABJRU5ErkJggg==)](/LICENSE)
