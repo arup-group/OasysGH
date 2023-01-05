@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using OasysUnits.Units;
-using OasysUnits;
-using System.Threading;
 using System.Globalization;
+using System.Threading;
+using OasysUnits;
+using OasysUnits.Units;
 
 namespace OasysGH.Units.Helpers
 {
@@ -18,7 +18,7 @@ namespace OasysGH.Units.Helpers
             (decimal)DefaultUnits.Tolerance.As(DefaultUnits.LengthUnitGeometry))[3])[2];
       }
     }
-    private static BaseUnits SI = UnitSystem.SI.BaseUnits;
+    private static BaseUnits SI = OasysUnits.UnitSystem.SI.BaseUnits;
 
     public static AreaUnit GetAreaUnit(LengthUnit unit)
     {
@@ -37,7 +37,7 @@ namespace OasysGH.Units.Helpers
       }
       // fallback:
       BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      UnitSystem unitSystem = new UnitSystem(baseUnits);
+      OasysUnits.UnitSystem unitSystem = new OasysUnits.UnitSystem(baseUnits);
       return new Area(1, unitSystem).Unit;
     }
 
@@ -58,7 +58,7 @@ namespace OasysGH.Units.Helpers
       }
       // fallback:
       BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      UnitSystem unitSystem = new UnitSystem(baseUnits);
+      OasysUnits.UnitSystem unitSystem = new OasysUnits.UnitSystem(baseUnits);
       return new Volume(1, unitSystem).Unit;
     }
 
@@ -79,7 +79,7 @@ namespace OasysGH.Units.Helpers
       }
       // fallback:
       BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      UnitSystem unitSystem = new UnitSystem(baseUnits);
+      OasysUnits.UnitSystem unitSystem = new OasysUnits.UnitSystem(baseUnits);
       return new AreaMomentOfInertia(1, unitSystem).Unit;
     }
 
