@@ -51,12 +51,9 @@ namespace OasysGH.Units.UI
       InitialiseDropdown(this.youngsModulusComboBox, this.PressureAbbr, Pressure.GetAbbreviation(DefaultUnits.YoungsModulusUnit));
 
       // Geometry
-      InitialiseDropdown(this.lengthComboBox, this.LengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry));
-      this.lengthComboBox.Enabled = !DefaultUnits.UseRhinoLengthGeometryUnit;
-      this.useRhinoLengthUnit.Checked = DefaultUnits.UseRhinoLengthGeometryUnit;
-
       this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry) + "]";
 
+      // i think this needs to happen before initializing the combo boxes
       this.toleranceUpDown.Value = (decimal)TempTolerance.As(Length.ParseUnit(lengthComboBox.Text));
       this.useRhinoTolerance.Checked = DefaultUnits.UseRhinoTolerance;
       if (this.useRhinoTolerance.Checked)
@@ -64,6 +61,11 @@ namespace OasysGH.Units.UI
         this.toleranceUpDown.Value = (decimal)RhinoUnit.GetRhinoTolerance().As(DefaultUnits.LengthUnitGeometry);
         this.toleranceUpDown.Enabled = false;
       }
+      
+      InitialiseDropdown(this.lengthComboBox, this.LengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry));
+      this.lengthComboBox.Enabled = !DefaultUnits.UseRhinoLengthGeometryUnit;
+      this.useRhinoLengthUnit.Checked = DefaultUnits.UseRhinoLengthGeometryUnit;
+
 
       // Loads
       InitialiseDropdown(this.forceComboBox, this.ForceAbbr, Force.GetAbbreviation(DefaultUnits.ForceUnit));
