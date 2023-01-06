@@ -54,7 +54,7 @@ namespace OasysGH.Units.UI
       this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry) + "]";
 
       // i think this needs to happen before initializing the combo boxes
-      this.toleranceUpDown.Value = (decimal)TempTolerance.As(Length.ParseUnit(lengthComboBox.Text));
+      this.toleranceUpDown.Value = (decimal)TempTolerance.As(Length.ParseUnit(Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry)));
       this.useRhinoTolerance.Checked = DefaultUnits.UseRhinoTolerance;
       if (this.useRhinoTolerance.Checked)
       {
