@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 using OasysUnits;
 
 namespace GH_UnitNumber
@@ -64,6 +66,15 @@ namespace GH_UnitNumber
 
     protected override OasysGH.Parameters.GH_UnitNumber PreferredCast(object data)
     {
+      if (data.GetType() == typeof(OasysGH.Parameters.GH_UnitNumber))
+        return (OasysGH.Parameters.GH_UnitNumber)data;
+      else if (data.GetType() == typeof(GH_ObjectWrapper))
+      {
+        object val = ((GH_ObjectWrapper)data).Value;
+        if (typeof(IQuantity).IsAssignableFrom(val.GetType()))
+          return new OasysGH.Parameters.GH_UnitNumber((IQuantity)val);
+      }
+
       if (GH_Convert.ToString(data, out string txt, GH_Conversion.Both))
       {
         List<Type> types = Quantity.Infos.Select(x => x.ValueType).ToList();
@@ -72,7 +83,10 @@ namespace GH_UnitNumber
         types.Remove(axialStiffness);
         Type bendingStiffness = types.Where(t => t.Name == "BendingStiffness").ToList()[0];
         types.Remove(bendingStiffness);
-        
+        Type duration = types.Where(t => t.Name == "Duration").ToList()[0];
+        Type massFraction = types.Where(t => t.Name == "MassFraction").ToList()[0];
+        types.Remove(duration);
+
         foreach (Type type in types)
         {
           if (Quantity.TryParse(type, txt, out IQuantity quantity))
@@ -82,6 +96,8 @@ namespace GH_UnitNumber
         List<Type> alternativeTypes = new List<Type>();
         types.Add(axialStiffness);
         types.Add(bendingStiffness);
+        types.Add(duration);
+        types.Add(massFraction);
         foreach (Type type in alternativeTypes)
         {
           if (Quantity.TryParse(type, txt, out IQuantity quantity))
