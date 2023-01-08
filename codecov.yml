@@ -7,7 +7,7 @@ flags:
   oasysgh:
     carryforward: false
     
- ignore:
+ignore:
   - "OasysGHTests"  # ignore project (as it is referenced by Integration test)
   - "GH_UnitNumber/Components/OBSOLETE"  # ignore old versions of components in
   - "GH_UnitNumber/Properties" # ignore icons etc
@@ -19,6 +19,7 @@ flags:
   - "OasysGH/Units/Helpers/RhinoUnits.cs" # ignore helper file that gets rhino unit (tested manually)
   - "OasysGH/Units/UI"  # ignore UI about box
   - "OasysGH/ComponentAttributes" # ignore UI classes
+
 comment:     # this is a top-level key
   layout: "reach, diff, tree"
   behavior: new
