@@ -418,91 +418,91 @@ namespace GH_UnitNumber.Components
       switch (unit)
       {
         case EngineeringUnits.Angle:
-          unitAbbreviation = Angle.GetAbbreviation((AngleUnit)Quantity.Unit);
+          unitAbbreviation = Angle.GetAbbreviation((AngleUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Length:
-          unitAbbreviation = Length.GetAbbreviation((LengthUnit)Quantity.Unit);
+          unitAbbreviation = Length.GetAbbreviation((LengthUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Area:
-          unitAbbreviation = Area.GetAbbreviation((AreaUnit)Quantity.Unit);
+          unitAbbreviation = Area.GetAbbreviation((AreaUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Volume:
-          unitAbbreviation = Volume.GetAbbreviation((VolumeUnit)Quantity.Unit);
+          unitAbbreviation = Volume.GetAbbreviation((VolumeUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.AreaMomentOfInertia:
-          unitAbbreviation = AreaMomentOfInertia.GetAbbreviation((AreaMomentOfInertiaUnit)Quantity.Unit);
+          unitAbbreviation = AreaMomentOfInertia.GetAbbreviation((AreaMomentOfInertiaUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Force:
-          unitAbbreviation = Force.GetAbbreviation((ForceUnit)Quantity.Unit);
+          unitAbbreviation = Force.GetAbbreviation((ForceUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.ForcePerLength:
-          unitAbbreviation = ForcePerLength.GetAbbreviation((ForcePerLengthUnit)Quantity.Unit);
+          unitAbbreviation = ForcePerLength.GetAbbreviation((ForcePerLengthUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.ForcePerArea:
-          unitAbbreviation = Pressure.GetAbbreviation((PressureUnit)Quantity.Unit);
+          unitAbbreviation = Pressure.GetAbbreviation((PressureUnit)SelectedMeasure);
           break; ;
 
         case EngineeringUnits.Moment:
-          unitAbbreviation = Moment.GetAbbreviation((MomentUnit)Quantity.Unit);
+          unitAbbreviation = Moment.GetAbbreviation((MomentUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Stress:
-          unitAbbreviation = Pressure.GetAbbreviation((PressureUnit)Quantity.Unit);
+          unitAbbreviation = Pressure.GetAbbreviation((PressureUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Strain:
-          unitAbbreviation = Strain.GetAbbreviation((StrainUnit)Quantity.Unit);
+          unitAbbreviation = Strain.GetAbbreviation((StrainUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.AxialStiffness:
-          unitAbbreviation = AxialStiffness.GetAbbreviation((AxialStiffnessUnit)Quantity.Unit);
+          unitAbbreviation = AxialStiffness.GetAbbreviation((AxialStiffnessUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.BendingStiffness:
-          unitAbbreviation = BendingStiffness.GetAbbreviation((BendingStiffnessUnit)Quantity.Unit);
+          unitAbbreviation = BendingStiffness.GetAbbreviation((BendingStiffnessUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Curvature:
-          unitAbbreviation = Curvature.GetAbbreviation((CurvatureUnit)Quantity.Unit);
+          unitAbbreviation = Curvature.GetAbbreviation((CurvatureUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Mass:
-          unitAbbreviation = Mass.GetAbbreviation((MassUnit)Quantity.Unit);
+          unitAbbreviation = Mass.GetAbbreviation((MassUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Density:
-          unitAbbreviation = Density.GetAbbreviation((DensityUnit)Quantity.Unit);
+          unitAbbreviation = Density.GetAbbreviation((DensityUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Temperature:
-          unitAbbreviation = Temperature.GetAbbreviation((TemperatureUnit)Quantity.Unit);
+          unitAbbreviation = Temperature.GetAbbreviation((TemperatureUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Velocity:
-          unitAbbreviation = Speed.GetAbbreviation((SpeedUnit)Quantity.Unit);
+          unitAbbreviation = Speed.GetAbbreviation((SpeedUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Acceleration:
-          unitAbbreviation = Acceleration.GetAbbreviation((AccelerationUnit)Quantity.Unit);
+          unitAbbreviation = Acceleration.GetAbbreviation((AccelerationUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Energy:
-          unitAbbreviation = Energy.GetAbbreviation((EnergyUnit)Quantity.Unit);
+          unitAbbreviation = Energy.GetAbbreviation((EnergyUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Ratio:
-          unitAbbreviation = Ratio.GetAbbreviation((RatioUnit)Quantity.Unit);
+          unitAbbreviation = Ratio.GetAbbreviation((RatioUnit)SelectedMeasure);
           break;
 
         case EngineeringUnits.Time:
-          unitAbbreviation = Duration.GetAbbreviation((DurationUnit)Quantity.Unit);
+          unitAbbreviation = Duration.GetAbbreviation((DurationUnit)SelectedMeasure);
           break;
 
         default:
