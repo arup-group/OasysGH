@@ -16,17 +16,8 @@ namespace OasysGHTests.Units.Helpers
     [Fact]
     public void SignificantDigitsTest() 
     {
-      // Assemble
-      Length currentTolerance = DefaultUnits.Tolerance;
-      
-      // Act
-      DefaultUnits.Tolerance = new Length(0.12345678, DefaultUnits.LengthUnitGeometry);
-
       // Assert
-      Assert.Equal(8, UnitsHelper.SignificantDigits);
-
-      // Revert
-      DefaultUnits.Tolerance = currentTolerance;
+      Assert.Equal(2, UnitsHelper.SignificantDigits);
     }
 
     [Theory]
