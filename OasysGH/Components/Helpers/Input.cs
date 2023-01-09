@@ -306,11 +306,9 @@ namespace OasysGH.Helpers
       }
       else if (!isOptional)
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
-      else
-      {
-        if (unitNumber == null)
-          return null;
-      }
+
+      if (unitNumber == null)
+        return null;
 
       return unitNumber.Value;
     }
