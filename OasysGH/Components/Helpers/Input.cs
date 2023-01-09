@@ -63,6 +63,9 @@ namespace OasysGH.Helpers
         {
           Quantity.TryFrom(0, unit, out IQuantity zeroType);
           Type valueType = zeroType.QuantityInfo.ValueType;
+          // someone thought it was a good idea to add 'm' as abbreviation for time/duration... revert to length:
+          if (txt.EndsWith("m") && valueType == typeof(Duration))
+            valueType= typeof(Length);
           if (Quantity.TryParse(valueType, txt, out IQuantity quantity))
             return quantity;
           else
@@ -140,6 +143,9 @@ namespace OasysGH.Helpers
           {
             Quantity.TryFrom(0, unit, out IQuantity zeroType);
             Type valueType = zeroType.QuantityInfo.ValueType;
+            // someone thought it was a good idea to add 'm' as abbreviation for time/duration... revert to length:
+            if (txt.EndsWith("m") && valueType == typeof(Duration))
+              valueType = typeof(Length);
             if (Quantity.TryParse(valueType, txt, out IQuantity quantity))
               items.Add(quantity);
             else
@@ -346,7 +352,7 @@ namespace OasysGH.Helpers
           {
             // create new quantity from default units
             if (val < 0)
-              lengths.Add(new Ratio(Math.Abs(val), RatioUnit.DecimalFraction));
+              lengths.Add(new Ratio(Math.Abs(val), RatioUnit.DecimalFraction).ToUnit(RatioUnit.Percent));
             else
               lengths.Add(new Length(val, lengthUnit));
           }
@@ -505,11 +511,12 @@ namespace OasysGH.Helpers
                 + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be Ratio");
             return new Ratio(1, RatioUnit.DecimalFraction);
           }
+          return (Ratio)unitNumber.Value;
         }
         // try cast to double
         else if (GH_Convert.ToDouble(gh_typ.Value, out double val, GH_Conversion.Both))
         {
-          owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Remark, "Note: Input " + owner.Params.Input[inputid].NickName + " was not automatically converted to percentage");
+          owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Remark, "Note: Input " + owner.Params.Input[inputid].NickName + " was NOT automatically converted to percentage");
           return new Ratio(val, RatioUnit.DecimalFraction);
         }
         // try cast to string

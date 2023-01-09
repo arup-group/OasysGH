@@ -49,6 +49,35 @@ namespace GH_UnitNumberTests
     }
 
     [Fact]
+    public void Check3()
+    {
+      GH_Document doc = Document();
+      IGH_Param param = Helper.FindParameter(doc, "Check3");
+      Assert.NotNull(param);
+      param.CollectData();
+      GH_Number output = (GH_Number)param.VolatileData.get_Branch(0)[0];
+      Assert.Equal(0.015, output.Value);
+    }
+
+    [Fact]
+    public void Check4()
+    {
+      GH_Document doc = Document();
+      IGH_Param param = Helper.FindParameter(doc, "Check4");
+      Assert.NotNull(param);
+      param.CollectData();
+      OasysGH.Parameters.GH_UnitNumber output0 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
+      OasysGH.Parameters.GH_UnitNumber output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[1];
+      OasysGH.Parameters.GH_UnitNumber output2 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[2];
+      OasysGH.Parameters.GH_UnitNumber output3 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[3];
+      
+      Assert.Equal(new Length(2.3, LengthUnit.Meter), output0.Value);
+      Assert.Equal(new Length(4.5, LengthUnit.Centimeter), output1.Value);
+      Assert.Equal(new Force(1.2, ForceUnit.Kilonewton), output2.Value);
+      Assert.Equal(new Force(3.4, ForceUnit.Meganewton), output3.Value);
+    }
+
+    [Fact]
     public void NoRuntimeErrorsTest()
     {
       Helper.TestNoRuntimeMessagesInDocument(Document(), GH_RuntimeMessageLevel.Error);
