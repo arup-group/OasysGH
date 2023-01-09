@@ -51,21 +51,20 @@ namespace OasysGH.Units.UI
       InitialiseDropdown(this.youngsModulusComboBox, this.PressureAbbr, Pressure.GetAbbreviation(DefaultUnits.YoungsModulusUnit));
 
       // Geometry
+      this.toleranceUpDown.Value = (decimal)TempTolerance.As(Length.ParseUnit(Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry)));
+      this.useRhinoTolerance.Checked = DefaultUnits.UseRhinoTolerance;
       this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry) + "]";
 
-      // i think this needs to happen before initializing the combo boxes
-      this.toleranceUpDown.Value = (decimal)TempTolerance.As(Length.ParseUnit(lengthComboBox.Text));
-      this.useRhinoTolerance.Checked = DefaultUnits.UseRhinoTolerance;
       if (this.useRhinoTolerance.Checked)
       {
         this.toleranceUpDown.Value = (decimal)RhinoUnit.GetRhinoTolerance().As(DefaultUnits.LengthUnitGeometry);
         this.toleranceUpDown.Enabled = false;
+        this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(RhinoUnit.GetRhinoLengthUnit()) + "]";
       }
       
       InitialiseDropdown(this.lengthComboBox, this.LengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry));
       this.lengthComboBox.Enabled = !DefaultUnits.UseRhinoLengthGeometryUnit;
       this.useRhinoLengthUnit.Checked = DefaultUnits.UseRhinoLengthGeometryUnit;
-
 
       // Loads
       InitialiseDropdown(this.forceComboBox, this.ForceAbbr, Force.GetAbbreviation(DefaultUnits.ForceUnit));
@@ -116,18 +115,17 @@ namespace OasysGH.Units.UI
 
     private void useRhinoTolerance_CheckedChanged(object sender, EventArgs e)
     {
-      toleranceUpDown.Enabled = !useRhinoTolerance.Checked;
-      LengthUnit unit = useRhinoTolerance.Checked ? RhinoUnit.GetRhinoLengthUnit() : Length.ParseUnit(lengthComboBox.Text);
-      this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(unit) + "]";
-
       if (!useRhinoTolerance.Checked)
       {
+        toleranceUpDown.Enabled = true;
         this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
-
-        this.SetTempTolerance(unit);
+        this.SetTempTolerance(Length.ParseUnit(lengthComboBox.Text));
       }
       else
       {
+        toleranceUpDown.Enabled = false;
+        LengthUnit unit = RhinoUnit.GetRhinoLengthUnit();
+        this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(unit) + "]";
         this.toleranceUpDown.Value = (decimal)RhinoUnit.GetRhinoTolerance().As(unit);
         this.TempTolerance = new Length((double)this.toleranceUpDown.Value, unit);
       }
