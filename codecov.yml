@@ -6,6 +6,24 @@ flags:
     carryforward: false
   oasysgh:
     carryforward: false
+    
+ignore:
+  - "OasysGHTests"  # ignore project (as it is referenced by Integration test)
+  - "GH_UnitNumber/Components/OBSOLETE"  # ignore old versions of components in
+  - "GH_UnitNumber/Properties" # ignore icons etc
+  - "GH_UnitNumber/Parameters/*Goo.cs" # ignore all files ending with *Goo.cs (goo wrappers, no logic should be placed here)
+  - "GH_UnitNumber/Parameters/*Parameter.cs" # ignore all files ending with *Parameter.cs (scaffolding for params, no logic should be placed here)
+  - "GH_UnitNumberAssemblyInfo.cs" 
+  - "OasysGH/ComponentAttributes" # ignore UI classes
+  - "OasysGH/Parameters/*Goo.cs" # ignore all files ending with *Goo.cs (goo wrappers, no logic should be placed here)
+  - "OasysGH/Parameters/*Param.cs" # ignore all files ending with *Parameter.cs (scaffolding for params, no logic should be placed here)
+  - "OasysGH/Properties" # ignore icons etc
+  - "OasysGH/Units/Helpers/FilteredUnits.cs" # ignore helper file that lists relevant engineering units only
+  - "OasysGH/Units/Helpers/RhinoUnits.cs" # ignore helper file that gets rhino unit (tested manually)
+  - "OasysGH/Units/UI"  # ignore UI about box
+  - "OasysGH/OasysPluginInfo.cs"
+  - "OasysGH/Utility.cs"
+  - "OasysGH/YakInstall.cs"
 
 comment:     # this is a top-level key
   layout: "reach, diff, tree"
