@@ -17,8 +17,6 @@ namespace OasysGH.Units
         // get rhino document length unit
         if (headless)
           LengthUnitGeometry = LengthUnit.Meter;
-        else
-          LengthUnitGeometry = RhinoUnit.GetRhinoLengthUnit(RhinoDoc.ActiveDoc.ModelUnitSystem);
         SaveSettings();
       }
     }
