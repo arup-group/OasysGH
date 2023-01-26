@@ -13,14 +13,7 @@ namespace OasysGH.Units
     {
       bool settingsExist = ReadSettings();
       if (!settingsExist)
-      {
-        // get rhino document length unit
-        if (headless)
-          LengthUnitGeometry = LengthUnit.Meter;
-        else
-          LengthUnitGeometry = RhinoUnit.GetRhinoLengthUnit(RhinoDoc.ActiveDoc.ModelUnitSystem);
         SaveSettings();
-      }
     }
 
     internal static void SaveSettings()
@@ -98,7 +91,7 @@ namespace OasysGH.Units
       DefaultUnits.UseRhinoLengthGeometryUnit = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoLengthGeometryUnit", false);
 
       DefaultUnits.Tolerance = new Length(Grasshopper.Instances.Settings.GetValue("OasysTolerance", double.NaN), LengthUnitGeometry);
-      UseRhinoTolerance = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoTolerance", false);
+      DefaultUnits.UseRhinoTolerance = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoTolerance", false);
 
       DefaultUnits.LengthUnitSection = (LengthUnit)Enum.Parse(typeof(LengthUnit),
       Grasshopper.Instances.Settings.GetValue("OasysLengthUnitSection", string.Empty));
