@@ -10,3 +10,4 @@
 /GH_UnitNumberTests/obj
 /GH_UnitNumberTests/bin
 /GH_UnitNumber/GH_UnitNumber.csproj.user
+*.user

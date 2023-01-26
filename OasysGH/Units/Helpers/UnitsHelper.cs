@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using OasysUnits.Units;
-using OasysUnits;
-using System.Threading;
 using System.Globalization;
+using System.Threading;
+using OasysUnits;
+using OasysUnits.Units;
 
 namespace OasysGH.Units.Helpers
 {
@@ -18,7 +18,7 @@ namespace OasysGH.Units.Helpers
             (decimal)DefaultUnits.Tolerance.As(DefaultUnits.LengthUnitGeometry))[3])[2];
       }
     }
-    private static BaseUnits SI = UnitSystem.SI.BaseUnits;
+    private static BaseUnits SI = OasysUnits.UnitSystem.SI.BaseUnits;
 
     public static AreaUnit GetAreaUnit(LengthUnit unit)
     {
@@ -37,7 +37,7 @@ namespace OasysGH.Units.Helpers
       }
       // fallback:
       BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      UnitSystem unitSystem = new UnitSystem(baseUnits);
+      OasysUnits.UnitSystem unitSystem = new OasysUnits.UnitSystem(baseUnits);
       return new Area(1, unitSystem).Unit;
     }
 
@@ -58,7 +58,7 @@ namespace OasysGH.Units.Helpers
       }
       // fallback:
       BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      UnitSystem unitSystem = new UnitSystem(baseUnits);
+      OasysUnits.UnitSystem unitSystem = new OasysUnits.UnitSystem(baseUnits);
       return new Volume(1, unitSystem).Unit;
     }
 
@@ -77,10 +77,7 @@ namespace OasysGH.Units.Helpers
         case LengthUnit.Inch:
           return AreaMomentOfInertiaUnit.InchToTheFourth;
       }
-      // fallback:
-      BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      UnitSystem unitSystem = new UnitSystem(baseUnits);
-      return new AreaMomentOfInertia(1, unitSystem).Unit;
+      throw new OasysUnitsException("Unable to convert " + unit + " to a known type of AreaMomentOfInertia");
     }
 
     public static VolumePerLengthUnit GetVolumePerLengthUnit(LengthUnit unit)
@@ -93,8 +90,9 @@ namespace OasysGH.Units.Helpers
         case LengthUnit.Millimeter:
         case LengthUnit.Centimeter:
         case LengthUnit.Meter:
-        default:
           return VolumePerLengthUnit.CubicMeterPerMeter;
+        default:
+          throw new OasysUnitsException("Unable to convert " + unit + " to a known type of VolumePerLengthUnit");
       }
     }
 
@@ -155,11 +153,7 @@ namespace OasysGH.Units.Helpers
           break;
       }
 
-      // fallback
-      Force force = Force.From(1, forceUnit);
-      Length length = Length.From(1, lengthUnit);
-      ForcePerLength kNperM = force / length;
-      return kNperM.Unit;
+      throw new OasysUnitsException("Unable to convert " + forceUnit + " x " + lengthUnit + " to a known type of VolumePerLengthUnit");
     }
 
     public static PressureUnit GetForcePerAreaUnit(ForceUnit forceUnit, LengthUnit lengthUnit)
@@ -234,7 +228,7 @@ namespace OasysGH.Units.Helpers
           switch (lengthUnit)
           {
             case LengthUnit.Millimeter:
-              return BendingStiffnessUnit.KilonewtonSquareMeter;
+              return BendingStiffnessUnit.KilonewtonSquareMillimeter;
             case LengthUnit.Meter:
               return BendingStiffnessUnit.KilonewtonSquareMeter;
           }
@@ -249,7 +243,7 @@ namespace OasysGH.Units.Helpers
           }
           break;
       }
-      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to force per area");
+      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to BendingStiffness");
     }
 
     public static MomentUnit GetMomentUnit(ForceUnit forceUnit, LengthUnit lengthUnit)
@@ -313,30 +307,26 @@ namespace OasysGH.Units.Helpers
 
     public static AxialStiffnessUnit GetAxialStiffnessUnit(ForceUnit forceUnit)
     {
-      switch (forceUnit)
+      try
       {
-        case ForceUnit.Newton:
-          return AxialStiffnessUnit.Newton;
-        case ForceUnit.Kilonewton:
-          return AxialStiffnessUnit.Kilonewton;
-        case ForceUnit.Meganewton:
-          return AxialStiffnessUnit.Meganewton;
-        case ForceUnit.KilopoundForce:
-          return AxialStiffnessUnit.KilopoundForce;
-        case ForceUnit.PoundForce:
-          return AxialStiffnessUnit.PoundForce;
+        return AxialStiffness.ParseUnit(Force.GetAbbreviation(forceUnit));
       }
-      throw new Exception("Unable to convert " + forceUnit.ToString() + " to Axial Stiffness");
+      catch (Exception)
+      {
+        throw new Exception("Unable to convert " + forceUnit.ToString() + " to Axial Stiffness");
+      }
     }
 
     public static DensityUnit GetDensityUnit(MassUnit massUnit, LengthUnit lengthUnit)
     {
-      Mass mass = Mass.From(1, massUnit);
-      Length len = Length.From(1, lengthUnit);
-      Volume vol = len * len * len;
-
-      Density density = mass / vol;
-      return density.Unit;
+      string mass = massUnit.ToString();
+      string length = lengthUnit.ToString();
+      return (DensityUnit)Enum.Parse(typeof(DensityUnit), mass + "PerCubic" + length );
+      
+      //Mass mass = Mass.From(1, massUnit);
+      //Length len = Length.From(1, lengthUnit);
+      //Volume vol = len * len * len;
+      //return density.Unit;
     }
 
     public static LinearDensityUnit GetLinearDensityUnit(MassUnit massUnit, LengthUnit lengthUnit)
@@ -364,7 +354,7 @@ namespace OasysGH.Units.Helpers
           }
           break;
       }
-      return LinearDensityUnit.KilogramPerMeter;
+      throw new Exception("Unable to convert " + massUnit.ToString() + " combined with " + lengthUnit.ToString() + " to Linear Density");
     }
 
     public static CoefficientOfThermalExpansionUnit GetCoefficientOfThermalExpansionUnit(TemperatureUnit temperatureUnit)

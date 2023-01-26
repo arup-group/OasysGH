@@ -285,10 +285,13 @@ namespace OasysGH.UI
       for (int i = 0; i < toggleTexts.Count; i++)
       {
         // add text box 
-        ToggleTextBound.Add(new RectangleF(Bounds.X + 2 * s + bw, Bounds.Bottom + s + h0 + i * h1, Bounds.Width - 4 * s - bw, h1));
+        ToggleTextBound.Add(new RectangleF(
+          Bounds.X + 2 * s + bw, //x
+          Bounds.Bottom + s + h0 + i * h1, //y
+          Bounds.Width - 2 * s - bw, //width
+          h1)); // height
         // add check box
         ToggleBoxBound.Add(new RectangleF(Bounds.X + s, Bounds.Bottom + s + h0 + i * h1, bw, h1));
-
       }
       // update component bounds
       Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + h0 + toggleTexts.Count * h1 + 2 * s);
@@ -440,10 +443,8 @@ namespace OasysGH.UI
           CheckBox.DrawCheckButton(graphics, new PointF(ToggleBoxBound[i].X + ToggleBoxBound[i].Width / 2, ToggleBoxBound[i].Y + ToggleBoxBound[i].Height / 2), toggles[i], activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
 
           // update width of text box for mouse-over event handling
-          List<string> incl = new List<string>();
-          incl.Add(toggleTexts[i]);
           RectangleF txtBound = ToggleTextBound[i];
-          txtBound.Width = WidthAttributes.MaxTextWidth(incl, font);
+          txtBound.Width = WidthAttributes.MaxTextWidth(new List<string>() { toggleTexts[i] }, new Font(GH_FontServer.FamilyStandard, 7));
           ToggleTextBound[i] = txtBound;
         }
       }

@@ -63,6 +63,9 @@ namespace OasysGH.Helpers
         {
           Quantity.TryFrom(0, unit, out IQuantity zeroType);
           Type valueType = zeroType.QuantityInfo.ValueType;
+          // someone thought it was a good idea to add 'm' as abbreviation for time/duration... revert to length:
+          if (txt.EndsWith("m") && valueType == typeof(Duration))
+            valueType= typeof(Length);
           if (Quantity.TryParse(valueType, txt, out IQuantity quantity))
             return quantity;
           else
@@ -140,6 +143,9 @@ namespace OasysGH.Helpers
           {
             Quantity.TryFrom(0, unit, out IQuantity zeroType);
             Type valueType = zeroType.QuantityInfo.ValueType;
+            // someone thought it was a good idea to add 'm' as abbreviation for time/duration... revert to length:
+            if (txt.EndsWith("m") && valueType == typeof(Duration))
+              valueType = typeof(Length);
             if (Quantity.TryParse(valueType, txt, out IQuantity quantity))
               items.Add(quantity);
             else
@@ -300,11 +306,9 @@ namespace OasysGH.Helpers
       }
       else if (!isOptional)
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
-      else
-      {
-        if (unitNumber == null)
-          return null;
-      }
+
+      if (unitNumber == null)
+        return null;
 
       return unitNumber.Value;
     }
@@ -348,7 +352,7 @@ namespace OasysGH.Helpers
           {
             // create new quantity from default units
             if (val < 0)
-              lengths.Add(new Ratio(Math.Abs(val), RatioUnit.DecimalFraction));
+              lengths.Add(new Ratio(Math.Abs(val), RatioUnit.DecimalFraction).ToUnit(RatioUnit.Percent));
             else
               lengths.Add(new Length(val, lengthUnit));
           }
@@ -383,6 +387,153 @@ namespace OasysGH.Helpers
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
       return null;
+    }
+
+    /// <summary>
+    /// Helper method to get a ratio unit number as either unit number or double as percentage
+    /// </summary>
+    /// <param name="owner"></param>
+    /// <param name="DA"></param>
+    /// <param name="inputid"></param>
+    /// <param name="isOptional"></param>
+    /// <returns></returns>
+    public static GH_UnitNumber UnitNumberOrDoubleAsRatioToPercentage(GH_Component owner, IGH_DataAccess DA, int inputid, bool isOptional = false)
+    {
+      GH_ObjectWrapper gh_typ = new GH_ObjectWrapper();
+      if (DA.GetData(inputid, ref gh_typ))
+      {
+        // try cast directly to quantity type
+        if (gh_typ.Value is GH_UnitNumber)
+        {
+          return (GH_UnitNumber)gh_typ.Value;
+        }
+        // try cast to double
+        else if (GH_Convert.ToDouble(gh_typ.Value, out double val, GH_Conversion.Both))
+        {
+          // create new quantity from default units
+          Ratio rat = new Ratio(val, RatioUnit.DecimalFraction).ToUnit(RatioUnit.Percent);
+          owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Remark, "Note: Input " + owner.Params.Input[inputid].NickName + " was automatically converted from DecimalFraction (" + val + ") to Percentage (" + rat.ToString("f0") + ")");
+          return new GH_UnitNumber(rat);
+        }
+        // try cast to string
+        else if (GH_Convert.ToString(gh_typ.Value, out string txt, GH_Conversion.Both))
+        {
+          if (Ratio.TryParse(txt, out Ratio res))
+            return new GH_UnitNumber(res);
+          else
+            owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to Ratio");
+        }
+        else
+        {
+          owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
+          return null;
+        }
+      }
+      else if (!isOptional)
+      {
+        owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
+      }
+      return null;
+    }
+
+    /// <summary>
+    /// Helper method to get a ratio unit number as either unit number or double as decimal fraction
+    /// </summary>
+    /// <param name="owner"></param>
+    /// <param name="DA"></param>
+    /// <param name="inputid"></param>
+    /// <returns></returns>
+    public static Ratio RatioInDecimalFractionToPercentage(GH_Component owner, IGH_DataAccess DA, int inputid)
+    {
+      GH_UnitNumber unitNumber = null;
+      GH_ObjectWrapper gh_typ = new GH_ObjectWrapper();
+      if (DA.GetData(inputid, ref gh_typ))
+      {
+        // try cast directly to quantity type
+        if (gh_typ.Value is GH_UnitNumber)
+        {
+          unitNumber = (GH_UnitNumber)gh_typ.Value;
+          // check that unit is of right type
+          if (!unitNumber.Value.QuantityInfo.UnitType.Equals(typeof(RatioUnit)))
+          {
+            owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Error in " + owner.Params.Input[inputid].NickName + " input: Wrong unit type"
+                + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be Ratio");
+            return new Ratio(100, RatioUnit.Percent);
+          }
+          return (Ratio)unitNumber.Value;
+        }
+        // try cast to double
+        else if (GH_Convert.ToDouble(gh_typ.Value, out double val, GH_Conversion.Both))
+        {
+          // create new quantity from default units
+          Ratio rat = new Ratio(val, RatioUnit.DecimalFraction).ToUnit(RatioUnit.Percent);
+          owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Remark, "Note: Input " + owner.Params.Input[inputid].NickName + " was automatically converted from DecimalFraction (" + val + ") to Percentage (" + rat.ToString("f0") + ")");
+          return rat;
+        }
+        // try cast to string
+        else if (GH_Convert.ToString(gh_typ.Value, out string txt, GH_Conversion.Both))
+        {
+          if (Ratio.TryParse(txt, out Ratio res))
+            return res;
+          else
+            owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to Ratio");
+        }
+        else
+        {
+          owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
+          return new Ratio(100, RatioUnit.Percent);
+        }
+      }
+      return new Ratio(100, RatioUnit.Percent);
+    }
+
+    /// <summary>
+    /// Helper method to get a ratio as either unit number or double as ratio
+    /// </summary>
+    /// <param name="owner"></param>
+    /// <param name="DA"></param>
+    /// <param name="inputid"></param>
+    /// <returns></returns>
+    public static Ratio RatioInDecimalFractionToDecimalFraction(GH_Component owner, IGH_DataAccess DA, int inputid)
+    {
+      GH_UnitNumber unitNumber = null;
+      GH_ObjectWrapper gh_typ = new GH_ObjectWrapper();
+      if (DA.GetData(inputid, ref gh_typ))
+      {
+        // try cast directly to quantity type
+        if (gh_typ.Value is GH_UnitNumber)
+        {
+          unitNumber = (GH_UnitNumber)gh_typ.Value;
+          // check that unit is of right type
+          if (!unitNumber.Value.QuantityInfo.UnitType.Equals(typeof(RatioUnit)))
+          {
+            owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Error in " + owner.Params.Input[inputid].NickName + " input: Wrong unit type"
+                + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be Ratio");
+            return new Ratio(1, RatioUnit.DecimalFraction);
+          }
+          return (Ratio)unitNumber.Value;
+        }
+        // try cast to double
+        else if (GH_Convert.ToDouble(gh_typ.Value, out double val, GH_Conversion.Both))
+        {
+          owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Remark, "Note: Input " + owner.Params.Input[inputid].NickName + " was NOT automatically converted to percentage");
+          return new Ratio(val, RatioUnit.DecimalFraction);
+        }
+        // try cast to string
+        else if (GH_Convert.ToString(gh_typ.Value, out string txt, GH_Conversion.Both))
+        {
+          if (Ratio.TryParse(txt, out Ratio res))
+            return res;
+          else
+            owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to Ratio");
+        }
+        else
+        {
+          owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
+          return new Ratio(1, RatioUnit.DecimalFraction);
+        }
+      }
+      return new Ratio(1, RatioUnit.DecimalFraction);
     }
   }
 }

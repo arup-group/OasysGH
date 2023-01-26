@@ -38,16 +38,24 @@ steps:
     MSBUILDDISABLENODEREUSE: 1
 
 - powershell: |
-    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\3.1.2\build --results-directory .\results\unitnumber --no-restore --logger trx .\GH_UnitNumberTests\bin\x64\Release\net48\GH_UnitNumberTests.dll
-    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\3.1.2\build --results-directory .\results\oasysgh --no-restore --logger trx .\OasysGHTests\bin\x64\Release\net48\OasysGHTests.dll
+    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\3.1.2\build --results-directory .\results\unitnumber .\GH_UnitNumberTests\bin\x64\Release\net48\GH_UnitNumberTests.dll
+    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\3.1.2\build --results-directory .\results\oasysgh .\OasysGHTests\bin\x64\Release\net48\OasysGHTests.dll
   displayName: dotnet test
   failOnStderr: true
 
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'cobertura'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/**/coverage.cobertura.xml'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/unitnumber/**/coverage.cobertura.xml'
     pathToSources: '$(System.DefaultWorkingDirectory)'
+  displayName: 'Upload UnitNumber coverage to Azure'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/oasysgh/**/coverage.cobertura.xml'
+    pathToSources: '$(System.DefaultWorkingDirectory)' 
+  displayName: 'Upload OasysGH coverage to Azure'
 
 - powershell: |
     $coverage_file_unitnumber = (Resolve-Path $(System.DefaultWorkingDirectory)/results/unitnumber/*/coverage.cobertura.xml).Path
@@ -60,8 +68,8 @@ steps:
     Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe
     ls $(System.DefaultWorkingDirectory)\
     cd $(System.DefaultWorkingDirectory)\
-    .\codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_unitnumber.xml --flags unitnumber
-    .\codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_oasysgh.xml --flags oasysgh
+    .\codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_unitnumber.xml -F unitnumber
+    .\codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_oasysgh.xml -F oasysgh
   env:
     CODECOV_TOKEN: $(CODECOV_TOKEN)
   displayName: Upload Code Coverage to codecovio

@@ -400,12 +400,13 @@ namespace OasysGH.UI
 
         // adjust fontsize to high resolution displays
         font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-
+        Font sml = GH_FontServer.Small;
+        sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
         Pen pen = new Pen(borderColour);
 
-        graphics.DrawString(SpacerTxt1, GH_FontServer.Small, annoText, SpacerBounds1, GH_TextRenderingConstants.CenterCenter);
-        graphics.DrawLine(pen, SpacerBounds1.X, SpacerBounds1.Y + SpacerBounds1.Height / 2, SpacerBounds1.X + (SpacerBounds1.Width - GH_FontServer.StringWidth(SpacerTxt1, GH_FontServer.Small)) / 2 - 4, SpacerBounds1.Y + SpacerBounds1.Height / 2);
-        graphics.DrawLine(pen, SpacerBounds1.X + (SpacerBounds1.Width - GH_FontServer.StringWidth(SpacerTxt1, GH_FontServer.Small)) / 2 + GH_FontServer.StringWidth(SpacerTxt1, GH_FontServer.Small) + 4, SpacerBounds1.Y + SpacerBounds1.Height / 2, SpacerBounds1.X + SpacerBounds1.Width, SpacerBounds1.Y + SpacerBounds1.Height / 2);
+        graphics.DrawString(SpacerTxt1, sml, annoText, SpacerBounds1, GH_TextRenderingConstants.CenterCenter);
+        graphics.DrawLine(pen, SpacerBounds1.X, SpacerBounds1.Y + SpacerBounds1.Height / 2, SpacerBounds1.X + (SpacerBounds1.Width - GH_FontServer.StringWidth(SpacerTxt1, sml)) / 2 - 4, SpacerBounds1.Y + SpacerBounds1.Height / 2);
+        graphics.DrawLine(pen, SpacerBounds1.X + (SpacerBounds1.Width - GH_FontServer.StringWidth(SpacerTxt1, sml)) / 2 + GH_FontServer.StringWidth(SpacerTxt1, sml) + 4, SpacerBounds1.Y + SpacerBounds1.Height / 2, SpacerBounds1.X + SpacerBounds1.Width, SpacerBounds1.Y + SpacerBounds1.Height / 2);
 
         graphics.DrawString("x", font, annoText, xTxtBounds1, GH_TextRenderingConstants.CenterCenter);
         CheckBox.DrawCheckButton(graphics, new PointF(xBounds1.X + xBounds1.Width / 2, xBounds1.Y + xBounds1.Height / 2), x1, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
@@ -425,9 +426,9 @@ namespace OasysGH.UI
         graphics.DrawString("zz", font, annoText, zzTxtBounds1, GH_TextRenderingConstants.CenterCenter);
         CheckBox.DrawCheckButton(graphics, new PointF(zzBounds1.X + zzBounds1.Width / 2, zzBounds1.Y + zzBounds1.Height / 2), zz1, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
 
-        graphics.DrawString(SpacerTxt2, GH_FontServer.Small, annoText, SpacerBounds2, GH_TextRenderingConstants.CenterCenter);
-        graphics.DrawLine(pen, SpacerBounds2.X, SpacerBounds2.Y + SpacerBounds2.Height / 2, SpacerBounds2.X + (SpacerBounds2.Width - GH_FontServer.StringWidth(SpacerTxt2, GH_FontServer.Small)) / 2 - 4, SpacerBounds2.Y + SpacerBounds2.Height / 2);
-        graphics.DrawLine(pen, SpacerBounds2.X + (SpacerBounds2.Width - GH_FontServer.StringWidth(SpacerTxt2, GH_FontServer.Small)) / 2 + GH_FontServer.StringWidth(SpacerTxt2, GH_FontServer.Small) + 4, SpacerBounds2.Y + SpacerBounds2.Height / 2, SpacerBounds2.X + SpacerBounds2.Width, SpacerBounds2.Y + SpacerBounds2.Height / 2);
+        graphics.DrawString(SpacerTxt2, sml, annoText, SpacerBounds2, GH_TextRenderingConstants.CenterCenter);
+        graphics.DrawLine(pen, SpacerBounds2.X, SpacerBounds2.Y + SpacerBounds2.Height / 2, SpacerBounds2.X + (SpacerBounds2.Width - GH_FontServer.StringWidth(SpacerTxt2, sml)) / 2 - 4, SpacerBounds2.Y + SpacerBounds2.Height / 2);
+        graphics.DrawLine(pen, SpacerBounds2.X + (SpacerBounds2.Width - GH_FontServer.StringWidth(SpacerTxt2, sml)) / 2 + GH_FontServer.StringWidth(SpacerTxt2, sml) + 4, SpacerBounds2.Y + SpacerBounds2.Height / 2, SpacerBounds2.X + SpacerBounds2.Width, SpacerBounds2.Y + SpacerBounds2.Height / 2);
 
         graphics.DrawString("x", font, annoText, xTxtBounds2, GH_TextRenderingConstants.CenterCenter);
         CheckBox.DrawCheckButton(graphics, new PointF(xBounds2.X + xBounds2.Width / 2, xBounds2.Y + xBounds2.Height / 2), x2, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
