@@ -13,12 +13,7 @@ namespace OasysGH.Units
     {
       bool settingsExist = ReadSettings();
       if (!settingsExist)
-      {
-        // get rhino document length unit
-        if (headless)
-          LengthUnitGeometry = LengthUnit.Meter;
         SaveSettings();
-      }
     }
 
     internal static void SaveSettings()
