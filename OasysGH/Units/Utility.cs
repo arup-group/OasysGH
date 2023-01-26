@@ -97,7 +97,7 @@ namespace OasysGH.Units
       DefaultUnits.UseRhinoLengthGeometryUnit = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoLengthGeometryUnit", false);
 
       DefaultUnits.Tolerance = new Length(Grasshopper.Instances.Settings.GetValue("OasysTolerance", double.NaN), LengthUnitGeometry);
-      UseRhinoTolerance = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoTolerance", false);
+      DefaultUnits.UseRhinoTolerance = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoTolerance", false);
 
       DefaultUnits.LengthUnitSection = (LengthUnit)Enum.Parse(typeof(LengthUnit),
       Grasshopper.Instances.Settings.GetValue("OasysLengthUnitSection", string.Empty));

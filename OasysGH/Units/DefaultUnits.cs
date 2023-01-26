@@ -24,7 +24,7 @@ namespace OasysGH.Units
       }
     }
     private static Length m_tolerance = new Length(1, LengthUnit.Centimeter);
-    public static bool UseRhinoTolerance { get; set; } = true;
+    public static bool UseRhinoTolerance { get; set; } = false;
     public static LengthUnit LengthUnitGeometry
     {
       get
@@ -41,7 +41,7 @@ namespace OasysGH.Units
       }
     }
     private static LengthUnit m_length_geometry = LengthUnit.Meter;
-    public static bool UseRhinoLengthGeometryUnit { get; set; } = true;
+    public static bool UseRhinoLengthGeometryUnit { get; set; } = false;
     public static LengthUnit LengthUnitSection { get; set; } = LengthUnit.Centimeter;
     public static LengthUnit LengthUnitResult = LengthUnit.Millimeter;
     public static ForceUnit ForceUnit { get; set; } = ForceUnit.Kilonewton;
