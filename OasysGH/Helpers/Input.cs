@@ -1,15 +1,15 @@
-﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using OasysUnits;
-using OasysGH.Parameters;
 using System.Globalization;
+using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
+using OasysGH.Parameters;
+using OasysUnits;
 using OasysUnits.Units;
 
 namespace OasysGH.Helpers
 {
-  public class Input
+  public static class Input
   {
     /// <summary>
     /// Helper method to get UnitNumber input parameter item
