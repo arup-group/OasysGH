@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Eto.Forms;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Newtonsoft.Json;
@@ -20,9 +19,9 @@ namespace OasysGH.Components
     public bool IsInitialised = false;
     public bool AlwaysExpireDownStream = false;
     public Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>();
-    
-    private Dictionary<int, List<bool>> OutputsAreExpired = new Dictionary<int, List<bool>>();
-    private Dictionary<int, bool> OutputIsExpired = new Dictionary<int, bool>();
+
+    private Dictionary<int, List<bool>> _outputsAreExpired = new Dictionary<int, List<bool>>();
+    private Dictionary<int, bool> _outputIsExpired = new Dictionary<int, bool>();
 
     public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
     {
@@ -59,18 +58,18 @@ namespace OasysGH.Components
     #region expire downstream
     protected override void ExpireDownStreamObjects()
     {
-      if (AlwaysExpireDownStream)
+      if (this.AlwaysExpireDownStream)
       {
         base.ExpireDownStreamObjects();
         return;
       }
 
       SetExpireDownStream();
-      if (this.OutputIsExpired.Count > 0)
+      if (this._outputIsExpired.Count > 0)
       {
         for (int outputIndex = 0; outputIndex < this.Params.Output.Count; outputIndex++)
         {
-          if (this.OutputIsExpired[outputIndex])
+          if (this._outputIsExpired[outputIndex])
           {
             IGH_Param item = this.Params.Output[outputIndex];
             item.ExpireSolution(recompute: false);
@@ -83,15 +82,15 @@ namespace OasysGH.Components
 
     private void SetExpireDownStream()
     {
-      if (this.OutputsAreExpired != null && this.OutputsAreExpired.Count > 0)
+      if (this._outputsAreExpired != null && this._outputsAreExpired.Count > 0)
       {
-        this.OutputIsExpired = new Dictionary<int, bool>();
+        this._outputIsExpired = new Dictionary<int, bool>();
         for (int outputIndex = 0; outputIndex < this.Params.Output.Count; outputIndex++)
         {
-          if (this.OutputsAreExpired.ContainsKey(outputIndex))
-            this.OutputIsExpired.Add(outputIndex, OutputsAreExpired[outputIndex].Any(c => c == true));
+          if (this._outputsAreExpired.ContainsKey(outputIndex))
+            this._outputIsExpired.Add(outputIndex, _outputsAreExpired[outputIndex].Any(c => c == true));
           else
-            this.OutputIsExpired.Add(outputIndex, true);
+            this._outputIsExpired.Add(outputIndex, true);
         }
       }
     }
@@ -101,7 +100,7 @@ namespace OasysGH.Components
       if (!this.ExistingOutputsSerialized.ContainsKey(outputIndex))
       {
         this.ExistingOutputsSerialized.Add(outputIndex, new List<string>());
-        this.OutputsAreExpired.Add(outputIndex, new List<bool>());
+        this._outputsAreExpired.Add(outputIndex, new List<bool>());
       }
 
       string outputsSerialized = "";
@@ -127,19 +126,18 @@ namespace OasysGH.Components
       if (this.ExistingOutputsSerialized[outputIndex].Count == index)
       {
         this.ExistingOutputsSerialized[outputIndex].Add(outputsSerialized);
-        this.OutputsAreExpired[outputIndex].Add(true);
+        this._outputsAreExpired[outputIndex].Add(true);
         return;
       }
 
       if (this.ExistingOutputsSerialized[outputIndex][index] != outputsSerialized)
       {
         this.ExistingOutputsSerialized[outputIndex][index] = outputsSerialized;
-        this.OutputsAreExpired[outputIndex][index] = true;
+        this._outputsAreExpired[outputIndex][index] = true;
         return;
       }
-      this.OutputsAreExpired[outputIndex][index] = false;
+      this._outputsAreExpired[outputIndex][index] = false;
     }
-
     #endregion
 
     #region (de)serialization

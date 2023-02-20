@@ -10,6 +10,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Types;
 using OasysGH.Helpers;
+using OasysGH.Parameters;
 using OasysGH.Units;
 using OasysGH.Units.Helpers;
 using OasysUnits;
@@ -88,9 +89,12 @@ namespace OasysGH.Components
     public override Guid ComponentGuid => new Guid("ea1741e5-905e-4ecb-8270-a584e3f99aa3");
     public override GH_Exposure Exposure => GH_Exposure.secondary;
 
+    // The path to the database file.
+    public abstract string DataSource { get; }
+
     // list of sections as outcome from selections
-    List<string> ProfileString = new List<string>() { "CAT HE HE200.B" };
-    string _search = "";
+    private List<string> _profileString = new List<string>() { "CAT HE HE200.B" };
+    private string _search = "";
 
     //List<string> excludedInterfaces = new List<string>(new string[]
     //{
@@ -98,22 +102,22 @@ namespace OasysGH.Components
     //});
 
     // Catalogues
-    private readonly Tuple<List<string>, List<int>> _cataloguedata = SqlReader.Instance.GetCataloguesDataFromSQLite(Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"));
+    private readonly Tuple<List<string>, List<int>> _cataloguedata;
     private List<int> _catalogueNumbers = new List<int>(); // internal db catalogue numbers
     private List<string> _catalogueNames = new List<string>(); // list of displayed catalogues
     private bool _inclSS;
 
     // Types
-    private Tuple<List<string>, List<int>> _typedata = SqlReader.Instance.GetTypesDataFromSQLite(-1, Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"), false);
-    private List<int> _typeNumbers = new List<int>(); //  internal db type numbers
+    private Tuple<List<string>, List<int>> _typedata;
+    private List<int> _typeNumbers = new List<int>(); // internal db type numbers
     private List<string> _typeNames = new List<string>(); // list of displayed types
 
     // Sections
-    private List<string> _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(new List<int> { -1 }, Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"), false);
-    private int _catalogueIndex = -1; //-1 is all
+    private List<string> _sectionList;
+    private int _catalogueIndex = -1; // -1 is all
     private int _typeIndex = -1;
 
-    private bool lastInputWasSecant;
+    private bool _lastInputWasSecant;
     private int _numberOfInputs;
     // temporary (???)
     private string type = "IRectangleProfile";
@@ -123,6 +127,9 @@ namespace OasysGH.Components
 
     protected CreateProfile(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
     {
+      this._cataloguedata = SqlReader.Instance.GetCataloguesDataFromSQLite(this.DataSource);
+      this._typedata = SqlReader.Instance.GetTypesDataFromSQLite(-1, this.DataSource, false);
+      this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(new List<int> { -1 }, this.DataSource, false);
     }
 
     private static bool MatchAndAdd(string item, string pattern, ref List<string> list, bool tryHard = false)
@@ -196,7 +203,7 @@ namespace OasysGH.Components
           {
             this._inclSS = incl;
             this.UpdateTypeData();
-            this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"), this._inclSS);
+            this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, this.DataSource, this._inclSS);
 
             this.SelectedItems[2] = this._typeNames[0];
             this.DropDownItems[2] = this._typeNames;
@@ -237,7 +244,7 @@ namespace OasysGH.Components
           {
             if (!MatchAndAdd(this.SelectedItems[3], this._search, ref filteredlist, tryHard))
             {
-              this.ProfileString = new List<string>();
+              this._profileString = new List<string>();
               this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No profile found that matches selected profile and search!");
             }
           }
@@ -263,11 +270,11 @@ namespace OasysGH.Components
               }
             }
           }
-          this.ProfileString = new List<string>();
+          this._profileString = new List<string>();
           if (filteredlist.Count > 0)
           {
             foreach (string profile in filteredlist)
-              this.ProfileString.Add("CAT " + profile);
+              this._profileString.Add("CAT " + profile);
           }
           else
           {
@@ -286,7 +293,7 @@ namespace OasysGH.Components
           pathCount = this.Params.Output[0].VolatileData.PathCount;
 
         GH_Path path = new Grasshopper.Kernel.Data.GH_Path(new int[] { pathCount });
-        tree.AddRange(this.ProfileString, path);
+        tree.AddRange(this._profileString, path);
 
         DA.SetDataTree(0, tree);
       }
@@ -297,6 +304,9 @@ namespace OasysGH.Components
       {
         string unit = "(" + Length.GetAbbreviation(this._lengthUnit, new CultureInfo("en")) + ") ";
         string profile = "STD ";
+
+        IProfile pf = null;
+
         // angle
         if (this.type == "IAngleProfile") //(typ.Name.Equals(typeof(IAngleProfile).Name))
         {
@@ -575,9 +585,7 @@ namespace OasysGH.Components
               Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
               Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString();
 
-          //profile = IStadiumProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit));
+          pf = new RectoCircle#Profile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
         }
 
         // ITrapezoidProfile
@@ -789,6 +797,9 @@ namespace OasysGH.Components
         //    return;
         //}
 
+        DA.SetData(0, new ProfileGoo(pf));
+
+
         DA.SetData(0, profile);
         return;
       }
@@ -816,7 +827,7 @@ namespace OasysGH.Components
       this._numberOfInputs = inputs;
 
       // if last input previously was a bool and we no longer need that
-      if (this.lastInputWasSecant || isSecantPile || isPerimeter)
+      if (this._lastInputWasSecant || isSecantPile || isPerimeter)
       {
         if (this.Params.Input.Count > 0)
         {
@@ -845,10 +856,10 @@ namespace OasysGH.Components
       {
         this.Params.RegisterInputParam(new Param_Integer());
         this.Params.RegisterInputParam(new Param_Boolean());
-        this.lastInputWasSecant = true;
+        this._lastInputWasSecant = true;
       }
       else
-        this.lastInputWasSecant = false;
+        this._lastInputWasSecant = false;
 
       if (isPerimeter)
         this.Params.RegisterInputParam(new Param_Plane());
@@ -1086,7 +1097,7 @@ namespace OasysGH.Components
           this.UpdateTypeData();
 
           // update section list to all types
-          this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"), this._inclSS);
+          this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(this._typeNumbers, this.DataSource, this._inclSS);
 
           // update displayed selections to all
           this.SelectedItems.Add(this._catalogueNames[0]);
@@ -1113,14 +1124,14 @@ namespace OasysGH.Components
           this.SelectedItems[1] = this._catalogueNames[j];
 
           // update typelist with selected input catalogue
-          this._typedata = SqlReader.Instance.GetTypesDataFromSQLite(_catalogueIndex, Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"), this._inclSS);
+          this._typedata = SqlReader.Instance.GetTypesDataFromSQLite(_catalogueIndex, this.DataSource, this._inclSS);
           this._typeNames = this._typedata.Item1;
           this._typeNumbers = this._typedata.Item2;
 
           // update section list from new types (all new types in catalogue)
           List<int> types = this._typeNumbers.ToList();
           types.RemoveAt(0); // remove -1 from beginning of list
-          this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"), this._inclSS);
+          this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, this.DataSource, this._inclSS);
 
           // update selections to display first item in new list
           this.SelectedItems[2] = this._typeNames[0];
@@ -1148,7 +1159,7 @@ namespace OasysGH.Components
 
 
           // section list with selected types (only types in selected type)
-          this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"), this._inclSS);
+          this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, this.DataSource, this._inclSS);
 
           // update selected section to be all
           this.SelectedItems[3] = this._sectionList[0];
@@ -1204,7 +1215,7 @@ namespace OasysGH.Components
 
     private void UpdateTypeData()
     {
-      this._typedata = GetTypesDataFromSQLite(_catalogueIndex, Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"), this._inclSS);
+      this._typedata = GetTypesDataFromSQLite(_catalogueIndex, this.DataSource, this._inclSS);
       this._typeNames = this._typedata.Item1;
       this._typeNumbers = this._typedata.Item2;
     }
@@ -1213,16 +1224,16 @@ namespace OasysGH.Components
     {
       if (this.SelectedItems[3] == "All")
       {
-        this.ProfileString = new List<string>();
+        this._profileString = new List<string>();
         foreach (string profile in _sectionList)
         {
           if (profile == "All")
             continue;
-          this.ProfileString.Add("CAT " + profile);
+          this._profileString.Add("CAT " + profile);
         }
       }
       else
-        this.ProfileString = new List<string>() { "CAT " + this.SelectedItems[3] };
+        this._profileString = new List<string>() { "CAT " + this.SelectedItems[3] };
     }
 
     public override void UpdateUIFromSelectedItems()
@@ -1237,13 +1248,13 @@ namespace OasysGH.Components
 
         this._catalogueNames = this._cataloguedata.Item1;
         this._catalogueNumbers = this._cataloguedata.Item2;
-        this._typedata = SqlReader.Instance.GetTypesDataFromSQLite(this._catalogueIndex, Path.Combine(AddReferencePriority.InstallPath, "sectlib.db3"), this._inclSS);
+        this._typedata = SqlReader.Instance.GetTypesDataFromSQLite(this._catalogueIndex, this.DataSource, this._inclSS);
         this._typeNames = this._typedata.Item1;
         this._typeNumbers = this._typedata.Item2;
 
         this.Mode1Clicked();
 
-        this.ProfileString = new List<string>() { "CAT " + this.SelectedItems[3] };
+        this._profileString = new List<string>() { "CAT " + this.SelectedItems[3] };
       }
       else
       {
