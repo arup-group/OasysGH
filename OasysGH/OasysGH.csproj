@@ -17,6 +17,12 @@
     <PackageTags>oasys;grasshopper</PackageTags>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Oasys.Taxonomy.IProfiles">
+      <HintPath>..\..\oasys-structural-taxonomy\Oasys.Taxonomy.IProfiles\bin\x64\Debug\net48\Oasys.Taxonomy.IProfiles.dll</HintPath>
+    </Reference>
+    <Reference Include="Oasys.Taxonomy.Profiles">
+      <HintPath>..\..\oasys-structural-taxonomy\Oasys.Taxonomy.Profiles\bin\x64\Debug\net48\Oasys.Taxonomy.Profiles.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices.AccountManagement" />

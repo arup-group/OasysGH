@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Grasshopper;
@@ -9,6 +8,7 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Types;
+using Oasys.Taxonomy.Profiles;
 using OasysGH.Helpers;
 using OasysGH.Parameters;
 using OasysGH.Units;
@@ -19,9 +19,9 @@ using Rhino.Geometry;
 
 namespace OasysGH.Components
 {
-  public abstract class CreateProfile : GH_OasysDropDownComponent
+  public abstract class CreateOasysProfile : GH_OasysDropDownComponent
   {
-    private enum FoldMode
+    internal enum FoldMode
     {
       Catalogue,
       Other
@@ -86,9 +86,6 @@ namespace OasysGH.Components
 
     #region Name and Ribbon Layout
     // This region handles how the component in displayed on the ribbon including name, exposure level and icon
-    public override Guid ComponentGuid => new Guid("ea1741e5-905e-4ecb-8270-a584e3f99aa3");
-    public override GH_Exposure Exposure => GH_Exposure.secondary;
-
     // The path to the database file.
     public abstract string DataSource { get; }
 
@@ -102,33 +99,35 @@ namespace OasysGH.Components
     //});
 
     // Catalogues
-    private readonly Tuple<List<string>, List<int>> _cataloguedata;
-    private List<int> _catalogueNumbers = new List<int>(); // internal db catalogue numbers
-    private List<string> _catalogueNames = new List<string>(); // list of displayed catalogues
+    //private readonly Tuple<List<string>, List<int>> _catalogueData;
+    internal List<string> _catalogueNames = new List<string>(); // list of displayed catalogues
+    internal List<int> _catalogueNumbers = new List<int>(); // internal db catalogue numbers
     private bool _inclSS;
 
     // Types
-    private Tuple<List<string>, List<int>> _typedata;
+    private Tuple<List<string>, List<int>> _typeData;
     private List<int> _typeNumbers = new List<int>(); // internal db type numbers
     private List<string> _typeNames = new List<string>(); // list of displayed types
 
     // Sections
-    private List<string> _sectionList;
+    internal List<string> _sectionList;
     private int _catalogueIndex = -1; // -1 is all
     private int _typeIndex = -1;
 
     private bool _lastInputWasSecant;
     private int _numberOfInputs;
     // temporary (???)
-    private string type = "IRectangleProfile";
+    private Type type = typeof(IRectangleProfile);
 
     private LengthUnit _lengthUnit = DefaultUnits.LengthUnitSection;
-    private FoldMode _mode = FoldMode.Other;
+    internal FoldMode _mode = FoldMode.Other;
 
-    protected CreateProfile(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
+    protected CreateOasysProfile(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
     {
-      this._cataloguedata = SqlReader.Instance.GetCataloguesDataFromSQLite(this.DataSource);
-      this._typedata = SqlReader.Instance.GetTypesDataFromSQLite(-1, this.DataSource, false);
+      var catalogueData = SqlReader.Instance.GetCataloguesDataFromSQLite(this.DataSource);
+      this._catalogueNames = catalogueData.Item1;
+      this._catalogueNumbers = catalogueData.Item2;
+      this._typeData = SqlReader.Instance.GetTypesDataFromSQLite(-1, this.DataSource, false);
       this._sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(new List<int> { -1 }, this.DataSource, false);
     }
 
@@ -182,8 +181,6 @@ namespace OasysGH.Components
       pManager.AddTextParameter("Profile", "Pf", "Profile for a GSA Section", GH_ParamAccess.tree);
     }
     #endregion
-
-    protected abstract OasysPluginInfo GetPluginInfo();
 
     protected override void SolveInstance(IGH_DataAccess DA)
     {
@@ -302,236 +299,91 @@ namespace OasysGH.Components
       #region std
       if (_mode == FoldMode.Other)
       {
-        string unit = "(" + Length.GetAbbreviation(this._lengthUnit, new CultureInfo("en")) + ") ";
-        string profile = "STD ";
+        IProfile profile = null;
 
-        IProfile pf = null;
-
-        // angle
-        if (this.type == "IAngleProfile") //(typ.Name.Equals(typeof(IAngleProfile).Name))
+        if (this.type == typeof(IAngleProfile))
         {
-          profile += "A" + unit +
-              Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString();
+          Flange flange = new Flange((Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
 
-          //profile = IAngleProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.Flange(this, DA, 1),
-          //    Input.Web(this, DA, 2));
+          WebConstant web = new WebConstant((Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
+
+          profile = new AngleProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), flange, web);
         }
 
-        // channel
-        else if (this.type == "IChannelProfile") //(typ.Name.Equals(typeof(IChannelProfile).Name))
+        else if (this.type == typeof(IChannelProfile))
         {
-          profile += "CH" + unit +
-              Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString();
+          Flange flanges = new Flange((Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
 
-          //profile = IChannelProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.Flange(this, DA, 1),
-          //    (IWebConstant)Input.Web(this, DA, 2));
+          WebConstant web = new WebConstant((Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
+
+          profile = new ChannelProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), flanges, web);
         }
 
-        // circle hollow
-        else if (this.type == "ICircleHollowProfile") //(typ.Name.Equals(typeof(ICircleHollowProfile).Name))
-        {
-          profile += "CHS" + unit +
-              Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString();
+        else if (this.type == typeof(ICircleHollowProfile))
+          profile = new CircleHollowProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
 
-          //profile = ICircleHollowProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit));
+        else if (this.type == typeof(ICircleProfile))
+          profile = new CircleProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit));
+
+        else if (this.type == typeof(ICruciformSymmetricalProfile))
+        {
+          Flange flange = new Flange((Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
+
+          WebConstant web = new WebConstant((Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
+
+          profile = new CruciformSymmetricalProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), flange, web);
         }
 
-        // circle
-        else if (this.type == "ICircleProfile") //(typ.Name.Equals(typeof(ICircleProfile).Name))
-        {
-          profile += "C" + unit +
-              Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString();
+        else if (this.type == typeof(IEllipseHollowProfile))
+          profile = new EllipseHollowProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
 
-          //profile = ICircleProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit));
+        else if (this.type == typeof(IEllipseProfile))
+          profile = new EllipseProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
+
+        else if (this.type == typeof(IGeneralCProfile))
+          profile = new GeneralCProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit));
+
+        else if (this.type == typeof(IGeneralZProfile))
+          profile = new GeneralZProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 4, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 5, this._lengthUnit));
+
+        else if (this.type == typeof(IIBeamAsymmetricalProfile))
+        {
+          Flange topFlange = new Flange((Length)Input.LengthOrRatio(this, DA, 4, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
+          Flange bottomFlange = new Flange((Length)Input.LengthOrRatio(this, DA, 5, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
+
+          WebConstant web = new WebConstant((Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit));
+
+          profile = new IBeamAsymmetricalProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), topFlange, bottomFlange, web);
         }
 
-        // ICruciformSymmetricalProfile
-        else if (this.type == "ICruciformSymmetricalProfile") //(typ.Name.Equals(typeof(ICruciformSymmetricalProfile).Name))
+        else if (this.type == typeof(IIBeamCellularProfile))
         {
-          profile += "X" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString();
+          Flange flanges = new Flange((Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
 
-          //profile = ICruciformSymmetricalProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.Flange(this, DA, 1),
-          //    (IWebConstant)Input.Web(this, DA, 2));
+          WebConstant web = new WebConstant((Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
+
+          profile = new IBeamCellularProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), flanges, web, IBeamOpeningType.Cellular, (Length)Input.LengthOrRatio(this, DA, 4, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 5, this._lengthUnit));
         }
 
-        // IEllipseHollowProfile
-        else if (this.type == "IEllipseHollowProfile") //(typ.Name.Equals(typeof(IEllipseHollowProfile).Name))
+        else if (this.type == typeof(IIBeamProfile))
         {
-          profile += "OVAL" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString();
+          Flange flanges = new Flange((Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
 
-          //profile = IEllipseHollowProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 2, lengthUnit));
+          WebConstant web = new WebConstant((Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
+
+          profile = new IBeamProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), flanges, web);
         }
 
-        // IEllipseProfile
-        else if (this.type == "IEllipseProfile") //(typ.Name.Equals(typeof(IEllipseProfile).Name))
-        {
-          profile += "E" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " 2";
+        else if (this.type == typeof(IRectangleHollowProfile))
+          profile = new RectangleHollowProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
 
-          //profile = IEllipseProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit));
-        }
+        else if (this.type == typeof(IRectangleProfile))
+          profile = new RectangleProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
 
-        // IGeneralCProfile
-        else if (this.type == "IGeneralCProfile") //(typ.Name.Equals(typeof(IGeneralCProfile).Name))
-        {
-          profile += "GC" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString();
+        else if (this.type == typeof(IRectoEllipseProfile))
+          profile = new RectoEllipseProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit));
 
-          //profile = IGeneralCProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 2, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 3, lengthUnit));
-        }
-
-        // IGeneralZProfile
-        else if (this.type == "IGeneralZProfile") //(typ.Name.Equals(typeof(IGeneralZProfile).Name))
-        {
-          profile += "GZ" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 4, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 5, this._lengthUnit).As(_lengthUnit).ToString();
-
-          //profile = IGeneralZProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 2, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 3, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 4, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 5, lengthUnit));
-        }
-
-        // IIBeamAsymmetricalProfile
-        else if (this.type == "IIBeamAsymmetricalProfile") //(typ.Name.Equals(typeof(IIBeamAsymmetricalProfile).Name))
-        {
-          profile += "GI" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 4, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 5, this._lengthUnit).As(_lengthUnit).ToString();
-
-          //profile = IIBeamAsymmetricalProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.Flange(this, DA, 1),
-          //    Input.Flange(this, DA, 2),
-          //    Input.Web(this, DA, 3));
-        }
-
-        // IIBeamCellularProfile
-        else if (this.type == "IIBeamCellularProfile") //(typ.Name.Equals(typeof(IIBeamCellularProfile).Name))
-        {
-          profile += "CB" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 4, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 5, this._lengthUnit).As(_lengthUnit).ToString();
-
-          //profile = IIBeamCellularProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.Flange(this, DA, 1),
-          //    (IWebConstant)Input.Web(this, DA, 2),
-          //    Input.LengthOrRatio(this, DA, 3, lengthUnit));
-        }
-
-        // IIBeamSymmetricalProfile
-        else if (this.type == "IIBeamSymmetricalProfile") //(typ.Name.Equals(typeof(IIBeamSymmetricalProfile).Name))
-        {
-          profile += "I" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString();
-
-          //profile = IIBeamSymmetricalProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.Flange(this, DA, 1),
-          //    (IWebConstant)Input.Web(this, DA, 2));
-        }
-
-        // IRectangleHollowProfile
-        else if (this.type == "IRectangleHollowProfile") //(typ.Name.Equals(typeof(IRectangleHollowProfile).Name))
-        {
-          profile += "RHS" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString();
-
-          //profile = IRectangleHollowProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.Flange(this, DA, 1),
-          //    (IWebConstant)Input.Web(this, DA, 2));
-        }
-
-        // IRectangleProfile
-        else if (this.type == "IRectangleProfile") //(typ.Name.Equals(typeof(IRectangleProfile).Name))
-        {
-          profile += "R" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString();
-
-          //profile = IRectangleProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit));
-        }
-
-        // IRectoEllipseProfile
-        else if (this.type == "IRectoEllipseProfile") //(typ.Name.Equals(typeof(IRectoEllipseProfile).Name))
-        {
-          profile += "RE" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString() + " 2";
-
-          //profile = IRectoEllipseProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 2, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 3, lengthUnit));
-        }
-
-        // ISecantPileProfile
-        else if (this.type == "ISecantPileProfile") //(typ.Name.Equals(typeof(ISecantPileProfile).Name))
+        else if (this.type == typeof(ISecantPileProfile))
         {
           int pileCount = 0;
           if (!DA.GetData(2, ref pileCount))
@@ -547,78 +399,28 @@ namespace OasysGH.Components
             return;
           }
 
-          profile += (isWallNotSection ? "SP" : "SPW") + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            pileCount.ToString();
-
-          //profile = ISecantPileProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit),
-          //    pileCount, isWallNotSection);
+          profile = new SecantPileProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit), pileCount, isWallNotSection);
         }
 
-        // ISheetPileProfile
-        else if (this.type == "ISheetPileProfile") //(typ.Name.Equals(typeof(ISheetPileProfile).Name))
+        else if (this.type == typeof(ISheetPileProfile))
+          profile = new SheetPileProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 4, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 5, this._lengthUnit));
+
+        else if (this.type == typeof(IRectoCircleProfile))
+          profile = new RectoCircleProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
+
+        else if (this.type == typeof(ITrapezoidProfile))
+          profile = new TrapezoidProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
+
+        else if (this.type == typeof(ITSectionProfile))
         {
-          profile += "SHT" + unit +
-            Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 4, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-            Input.LengthOrRatio(this, DA, 5, this._lengthUnit).As(_lengthUnit).ToString();
+          Flange flange = new Flange((Length)Input.LengthOrRatio(this, DA, 3, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
 
-          //profile = ISheetPileProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 2, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 3, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 4, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 5, lengthUnit));
+          WebConstant web = new WebConstant((Length)Input.LengthOrRatio(this, DA, 2, this._lengthUnit));
+
+          profile = new TSectionProfile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), flange, web);
         }
 
-        // IStadiumProfile
-        else if (this.type == "IStadiumProfile") //(typ.Name.Equals(typeof(IStadiumProfile).Name))
-        {
-          profile += "RC" + unit +
-              Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString();
-
-          pf = new RectoCircle#Profile((Length)Input.LengthOrRatio(this, DA, 0, this._lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, this._lengthUnit));
-        }
-
-        // ITrapezoidProfile
-        else if (this.type == "ITrapezoidProfile") //(typ.Name.Equals(typeof(ITrapezoidProfile).Name))
-        {
-          profile += "TR" + unit +
-              Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-              Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString();
-
-          //profile = ITrapezoidProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 1, lengthUnit),
-          //    Input.LengthOrRatio(this, DA, 2, lengthUnit));
-        }
-
-        // ITSectionProfile
-        else if (this.type == "ITSectionProfile") //(typ.Name.Equals(typeof(ITSectionProfile).Name))
-        {
-          profile += "T" + unit +
-             Input.LengthOrRatio(this, DA, 0, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-             Input.LengthOrRatio(this, DA, 1, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-             Input.LengthOrRatio(this, DA, 2, this._lengthUnit).As(_lengthUnit).ToString() + " " +
-             Input.LengthOrRatio(this, DA, 3, this._lengthUnit).As(_lengthUnit).ToString();
-
-          //profile = ITSectionProfile.Create(
-          //    Input.LengthOrRatio(this, DA, 0, lengthUnit),
-          //    Input.Flange(this, DA, 1),
-          //    Input.Web(this, DA, 2));
-        }
-
-        // IPerimeterProfile (last chance...)
-        else if (this.type == "IPerimeterProfile") //(typ.Name.Equals(typeof(IPerimeterProfile).Name))
+        else if (this.type == typeof(IPerimeterProfile))
         {
           ProfileHelper perimeter = new ProfileHelper();
           perimeter.profileType = ProfileHelper.ProfileTypes.Geometric;
@@ -797,7 +599,7 @@ namespace OasysGH.Components
         //    return;
         //}
 
-        DA.SetData(0, new ProfileGoo(pf));
+        DA.SetData(0, new OasysProfileGoo(profile));
 
 
         DA.SetData(0, profile);
@@ -807,7 +609,7 @@ namespace OasysGH.Components
     }
 
     #region menu override
-    private void Mode1Clicked()
+    internal void Mode1Clicked()
     {
       // remove input parameters
       while (this.Params.Input.Count > 0)
@@ -878,147 +680,127 @@ namespace OasysGH.Components
         this._mode = FoldMode.Other;
       }
 
-      // angle
-      if (this.type == "IAngleProfile") //(typ.Name.Equals(typeof(IAngleProfile).Name))
+      if (this.type == typeof(IAngleProfile))
       {
         SetNumberOfGenericInputs(4);
         //dup = IAngleProfile.Create(angle.Depth, angle.Flange, angle.Web);
       }
 
-      // channel
-      else if (this.type == "IChannelProfile") //(typ.Name.Equals(typeof(IChannelProfile).Name))
+      else if (this.type == typeof(IChannelProfile))
       {
         SetNumberOfGenericInputs(4);
         //dup = IChannelProfile.Create(channel.Depth, channel.Flanges, channel.Web);
       }
 
-      // circle hollow
-      else if (this.type == "ICircleHollowProfile") //(typ.Name.Equals(typeof(ICircleHollowProfile).Name))
+      else if (this.type == typeof(ICircleHollowProfile))
       {
         SetNumberOfGenericInputs(2);
         //dup = ICircleHollowProfile.Create(circleHollow.Diameter, circleHollow.WallThickness);
       }
 
-      // circle
-      else if (this.type == "ICircleProfile") //(typ.Name.Equals(typeof(ICircleProfile).Name))
+      else if (this.type == typeof(ICircleProfile))
       {
         SetNumberOfGenericInputs(1);
         //dup = ICircleProfile.Create(circle.Diameter);
       }
 
-      // ICruciformSymmetricalProfile
-      else if (this.type == "ICruciformSymmetricalProfile") //(typ.Name.Equals(typeof(ICruciformSymmetricalProfile).Name))
+      else if (this.type == typeof(ICruciformSymmetricalProfile))
       {
         SetNumberOfGenericInputs(4);
         //dup = ICruciformSymmetricalProfile.Create(cruciformSymmetrical.Depth, cruciformSymmetrical.Flange, cruciformSymmetrical.Web);
       }
 
-      // IEllipseHollowProfile
-      else if (this.type == "IEllipseHollowProfile") //(typ.Name.Equals(typeof(IEllipseHollowProfile).Name))
+      else if (this.type == typeof(IEllipseHollowProfile))
       {
         SetNumberOfGenericInputs(3);
         //dup = IEllipseHollowProfile.Create(ellipseHollow.Depth, ellipseHollow.Width, ellipseHollow.WallThickness);
       }
 
-      // IEllipseProfile
-      else if (this.type == "IEllipseProfile") //(typ.Name.Equals(typeof(IEllipseProfile).Name))
+      else if (this.type == typeof(IEllipseProfile))
       {
         SetNumberOfGenericInputs(2);
         //dup = IEllipseProfile.Create(ellipse.Depth, ellipse.Width);
       }
 
-      // IGeneralCProfile
-      else if (this.type == "IGeneralCProfile") //(typ.Name.Equals(typeof(IGeneralCProfile).Name))
+      else if (this.type == typeof(IGeneralCProfile))
       {
         SetNumberOfGenericInputs(4);
         //dup = IGeneralCProfile.Create(generalC.Depth, generalC.FlangeWidth, generalC.Lip, generalC.Thickness);
       }
 
-      // IGeneralZProfile
-      else if (this.type == "IGeneralZProfile") //(typ.Name.Equals(typeof(IGeneralZProfile).Name))
+      else if (this.type == typeof(IGeneralZProfile))
       {
         SetNumberOfGenericInputs(6);
         //dup = IGeneralZProfile.Create(generalZ.Depth, generalZ.TopFlangeWidth, generalZ.BottomFlangeWidth, generalZ.TopLip, generalZ.BottomLip, generalZ.Thickness);
       }
 
-      // IIBeamAsymmetricalProfile
-      else if (this.type == "IIBeamAsymmetricalProfile") //(typ.Name.Equals(typeof(IIBeamAsymmetricalProfile).Name))
+      else if (this.type == typeof(IIBeamAsymmetricalProfile))
       {
         SetNumberOfGenericInputs(6);
         //dup = IIBeamAsymmetricalProfile.Create(iBeamAsymmetrical.Depth, iBeamAsymmetrical.TopFlange, iBeamAsymmetrical.BottomFlange, iBeamAsymmetrical.Web);
       }
 
-      // IIBeamCellularProfile
-      else if (this.type == "IIBeamCellularProfile") //(typ.Name.Equals(typeof(IIBeamCellularProfile).Name))
+      else if (this.type == typeof(IIBeamCellularProfile))
       {
         SetNumberOfGenericInputs(6);
         //dup = IIBeamCellularProfile.Create(iBeamCellular.Depth, iBeamCellular.Flanges, iBeamCellular.Web, iBeamCellular.WebOpening);
       }
 
-      // IIBeamSymmetricalProfile
-      else if (this.type == "IIBeamSymmetricalProfile") //(typ.Name.Equals(typeof(IIBeamSymmetricalProfile).Name))
+      else if (this.type == typeof(IIBeamProfile))
       {
         SetNumberOfGenericInputs(4);
         //dup = IIBeamSymmetricalProfile.Create(iBeamSymmetrical.Depth, iBeamSymmetrical.Flanges, iBeamSymmetrical.Web);
       }
 
-      // IRectangleHollowProfile
-      else if (this.type == "IRectangleHollowProfile") //(typ.Name.Equals(typeof(IRectangleHollowProfile).Name))
+      else if (this.type == typeof(IRectangleHollowProfile))
       {
         SetNumberOfGenericInputs(4);
         //dup = IRectangleHollowProfile.Create(rectangleHollow.Depth, rectangleHollow.Flanges, rectangleHollow.Webs);
       }
 
-      // IRectangleProfile
-      else if (this.type == "IRectangleProfile") //(typ.Name.Equals(typeof(IRectangleProfile).Name))
+      else if (this.type == typeof(IRectangleProfile))
       {
         SetNumberOfGenericInputs(2);
         //dup = IRectangleProfile.Create(rectangle.Depth, rectangle.Width);
       }
 
       // IRectoEllipseProfile
-      else if (this.type == "IRectoEllipseProfile") //(typ.Name.Equals(typeof(IRectoEllipseProfile).Name))
+      else if (this.type == typeof(IPerimeterProfile))
       {
         SetNumberOfGenericInputs(4);
         //dup = IRectoEllipseProfile.Create(rectoEllipse.Depth, rectoEllipse.DepthFlat, rectoEllipse.Width, rectoEllipse.WidthFlat);
       }
 
-      // ISecantPileProfile
-      else if (this.type == "ISecantPileProfile") //(typ.Name.Equals(typeof(ISecantPileProfile).Name))
+      else if (this.type == typeof(ISecantPileProfile))
       {
         SetNumberOfGenericInputs(4, true);
         //dup = ISecantPileProfile.Create(secantPile.Diameter, secantPile.PileCentres, secantPile.PileCount, secantPile.IsWallNotSection);
       }
 
-      // ISheetPileProfile
-      else if (this.type == "ISheetPileProfile") //(typ.Name.Equals(typeof(ISheetPileProfile).Name))
+      else if (this.type == typeof(ISheetPileProfile))
       {
         SetNumberOfGenericInputs(6);
         //dup = ISheetPileProfile.Create(sheetPile.Depth, sheetPile.Width, sheetPile.TopFlangeWidth, sheetPile.BottomFlangeWidth, sheetPile.FlangeThickness, sheetPile.WebThickness);
       }
 
-      // IStadiumProfile
-      else if (this.type == "IStadiumProfile") //(typ.Name.Equals(typeof(IStadiumProfile).Name))
+      else if (this.type == typeof(IRectoCircleProfile))
       {
         SetNumberOfGenericInputs(2);
         //dup = IStadiumProfile.Create(stadium.Depth, stadium.Width);
       }
 
-      // ITrapezoidProfile
-      else if (this.type == "ITrapezoidProfile") //(typ.Name.Equals(typeof(ITrapezoidProfile).Name))
+      else if (this.type == typeof(ITrapezoidProfile))
       {
         SetNumberOfGenericInputs(3);
         //dup = ITrapezoidProfile.Create(trapezoid.Depth, trapezoid.TopWidth, trapezoid.BottomWidth);
       }
 
-      // ITSectionProfile
-      else if (this.type == "ITSectionProfile") //(typ.Name.Equals(typeof(ITSectionProfile).Name))
+      else if (this.type == typeof(ITSectionProfile))
       {
         SetNumberOfGenericInputs(4);
         //dup = ITSectionProfile.Create(tSection.Depth, tSection.Flange, tSection.Web);
       }
-      // IPerimeterProfile
-      else if (this.type == "IPerimeterProfile") //(typ.Name.Equals(typeof(IPerimeterProfile).Name))
+      else if (this.type == typeof(IPerimeterProfile))
       {
         SetNumberOfGenericInputs(1, false, true);
 
@@ -1088,9 +870,6 @@ namespace OasysGH.Components
           // set catalogue selection to all
           this._catalogueIndex = -1;
 
-          this._catalogueNames = this._cataloguedata.Item1;
-          this._catalogueNumbers = this._cataloguedata.Item2;
-
           // set types to all
           this._typeIndex = -1;
           // update typelist with all catalogues
@@ -1124,9 +903,9 @@ namespace OasysGH.Components
           this.SelectedItems[1] = this._catalogueNames[j];
 
           // update typelist with selected input catalogue
-          this._typedata = SqlReader.Instance.GetTypesDataFromSQLite(_catalogueIndex, this.DataSource, this._inclSS);
-          this._typeNames = this._typedata.Item1;
-          this._typeNumbers = this._typedata.Item2;
+          this._typeData = SqlReader.Instance.GetTypesDataFromSQLite(_catalogueIndex, this.DataSource, this._inclSS);
+          this._typeNames = this._typeData.Item1;
+          this._typeNumbers = this._typeData.Item2;
 
           // update section list from new types (all new types in catalogue)
           List<int> types = this._typeNumbers.ToList();
@@ -1215,9 +994,9 @@ namespace OasysGH.Components
 
     private void UpdateTypeData()
     {
-      this._typedata = GetTypesDataFromSQLite(_catalogueIndex, this.DataSource, this._inclSS);
-      this._typeNames = this._typedata.Item1;
-      this._typeNumbers = this._typedata.Item2;
+      this._typeData = GetTypesDataFromSQLite(_catalogueIndex, this.DataSource, this._inclSS);
+      this._typeNames = this._typeData.Item1;
+      this._typeNumbers = this._typeData.Item2;
     }
 
     private void UpdateProfileString()
@@ -1246,11 +1025,9 @@ namespace OasysGH.Components
           "Profile type", "Catalogue", "Type", "Profile"
         });
 
-        this._catalogueNames = this._cataloguedata.Item1;
-        this._catalogueNumbers = this._cataloguedata.Item2;
-        this._typedata = SqlReader.Instance.GetTypesDataFromSQLite(this._catalogueIndex, this.DataSource, this._inclSS);
-        this._typeNames = this._typedata.Item1;
-        this._typeNumbers = this._typedata.Item2;
+        this._typeData = SqlReader.Instance.GetTypesDataFromSQLite(this._catalogueIndex, this.DataSource, this._inclSS);
+        this._typeNames = this._typeData.Item1;
+        this._typeNumbers = this._typeData.Item2;
 
         this.Mode1Clicked();
 
