@@ -12,16 +12,16 @@ namespace OasysGH.Components
 {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent
   {
-    private static readonly OasysUnitsIQuantityJsonConverter Converter = new OasysUnitsIQuantityJsonConverter();
-    public List<List<string>> DropDownItems;
-    public List<string> SelectedItems;
-    public List<string> SpacerDescriptions;
-    public bool IsInitialised = false;
-    public bool AlwaysExpireDownStream = false;
-    public Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>();
+    protected List<List<string>> DropDownItems;
+    protected List<string> SelectedItems;
+    protected List<string> SpacerDescriptions;
+    protected bool IsInitialised = false;
+    protected bool AlwaysExpireDownStream = false;
+    protected Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>();
 
     private Dictionary<int, List<bool>> _outputsAreExpired = new Dictionary<int, List<bool>>();
     private Dictionary<int, bool> _outputIsExpired = new Dictionary<int, bool>();
+    private static readonly OasysUnitsIQuantityJsonConverter Converter = new OasysUnitsIQuantityJsonConverter();
 
     public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
     {
@@ -36,17 +36,17 @@ namespace OasysGH.Components
       m_attributes = new UI.DropDownComponentAttributes(this, this.SetSelected, this.DropDownItems, this.SelectedItems, this.SpacerDescriptions);
     }
 
-    public abstract void InitialiseDropdowns();
+    protected abstract void InitialiseDropdowns();
 
     public abstract void SetSelected(int i, int j);
 
-    public virtual void UpdateUIFromSelectedItems()
+    protected virtual void UpdateUIFromSelectedItems()
     {
       this.CreateAttributes();
       this.UpdateUI();
     }
 
-    public virtual void UpdateUI()
+    protected virtual void UpdateUI()
     {
       (this as IGH_VariableParameterComponent).VariableParameterMaintenance();
       this.ExpireSolution(true);

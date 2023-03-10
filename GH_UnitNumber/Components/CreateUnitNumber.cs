@@ -153,7 +153,7 @@ namespace GH_UnitNumber.Components
     IQuantity Quantity;
     double Val;
 
-    public override void InitialiseDropdowns()
+    protected override void InitialiseDropdowns()
     {
       this.SpacerDescriptions = new List<string>(new string[] { "Unit type", "Measure" });
 
@@ -401,7 +401,7 @@ namespace GH_UnitNumber.Components
       this.DropDownItems[1] = this.MeasureDictionary.Keys.ToList();
     }
 
-    public override void UpdateUIFromSelectedItems()
+    protected override void UpdateUIFromSelectedItems()
     {
       EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), this.SelectedItems[0]);
       UpdateQuantityUnitTypeFromUnitString(unit);

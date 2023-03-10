@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
 using OasysGH;
 using OasysGH.Components;
 using OasysUnits;
-using static System.Net.Mime.MediaTypeNames;
-using Grasshopper.Kernel.Special;
-using System.Drawing;
-using OasysGH.Units.Helpers;
-using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
 
 namespace GH_UnitNumber.Components
 {
@@ -129,7 +126,7 @@ namespace GH_UnitNumber.Components
     Enum SelectedUnit;
     bool ComingFromSave = false;
 
-    public override void InitialiseDropdowns()
+    protected override void InitialiseDropdowns()
     {
       this.SpacerDescriptions = new List<string>(new string[] { "Select output unit" });
 
@@ -152,7 +149,7 @@ namespace GH_UnitNumber.Components
       base.UpdateUI();
     }
 
-    public override void UpdateUIFromSelectedItems()
+    protected override void UpdateUIFromSelectedItems()
     {
       this.ComingFromSave = true;
       base.UpdateUIFromSelectedItems();
@@ -209,7 +206,7 @@ namespace GH_UnitNumber.Components
         vallist.ListItems.Add(new GH_ValueListItem(fullName, String.Format("\"{0}\"", abbrName)));
       }
       vallist.Attributes.Pivot = new PointF(x - vallist.Attributes.Bounds.Width, y);
-      
+
       Grasshopper.Instances.ActiveCanvas.Document.AddObject(vallist, false);
       this.Params.Input[1].RemoveAllSources();
       this.Params.Input[1].AddSource(vallist);
@@ -223,7 +220,7 @@ namespace GH_UnitNumber.Components
       var panel = new Grasshopper.Kernel.Special.GH_Panel();
 
       panel.CreateAttributes();
-      
+
       // set the location relative to the open component on the canvas
       panel.Attributes.Pivot = new PointF((float)Attributes.DocObject.Attributes.Bounds.Left -
           panel.Attributes.Bounds.Width - 30, (float)Params.Input[0].Attributes.Pivot.Y + panel.Attributes.Bounds.Height / 2);
@@ -233,12 +230,12 @@ namespace GH_UnitNumber.Components
         txt += abbrName + "\n";
       txt = txt.TrimEnd('\n');
       panel.UserText = txt;
-      
+
       Grasshopper.Instances.ActiveCanvas.Document.AddObject(panel, false);
-      
+
       panel.Properties.Multiline = false;
       panel.Properties.DrawPaths = false;
-      
+
       this.UpdateUI();
     }
     #endregion

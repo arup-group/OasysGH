@@ -91,7 +91,7 @@ namespace GH_UnitNumber.Components
     Enum SelectedUnit;
     bool ComingFromSave = false;
 
-    public override void InitialiseDropdowns()
+    protected override void InitialiseDropdowns()
     {
       this.SpacerDescriptions = new List<string>(new string[] { "Select output unit" });
 
@@ -114,7 +114,7 @@ namespace GH_UnitNumber.Components
       base.UpdateUI();
     }
 
-    public override void UpdateUIFromSelectedItems()
+    protected override void UpdateUIFromSelectedItems()
     {
       this.ComingFromSave = true;
       base.UpdateUIFromSelectedItems();
