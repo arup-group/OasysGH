@@ -87,7 +87,7 @@ namespace OasysGH.Components
     public abstract string DataSource { get; } // The path to the database file.
 
     // list of sections as outcome from selections
-    private List<string> _profileDescriptions = new List<string>() { "CAT HE HE200.B" };
+    protected List<string> _profileDescriptions = new List<string>() { "CAT HE HE200.B" };
     private string _search = "";
 
     //List<string> excludedInterfaces = new List<string>(new string[]
@@ -188,17 +188,17 @@ namespace OasysGH.Components
       {
         List<IProfile> profiles = this.SolveInstanceForCatalogueProfile(DA);
 
-        DataTree<IProfile> tree = new DataTree<IProfile>();
+          DataTree<IProfile> tree = new DataTree<IProfile>();
 
-        int pathCount = 0;
-        if (this.Params.Output[0].VolatileDataCount > 0)
-          pathCount = this.Params.Output[0].VolatileData.PathCount;
+          int pathCount = 0;
+          if (this.Params.Output[0].VolatileDataCount > 0)
+            pathCount = this.Params.Output[0].VolatileData.PathCount;
 
-        GH_Path path = new GH_Path(new int[] { pathCount });
-        tree.AddRange(profiles, path);
+          GH_Path path = new GH_Path(new int[] { pathCount });
+          tree.AddRange(profiles, path);
 
-        DA.SetDataTree(0, tree);
-      }
+          DA.SetDataTree(0, tree);
+        }
       else if (this._mode == FoldMode.Other)
       {
         IProfile profile = this.SolveInstanceForStandardProfile(DA);
@@ -304,8 +304,8 @@ namespace OasysGH.Components
       if (this._search == null)
         this.UpdateProfileDescriptions();
 
-      //foreach (string description in this._profileDescriptions)
-      //profiles.Add(new CatalogueProfile(description));
+      foreach (string description in this._profileDescriptions)
+        profiles.Add(new CatalogueProfile(description));
 
       return profiles;
     }
