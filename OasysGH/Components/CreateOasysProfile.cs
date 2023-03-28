@@ -112,7 +112,6 @@ namespace OasysGH.Components
     private int _typeIndex = -1;
 
     private bool _lastInputWasSecant;
-    private int _numberOfInputs;
     // temporary (???)
     private Type type = typeof(IRectangleProfile);
 
@@ -306,7 +305,7 @@ namespace OasysGH.Components
         this.UpdateProfileDescriptions();
 
       //foreach (string description in this._profileDescriptions)
-        //profiles.Add(new CatalogueProfile(description));
+      //profiles.Add(new CatalogueProfile(description));
 
       return profiles;
     }
@@ -704,58 +703,68 @@ namespace OasysGH.Components
       base.UpdateUI();
     }
 
-    protected virtual void SetNumberOfGenericInputs()
+    protected virtual int GetNumberOfGenericInputs()
     {
+      if (this.type == typeof(IAngleProfile))
+        return 4;
+      else if (this.type == typeof(IChannelProfile))
+        return 4;
+      else if (this.type == typeof(ICircleHollowProfile))
+        return 2;
+      else if (this.type == typeof(ICircleProfile))
+        return 1;
+      else if (this.type == typeof(ICruciformSymmetricalProfile))
+        return 4;
+      else if (this.type == typeof(IEllipseHollowProfile))
+        return 3;
+      else if (this.type == typeof(IEllipseProfile))
+        return 2;
+      else if (this.type == typeof(IGeneralCProfile))
+        return 4;
+      else if (this.type == typeof(IGeneralZProfile))
+        return 6;
+      else if (this.type == typeof(IIBeamAsymmetricalProfile))
+        return 6;
+      else if (this.type == typeof(IIBeamCellularProfile))
+        return 6;
+      else if (this.type == typeof(IIBeamProfile))
+        return 4;
+      else if (this.type == typeof(IRectangleHollowProfile))
+        return 4;
+      else if (this.type == typeof(IRectangleProfile))
+        return 2;
+      else if (this.type == typeof(IPerimeterProfile))
+        return 4;
+      else if (this.type == typeof(ISecantPileProfile))
+        return 4;
+      else if (this.type == typeof(ISheetPileProfile))
+        return 6;
+      else if (this.type == typeof(IRectoCircleProfile))
+        return 2;
+      else if (this.type == typeof(ITrapezoidProfile))
+        return 3;
+      else if (this.type == typeof(ITSectionProfile))
+        return 4;
+      else if (this.type == typeof(IPerimeterProfile))
+        return 1;
+
+      return -1;
+    }
+
+    protected virtual void UpdateParameters()
+    {
+      int numberOfGenericInputs = GetNumberOfGenericInputs();
       bool isSecantPile = false;
       bool isPerimeter = false;
-      if (this.type == typeof(IAngleProfile))
-        this._numberOfInputs = 4;
-      else if (this.type == typeof(IChannelProfile))
-        this._numberOfInputs = 4;
-      else if (this.type == typeof(ICircleHollowProfile))
-        this._numberOfInputs = 2;
-      else if (this.type == typeof(ICircleProfile))
-        this._numberOfInputs = 1;
-      else if (this.type == typeof(ICruciformSymmetricalProfile))
-        this._numberOfInputs = 4;
-      else if (this.type == typeof(IEllipseHollowProfile))
-        this._numberOfInputs = 3;
-      else if (this.type == typeof(IEllipseProfile))
-        this._numberOfInputs = 2;
-      else if (this.type == typeof(IGeneralCProfile))
-        this._numberOfInputs = 4;
-      else if (this.type == typeof(IGeneralZProfile))
-        this._numberOfInputs = 6;
-      else if (this.type == typeof(IIBeamAsymmetricalProfile))
-        this._numberOfInputs = 6;
-      else if (this.type == typeof(IIBeamCellularProfile))
-        this._numberOfInputs = 6;
-      else if (this.type == typeof(IIBeamProfile))
-        this._numberOfInputs = 4;
-      else if (this.type == typeof(IRectangleHollowProfile))
-        this._numberOfInputs = 4;
-      else if (this.type == typeof(IRectangleProfile))
-        this._numberOfInputs = 2;
-      else if (this.type == typeof(IPerimeterProfile))
-        this._numberOfInputs = 4;
-      else if (this.type == typeof(ISecantPileProfile))
+
+      if (this.type == typeof(ISecantPileProfile))
       {
-        this._numberOfInputs = 4;
         isSecantPile = true;
       }
-      else if (this.type == typeof(ISheetPileProfile))
-        this._numberOfInputs = 6;
-      else if (this.type == typeof(IRectoCircleProfile))
-        this._numberOfInputs = 2;
-      else if (this.type == typeof(ITrapezoidProfile))
-        this._numberOfInputs = 3;
-      else if (this.type == typeof(ITSectionProfile))
-        this._numberOfInputs = 4;
       else if (this.type == typeof(IPerimeterProfile))
       {
         isSecantPile = false;
         isPerimeter = true;
-        this._numberOfInputs = 1;
       }
 
       // if last input previously was a bool and we no longer need that
@@ -770,18 +779,18 @@ namespace OasysGH.Components
       }
 
       // remove any additional inputs
-      while (this.Params.Input.Count > this._numberOfInputs)
-        this.Params.UnregisterInputParameter(this.Params.Input[this._numberOfInputs], true);
+      while (this.Params.Input.Count > numberOfGenericInputs)
+        this.Params.UnregisterInputParameter(this.Params.Input[numberOfGenericInputs], true);
 
       if (isSecantPile) // add two less generic than input says
       {
-        while (this.Params.Input.Count > this._numberOfInputs + 2)
-          this.Params.UnregisterInputParameter(this.Params.Input[this._numberOfInputs + 2], true);
-        this._numberOfInputs -= 2;
+        while (this.Params.Input.Count > numberOfGenericInputs + 2)
+          this.Params.UnregisterInputParameter(this.Params.Input[numberOfGenericInputs + 2], true);
+        numberOfGenericInputs -= 2;
       }
 
       // add inputs parameter
-      while (this.Params.Input.Count < this._numberOfInputs)
+      while (this.Params.Input.Count < numberOfGenericInputs)
         this.Params.RegisterInputParam(new Param_GenericObject());
 
       if (isSecantPile) // finally add int and bool param if secant
@@ -810,7 +819,7 @@ namespace OasysGH.Components
         this._mode = FoldMode.Other;
       }
 
-      this.SetNumberOfGenericInputs();
+      this.UpdateParameters();
 
       (this as IGH_VariableParameterComponent).VariableParameterMaintenance();
       this.Params.OnParametersChanged();
@@ -1699,7 +1708,6 @@ namespace OasysGH.Components
       writer.SetString("mode", this._mode.ToString());
       writer.SetString("lengthUnit", this._lengthUnit.ToString());
       writer.SetBoolean("inclSS", this._inclSS);
-      writer.SetInt32("NumberOfInputs", this._numberOfInputs);
       writer.SetInt32("catalogueIndex", this._catalogueIndex);
       writer.SetInt32("typeIndex", this._typeIndex);
       writer.SetString("search", this._search);
@@ -1711,7 +1719,6 @@ namespace OasysGH.Components
       this._mode = (FoldMode)Enum.Parse(typeof(FoldMode), reader.GetString("mode"));
       this._lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), reader.GetString("lengthUnit"));
       this._inclSS = reader.GetBoolean("inclSS");
-      this._numberOfInputs = reader.GetInt32("NumberOfInputs");
       this._catalogueIndex = reader.GetInt32("catalogueIndex");
       this._typeIndex = reader.GetInt32("typeIndex");
       this._search = reader.GetString("search");
