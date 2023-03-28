@@ -673,7 +673,6 @@ namespace OasysGH.Components
             break;
         }
 
-
         DA.SetData(0, ConvertSection.ProfileConversion(perimeter));
         //profile = Input.Boundaries(this, DA, 0, 1, lengthUnit);
         //DA.SetData(0, Input.Boundaries(this, DA, 0, 1, lengthUnit));
@@ -733,14 +732,16 @@ namespace OasysGH.Components
         return 4;
       else if (this.type == typeof(IRectangleProfile))
         return 2;
+      else if (this.type == typeof(IRectoCircleProfile))
+        return 2;
+      else if (this.type == typeof(IRectoEllipseProfile))
+        return 4;
       else if (this.type == typeof(IPerimeterProfile))
         return 4;
       else if (this.type == typeof(ISecantPileProfile))
         return 4;
       else if (this.type == typeof(ISheetPileProfile))
         return 6;
-      else if (this.type == typeof(IRectoCircleProfile))
-        return 2;
       else if (this.type == typeof(ITrapezoidProfile))
         return 3;
       else if (this.type == typeof(ITSectionProfile))
@@ -1522,7 +1523,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The flat length of the profile's overall width.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = IRectoEllipseProfile.Create(rectoEllipse.Depth, rectoEllipse.DepthFlat, rectoEllipse.Width, rectoEllipse.WidthFlat);
         }
 
         else if (this.type == typeof(ISecantPileProfile))
