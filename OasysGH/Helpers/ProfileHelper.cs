@@ -18,6 +18,7 @@ namespace OasysGH.Helpers
       [Description("Catalogue")] Catalogue,
       [Description("Geometric")] Geometric
     }
+
     public enum GeoTypes
     {
       [Description("Perimeter")] Perim
@@ -68,6 +69,7 @@ namespace OasysGH.Helpers
     public List<Point2d> perimeterPoints;
     public List<List<Point2d>> voidPoints;
   }
+
   /// <summary>
   /// Helper class for Profile/Section conversions
   /// </summary>

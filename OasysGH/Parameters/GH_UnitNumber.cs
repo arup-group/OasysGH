@@ -17,11 +17,11 @@ namespace OasysGH.Parameters
     public override OasysPluginInfo PluginInfo => OasysGH.PluginInfo.Instance;
 
     public GH_UnitNumber(IQuantity item) : base(item) { }
-    public override IGH_Goo Duplicate() => new GH_UnitNumber(this.Value);
+    public override IGH_Goo Duplicate() => new GH_UnitNumber(Value);
 
     public override string ToString()
     {
-      return this.Value.ToString().Replace(",", string.Empty).Replace(" ", string.Empty);
+      return Value.ToString().Replace(",", string.Empty).Replace(" ", string.Empty);
     }
 
     public override bool CastTo<Q>(ref Q target)

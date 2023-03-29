@@ -76,7 +76,7 @@ It is used to set the `m_attributes` field in a Grasshopper component:
 ```cs
 public override void CreateAttributes()
 {
-  m_attributes = new UI.DropDownComponentAttributes(this, this.SetSelected, this.DropDownItems, this.SelectedItems, this.SpacerDescriptions);
+  m_attributes = new UI.DropDownComponentAttributes(this, SetSelected, DropDownItems, SelectedItems, SpacerDescriptions);
 }
 ```
 
@@ -114,16 +114,16 @@ private LengthUnit LengthUnit = DefaultUnits.LengthUnitSection; // get default l
 
 public override void InitialiseDropdowns()
 {
-  this.SpacerDescriptions = new List<string>(new string[] { "Unit" });
+  SpacerDescriptions = new List<string>(new string[] { "Unit" });
 
-  this.DropDownItems = new List<List<string>>();
-  this.SelectedItems = new List<string>();
+  DropDownItems = new List<List<string>>();
+  SelectedItems = new List<string>();
 
   // add length
-  this.DropDownItems.Add(Units.FilteredLengthUnits);
-  this.SelectedItems.Add(this.LengthUnit.ToString());
+  DropDownItems.Add(Units.FilteredLengthUnits);
+  SelectedItems.Add(LengthUnit.ToString());
 
-  this.IsInitialised = true;
+  IsInitialised = true;
 }
 ```
 
@@ -132,11 +132,11 @@ Secondly, we need to implement what happens when users make a selection in the d
 public override void SetSelected(int i, int j)
 {
   // change selected item
-  this.SelectedItems[i] = this.DropDownItems[i][j];
-  if (this.LengthUnit.ToString() == this.SelectedItems[i])
+  SelectedItems[i] = DropDownItems[i][j];
+  if (LengthUnit.ToString() == SelectedItems[i])
     return;
 
-  this.LengthUnit = (LengthUnit)Enum.Parse(typeof(LengthUnit), this.SelectedItems[i]);
+  LengthUnit = (LengthUnit)Enum.Parse(typeof(LengthUnit), SelectedItems[i]);
 
   base.UpdateUI();
 }
@@ -147,7 +147,7 @@ The contents of SelectedItems and DropDownItems are both stored and recreated au
 ```cs
 public override void UpdateUIFromSelectedItems()
 {
-  this.LengthUnit = (LengthUnit)Enum.Parse(typeof(LengthUnit), this.SelectedItems[0]);
+  LengthUnit = (LengthUnit)Enum.Parse(typeof(LengthUnit), SelectedItems[0]);
 
   base.UpdateUIFromSelectedItems();
 }
@@ -157,7 +157,7 @@ Finally, and optionally, we may want to change the name of the input parameters 
 ```cs
 public override void VariableParameterMaintenance()
 {
-  string unitAbbreviation = Length.GetAbbreviation(this.LengthUnit);
+  string unitAbbreviation = Length.GetAbbreviation(LengthUnit);
   Params.Input[0].Name = "Pos x [" + unitAbbreviation + "]";
   Params.Input[3].Name = "Spacing [" + unitAbbreviation + "]";
 }
@@ -178,7 +178,7 @@ public class GH_UnitNumber : GH_OasysGoo<IQuantity>
   public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
 
   public GH_UnitNumber(IQuantity item) : base(item) { }
-  public override IGH_Goo Duplicate() => new GH_UnitNumber(this.Value);  
+  public override IGH_Goo Duplicate() => new GH_UnitNumber(Value);  
 }
 ```
 
@@ -188,7 +188,7 @@ This class is still to be implemented, but is in the making...
 ### Input helpers
 OasysGH provides helper methods to get generic input parameters. This enables a single line of code in SolveInstance to retreive custom input parameters in a coherent way that will act similar to how Grasshopper acts to build-in parameters (same type of errors/warnings). For instance a UnitNumber length input can be retrieved like this:
 ```cs
-Length inputLength = (Length)Input.UnitNumber(this, DA, 0, this.LengthUnit);
+Length inputLength = (Length)Input.UnitNumber(this, DA, 0, LengthUnit);
 ```
 
 The helpers include methods for getting:

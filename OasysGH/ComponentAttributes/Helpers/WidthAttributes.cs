@@ -1,7 +1,7 @@
-﻿using Grasshopper.GUI;
-using Grasshopper.Kernel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using Grasshopper.GUI;
+using Grasshopper.Kernel;
 
 namespace OasysGH.UI.Helpers
 {

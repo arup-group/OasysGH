@@ -1,11 +1,11 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
+using Microsoft.Data.Sqlite;
 
 namespace OasysGH.Helpers
 {
@@ -18,18 +18,6 @@ namespace OasysGH.Helpers
     public static SqlReader Instance { get { return lazy.Value; } }
     private static readonly Lazy<SqlReader> lazy = new Lazy<SqlReader>(() => Initialize());
 
-    [HandleProcessCorruptedStateExceptions] // access violation
-    static void UEHandler(object sender, UnhandledExceptionEventArgs e)
-    {
-      var ex = e.ExceptionObject as Exception;
-
-      string assemblies = "";
-      foreach (Assembly ass in AppDomain.CurrentDomain.GetAssemblies())
-        assemblies += ass.ToString() + "; ";
-
-      throw new Exception(ex.ToString() + "     " + assemblies);
-    }
-
     public static SqlReader Initialize()
     {
       string codeBase = Assembly.GetCallingAssembly().CodeBase;
@@ -38,7 +26,6 @@ namespace OasysGH.Helpers
 
       try
       {
-        AppDomain.CurrentDomain.UnhandledException += UEHandler;
         Assembly SQLiteInterop = Assembly.LoadFile(codeBasePath + @"\Microsoft.Data.Sqlite.dll");
 
         return new SqlReader();
@@ -59,7 +46,6 @@ namespace OasysGH.Helpers
 
         // Create the second AppDomain.
         AppDomain ad = AppDomain.CreateDomain("SQLite AppDomain", null, ads);
-        ad.UnhandledException += UEHandler;
 
         // Create an instance of MarshalbyRefType in the second AppDomain.
         // A proxy to the object is returned.

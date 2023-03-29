@@ -30,10 +30,10 @@ namespace OasysGH.Components
     #region UI
     public override void CreateAttributes()
     {
-      if (!this.IsInitialised)
-        this.InitialiseDropdowns();
+      if (!IsInitialised)
+        InitialiseDropdowns();
 
-      m_attributes = new UI.DropDownComponentAttributes(this, this.SetSelected, this.DropDownItems, this.SelectedItems, this.SpacerDescriptions);
+      m_attributes = new UI.DropDownComponentAttributes(this, SetSelected, DropDownItems, SelectedItems, SpacerDescriptions);
     }
 
     protected abstract void InitialiseDropdowns();
@@ -42,36 +42,36 @@ namespace OasysGH.Components
 
     protected virtual void UpdateUIFromSelectedItems()
     {
-      this.CreateAttributes();
-      this.UpdateUI();
+      CreateAttributes();
+      UpdateUI();
     }
 
     protected virtual void UpdateUI()
     {
       (this as IGH_VariableParameterComponent).VariableParameterMaintenance();
-      this.ExpireSolution(true);
-      this.Params.OnParametersChanged();
-      this.OnDisplayExpired(true);
+      ExpireSolution(true);
+      Params.OnParametersChanged();
+      OnDisplayExpired(true);
     }
     #endregion
 
     #region expire downstream
     protected override void ExpireDownStreamObjects()
     {
-      if (this.AlwaysExpireDownStream)
+      if (AlwaysExpireDownStream)
       {
         base.ExpireDownStreamObjects();
         return;
       }
 
       SetExpireDownStream();
-      if (this._outputIsExpired.Count > 0)
+      if (_outputIsExpired.Count > 0)
       {
-        for (int outputIndex = 0; outputIndex < this.Params.Output.Count; outputIndex++)
+        for (int outputIndex = 0; outputIndex < Params.Output.Count; outputIndex++)
         {
-          if (this._outputIsExpired[outputIndex])
+          if (_outputIsExpired[outputIndex])
           {
-            IGH_Param item = this.Params.Output[outputIndex];
+            IGH_Param item = Params.Output[outputIndex];
             item.ExpireSolution(recompute: false);
           }
         }
@@ -82,25 +82,25 @@ namespace OasysGH.Components
 
     private void SetExpireDownStream()
     {
-      if (this._outputsAreExpired != null && this._outputsAreExpired.Count > 0)
+      if (_outputsAreExpired != null && _outputsAreExpired.Count > 0)
       {
-        this._outputIsExpired = new Dictionary<int, bool>();
-        for (int outputIndex = 0; outputIndex < this.Params.Output.Count; outputIndex++)
+        _outputIsExpired = new Dictionary<int, bool>();
+        for (int outputIndex = 0; outputIndex < Params.Output.Count; outputIndex++)
         {
-          if (this._outputsAreExpired.ContainsKey(outputIndex))
-            this._outputIsExpired.Add(outputIndex, _outputsAreExpired[outputIndex].Any(c => c == true));
+          if (_outputsAreExpired.ContainsKey(outputIndex))
+            _outputIsExpired.Add(outputIndex, _outputsAreExpired[outputIndex].Any(c => c == true));
           else
-            this._outputIsExpired.Add(outputIndex, true);
+            _outputIsExpired.Add(outputIndex, true);
         }
       }
     }
 
     public void OutputChanged<T>(T data, int outputIndex, int index) where T : IGH_Goo
     {
-      if (!this.ExistingOutputsSerialized.ContainsKey(outputIndex))
+      if (!ExistingOutputsSerialized.ContainsKey(outputIndex))
       {
-        this.ExistingOutputsSerialized.Add(outputIndex, new List<string>());
-        this._outputsAreExpired.Add(outputIndex, new List<bool>());
+        ExistingOutputsSerialized.Add(outputIndex, new List<string>());
+        _outputsAreExpired.Add(outputIndex, new List<bool>());
       }
 
       string outputsSerialized = "";
@@ -123,36 +123,36 @@ namespace OasysGH.Components
         }
       }
 
-      if (this.ExistingOutputsSerialized[outputIndex].Count == index)
+      if (ExistingOutputsSerialized[outputIndex].Count == index)
       {
-        this.ExistingOutputsSerialized[outputIndex].Add(outputsSerialized);
-        this._outputsAreExpired[outputIndex].Add(true);
+        ExistingOutputsSerialized[outputIndex].Add(outputsSerialized);
+        _outputsAreExpired[outputIndex].Add(true);
         return;
       }
 
-      if (this.ExistingOutputsSerialized[outputIndex][index] != outputsSerialized)
+      if (ExistingOutputsSerialized[outputIndex][index] != outputsSerialized)
       {
-        this.ExistingOutputsSerialized[outputIndex][index] = outputsSerialized;
-        this._outputsAreExpired[outputIndex][index] = true;
+        ExistingOutputsSerialized[outputIndex][index] = outputsSerialized;
+        _outputsAreExpired[outputIndex][index] = true;
         return;
       }
-      this._outputsAreExpired[outputIndex][index] = false;
+      _outputsAreExpired[outputIndex][index] = false;
     }
     #endregion
 
     #region (de)serialization
     public override bool Write(GH_IO.Serialization.GH_IWriter writer)
     {
-      Helpers.DeSerialization.WriteDropDownComponents(ref writer, this.DropDownItems, this.SelectedItems, this.SpacerDescriptions);
+      Helpers.DeSerialization.WriteDropDownComponents(ref writer, DropDownItems, SelectedItems, SpacerDescriptions);
       return base.Write(writer);
     }
 
     public override bool Read(GH_IO.Serialization.GH_IReader reader)
     {
-      Helpers.DeSerialization.ReadDropDownComponents(ref reader, ref this.DropDownItems, ref this.SelectedItems, ref this.SpacerDescriptions);
+      Helpers.DeSerialization.ReadDropDownComponents(ref reader, ref DropDownItems, ref SelectedItems, ref SpacerDescriptions);
 
-      this.IsInitialised = true;
-      this.UpdateUIFromSelectedItems();
+      IsInitialised = true;
+      UpdateUIFromSelectedItems();
 
       return base.Read(reader);
     }

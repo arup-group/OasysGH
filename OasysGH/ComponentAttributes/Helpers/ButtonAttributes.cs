@@ -46,6 +46,7 @@ namespace OasysGH.UI.Helpers
       }
     }
   }
+
   /// <summary>
   /// Method to draw a rounded rectangle
   /// 
@@ -97,7 +98,6 @@ namespace OasysGH.UI.Helpers
     }
   }
 
-
   /// <summary>
   /// Method to draw a dropdown arrow
   /// 
@@ -119,7 +119,6 @@ namespace OasysGH.UI.Helpers
                 new PointF(center.X, center.Y + rectanglesize / 6),
                 new PointF(center.X + rectanglesize / 4, center.Y - rectanglesize / 8)
           });
-
     }
   }
 }

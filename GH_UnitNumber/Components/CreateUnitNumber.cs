@@ -17,17 +17,25 @@ namespace GH_UnitNumber.Components
   public class CreateUnitNumber : GH_OasysDropDownComponent
   {
     #region Name and Ribbon Layout
-    // This region handles how the component in displayed on the ribbon
-    // including name, exposure level and icon
+    // This region handles how the component in displayed on the ribbon including name, exposure level and icon
     public override Guid ComponentGuid => new Guid("a6d79db6-844f-4228-b38f-9223762185fb");
-    public CreateUnitNumber()
-      : base("Create UnitNumber", "CreateUnit", "Create a unit number (quantity) from value, unit and measure",
-            "Params",
-            "Util")
-    { this.Hidden = true; } // sets the initial state of the component to hidden
     public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.obscure;
-    protected override System.Drawing.Bitmap Icon => Properties.Resources.CreateUnitNumber;
     public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
+    protected override System.Drawing.Bitmap Icon => Properties.Resources.CreateUnitNumber;
+    private Dictionary<string, Enum> _measureDictionary;
+    private Enum _selectedMeasure;
+    private IQuantity _quantity;
+    private double _val;
+
+    public CreateUnitNumber() : base(
+      "Create UnitNumber",
+      "CreateUnit",
+      "Create a unit number (quantity) from value, unit and measure",
+      "Params",
+      "Util")
+    {
+      Hidden = true; // sets the initial state of the component to hidden
+    }
     #endregion
 
     #region Input and output
@@ -35,6 +43,7 @@ namespace GH_UnitNumber.Components
     {
       pManager.AddNumberParameter("Number [unit]", "N", "Number representing the value of selected unit and measure", GH_ParamAccess.item);
     }
+
     protected override void RegisterOutputParams(GH_OutputParamManager pManager)
     {
       pManager.AddParameter(new GH_UnitNumberParameter());
@@ -43,154 +52,149 @@ namespace GH_UnitNumber.Components
 
     protected override void SolveInstance(IGH_DataAccess DA)
     {
-      if (DA.GetData(0, ref Val))
+      if (DA.GetData(0, ref _val))
       {
-        EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), this.SelectedItems[0]);
+        EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
 
         switch (unit)
         {
           case EngineeringUnits.Angle:
-            this.Quantity = new Angle(Val, (AngleUnit)SelectedMeasure);
+            _quantity = new Angle(_val, (AngleUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Length:
-            this.Quantity = new Length(Val, (LengthUnit)SelectedMeasure);
+            _quantity = new Length(_val, (LengthUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Area:
-            this.Quantity = new Area(Val, (AreaUnit)SelectedMeasure);
+            _quantity = new Area(_val, (AreaUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Volume:
-            this.Quantity = new Volume(Val, (VolumeUnit)SelectedMeasure);
+            _quantity = new Volume(_val, (VolumeUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.AreaMomentOfInertia:
-            this.Quantity = new AreaMomentOfInertia(Val, (AreaMomentOfInertiaUnit)SelectedMeasure);
+            _quantity = new AreaMomentOfInertia(_val, (AreaMomentOfInertiaUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Force:
-            this.Quantity = new Force(Val, (ForceUnit)SelectedMeasure);
+            _quantity = new Force(_val, (ForceUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.ForcePerLength:
-            this.Quantity = new ForcePerLength(Val, (ForcePerLengthUnit)SelectedMeasure);
+            _quantity = new ForcePerLength(_val, (ForcePerLengthUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.ForcePerArea:
-            this.Quantity = new Pressure(Val, (PressureUnit)SelectedMeasure);
+            _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
             break; ;
 
           case EngineeringUnits.Moment:
-            this.Quantity = new Moment(Val, (MomentUnit)SelectedMeasure);
+            _quantity = new Moment(_val, (MomentUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Stress:
-            this.Quantity = new Pressure(Val, (PressureUnit)SelectedMeasure);
+            _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Strain:
-            this.Quantity = new Strain(Val, (StrainUnit)SelectedMeasure);
+            _quantity = new Strain(_val, (StrainUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.AxialStiffness:
-            this.Quantity = new AxialStiffness(Val, (AxialStiffnessUnit)SelectedMeasure);
+            _quantity = new AxialStiffness(_val, (AxialStiffnessUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.BendingStiffness:
-            this.Quantity = new BendingStiffness(Val, (BendingStiffnessUnit)SelectedMeasure);
+            _quantity = new BendingStiffness(_val, (BendingStiffnessUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Curvature:
-            this.Quantity = new Curvature(Val, (CurvatureUnit)SelectedMeasure);
+            _quantity = new Curvature(_val, (CurvatureUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Mass:
-            this.Quantity = new Mass(Val, (MassUnit)SelectedMeasure);
+            _quantity = new Mass(_val, (MassUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Density:
-            this.Quantity = new Density(Val, (DensityUnit)SelectedMeasure);
+            _quantity = new Density(_val, (DensityUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Temperature:
-            this.Quantity = new Temperature(Val, (TemperatureUnit)SelectedMeasure);
+            _quantity = new Temperature(_val, (TemperatureUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Velocity:
-            this.Quantity = new Speed(Val, (SpeedUnit)SelectedMeasure);
+            _quantity = new Speed(_val, (SpeedUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Acceleration:
-            this.Quantity = new Acceleration(Val, (AccelerationUnit)SelectedMeasure);
+            _quantity = new Acceleration(_val, (AccelerationUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Energy:
-            this.Quantity = new Energy(Val, (EnergyUnit)SelectedMeasure);
+            _quantity = new Energy(_val, (EnergyUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Ratio:
-            this.Quantity = new Ratio(Val, (RatioUnit)SelectedMeasure);
+            _quantity = new Ratio(_val, (RatioUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Time:
-            this.Quantity = new Duration(Val, (DurationUnit)SelectedMeasure);
+            _quantity = new Duration(_val, (DurationUnit)_selectedMeasure);
             break;
 
           default:
             throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
         }
 
-        OasysGH.Parameters.GH_UnitNumber unitNumber = new OasysGH.Parameters.GH_UnitNumber(this.Quantity);
+        OasysGH.Parameters.GH_UnitNumber unitNumber = new OasysGH.Parameters.GH_UnitNumber(_quantity);
 
         OasysGH.Helpers.Output.SetItem(this, DA, 0, unitNumber);
       }
     }
 
     #region Custom UI
-    Dictionary<string, Enum> MeasureDictionary;
-    Enum SelectedMeasure;
-    IQuantity Quantity;
-    double Val;
-
     protected override void InitialiseDropdowns()
     {
-      this.SpacerDescriptions = new List<string>(new string[] { "Unit type", "Measure" });
+      SpacerDescriptions = new List<string>(new string[] { "Unit type", "Measure" });
 
-      this.DropDownItems = new List<List<string>>();
-      this.SelectedItems = new List<string>();
+      DropDownItems = new List<List<string>>();
+      SelectedItems = new List<string>();
 
-      this.DropDownItems.Add(Enum.GetNames(typeof(EngineeringUnits)).ToList());
-      this.SelectedItems.Add(this.DropDownItems[0][1]);
+      DropDownItems.Add(Enum.GetNames(typeof(EngineeringUnits)).ToList());
+      SelectedItems.Add(DropDownItems[0][1]);
 
-      this.DropDownItems.Add(Enum.GetNames(typeof(LengthUnit)).ToList());
-      this.SelectedItems.Add(DefaultUnits.LengthUnitGeometry.ToString());
+      DropDownItems.Add(Enum.GetNames(typeof(LengthUnit)).ToList());
+      SelectedItems.Add(DefaultUnits.LengthUnitGeometry.ToString());
 
-      this.Quantity = new Length(0, DefaultUnits.LengthUnitGeometry);
-      this.SelectedMeasure = this.Quantity.Unit;
+      _quantity = new Length(0, DefaultUnits.LengthUnitGeometry);
+      _selectedMeasure = _quantity.Unit;
 
-      this.MeasureDictionary = new Dictionary<string, Enum>();
-      foreach (UnitInfo unit in Quantity.QuantityInfo.UnitInfos)
-        this.MeasureDictionary.Add(unit.Name, unit.Value);
+      _measureDictionary = new Dictionary<string, Enum>();
+      foreach (UnitInfo unit in _quantity.QuantityInfo.UnitInfos)
+        _measureDictionary.Add(unit.Name, unit.Value);
 
-      this.IsInitialised = true;
+      IsInitialised = true;
     }
 
     public override void SetSelected(int i, int j)
     {
-      this.SelectedItems[i] = this.DropDownItems[i][j];
+      SelectedItems[i] = DropDownItems[i][j];
 
       // if change is made to first (unit type) list we have to update lists
       if (i == 0)
       {
-        EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), this.SelectedItems[0]);
+        EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
         UpdateQuantityUnitTypeFromUnitString(unit);
         UpdateMeasureDictionary();
-        this.SelectedItems[1] = this.SelectedMeasure.ToString();
+        SelectedItems[1] = _selectedMeasure.ToString();
       }
       else // if change is made to the measure of a unit
       {
-        this.SelectedMeasure = this.MeasureDictionary[this.SelectedItems.Last()];
+        _selectedMeasure = _measureDictionary[SelectedItems.Last()];
         UpdateUnitMeasureAndAbbreviation();
       }
       base.UpdateUI();
@@ -198,96 +202,96 @@ namespace GH_UnitNumber.Components
 
     private void UpdateUnitMeasureAndAbbreviation()
     {
-      EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), this.SelectedItems[0]);
+      EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
 
       switch (unit)
       {
         case EngineeringUnits.Angle:
-          this.Quantity = new Angle(Val, (AngleUnit)SelectedMeasure);
+          _quantity = new Angle(_val, (AngleUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Length:
-          this.Quantity = new Length(Val, (LengthUnit)SelectedMeasure);
+          _quantity = new Length(_val, (LengthUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Area:
-          this.Quantity = new Area(Val, (AreaUnit)SelectedMeasure);
+          _quantity = new Area(_val, (AreaUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Volume:
-          this.Quantity = new Volume(Val, (VolumeUnit)SelectedMeasure);
+          _quantity = new Volume(_val, (VolumeUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.AreaMomentOfInertia:
-          this.Quantity = new AreaMomentOfInertia(Val, (AreaMomentOfInertiaUnit)SelectedMeasure);
+          _quantity = new AreaMomentOfInertia(_val, (AreaMomentOfInertiaUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Force:
-          this.Quantity = new Force(Val, (ForceUnit)SelectedMeasure);
+          _quantity = new Force(_val, (ForceUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.ForcePerLength:
-          this.Quantity = new ForcePerLength(Val, (ForcePerLengthUnit)SelectedMeasure);
+          _quantity = new ForcePerLength(_val, (ForcePerLengthUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.ForcePerArea:
-          this.Quantity = new Pressure(Val, (PressureUnit)SelectedMeasure);
+          _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
           break; ;
 
         case EngineeringUnits.Moment:
-          this.Quantity = new Moment(Val, (MomentUnit)SelectedMeasure);
+          _quantity = new Moment(_val, (MomentUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Stress:
-          this.Quantity = new Pressure(Val, (PressureUnit)SelectedMeasure);
+          _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Strain:
-          this.Quantity = new Strain(Val, (StrainUnit)SelectedMeasure);
+          _quantity = new Strain(_val, (StrainUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.AxialStiffness:
-          this.Quantity = new AxialStiffness(Val, (AxialStiffnessUnit)SelectedMeasure);
+          _quantity = new AxialStiffness(_val, (AxialStiffnessUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.BendingStiffness:
-          this.Quantity = new BendingStiffness(Val, (BendingStiffnessUnit)SelectedMeasure);
+          _quantity = new BendingStiffness(_val, (BendingStiffnessUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Curvature:
-          this.Quantity = new Curvature(Val, (CurvatureUnit)SelectedMeasure);
+          _quantity = new Curvature(_val, (CurvatureUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Mass:
-          this.Quantity = new Mass(Val, (MassUnit)SelectedMeasure);
+          _quantity = new Mass(_val, (MassUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Density:
-          this.Quantity = new Density(Val, (DensityUnit)SelectedMeasure);
+          _quantity = new Density(_val, (DensityUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Temperature:
-          this.Quantity = new Temperature(Val, (TemperatureUnit)SelectedMeasure);
+          _quantity = new Temperature(_val, (TemperatureUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Velocity:
-          this.Quantity = new Speed(Val, (SpeedUnit)SelectedMeasure);
+          _quantity = new Speed(_val, (SpeedUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Acceleration:
-          this.Quantity = new Acceleration(Val, (AccelerationUnit)SelectedMeasure);
+          _quantity = new Acceleration(_val, (AccelerationUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Energy:
-          this.Quantity = new Energy(Val, (EnergyUnit)SelectedMeasure);
+          _quantity = new Energy(_val, (EnergyUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Ratio:
-          this.Quantity = new Ratio(Val, (RatioUnit)SelectedMeasure);
+          _quantity = new Ratio(_val, (RatioUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Time:
-          this.Quantity = new Duration(Val, (DurationUnit)SelectedMeasure);
+          _quantity = new Duration(_val, (DurationUnit)_selectedMeasure);
           break;
 
         default:
@@ -300,215 +304,215 @@ namespace GH_UnitNumber.Components
       switch (unit)
       {
         case EngineeringUnits.Angle:
-          this.Quantity = new Angle(Val, DefaultUnits.AngleUnit);
+          _quantity = new Angle(_val, DefaultUnits.AngleUnit);
           break;
 
         case EngineeringUnits.Length:
-          this.Quantity = new Length(Val, DefaultUnits.LengthUnitGeometry);
+          _quantity = new Length(_val, DefaultUnits.LengthUnitGeometry);
           break;
 
         case EngineeringUnits.Area:
-          this.Quantity = new Area(Val, DefaultUnits.SectionAreaUnit);
+          _quantity = new Area(_val, DefaultUnits.SectionAreaUnit);
           break;
 
         case EngineeringUnits.Volume:
-          this.Quantity = new Volume(Val, DefaultUnits.SectionVolumeUnit);
+          _quantity = new Volume(_val, DefaultUnits.SectionVolumeUnit);
           break;
 
         case EngineeringUnits.AreaMomentOfInertia:
-          this.Quantity = new AreaMomentOfInertia(Val, DefaultUnits.SectionAreaMomentOfInertiaUnit);
+          _quantity = new AreaMomentOfInertia(_val, DefaultUnits.SectionAreaMomentOfInertiaUnit);
           break;
 
         case EngineeringUnits.Force:
-          this.Quantity = new Force(Val, DefaultUnits.ForceUnit);
+          _quantity = new Force(_val, DefaultUnits.ForceUnit);
           break;
 
         case EngineeringUnits.ForcePerLength:
-          this.Quantity = new ForcePerLength(Val, DefaultUnits.ForcePerLengthUnit);
+          _quantity = new ForcePerLength(_val, DefaultUnits.ForcePerLengthUnit);
           break;
 
         case EngineeringUnits.ForcePerArea:
-          this.Quantity = new Pressure(Val, DefaultUnits.ForcePerAreaUnit);
+          _quantity = new Pressure(_val, DefaultUnits.ForcePerAreaUnit);
           break; ;
 
         case EngineeringUnits.Moment:
-          this.Quantity = new Moment(Val, DefaultUnits.MomentUnit);
+          _quantity = new Moment(_val, DefaultUnits.MomentUnit);
           break;
 
         case EngineeringUnits.Stress:
-          this.Quantity = new Pressure(Val, DefaultUnits.StressUnitResult);
+          _quantity = new Pressure(_val, DefaultUnits.StressUnitResult);
           break;
 
         case EngineeringUnits.Strain:
-          this.Quantity = new Strain(Val, DefaultUnits.StrainUnitResult);
+          _quantity = new Strain(_val, DefaultUnits.StrainUnitResult);
           break;
 
         case EngineeringUnits.AxialStiffness:
-          this.Quantity = new AxialStiffness(Val, DefaultUnits.AxialStiffnessUnit);
+          _quantity = new AxialStiffness(_val, DefaultUnits.AxialStiffnessUnit);
           break;
 
         case EngineeringUnits.BendingStiffness:
-          this.Quantity = new BendingStiffness(Val, DefaultUnits.BendingStiffnessUnit);
+          _quantity = new BendingStiffness(_val, DefaultUnits.BendingStiffnessUnit);
           break;
 
         case EngineeringUnits.Curvature:
-          this.Quantity = new Curvature(Val, DefaultUnits.CurvatureUnit);
+          _quantity = new Curvature(_val, DefaultUnits.CurvatureUnit);
           break;
 
         case EngineeringUnits.Mass:
-          this.Quantity = new Mass(Val, DefaultUnits.MassUnit);
+          _quantity = new Mass(_val, DefaultUnits.MassUnit);
           break;
 
         case EngineeringUnits.Density:
-          this.Quantity = new Density(Val, DefaultUnits.DensityUnit);
+          _quantity = new Density(_val, DefaultUnits.DensityUnit);
           break;
 
         case EngineeringUnits.Temperature:
-          this.Quantity = new Temperature(Val, DefaultUnits.TemperatureUnit);
+          _quantity = new Temperature(_val, DefaultUnits.TemperatureUnit);
           break;
 
         case EngineeringUnits.Velocity:
-          this.Quantity = new Speed(Val, DefaultUnits.VelocityUnit);
+          _quantity = new Speed(_val, DefaultUnits.VelocityUnit);
           break;
 
         case EngineeringUnits.Acceleration:
-          this.Quantity = new Acceleration(Val, DefaultUnits.AccelerationUnit);
+          _quantity = new Acceleration(_val, DefaultUnits.AccelerationUnit);
           break;
 
         case EngineeringUnits.Energy:
-          this.Quantity = new Energy(Val, DefaultUnits.EnergyUnit);
+          _quantity = new Energy(_val, DefaultUnits.EnergyUnit);
           break;
 
         case EngineeringUnits.Ratio:
-          this.Quantity = new Ratio(Val, DefaultUnits.RatioUnit);
+          _quantity = new Ratio(_val, DefaultUnits.RatioUnit);
           break;
 
         case EngineeringUnits.Time:
-          this.Quantity = new Duration(Val, DefaultUnits.TimeMediumUnit);
+          _quantity = new Duration(_val, DefaultUnits.TimeMediumUnit);
           break;
 
         default:
           throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
       }
-      SelectedMeasure = Quantity.Unit;
+      _selectedMeasure = _quantity.Unit;
     }
 
     private void UpdateMeasureDictionary()
     {
-      this.MeasureDictionary = new Dictionary<string, Enum>();
-      foreach (UnitInfo unitype in Quantity.QuantityInfo.UnitInfos)
-        this.MeasureDictionary.Add(unitype.Name, unitype.Value);
-      this.DropDownItems[1] = this.MeasureDictionary.Keys.ToList();
+      _measureDictionary = new Dictionary<string, Enum>();
+      foreach (UnitInfo unitype in _quantity.QuantityInfo.UnitInfos)
+        _measureDictionary.Add(unitype.Name, unitype.Value);
+      DropDownItems[1] = _measureDictionary.Keys.ToList();
     }
 
     protected override void UpdateUIFromSelectedItems()
     {
-      EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), this.SelectedItems[0]);
+      EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
       UpdateQuantityUnitTypeFromUnitString(unit);
       UpdateMeasureDictionary();
       UpdateUnitMeasureAndAbbreviation();
-      SelectedMeasure = MeasureDictionary[this.SelectedItems.Last()];
+      _selectedMeasure = _measureDictionary[SelectedItems.Last()];
       base.UpdateUIFromSelectedItems();
     }
 
     public override void VariableParameterMaintenance()
     {
-      EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), this.SelectedItems[0]);
+      EngineeringUnits unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
       string unitAbbreviation = "";
       switch (unit)
       {
         case EngineeringUnits.Angle:
-          unitAbbreviation = Angle.GetAbbreviation((AngleUnit)SelectedMeasure);
+          unitAbbreviation = Angle.GetAbbreviation((AngleUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Length:
-          unitAbbreviation = Length.GetAbbreviation((LengthUnit)SelectedMeasure);
+          unitAbbreviation = Length.GetAbbreviation((LengthUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Area:
-          unitAbbreviation = Area.GetAbbreviation((AreaUnit)SelectedMeasure);
+          unitAbbreviation = Area.GetAbbreviation((AreaUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Volume:
-          unitAbbreviation = Volume.GetAbbreviation((VolumeUnit)SelectedMeasure);
+          unitAbbreviation = Volume.GetAbbreviation((VolumeUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.AreaMomentOfInertia:
-          unitAbbreviation = AreaMomentOfInertia.GetAbbreviation((AreaMomentOfInertiaUnit)SelectedMeasure);
+          unitAbbreviation = AreaMomentOfInertia.GetAbbreviation((AreaMomentOfInertiaUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Force:
-          unitAbbreviation = Force.GetAbbreviation((ForceUnit)SelectedMeasure);
+          unitAbbreviation = Force.GetAbbreviation((ForceUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.ForcePerLength:
-          unitAbbreviation = ForcePerLength.GetAbbreviation((ForcePerLengthUnit)SelectedMeasure);
+          unitAbbreviation = ForcePerLength.GetAbbreviation((ForcePerLengthUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.ForcePerArea:
-          unitAbbreviation = Pressure.GetAbbreviation((PressureUnit)SelectedMeasure);
+          unitAbbreviation = Pressure.GetAbbreviation((PressureUnit)_selectedMeasure);
           break; ;
 
         case EngineeringUnits.Moment:
-          unitAbbreviation = Moment.GetAbbreviation((MomentUnit)SelectedMeasure);
+          unitAbbreviation = Moment.GetAbbreviation((MomentUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Stress:
-          unitAbbreviation = Pressure.GetAbbreviation((PressureUnit)SelectedMeasure);
+          unitAbbreviation = Pressure.GetAbbreviation((PressureUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Strain:
-          unitAbbreviation = Strain.GetAbbreviation((StrainUnit)SelectedMeasure);
+          unitAbbreviation = Strain.GetAbbreviation((StrainUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.AxialStiffness:
-          unitAbbreviation = AxialStiffness.GetAbbreviation((AxialStiffnessUnit)SelectedMeasure);
+          unitAbbreviation = AxialStiffness.GetAbbreviation((AxialStiffnessUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.BendingStiffness:
-          unitAbbreviation = BendingStiffness.GetAbbreviation((BendingStiffnessUnit)SelectedMeasure);
+          unitAbbreviation = BendingStiffness.GetAbbreviation((BendingStiffnessUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Curvature:
-          unitAbbreviation = Curvature.GetAbbreviation((CurvatureUnit)SelectedMeasure);
+          unitAbbreviation = Curvature.GetAbbreviation((CurvatureUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Mass:
-          unitAbbreviation = Mass.GetAbbreviation((MassUnit)SelectedMeasure);
+          unitAbbreviation = Mass.GetAbbreviation((MassUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Density:
-          unitAbbreviation = Density.GetAbbreviation((DensityUnit)SelectedMeasure);
+          unitAbbreviation = Density.GetAbbreviation((DensityUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Temperature:
-          unitAbbreviation = Temperature.GetAbbreviation((TemperatureUnit)SelectedMeasure);
+          unitAbbreviation = Temperature.GetAbbreviation((TemperatureUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Velocity:
-          unitAbbreviation = Speed.GetAbbreviation((SpeedUnit)SelectedMeasure);
+          unitAbbreviation = Speed.GetAbbreviation((SpeedUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Acceleration:
-          unitAbbreviation = Acceleration.GetAbbreviation((AccelerationUnit)SelectedMeasure);
+          unitAbbreviation = Acceleration.GetAbbreviation((AccelerationUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Energy:
-          unitAbbreviation = Energy.GetAbbreviation((EnergyUnit)SelectedMeasure);
+          unitAbbreviation = Energy.GetAbbreviation((EnergyUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Ratio:
-          unitAbbreviation = Ratio.GetAbbreviation((RatioUnit)SelectedMeasure);
+          unitAbbreviation = Ratio.GetAbbreviation((RatioUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Time:
-          unitAbbreviation = Duration.GetAbbreviation((DurationUnit)SelectedMeasure);
+          unitAbbreviation = Duration.GetAbbreviation((DurationUnit)_selectedMeasure);
           break;
 
         default:
           throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
       }
-      
+
       Params.Input[0].Name = "Number [" + unitAbbreviation + "]";
     }
     #endregion

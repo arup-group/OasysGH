@@ -19,7 +19,7 @@ namespace GH_UnitNumber.Components
       : base("Convert UnitNumber", "ConvertUnit", "Convert a unit number (quantity) into another unit",
             "Params",
             "Util")
-    { this.Hidden = true; } // sets the initial state of the component to hidden
+    { Hidden = true; } // sets the initial state of the component to hidden
     public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.hidden;
 
     protected override System.Drawing.Bitmap Icon => Properties.Resources.ConvertUnitNumber;
@@ -51,15 +51,15 @@ namespace GH_UnitNumber.Components
         if (gh_typ.Value is OasysGH.Parameters.GH_UnitNumber)
         {
           inUnitNumber = (OasysGH.Parameters.GH_UnitNumber)gh_typ.Value;
-          if (this.ConvertedUnitNumber == null || !this.ConvertedUnitNumber.Value.QuantityInfo.UnitType.Equals(inUnitNumber.Value.QuantityInfo.UnitType))
+          if (ConvertedUnitNumber == null || !ConvertedUnitNumber.Value.QuantityInfo.UnitType.Equals(inUnitNumber.Value.QuantityInfo.UnitType))
           {
-            this.UnitDictionary = new Dictionary<string, Enum>();
+            UnitDictionary = new Dictionary<string, Enum>();
             foreach (UnitInfo unit in inUnitNumber.Value.QuantityInfo.UnitInfos)
-              this.UnitDictionary.Add(unit.Name, unit.Value);
+              UnitDictionary.Add(unit.Name, unit.Value);
 
-            this.DropDownItems[0] = this.UnitDictionary.Keys.ToList();
+            DropDownItems[0] = UnitDictionary.Keys.ToList();
             if (!ComingFromSave)
-              this.SelectedItems[0] = inUnitNumber.Value.Unit.ToString();
+              SelectedItems[0] = inUnitNumber.Value.Unit.ToString();
             else
               ComingFromSave = false;
           }
@@ -77,12 +77,12 @@ namespace GH_UnitNumber.Components
       }
 
       // update selected material
-      this.SelectedUnit = this.UnitDictionary[SelectedItems.Last()];
+      SelectedUnit = UnitDictionary[SelectedItems.Last()];
 
       // convert unit to selected output
-      this.ConvertedUnitNumber = new OasysGH.Parameters.GH_UnitNumber(inUnitNumber.Value.ToUnit(this.SelectedUnit));
+      ConvertedUnitNumber = new OasysGH.Parameters.GH_UnitNumber(inUnitNumber.Value.ToUnit(SelectedUnit));
 
-      OasysGH.Helpers.Output.SetItem(this, DA, 0, this.ConvertedUnitNumber);
+      OasysGH.Helpers.Output.SetItem(this, DA, 0, ConvertedUnitNumber);
     }
 
     #region Custom UI
@@ -93,30 +93,30 @@ namespace GH_UnitNumber.Components
 
     protected override void InitialiseDropdowns()
     {
-      this.SpacerDescriptions = new List<string>(new string[] { "Select output unit" });
+      SpacerDescriptions = new List<string>(new string[] { "Select output unit" });
 
-      this.DropDownItems = new List<List<string>>();
-      this.SelectedItems = new List<string>();
+      DropDownItems = new List<List<string>>();
+      SelectedItems = new List<string>();
 
-      this.DropDownItems.Add(new List<string>(new string[] { " " }));
-      this.SelectedItems.Add("   ");
+      DropDownItems.Add(new List<string>(new string[] { " " }));
+      SelectedItems.Add("   ");
 
-      this.IsInitialised = true;
+      IsInitialised = true;
     }
 
     public override void SetSelected(int i, int j)
     {
-      if (this.UnitDictionary != null)
+      if (UnitDictionary != null)
       {
-        this.SelectedItems[i] = this.DropDownItems[i][j];
-        this.DropDownItems[0] = this.UnitDictionary.Keys.ToList();
+        SelectedItems[i] = DropDownItems[i][j];
+        DropDownItems[0] = UnitDictionary.Keys.ToList();
       }
       base.UpdateUI();
     }
 
     protected override void UpdateUIFromSelectedItems()
     {
-      this.ComingFromSave = true;
+      ComingFromSave = true;
       base.UpdateUIFromSelectedItems();
     }
     #endregion

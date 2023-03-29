@@ -14,6 +14,6 @@ namespace OasysGH.Parameters
     {
     }
 
-    public override IGH_Goo Duplicate() => new OasysProfileGoo(this.Value);
+    public override IGH_Goo Duplicate() => new OasysProfileGoo(Value);
   }
 }

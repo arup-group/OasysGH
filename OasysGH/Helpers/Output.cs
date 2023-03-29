@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Grasshopper;
 using Grasshopper.Kernel;
-using OasysGH.Components;
 using Grasshopper.Kernel.Types;
+using OasysGH.Components;
 
 namespace OasysGH.Helpers
 {

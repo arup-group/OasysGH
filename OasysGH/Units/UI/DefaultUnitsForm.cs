@@ -35,54 +35,54 @@ namespace OasysGH.Units.UI
 
     public DefaultUnitsForm()
     {
-      this.InitializeComponent();
+      InitializeComponent();
 
       // Properties
-      this.InitialiseDropdown(this.lengthSectionComboBox, this.LengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitSection));
-      this.InitialiseDropdown(this.areaComboBox, this.AreaAbbr, Area.GetAbbreviation(DefaultUnits.SectionAreaUnit));
-      this.InitialiseDropdown(this.volumeComboBox, this.VolumeAbbr, Volume.GetAbbreviation(DefaultUnits.SectionVolumeUnit));
-      this.InitialiseDropdown(this.momentOfInertiaComboBox, this.InertiaAbbr, AreaMomentOfInertia.GetAbbreviation(DefaultUnits.SectionAreaMomentOfInertiaUnit));
-      this.InitialiseDropdown(this.massComboBox, this.MassAbbr, Mass.GetAbbreviation(DefaultUnits.MassUnit));
-      this.InitialiseDropdown(this.densityComboBox, this.DensityAbbr, Density.GetAbbreviation(DefaultUnits.DensityUnit));
-      this.InitialiseDropdown(this.linearDensityComboBox, this.LinearDensityAbbr, LinearDensity.GetAbbreviation(DefaultUnits.LinearDensityUnit));
-      this.InitialiseDropdown(this.volumePerLengthComboBox, this.VolPerLengthAbbr, VolumePerLength.GetAbbreviation(DefaultUnits.VolumePerLengthUnit));
-      this.InitialiseDropdown(this.materialStrengthComboBox, this.PressureAbbr, Pressure.GetAbbreviation(DefaultUnits.MaterialStrengthUnit));
-      this.InitialiseDropdown(this.materialStrainComboBox, this.StrainAbbr, Strain.GetAbbreviation(DefaultUnits.MaterialStrainUnit));
-      this.InitialiseDropdown(this.youngsModulusComboBox, this.PressureAbbr, Pressure.GetAbbreviation(DefaultUnits.YoungsModulusUnit));
+      InitialiseDropdown(lengthSectionComboBox, LengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitSection));
+      InitialiseDropdown(areaComboBox, AreaAbbr, Area.GetAbbreviation(DefaultUnits.SectionAreaUnit));
+      InitialiseDropdown(volumeComboBox, VolumeAbbr, Volume.GetAbbreviation(DefaultUnits.SectionVolumeUnit));
+      InitialiseDropdown(momentOfInertiaComboBox, InertiaAbbr, AreaMomentOfInertia.GetAbbreviation(DefaultUnits.SectionAreaMomentOfInertiaUnit));
+      InitialiseDropdown(massComboBox, MassAbbr, Mass.GetAbbreviation(DefaultUnits.MassUnit));
+      InitialiseDropdown(densityComboBox, DensityAbbr, Density.GetAbbreviation(DefaultUnits.DensityUnit));
+      InitialiseDropdown(linearDensityComboBox, LinearDensityAbbr, LinearDensity.GetAbbreviation(DefaultUnits.LinearDensityUnit));
+      InitialiseDropdown(volumePerLengthComboBox, VolPerLengthAbbr, VolumePerLength.GetAbbreviation(DefaultUnits.VolumePerLengthUnit));
+      InitialiseDropdown(materialStrengthComboBox, PressureAbbr, Pressure.GetAbbreviation(DefaultUnits.MaterialStrengthUnit));
+      InitialiseDropdown(materialStrainComboBox, StrainAbbr, Strain.GetAbbreviation(DefaultUnits.MaterialStrainUnit));
+      InitialiseDropdown(youngsModulusComboBox, PressureAbbr, Pressure.GetAbbreviation(DefaultUnits.YoungsModulusUnit));
 
       // Geometry
-      this.toleranceUpDown.Value = (decimal)TempTolerance.As(Length.ParseUnit(Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry)));
-      this.useRhinoTolerance.Checked = DefaultUnits.UseRhinoTolerance;
-      this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry) + "]";
+      toleranceUpDown.Value = (decimal)TempTolerance.As(Length.ParseUnit(Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry)));
+      useRhinoTolerance.Checked = DefaultUnits.UseRhinoTolerance;
+      toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry) + "]";
 
-      if (this.useRhinoTolerance.Checked)
+      if (useRhinoTolerance.Checked)
       {
-        this.toleranceUpDown.Value = (decimal)RhinoUnit.GetRhinoTolerance().As(DefaultUnits.LengthUnitGeometry);
-        this.toleranceUpDown.Enabled = false;
-        this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(RhinoUnit.GetRhinoLengthUnit()) + "]";
+        toleranceUpDown.Value = (decimal)RhinoUnit.GetRhinoTolerance().As(DefaultUnits.LengthUnitGeometry);
+        toleranceUpDown.Enabled = false;
+        toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(RhinoUnit.GetRhinoLengthUnit()) + "]";
       }
       
-      this.InitialiseDropdown(this.lengthComboBox, this.LengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry));
-      this.lengthComboBox.Enabled = !DefaultUnits.UseRhinoLengthGeometryUnit;
-      this.useRhinoLengthUnit.Checked = DefaultUnits.UseRhinoLengthGeometryUnit;
+      InitialiseDropdown(lengthComboBox, LengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitGeometry));
+      lengthComboBox.Enabled = !DefaultUnits.UseRhinoLengthGeometryUnit;
+      useRhinoLengthUnit.Checked = DefaultUnits.UseRhinoLengthGeometryUnit;
 
       // Loads
-      this.InitialiseDropdown(this.forceComboBox, this.ForceAbbr, Force.GetAbbreviation(DefaultUnits.ForceUnit));
-      this.InitialiseDropdown(this.forcePerLengthComboBox, this.ForcePerLengthAbbr, ForcePerLength.GetAbbreviation(DefaultUnits.ForcePerLengthUnit));
-      this.InitialiseDropdown(this.forcePerAreaComboBox, this.ForcePerAreaAbbr, Pressure.GetAbbreviation(DefaultUnits.ForcePerAreaUnit));
-      this.InitialiseDropdown(this.momentComboBox, this.MomentAbbr, Moment.GetAbbreviation(DefaultUnits.MomentUnit));
-      this.InitialiseDropdown(this.temperatureComboBox, this.TemperatureAbbr, Temperature.GetAbbreviation(DefaultUnits.TemperatureUnit));
+      InitialiseDropdown(forceComboBox, ForceAbbr, Force.GetAbbreviation(DefaultUnits.ForceUnit));
+      InitialiseDropdown(forcePerLengthComboBox, ForcePerLengthAbbr, ForcePerLength.GetAbbreviation(DefaultUnits.ForcePerLengthUnit));
+      InitialiseDropdown(forcePerAreaComboBox, ForcePerAreaAbbr, Pressure.GetAbbreviation(DefaultUnits.ForcePerAreaUnit));
+      InitialiseDropdown(momentComboBox, MomentAbbr, Moment.GetAbbreviation(DefaultUnits.MomentUnit));
+      InitialiseDropdown(temperatureComboBox, TemperatureAbbr, Temperature.GetAbbreviation(DefaultUnits.TemperatureUnit));
 
       // Results
-      this.InitialiseDropdown(this.displacementComboBox, this.LengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitResult));
-      this.InitialiseDropdown(this.stressComboBox, this.PressureAbbr, Pressure.GetAbbreviation(DefaultUnits.StressUnitResult));
-      this.InitialiseDropdown(this.strainComboBox, this.StrainAbbr, Strain.GetAbbreviation(DefaultUnits.StrainUnitResult));
-      this.InitialiseDropdown(this.axialStiffnessComboBox, this.AxialStffAbbr, AxialStiffness.GetAbbreviation(DefaultUnits.AxialStiffnessUnit));
-      this.InitialiseDropdown(this.bendingStiffnessComboBox, this.BendingStffAbbr, BendingStiffness.GetAbbreviation(DefaultUnits.BendingStiffnessUnit));
-      this.InitialiseDropdown(this.velocityComboBox, this.VelocityAbbr, Speed.GetAbbreviation(DefaultUnits.VelocityUnit));
-      this.InitialiseDropdown(this.accelerationComboBox, this.AccelerationAbbr, Acceleration.GetAbbreviation(DefaultUnits.AccelerationUnit));
-      this.InitialiseDropdown(this.energyComboBox, this.EnergyAbbr, Energy.GetAbbreviation(DefaultUnits.EnergyUnit));
-      this.InitialiseDropdown(this.curvatureComboBox, this.CurvatureAbbr, Curvature.GetAbbreviation(DefaultUnits.CurvatureUnit));
+      InitialiseDropdown(displacementComboBox, LengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitResult));
+      InitialiseDropdown(stressComboBox, PressureAbbr, Pressure.GetAbbreviation(DefaultUnits.StressUnitResult));
+      InitialiseDropdown(strainComboBox, StrainAbbr, Strain.GetAbbreviation(DefaultUnits.StrainUnitResult));
+      InitialiseDropdown(axialStiffnessComboBox, AxialStffAbbr, AxialStiffness.GetAbbreviation(DefaultUnits.AxialStiffnessUnit));
+      InitialiseDropdown(bendingStiffnessComboBox, BendingStffAbbr, BendingStiffness.GetAbbreviation(DefaultUnits.BendingStiffnessUnit));
+      InitialiseDropdown(velocityComboBox, VelocityAbbr, Speed.GetAbbreviation(DefaultUnits.VelocityUnit));
+      InitialiseDropdown(accelerationComboBox, AccelerationAbbr, Acceleration.GetAbbreviation(DefaultUnits.AccelerationUnit));
+      InitialiseDropdown(energyComboBox, EnergyAbbr, Energy.GetAbbreviation(DefaultUnits.EnergyUnit));
+      InitialiseDropdown(curvatureComboBox, CurvatureAbbr, Curvature.GetAbbreviation(DefaultUnits.CurvatureUnit));
     }
 
     private void InitialiseDropdown(ComboBox comboBox, List<string> dataSource, string selected)
@@ -100,17 +100,17 @@ namespace OasysGH.Units.UI
 
     private void SetTempTolerance(LengthUnit unit)
     {
-      decimal tolerance = (decimal)new Length((double)this.toleranceUpDown.Value, this.TempTolerance.Unit).As(unit);
+      decimal tolerance = (decimal)new Length((double)toleranceUpDown.Value, TempTolerance.Unit).As(unit);
 
       // check if chosen tolerance is inside min/max values, and reset form to min/max values if outside
-      if (tolerance >= this.toleranceUpDown.Minimum && tolerance <= this.toleranceUpDown.Maximum)
-        this.toleranceUpDown.Value = tolerance;
-      else if (tolerance < this.toleranceUpDown.Minimum)
-        this.toleranceUpDown.Value = this.toleranceUpDown.Minimum;
+      if (tolerance >= toleranceUpDown.Minimum && tolerance <= toleranceUpDown.Maximum)
+        toleranceUpDown.Value = tolerance;
+      else if (tolerance < toleranceUpDown.Minimum)
+        toleranceUpDown.Value = toleranceUpDown.Minimum;
       else
-        this.toleranceUpDown.Value = this.toleranceUpDown.Maximum;
+        toleranceUpDown.Value = toleranceUpDown.Maximum;
 
-      this.TempTolerance = new Length((double)this.toleranceUpDown.Value, unit);
+      TempTolerance = new Length((double)toleranceUpDown.Value, unit);
     }
 
     private void useRhinoTolerance_CheckedChanged(object sender, EventArgs e)
@@ -118,16 +118,16 @@ namespace OasysGH.Units.UI
       if (!useRhinoTolerance.Checked)
       {
         toleranceUpDown.Enabled = true;
-        this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
-        this.SetTempTolerance(Length.ParseUnit(lengthComboBox.Text));
+        toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
+        SetTempTolerance(Length.ParseUnit(lengthComboBox.Text));
       }
       else
       {
         toleranceUpDown.Enabled = false;
         LengthUnit unit = RhinoUnit.GetRhinoLengthUnit();
-        this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(unit) + "]";
-        this.toleranceUpDown.Value = (decimal)RhinoUnit.GetRhinoTolerance().As(unit);
-        this.TempTolerance = new Length((double)this.toleranceUpDown.Value, unit);
+        toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(unit) + "]";
+        toleranceUpDown.Value = (decimal)RhinoUnit.GetRhinoTolerance().As(unit);
+        TempTolerance = new Length((double)toleranceUpDown.Value, unit);
       }
     }
 
@@ -135,11 +135,11 @@ namespace OasysGH.Units.UI
     {
       if (!useRhinoTolerance.Checked)
       {
-        this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
+        toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
 
         LengthUnit unit = Length.ParseUnit(lengthComboBox.Text);
 
-        this.SetTempTolerance(unit);
+        SetTempTolerance(unit);
       }
     }
 
@@ -147,13 +147,13 @@ namespace OasysGH.Units.UI
     {
       lengthComboBox.Enabled = !useRhinoLengthUnit.Checked;
       LengthUnit unit = lengthComboBox.Enabled ? DefaultUnits.LengthUnitGeometry : RhinoUnit.GetRhinoLengthUnit();
-      SetSelectedDropdown(this.lengthComboBox, LengthAbbr, Length.GetAbbreviation(unit));
-      this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(unit) + "]";
+      SetSelectedDropdown(lengthComboBox, LengthAbbr, Length.GetAbbreviation(unit));
+      toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(unit) + "]";
       if (!useRhinoTolerance.Checked)
       {
-        this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
+        toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
 
-        this.SetTempTolerance(unit);
+        SetTempTolerance(unit);
       }
     }
 
@@ -284,46 +284,46 @@ namespace OasysGH.Units.UI
     private void UpdateSelectedFromUnitSystem(UnitSystem unitSystem)
     {
       // Properties
-      this.SetSelectedDropdown(this.lengthSectionComboBox, LengthAbbr, Length.GetAbbreviation(unitSystem.SectionLengthUnit));
-      this.SetSelectedDropdown(this.areaComboBox, AreaAbbr, Area.GetAbbreviation(unitSystem.SectionAreaUnit));
-      this.SetSelectedDropdown(this.volumeComboBox, VolumeAbbr, Volume.GetAbbreviation(unitSystem.SectionVolumeUnit));
-      this.SetSelectedDropdown(this.momentOfInertiaComboBox, InertiaAbbr, AreaMomentOfInertia.GetAbbreviation(unitSystem.SectionAreaMomentOfInertiaUnit));
-      this.SetSelectedDropdown(this.massComboBox, MassAbbr, Mass.GetAbbreviation(unitSystem.MassUnit));
-      this.SetSelectedDropdown(this.densityComboBox, DensityAbbr, Density.GetAbbreviation(unitSystem.DensityUnit));
-      this.SetSelectedDropdown(this.linearDensityComboBox, LinearDensityAbbr, LinearDensity.GetAbbreviation(unitSystem.LinearDensityUnit));
-      this.SetSelectedDropdown(this.volumePerLengthComboBox, VolPerLengthAbbr, VolumePerLength.GetAbbreviation(unitSystem.VolumePerLengthUnit));
-      this.SetSelectedDropdown(this.materialStrengthComboBox, PressureAbbr, Pressure.GetAbbreviation(unitSystem.MaterialStrengthUnit));
-      this.SetSelectedDropdown(this.materialStrainComboBox, StrainAbbr, Strain.GetAbbreviation(unitSystem.MaterialStrainUnit));
-      this.SetSelectedDropdown(this.youngsModulusComboBox, PressureAbbr, Pressure.GetAbbreviation(unitSystem.YoungsModulusUnit));
+      SetSelectedDropdown(lengthSectionComboBox, LengthAbbr, Length.GetAbbreviation(unitSystem.SectionLengthUnit));
+      SetSelectedDropdown(areaComboBox, AreaAbbr, Area.GetAbbreviation(unitSystem.SectionAreaUnit));
+      SetSelectedDropdown(volumeComboBox, VolumeAbbr, Volume.GetAbbreviation(unitSystem.SectionVolumeUnit));
+      SetSelectedDropdown(momentOfInertiaComboBox, InertiaAbbr, AreaMomentOfInertia.GetAbbreviation(unitSystem.SectionAreaMomentOfInertiaUnit));
+      SetSelectedDropdown(massComboBox, MassAbbr, Mass.GetAbbreviation(unitSystem.MassUnit));
+      SetSelectedDropdown(densityComboBox, DensityAbbr, Density.GetAbbreviation(unitSystem.DensityUnit));
+      SetSelectedDropdown(linearDensityComboBox, LinearDensityAbbr, LinearDensity.GetAbbreviation(unitSystem.LinearDensityUnit));
+      SetSelectedDropdown(volumePerLengthComboBox, VolPerLengthAbbr, VolumePerLength.GetAbbreviation(unitSystem.VolumePerLengthUnit));
+      SetSelectedDropdown(materialStrengthComboBox, PressureAbbr, Pressure.GetAbbreviation(unitSystem.MaterialStrengthUnit));
+      SetSelectedDropdown(materialStrainComboBox, StrainAbbr, Strain.GetAbbreviation(unitSystem.MaterialStrainUnit));
+      SetSelectedDropdown(youngsModulusComboBox, PressureAbbr, Pressure.GetAbbreviation(unitSystem.YoungsModulusUnit));
 
       // Geometry
-      this.useRhinoLengthUnit.Checked = false;
-      this.lengthComboBox.Enabled = true;
-      this.SetSelectedDropdown(this.lengthComboBox, LengthAbbr, Length.GetAbbreviation(unitSystem.LengthUnit));
-      if (!this.useRhinoTolerance.Checked)
+      useRhinoLengthUnit.Checked = false;
+      lengthComboBox.Enabled = true;
+      SetSelectedDropdown(lengthComboBox, LengthAbbr, Length.GetAbbreviation(unitSystem.LengthUnit));
+      if (!useRhinoTolerance.Checked)
       {
-        this.toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(unitSystem.LengthUnit) + "]";
+        toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(unitSystem.LengthUnit) + "]";
 
-        this.SetTempTolerance(unitSystem.LengthUnit);
+        SetTempTolerance(unitSystem.LengthUnit);
       }
 
       // Loads
-      this.SetSelectedDropdown(this.forceComboBox, ForceAbbr, Force.GetAbbreviation(unitSystem.ForceUnit));
-      this.SetSelectedDropdown(this.forcePerLengthComboBox, ForcePerLengthAbbr, ForcePerLength.GetAbbreviation(unitSystem.ForcePerLengthUnit));
-      this.SetSelectedDropdown(this.forcePerAreaComboBox, ForcePerAreaAbbr, Pressure.GetAbbreviation(unitSystem.ForcePerAreaUnit));
-      this.SetSelectedDropdown(this.momentComboBox, MomentAbbr, Moment.GetAbbreviation(unitSystem.MomentUnit));
-      this.SetSelectedDropdown(this.temperatureComboBox, TemperatureAbbr, Temperature.GetAbbreviation(unitSystem.TemperatureUnit));
+      SetSelectedDropdown(forceComboBox, ForceAbbr, Force.GetAbbreviation(unitSystem.ForceUnit));
+      SetSelectedDropdown(forcePerLengthComboBox, ForcePerLengthAbbr, ForcePerLength.GetAbbreviation(unitSystem.ForcePerLengthUnit));
+      SetSelectedDropdown(forcePerAreaComboBox, ForcePerAreaAbbr, Pressure.GetAbbreviation(unitSystem.ForcePerAreaUnit));
+      SetSelectedDropdown(momentComboBox, MomentAbbr, Moment.GetAbbreviation(unitSystem.MomentUnit));
+      SetSelectedDropdown(temperatureComboBox, TemperatureAbbr, Temperature.GetAbbreviation(unitSystem.TemperatureUnit));
 
       // Results
-      this.SetSelectedDropdown(this.displacementComboBox, LengthAbbr, Length.GetAbbreviation(unitSystem.LengthUnitResult));
-      this.SetSelectedDropdown(this.stressComboBox, PressureAbbr, Pressure.GetAbbreviation(unitSystem.StressUnitResult));
-      this.SetSelectedDropdown(this.strainComboBox, StrainAbbr, Strain.GetAbbreviation(unitSystem.StrainUnitResult));
-      this.SetSelectedDropdown(this.axialStiffnessComboBox, AxialStffAbbr, AxialStiffness.GetAbbreviation(unitSystem.AxialStiffnessUnit));
-      this.SetSelectedDropdown(this.bendingStiffnessComboBox, BendingStffAbbr, BendingStiffness.GetAbbreviation(unitSystem.BendingStiffnessUnit));
-      this.SetSelectedDropdown(this.velocityComboBox, VelocityAbbr, Speed.GetAbbreviation(unitSystem.VelocityUnit));
-      this.SetSelectedDropdown(this.accelerationComboBox, AccelerationAbbr, Acceleration.GetAbbreviation(unitSystem.AccelerationUnit));
-      this.SetSelectedDropdown(this.energyComboBox, EnergyAbbr, Energy.GetAbbreviation(unitSystem.EnergyUnit));
-      this.SetSelectedDropdown(this.curvatureComboBox, CurvatureAbbr, Curvature.GetAbbreviation(unitSystem.CurvatureUnit));
+      SetSelectedDropdown(displacementComboBox, LengthAbbr, Length.GetAbbreviation(unitSystem.LengthUnitResult));
+      SetSelectedDropdown(stressComboBox, PressureAbbr, Pressure.GetAbbreviation(unitSystem.StressUnitResult));
+      SetSelectedDropdown(strainComboBox, StrainAbbr, Strain.GetAbbreviation(unitSystem.StrainUnitResult));
+      SetSelectedDropdown(axialStiffnessComboBox, AxialStffAbbr, AxialStiffness.GetAbbreviation(unitSystem.AxialStiffnessUnit));
+      SetSelectedDropdown(bendingStiffnessComboBox, BendingStffAbbr, BendingStiffness.GetAbbreviation(unitSystem.BendingStiffnessUnit));
+      SetSelectedDropdown(velocityComboBox, VelocityAbbr, Speed.GetAbbreviation(unitSystem.VelocityUnit));
+      SetSelectedDropdown(accelerationComboBox, AccelerationAbbr, Acceleration.GetAbbreviation(unitSystem.AccelerationUnit));
+      SetSelectedDropdown(energyComboBox, EnergyAbbr, Energy.GetAbbreviation(unitSystem.EnergyUnit));
+      SetSelectedDropdown(curvatureComboBox, CurvatureAbbr, Curvature.GetAbbreviation(unitSystem.CurvatureUnit));
     }
 
     private void OK_Click(object sender, EventArgs e)
@@ -355,7 +355,7 @@ namespace OasysGH.Units.UI
       DefaultUnits.AccelerationUnit = Acceleration.ParseUnit(accelerationComboBox.Text);
       DefaultUnits.EnergyUnit = Energy.ParseUnit(energyComboBox.Text);
       DefaultUnits.CurvatureUnit = Curvature.ParseUnit(curvatureComboBox.Text);
-      DefaultUnits.Tolerance = new Length((double)this.toleranceUpDown.Value, useRhinoTolerance.Checked ? RhinoUnit.GetRhinoLengthUnit() : DefaultUnits.LengthUnitGeometry);
+      DefaultUnits.Tolerance = new Length((double)toleranceUpDown.Value, useRhinoTolerance.Checked ? RhinoUnit.GetRhinoLengthUnit() : DefaultUnits.LengthUnitGeometry);
       DefaultUnits.UseRhinoTolerance = useRhinoTolerance.Checked;
 
       Utility.SaveSettings();

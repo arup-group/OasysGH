@@ -11,7 +11,16 @@ namespace GH_UnitNumber.Components
     public override Guid ComponentGuid => new Guid("0dec5da5-93ed-4d3e-b3c0-9dc7727327ad");
     public override GH_Exposure Exposure => GH_Exposure.hidden;
     public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
-    public TestInputComponent() : base("Test Component", "Test", "A component to test unitsnumber inputs", "Test", "Test") { } 
+
+    public TestInputComponent() : base(
+      "Test Component",
+      "Test",
+      "A component to test unitsnumber inputs",
+      "Test",
+      "Test")
+    {
+    }
+
     protected override void RegisterInputParams(GH_InputParamManager pManager)
     {
       pManager.AddGenericParameter("Test", "UN", "Test item GH_UnitNumber input", GH_ParamAccess.item);
@@ -35,42 +44,42 @@ namespace GH_UnitNumber.Components
 
     protected override void SolveInstance(IGH_DataAccess DA)
     {
-      if (this.Params.Input[0].SourceCount > 0)
+      if (Params.Input[0].SourceCount > 0)
       {
         DA.SetData(0, OasysGH.Helpers.Input.UnitNumber(this, DA, 0, MomentUnit.KilonewtonMeter));
       }
-      if (this.Params.Input[1].SourceCount > 0)
+      if (Params.Input[1].SourceCount > 0)
       {
         DA.SetDataList(1, OasysGH.Helpers.Input.UnitNumberList(this, DA, 1, ForceUnit.Kilonewton));
       }
 
-      if (this.Params.Input[2].SourceCount > 0)
+      if (Params.Input[2].SourceCount > 0)
       {
         DA.SetData(0, OasysGH.Helpers.Input.GenericGoo<OasysGH.Parameters.GH_UnitNumber>(this, DA, 2));
       }
-      if (this.Params.Input[3].SourceCount > 0)
+      if (Params.Input[3].SourceCount > 0)
       {
-        DA.SetDataList(1, OasysGH.Helpers.Input.GenericGooList< OasysGH.Parameters.GH_UnitNumber>(this, DA, 3));
+        DA.SetDataList(1, OasysGH.Helpers.Input.GenericGooList<OasysGH.Parameters.GH_UnitNumber>(this, DA, 3));
       }
 
-      if (this.Params.Input[4].SourceCount > 0)
+      if (Params.Input[4].SourceCount > 0)
       {
         DA.SetData(0, OasysGH.Helpers.Input.LengthOrRatio(this, DA, 4, LengthUnit.Meter));
       }
-      if (this.Params.Input[5].SourceCount > 0)
+      if (Params.Input[5].SourceCount > 0)
       {
         DA.SetDataList(1, OasysGH.Helpers.Input.LengthsOrRatios(this, DA, 5, LengthUnit.Meter));
       }
 
-      if (this.Params.Input[6].SourceCount > 0)
+      if (Params.Input[6].SourceCount > 0)
       {
         DA.SetData(0, OasysGH.Helpers.Input.UnitNumberOrDoubleAsRatioToPercentage(this, DA, 6));
       }
-      if (this.Params.Input[7].SourceCount > 0)
+      if (Params.Input[7].SourceCount > 0)
       {
         DA.SetData(0, OasysGH.Helpers.Input.RatioInDecimalFractionToPercentage(this, DA, 7));
       }
-      if (this.Params.Input[8].SourceCount > 0)
+      if (Params.Input[8].SourceCount > 0)
       {
         DA.SetData(0, OasysGH.Helpers.Input.RatioInDecimalFractionToDecimalFraction(this, DA, 8));
       }
