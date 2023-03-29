@@ -188,17 +188,17 @@ namespace OasysGH.Components
       {
         List<IProfile> profiles = this.SolveInstanceForCatalogueProfile(DA);
 
-          DataTree<IProfile> tree = new DataTree<IProfile>();
+        DataTree<IProfile> tree = new DataTree<IProfile>();
 
-          int pathCount = 0;
-          if (this.Params.Output[0].VolatileDataCount > 0)
-            pathCount = this.Params.Output[0].VolatileData.PathCount;
+        int pathCount = 0;
+        if (this.Params.Output[0].VolatileDataCount > 0)
+          pathCount = this.Params.Output[0].VolatileData.PathCount;
 
-          GH_Path path = new GH_Path(new int[] { pathCount });
-          tree.AddRange(profiles, path);
+        GH_Path path = new GH_Path(new int[] { pathCount });
+        tree.AddRange(profiles, path);
 
-          DA.SetDataTree(0, tree);
-        }
+        DA.SetDataTree(0, tree);
+      }
       else if (this._mode == FoldMode.Other)
       {
         IProfile profile = this.SolveInstanceForStandardProfile(DA);
@@ -736,8 +736,6 @@ namespace OasysGH.Components
         return 2;
       else if (this.type == typeof(IRectoEllipseProfile))
         return 4;
-      else if (this.type == typeof(IPerimeterProfile))
-        return 4;
       else if (this.type == typeof(ISecantPileProfile))
         return 4;
       else if (this.type == typeof(ISheetPileProfile))
@@ -747,7 +745,7 @@ namespace OasysGH.Components
       else if (this.type == typeof(ITSectionProfile))
         return 4;
       else if (this.type == typeof(IPerimeterProfile))
-        return 1;
+        return 2; // or 1???
 
       return -1;
     }
@@ -759,14 +757,9 @@ namespace OasysGH.Components
       bool isPerimeter = false;
 
       if (this.type == typeof(ISecantPileProfile))
-      {
         isSecantPile = true;
-      }
       else if (this.type == typeof(IPerimeterProfile))
-      {
-        isSecantPile = false;
         isPerimeter = true;
-      }
 
       // if last input previously was a bool and we no longer need that
       if (this._lastInputWasSecant || isSecantPile || isPerimeter)
@@ -1112,8 +1105,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The flange thickness of the angle profile.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-
-          //dup = IAngleProfile.Create(angle.Depth, angle.Flange, angle.Web);
         }
 
         else if (this.type == typeof(IChannelProfile))
@@ -1145,7 +1136,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
           this.Params.Input[i].Optional = false;
-          //dup = IChannelProfile.Create(channel.Depth, channel.Flanges, channel.Web);
         }
 
         else if (this.type == typeof(ICircleHollowProfile))
@@ -1162,7 +1152,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The wall thickness of the hollow circle.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = ICircleHollowProfile.Create(circleHollow.Diameter, circleHollow.WallThickness);
         }
 
         else if (this.type == typeof(ICircleProfile))
@@ -1172,8 +1161,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The diameter of the circle.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-
-          //dup = ICircleProfile.Create(circle.Diameter);
         }
 
         else if (this.type == typeof(ICruciformSymmetricalProfile))
@@ -1204,7 +1191,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The flange thickness of the cruciform.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = ICruciformSymmetricalProfile.Create(cruciformSymmetrical.Depth, cruciformSymmetrical.Flange, cruciformSymmetrical.Web);
         }
 
         else if (this.type == typeof(IEllipseHollowProfile))
@@ -1228,7 +1214,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The wall thickness of the hollow ellipse.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = IEllipseHollowProfile.Create(ellipseHollow.Depth, ellipseHollow.Width, ellipseHollow.WallThickness);
         }
 
         else if (this.type == typeof(IEllipseProfile))
@@ -1245,7 +1230,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The width of the ellipse.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = IEllipseProfile.Create(ellipse.Depth, ellipse.Width);
         }
 
         else if (this.type == typeof(IGeneralCProfile))
@@ -1276,7 +1260,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The thickness of the generic c section profile.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = IGeneralCProfile.Create(generalC.Depth, generalC.FlangeWidth, generalC.Lip, generalC.Thickness);
         }
 
         else if (this.type == typeof(IGeneralZProfile))
@@ -1321,7 +1304,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The thickness of the generic z section profile.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = IGeneralZProfile.Create(generalZ.Depth, generalZ.TopFlangeWidth, generalZ.BottomFlangeWidth, generalZ.TopLip, generalZ.BottomLip, generalZ.Thickness);
         }
 
         else if (this.type == typeof(IIBeamAsymmetricalProfile))
@@ -1366,8 +1348,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The bpttom flange thickness.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-
-          //dup = IIBeamAsymmetricalProfile.Create(iBeamAsymmetrical.Depth, iBeamAsymmetrical.TopFlange, iBeamAsymmetrical.BottomFlange, iBeamAsymmetrical.Web);
         }
 
         else if (this.type == typeof(IIBeamCellularProfile))
@@ -1412,7 +1392,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The pitch (spacing) between the web openings.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = IIBeamCellularProfile.Create(iBeamCellular.Depth, iBeamCellular.Flanges, iBeamCellular.Web, iBeamCellular.WebOpening);
         }
 
         else if (this.type == typeof(IIBeamProfile))
@@ -1443,8 +1422,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The flange thickness of the angle profile.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-
-          //dup = IIBeamSymmetricalProfile.Create(iBeamSymmetrical.Depth, iBeamSymmetrical.Flanges, iBeamSymmetrical.Web);
         }
 
         else if (this.type == typeof(IRectangleHollowProfile))
@@ -1475,7 +1452,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The top/bottom thickness of the hollow rectangle.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = IRectangleHollowProfile.Create(rectangleHollow.Depth, rectangleHollow.Flanges, rectangleHollow.Webs);
         }
 
         else if (this.type == typeof(IRectangleProfile))
@@ -1492,7 +1468,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "Width of the rectangle, in local y-axis direction.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = IRectangleProfile.Create(rectangle.Depth, rectangle.Width);
         }
 
         else if (this.type == typeof(IRectoEllipseProfile))
@@ -1553,7 +1528,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "Converts the profile into a wall secant pile profile if true -- Converts the profile into a section secant pile profile if false.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = ISecantPileProfile.Create(secantPile.Diameter, secantPile.PileCentres, secantPile.PileCount, secantPile.IsWallNotSection);
         }
 
         else if (this.type == typeof(ISheetPileProfile))
@@ -1598,7 +1572,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The web thickness of the sheet pile section profile.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = ISheetPileProfile.Create(sheetPile.Depth, sheetPile.Width, sheetPile.TopFlangeWidth, sheetPile.BottomFlangeWidth, sheetPile.FlangeThickness, sheetPile.WebThickness);
         }
 
         else if (this.type == typeof(IRectoCircleProfile))
@@ -1615,7 +1588,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The profile's width (diameter of the semicircles).";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = IStadiumProfile.Create(stadium.Depth, stadium.Width);
         }
 
         else if (this.type == typeof(ITrapezoidProfile))
@@ -1639,7 +1611,6 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The bottom width of trapezoidal profile. Bottom is relative to the local z-axis.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-          //dup = ITrapezoidProfile.Create(trapezoid.Depth, trapezoid.TopWidth, trapezoid.BottomWidth);
         }
 
         else if (this.type == typeof(ITSectionProfile))
@@ -1670,33 +1641,31 @@ namespace OasysGH.Components
           this.Params.Input[i].Description = "The flange thickness of the T section profile.";
           this.Params.Input[i].Access = GH_ParamAccess.item;
           this.Params.Input[i].Optional = false;
-
-          //dup = ITSectionProfile.Create(tSection.Depth, tSection.Flange, tSection.Web);
         }
+
         else if (this.type == typeof(IPerimeterProfile))
         {
-          this.Params.Input[i].NickName = "B";
-          this.Params.Input[i].Name = "Boundary";
-          this.Params.Input[i].Description = "Planar Brep or closed planar curve.";
-          this.Params.Input[i].Access = GH_ParamAccess.item;
-          this.Params.Input[i].Optional = false;
-
-          if (Params.Input.Count == 1) // handle backwards compatability
-            Params.RegisterInputParam(new Param_Plane());
-
+          Params.Input[i].NickName = "B";
+          Params.Input[i].Name = "Boundary";
+          Params.Input[i].Description = "The outer edge polyline or BRep. If BRep contains openings these will be added as voids";
+          Params.Input[i].Access = GH_ParamAccess.item;
+          Params.Input[i].Optional = false;
+          
+          // do we want this input?
           i++;
-          this.Params.Input[i].NickName = "P";
-          this.Params.Input[i].Name = "Plane";
-          this.Params.Input[i].Description = "Optional plane in which to project boundary onto. Profile will get coordinates in this plane.";
-          this.Params.Input[i].Access = GH_ParamAccess.item;
-          this.Params.Input[i].Optional = true;
+          Params.Input[i].NickName = "V";
+          Params.Input[i].Name = "VoidPolylines";
+          Params.Input[i].Description = "[Optional] The void polygons within the solid polygon of the perimeter profile. If first input is a BRep this input will be ignored.";
+          Params.Input[i].Access = GH_ParamAccess.list;
+          Params.Input[i].Optional = true;
 
+          // is this a "different" _optional_ plane than in case of the other profiles?
           //i++;
-          //Params.Input[i].NickName = "V";
-          //Params.Input[i].Name = "[Optional] VoidPolylines";
-          //Params.Input[i].Description = "The void polygons within the solid polygon of the perimeter profile. If first input is a BRep this input will be ignored.";
-          //Params.Input[i].Access = GH_ParamAccess.list;
-          //Params.Input[i].Optional = true;
+          //this.Params.Input[i].NickName = "P";
+          //this.Params.Input[i].Name = "Plane";
+          //this.Params.Input[i].Description = "Optional plane in which to project boundary onto. Profile will get coordinates in this plane.";
+          //this.Params.Input[i].Access = GH_ParamAccess.item;
+          //this.Params.Input[i].Optional = true;
         }
       }
     }
