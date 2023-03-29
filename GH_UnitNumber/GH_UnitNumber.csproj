@@ -4,13 +4,13 @@
     <PlatformTarget>x64</PlatformTarget>
     <Platforms>x64</Platforms>
     <Title>GH_UnitNumber</Title>
-	  <Company>Oasys</Company>
-    <Copyright>Copyright © Oasys 2022</Copyright>
+	   <Company>Oasys</Company>
+    <Copyright>Copyright © Oasys 2023</Copyright>
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>UnitNumberLogo64.png</PackageIcon>
-    <Version>0.5.2-beta</Version>
+    <Version>0.6.0-beta</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <BaseOutputPath>bin\</BaseOutputPath>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
