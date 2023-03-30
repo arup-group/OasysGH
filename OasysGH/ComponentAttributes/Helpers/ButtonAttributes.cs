@@ -6,7 +6,7 @@ namespace OasysGH.UI.Helpers
   /// <summary>
   /// Class holding custom UI graphical buttons/boxes
   /// </summary>
-  internal class CheckBox
+  public static class CheckBox
   {
     /// <summary>
     /// Method to draw a check box with GSA-styling
@@ -21,7 +21,7 @@ namespace OasysGH.UI.Helpers
     /// <param name="passiveFill"></param>
     /// <param name="passiveEdge"></param>
     /// <param name="size"></param>
-    internal static void DrawCheckButton(Graphics graphics, PointF center, bool check, Brush activeFill, Color activeEdge, Brush passiveFill, Color passiveEdge, int size)
+    public static void DrawCheckButton(Graphics graphics, PointF center, bool check, Brush activeFill, Color activeEdge, Brush passiveFill, Color passiveEdge, int size)
     {
       // draws the check-button GSA styled
       //add scaler?
@@ -52,9 +52,9 @@ namespace OasysGH.UI.Helpers
   /// 
   /// Call this method when overriding Render method
   /// </summary>
-  internal class ButtonAttributes
+  public static class ButtonAttributes
   {
-    internal static GraphicsPath RoundedRect(RectangleF bounds, int radius, bool overlay = false)
+    public static GraphicsPath RoundedRect(RectangleF bounds, int radius, bool overlay = false)
     {
       RectangleF b = new RectangleF(bounds.X, bounds.Y, bounds.Width, bounds.Height);
       int diameter = radius * 2;
@@ -103,9 +103,9 @@ namespace OasysGH.UI.Helpers
   /// 
   /// Call this method when overriding Render method
   /// </summary>
-  internal class DropDownArrow
+  public static class DropDownArrow
   {
-    internal static void DrawDropDownButton(Graphics graphics, PointF center, Color colour, int rectanglesize)
+    public static void DrawDropDownButton(Graphics graphics, PointF center, Color colour, int rectanglesize)
     {
       Pen pen = new Pen(new SolidBrush(colour))
       {
@@ -113,12 +113,12 @@ namespace OasysGH.UI.Helpers
       };
 
       graphics.DrawLines(
-          pen, new PointF[]
-          {
-                new PointF(center.X - rectanglesize / 4, center.Y - rectanglesize / 8),
-                new PointF(center.X, center.Y + rectanglesize / 6),
-                new PointF(center.X + rectanglesize / 4, center.Y - rectanglesize / 8)
-          });
+        pen, new PointF[]
+        {
+          new PointF(center.X - rectanglesize / 4, center.Y - rectanglesize / 8),
+          new PointF(center.X, center.Y + rectanglesize / 6),
+          new PointF(center.X + rectanglesize / 4, center.Y - rectanglesize / 8)
+        });
     }
   }
 }
