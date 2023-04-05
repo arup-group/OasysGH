@@ -116,7 +116,7 @@ namespace OasysGH.UI
 
     protected void FixLayout()
     {
-      float width = this.Bounds.Width; // initial component width before UI overrides
+      float width = Bounds.Width; // initial component width before UI overrides
       float num = Math.Max(width, MinWidth); // number for new width
       float num2 = 0f; // value for increased width (if any)
 
@@ -125,11 +125,11 @@ namespace OasysGH.UI
       {
         num2 = num - width; // change in width
                             // update component bounds to new width
-        this.Bounds = new RectangleF(
-            this.Bounds.X - num2 / 2f,
-            this.Bounds.Y,
+        Bounds = new RectangleF(
+            Bounds.X - num2 / 2f,
+            Bounds.Y,
             num,
-            this.Bounds.Height);
+            Bounds.Height);
       }
 
       // secondly update position of input and output parameter text

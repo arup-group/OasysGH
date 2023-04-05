@@ -8,8 +8,8 @@ namespace OasysGH.Parameters
     abstract public OasysPluginInfo PluginInfo { get; }
 
     public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
-    public override string TypeDescription => PluginInfo.ProductName + " " + this.TypeName + " Parameter";
-    public override bool IsValid => (this.Value == null) ? false : true;
+    public override string TypeDescription => PluginInfo.ProductName + " " + TypeName + " Parameter";
+    public override bool IsValid => (Value == null) ? false : true;
     public override string IsValidWhyNot
     {
       get
@@ -24,9 +24,9 @@ namespace OasysGH.Parameters
     public GH_OasysGoo(T item)
     {
       if (item == null)
-        this.Value = item;
+        Value = item;
       else
-        this.Value = (T)item.Duplicate();
+        Value = (T)item.Duplicate();
     }
 
     public override string ToString()

@@ -5,11 +5,11 @@ namespace OasysGH.Components
 {
   public abstract class GH_OasysComponent : GH_Component
   {
+    abstract public OasysPluginInfo PluginInfo { get; }
+
     public GH_OasysComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
     {
     }
-
-    abstract public OasysPluginInfo PluginInfo { get; }
 
     public override void AddedToDocument(GH_Document document)
     {

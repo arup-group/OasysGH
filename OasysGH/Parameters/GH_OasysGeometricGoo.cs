@@ -1,7 +1,6 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
-using OasysGH;
 
 namespace OasysGH.Parameters
 {
@@ -10,8 +9,8 @@ namespace OasysGH.Parameters
     abstract public OasysPluginInfo PluginInfo { get; }
 
     public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
-    public override string TypeDescription => PluginInfo.ProductName + " " + this.TypeName + " Parameter";
-    public override bool IsValid => (this.GetGeometry() == null) ? false : this.GetGeometry().IsValid ? true : false;
+    public override string TypeDescription => PluginInfo.ProductName + " " + TypeName + " Parameter";
+    public override bool IsValid => (GetGeometry() == null) ? false : GetGeometry().IsValid ? true : false;
     public override string IsValidWhyNot
     {
       get
@@ -21,7 +20,7 @@ namespace OasysGH.Parameters
         else
         {
           string whyNot = "";
-          this.GetGeometry().IsValidWithLog(out whyNot);
+          GetGeometry().IsValidWithLog(out whyNot);
           return whyNot;
         }
       }
@@ -30,17 +29,17 @@ namespace OasysGH.Parameters
     public GH_OasysGeometricGoo(T item)
     {
       if (item == null)
-        this.Value = item;
+        Value = item;
       else
-        this.Value = (T)item.Duplicate();
+        Value = (T)item.Duplicate();
     }
 
     public override string ToString()
     {
-      if (this.Value == null)
+      if (Value == null)
         return "Null";
       else
-        return this.PluginInfo.ProductName + " " + this.TypeName + " (" + this.Value.ToString() + ")";
+        return PluginInfo.ProductName + " " + TypeName + " (" + Value.ToString() + ")";
     }
 
     #region casting methods
@@ -84,7 +83,7 @@ namespace OasysGH.Parameters
     #region geometry
     public override IGH_GeometricGoo DuplicateGeometry()
     {
-      return this.Duplicate();
+      return Duplicate();
     }
     public abstract new IGH_GeometricGoo Duplicate();
 
@@ -96,7 +95,7 @@ namespace OasysGH.Parameters
       {
         if (!m_BoundingBox.IsValid)
         {
-          m_BoundingBox = this.GetBoundingBox(Rhino.Geometry.Transform.ZeroTransformation);
+          m_BoundingBox = GetBoundingBox(Rhino.Geometry.Transform.ZeroTransformation);
         }
         return m_BoundingBox;
       }
@@ -104,7 +103,7 @@ namespace OasysGH.Parameters
     private BoundingBox m_BoundingBox;
     public override BoundingBox GetBoundingBox(Transform xform)
     {
-      GeometryBase geom = this.GetGeometry();
+      GeometryBase geom = GetGeometry();
       if (geom == null)
         return BoundingBox.Empty;
       return geom.GetBoundingBox(Rhino.Geometry.Transform.ZeroTransformation);

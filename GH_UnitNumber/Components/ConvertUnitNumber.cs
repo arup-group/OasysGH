@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
 using OasysGH;
 using OasysGH.Components;
 using OasysUnits;
-using static System.Net.Mime.MediaTypeNames;
-using Grasshopper.Kernel.Special;
-using System.Drawing;
-using OasysGH.Units.Helpers;
-using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
 
 namespace GH_UnitNumber.Components
 {
@@ -21,15 +18,22 @@ namespace GH_UnitNumber.Components
     // This region handles how the component in displayed on the ribbon
     // including name, exposure level and icon
     public override Guid ComponentGuid => new Guid("267b3293-f4ac-48ab-ab66-2d194c86aa52");
-    public ConvertUnitNumber()
-      : base("Convert UnitNumber", "ConvertUnit", "Convert a unit number (quantity) into another unit",
-            "Params",
-            "Util")
-    { this.Hidden = true; } // sets the initial state of the component to hidden
     public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.obscure;
-
-    protected override System.Drawing.Bitmap Icon => Properties.Resources.ConvertUnitNumber;
     public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
+    protected override System.Drawing.Bitmap Icon => Properties.Resources.ConvertUnitNumber;
+    private OasysGH.Parameters.GH_UnitNumber _convertedUnitNumber;
+    private Dictionary<string, Enum> _unitDictionary;
+    private Enum _selectedUnit;
+    private bool _comingFromSave = false;
+
+    public ConvertUnitNumber() : base("Convert UnitNumber",
+      "ConvertUnit",
+      "Convert a unit number (quantity) into another unit",
+      "Params",
+      "Util")
+    {
+      Hidden = true; // sets the initial state of the component to hidden
+    }
     #endregion
 
     #region Input and output
@@ -40,6 +44,7 @@ namespace GH_UnitNumber.Components
       pManager.AddTextParameter("Unit", "u", "[Optional] desired unit to attempt to convert input into", GH_ParamAccess.item);
       pManager[1].Optional = true;
     }
+
     protected override void RegisterOutputParams(GH_OutputParamManager pManager)
     {
       pManager.AddParameter(new GH_UnitNumberParameter());
@@ -58,26 +63,26 @@ namespace GH_UnitNumber.Components
         if (gh_typ.Value is OasysGH.Parameters.GH_UnitNumber)
         {
           inUnitNumber = (OasysGH.Parameters.GH_UnitNumber)gh_typ.Value;
-          if (this.ConvertedUnitNumber == null || !this.ConvertedUnitNumber.Value.QuantityInfo.UnitType.Equals(inUnitNumber.Value.QuantityInfo.UnitType))
+          if (_convertedUnitNumber == null || !_convertedUnitNumber.Value.QuantityInfo.UnitType.Equals(inUnitNumber.Value.QuantityInfo.UnitType))
           {
-            this.UnitDictionary = new Dictionary<string, Enum>();
+            _unitDictionary = new Dictionary<string, Enum>();
             foreach (UnitInfo unit in inUnitNumber.Value.QuantityInfo.UnitInfos)
             {
               IQuantity quantity = Quantity.From(0, unit.Value);
               string abbr = quantity.ToString().Replace("0", string.Empty).Trim();
-              if (!this.UnitDictionary.ContainsKey(abbr))
-                this.UnitDictionary.Add(abbr, unit.Value);
+              if (!_unitDictionary.ContainsKey(abbr))
+                _unitDictionary.Add(abbr, unit.Value);
             }
 
-            this.DropDownItems[0] = this.UnitDictionary.Keys.ToList();
-            if (!ComingFromSave)
+            DropDownItems[0] = _unitDictionary.Keys.ToList();
+            if (!_comingFromSave)
             {
               IQuantity quantity = Quantity.From(0, inUnitNumber.Value.Unit);
               string abbr = quantity.ToString().Replace("0", string.Empty).Trim();
-              this.SelectedItems[0] = abbr;
+              SelectedItems[0] = abbr;
             }
             else
-              ComingFromSave = false;
+              _comingFromSave = false;
           }
         }
         else
@@ -100,10 +105,10 @@ namespace GH_UnitNumber.Components
         Type type = inUnitNumber.Value.QuantityInfo.ValueType;
         if (Quantity.TryParse(type, unitTxt, out IQuantity quantity))
         {
-          this.SelectedUnit = quantity.Unit;
-          IQuantity quantity2 = Quantity.From(0, this.SelectedUnit);
+          _selectedUnit = quantity.Unit;
+          IQuantity quantity2 = Quantity.From(0, _selectedUnit);
           string abbr = quantity2.ToString().Replace("0", string.Empty).Trim();
-          this.SelectedItems[0] = abbr;
+          SelectedItems[0] = abbr;
         }
         else
         {
@@ -114,47 +119,42 @@ namespace GH_UnitNumber.Components
       else
       {
         // update selected unit from dropdown
-        this.SelectedUnit = this.UnitDictionary[SelectedItems.Last()];
+        _selectedUnit = _unitDictionary[SelectedItems.Last()];
       }
 
       // convert unit to selected output
-      this.ConvertedUnitNumber = new OasysGH.Parameters.GH_UnitNumber(inUnitNumber.Value.ToUnit(this.SelectedUnit));
+      _convertedUnitNumber = new OasysGH.Parameters.GH_UnitNumber(inUnitNumber.Value.ToUnit(_selectedUnit));
 
-      OasysGH.Helpers.Output.SetItem(this, DA, 0, this.ConvertedUnitNumber);
+      OasysGH.Helpers.Output.SetItem(this, DA, 0, _convertedUnitNumber);
     }
 
     #region Custom UI
-    OasysGH.Parameters.GH_UnitNumber ConvertedUnitNumber;
-    Dictionary<string, Enum> UnitDictionary;
-    Enum SelectedUnit;
-    bool ComingFromSave = false;
-
-    public override void InitialiseDropdowns()
+    protected override void InitialiseDropdowns()
     {
-      this.SpacerDescriptions = new List<string>(new string[] { "Select output unit" });
+      SpacerDescriptions = new List<string>(new string[] { "Select output unit" });
 
-      this.DropDownItems = new List<List<string>>();
-      this.SelectedItems = new List<string>();
+      DropDownItems = new List<List<string>>();
+      SelectedItems = new List<string>();
 
-      this.DropDownItems.Add(new List<string>(new string[] { " " }));
-      this.SelectedItems.Add("   ");
+      DropDownItems.Add(new List<string>(new string[] { " " }));
+      SelectedItems.Add("   ");
 
-      this.IsInitialised = true;
+      IsInitialised = true;
     }
 
     public override void SetSelected(int i, int j)
     {
-      if (this.UnitDictionary != null)
+      if (_unitDictionary != null)
       {
-        this.SelectedItems[i] = this.DropDownItems[i][j];
-        this.DropDownItems[0] = this.UnitDictionary.Keys.ToList();
+        SelectedItems[i] = DropDownItems[i][j];
+        DropDownItems[0] = _unitDictionary.Keys.ToList();
       }
       base.UpdateUI();
     }
 
-    public override void UpdateUIFromSelectedItems()
+    protected override void UpdateUIFromSelectedItems()
     {
-      this.ComingFromSave = true;
+      _comingFromSave = true;
       base.UpdateUIFromSelectedItems();
     }
 
@@ -170,7 +170,7 @@ namespace GH_UnitNumber.Components
       ToolStripMenuItem valueList = new ToolStripMenuItem("Create ValueList input", vallist.Icon_24x24, (s, e) => { CreateValueList(); });
       ToolStripMenuItem textPanel = new ToolStripMenuItem("Create Text Panel", panel.Icon_24x24, (s, e) => { CreateTextPanel(); });
 
-      if (this.UnitDictionary != null)
+      if (_unitDictionary != null)
       {
         valueList.Enabled = true;
         textPanel.Enabled = true;
@@ -191,10 +191,10 @@ namespace GH_UnitNumber.Components
 
     public void CreateValueList()
     {
-      string name = this.ConvertedUnitNumber.Value.QuantityInfo.Name + " Units";
-      List<string> values = this.UnitDictionary.Keys.ToList();
-      float x = this.Attributes.Bounds.X;
-      float y = this.Params.Input[1].Attributes.Bounds.Y;
+      string name = _convertedUnitNumber.Value.QuantityInfo.Name + " Units";
+      List<string> values = _unitDictionary.Keys.ToList();
+      float x = Attributes.Bounds.X;
+      float y = Params.Input[1].Attributes.Bounds.Y;
       var vallist = new GH_ValueList();
       vallist.CreateAttributes();
       vallist.Name = name;
@@ -202,19 +202,19 @@ namespace GH_UnitNumber.Components
       vallist.Description = "Select an option...";
       vallist.ListMode = GH_ValueListMode.DropDown;
       vallist.ListItems.Clear();
-      foreach (KeyValuePair<string, Enum> kvp in this.UnitDictionary)
+      foreach (KeyValuePair<string, Enum> kvp in _unitDictionary)
       {
         string fullName = kvp.Value.ToString();
         string abbrName = kvp.Key;
         vallist.ListItems.Add(new GH_ValueListItem(fullName, String.Format("\"{0}\"", abbrName)));
       }
       vallist.Attributes.Pivot = new PointF(x - vallist.Attributes.Bounds.Width, y);
-      
-      Grasshopper.Instances.ActiveCanvas.Document.AddObject(vallist, false);
-      this.Params.Input[1].RemoveAllSources();
-      this.Params.Input[1].AddSource(vallist);
 
-      this.UpdateUI();
+      Grasshopper.Instances.ActiveCanvas.Document.AddObject(vallist, false);
+      Params.Input[1].RemoveAllSources();
+      Params.Input[1].AddSource(vallist);
+
+      UpdateUI();
     }
 
     public void CreateTextPanel()
@@ -223,23 +223,23 @@ namespace GH_UnitNumber.Components
       var panel = new Grasshopper.Kernel.Special.GH_Panel();
 
       panel.CreateAttributes();
-      
+
       // set the location relative to the open component on the canvas
       panel.Attributes.Pivot = new PointF((float)Attributes.DocObject.Attributes.Bounds.Left -
           panel.Attributes.Bounds.Width - 30, (float)Params.Input[0].Attributes.Pivot.Y + panel.Attributes.Bounds.Height / 2);
 
       string txt = "";
-      foreach (string abbrName in this.UnitDictionary.Keys)
+      foreach (string abbrName in _unitDictionary.Keys)
         txt += abbrName + "\n";
       txt = txt.TrimEnd('\n');
       panel.UserText = txt;
-      
+
       Grasshopper.Instances.ActiveCanvas.Document.AddObject(panel, false);
-      
+
       panel.Properties.Multiline = false;
       panel.Properties.DrawPaths = false;
-      
-      this.UpdateUI();
+
+      UpdateUI();
     }
     #endregion
   }

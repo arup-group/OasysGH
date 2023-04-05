@@ -7,7 +7,7 @@ namespace OasysGH.UI.Helpers
   /// 
   /// Call this method when overriding Render method
   /// </summary>
-  public class DropDownArrow
+  public static class DropDownArrow
   {
     public static void DrawDropDownButton(Graphics graphics, PointF center, Color colour, int rectanglesize)
     {

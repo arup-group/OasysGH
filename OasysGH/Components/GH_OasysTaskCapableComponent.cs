@@ -7,10 +7,11 @@ namespace OasysGH.Components
 {
   public abstract class GH_OasysTaskCapableComponent<T> : GH_TaskCapableComponent<T>
   {
+    abstract public OasysPluginInfo PluginInfo { get; }
+
     public GH_OasysTaskCapableComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
     {
     }
-    abstract public OasysPluginInfo PluginInfo { get; }
 
     public override void AddedToDocument(GH_Document document)
     {

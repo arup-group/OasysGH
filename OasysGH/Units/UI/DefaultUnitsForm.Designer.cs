@@ -28,729 +28,729 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.components = new System.ComponentModel.Container();
+      components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DefaultUnitsForm));
-      this.button1 = new System.Windows.Forms.Button();
-      this.button2 = new System.Windows.Forms.Button();
-      this.button5 = new System.Windows.Forms.Button();
-      this.button6 = new System.Windows.Forms.Button();
-      this.button4 = new System.Windows.Forms.Button();
-      this.button3 = new System.Windows.Forms.Button();
-      this.label2 = new System.Windows.Forms.Label();
-      this.label3 = new System.Windows.Forms.Label();
-      this.label4 = new System.Windows.Forms.Label();
-      this.label5 = new System.Windows.Forms.Label();
-      this.label6 = new System.Windows.Forms.Label();
-      this.label7 = new System.Windows.Forms.Label();
-      this.label8 = new System.Windows.Forms.Label();
-      this.label9 = new System.Windows.Forms.Label();
-      this.label10 = new System.Windows.Forms.Label();
-      this.lengthSectionComboBox = new System.Windows.Forms.ComboBox();
-      this.areaComboBox = new System.Windows.Forms.ComboBox();
-      this.volumeComboBox = new System.Windows.Forms.ComboBox();
-      this.momentOfInertiaComboBox = new System.Windows.Forms.ComboBox();
-      this.massComboBox = new System.Windows.Forms.ComboBox();
-      this.densityComboBox = new System.Windows.Forms.ComboBox();
-      this.linearDensityComboBox = new System.Windows.Forms.ComboBox();
-      this.volumePerLengthComboBox = new System.Windows.Forms.ComboBox();
-      this.label111 = new System.Windows.Forms.Label();
-      this.youngsModulusComboBox = new System.Windows.Forms.ComboBox();
-      this.label11 = new System.Windows.Forms.Label();
-      this.materialStrainComboBox = new System.Windows.Forms.ComboBox();
-      this.materialStrengthComboBox = new System.Windows.Forms.ComboBox();
-      this.label23 = new System.Windows.Forms.Label();
-      this.label24 = new System.Windows.Forms.Label();
-      this.displacementComboBox = new System.Windows.Forms.ComboBox();
-      this.label25 = new System.Windows.Forms.Label();
-      this.stressComboBox = new System.Windows.Forms.ComboBox();
-      this.label32 = new System.Windows.Forms.Label();
-      this.strainComboBox = new System.Windows.Forms.ComboBox();
-      this.label26 = new System.Windows.Forms.Label();
-      this.axialStiffnessComboBox = new System.Windows.Forms.ComboBox();
-      this.label27 = new System.Windows.Forms.Label();
-      this.bendingStiffnessComboBox = new System.Windows.Forms.ComboBox();
-      this.label28 = new System.Windows.Forms.Label();
-      this.velocityComboBox = new System.Windows.Forms.ComboBox();
-      this.label29 = new System.Windows.Forms.Label();
-      this.accelerationComboBox = new System.Windows.Forms.ComboBox();
-      this.label30 = new System.Windows.Forms.Label();
-      this.energyComboBox = new System.Windows.Forms.ComboBox();
-      this.label31 = new System.Windows.Forms.Label();
-      this.curvatureComboBox = new System.Windows.Forms.ComboBox();
-      this.label22 = new System.Windows.Forms.Label();
-      this.temperatureComboBox = new System.Windows.Forms.ComboBox();
-      this.label21 = new System.Windows.Forms.Label();
-      this.momentComboBox = new System.Windows.Forms.ComboBox();
-      this.label20 = new System.Windows.Forms.Label();
-      this.forcePerAreaComboBox = new System.Windows.Forms.ComboBox();
-      this.label19 = new System.Windows.Forms.Label();
-      this.forcePerLengthComboBox = new System.Windows.Forms.ComboBox();
-      this.label18 = new System.Windows.Forms.Label();
-      this.forceComboBox = new System.Windows.Forms.ComboBox();
-      this.label17 = new System.Windows.Forms.Label();
-      this.label13 = new System.Windows.Forms.Label();
-      this.label14 = new System.Windows.Forms.Label();
-      this.lengthComboBox = new System.Windows.Forms.ComboBox();
-      this.toleranceTxt = new System.Windows.Forms.Label();
-      this.toleranceUpDown = new System.Windows.Forms.NumericUpDown();
-      this.useRhinoLengthUnit = new System.Windows.Forms.CheckBox();
-      this.useRhinoTolerance = new System.Windows.Forms.CheckBox();
-      this.label1 = new System.Windows.Forms.Label();
-      this.panel1 = new System.Windows.Forms.Panel();
-      this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-      this.panel2 = new System.Windows.Forms.Panel();
-      this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-      this.panel3 = new System.Windows.Forms.Panel();
-      this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-      this.panel4 = new System.Windows.Forms.Panel();
-      this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-      this.description = new System.Windows.Forms.Label();
-      this.rhinoUnitBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.defaultUnitsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.filteredUnitsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      ((System.ComponentModel.ISupportInitialize)(this.toleranceUpDown)).BeginInit();
-      this.panel1.SuspendLayout();
-      this.tableLayoutPanel2.SuspendLayout();
-      this.panel2.SuspendLayout();
-      this.tableLayoutPanel3.SuspendLayout();
-      this.panel3.SuspendLayout();
-      this.tableLayoutPanel5.SuspendLayout();
-      this.panel4.SuspendLayout();
-      this.tableLayoutPanel4.SuspendLayout();
-      this.tableLayoutPanel1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.rhinoUnitBindingSource)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.defaultUnitsBindingSource)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.filteredUnitsBindingSource)).BeginInit();
-      this.SuspendLayout();
+      button1 = new System.Windows.Forms.Button();
+      button2 = new System.Windows.Forms.Button();
+      button5 = new System.Windows.Forms.Button();
+      button6 = new System.Windows.Forms.Button();
+      button4 = new System.Windows.Forms.Button();
+      button3 = new System.Windows.Forms.Button();
+      label2 = new System.Windows.Forms.Label();
+      label3 = new System.Windows.Forms.Label();
+      label4 = new System.Windows.Forms.Label();
+      label5 = new System.Windows.Forms.Label();
+      label6 = new System.Windows.Forms.Label();
+      label7 = new System.Windows.Forms.Label();
+      label8 = new System.Windows.Forms.Label();
+      label9 = new System.Windows.Forms.Label();
+      label10 = new System.Windows.Forms.Label();
+      lengthSectionComboBox = new System.Windows.Forms.ComboBox();
+      areaComboBox = new System.Windows.Forms.ComboBox();
+      volumeComboBox = new System.Windows.Forms.ComboBox();
+      momentOfInertiaComboBox = new System.Windows.Forms.ComboBox();
+      massComboBox = new System.Windows.Forms.ComboBox();
+      densityComboBox = new System.Windows.Forms.ComboBox();
+      linearDensityComboBox = new System.Windows.Forms.ComboBox();
+      volumePerLengthComboBox = new System.Windows.Forms.ComboBox();
+      label111 = new System.Windows.Forms.Label();
+      youngsModulusComboBox = new System.Windows.Forms.ComboBox();
+      label11 = new System.Windows.Forms.Label();
+      materialStrainComboBox = new System.Windows.Forms.ComboBox();
+      materialStrengthComboBox = new System.Windows.Forms.ComboBox();
+      label23 = new System.Windows.Forms.Label();
+      label24 = new System.Windows.Forms.Label();
+      displacementComboBox = new System.Windows.Forms.ComboBox();
+      label25 = new System.Windows.Forms.Label();
+      stressComboBox = new System.Windows.Forms.ComboBox();
+      label32 = new System.Windows.Forms.Label();
+      strainComboBox = new System.Windows.Forms.ComboBox();
+      label26 = new System.Windows.Forms.Label();
+      axialStiffnessComboBox = new System.Windows.Forms.ComboBox();
+      label27 = new System.Windows.Forms.Label();
+      bendingStiffnessComboBox = new System.Windows.Forms.ComboBox();
+      label28 = new System.Windows.Forms.Label();
+      velocityComboBox = new System.Windows.Forms.ComboBox();
+      label29 = new System.Windows.Forms.Label();
+      accelerationComboBox = new System.Windows.Forms.ComboBox();
+      label30 = new System.Windows.Forms.Label();
+      energyComboBox = new System.Windows.Forms.ComboBox();
+      label31 = new System.Windows.Forms.Label();
+      curvatureComboBox = new System.Windows.Forms.ComboBox();
+      label22 = new System.Windows.Forms.Label();
+      temperatureComboBox = new System.Windows.Forms.ComboBox();
+      label21 = new System.Windows.Forms.Label();
+      momentComboBox = new System.Windows.Forms.ComboBox();
+      label20 = new System.Windows.Forms.Label();
+      forcePerAreaComboBox = new System.Windows.Forms.ComboBox();
+      label19 = new System.Windows.Forms.Label();
+      forcePerLengthComboBox = new System.Windows.Forms.ComboBox();
+      label18 = new System.Windows.Forms.Label();
+      forceComboBox = new System.Windows.Forms.ComboBox();
+      label17 = new System.Windows.Forms.Label();
+      label13 = new System.Windows.Forms.Label();
+      label14 = new System.Windows.Forms.Label();
+      lengthComboBox = new System.Windows.Forms.ComboBox();
+      toleranceTxt = new System.Windows.Forms.Label();
+      toleranceUpDown = new System.Windows.Forms.NumericUpDown();
+      useRhinoLengthUnit = new System.Windows.Forms.CheckBox();
+      useRhinoTolerance = new System.Windows.Forms.CheckBox();
+      label1 = new System.Windows.Forms.Label();
+      panel1 = new System.Windows.Forms.Panel();
+      tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      panel2 = new System.Windows.Forms.Panel();
+      tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+      panel3 = new System.Windows.Forms.Panel();
+      tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+      panel4 = new System.Windows.Forms.Panel();
+      tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+      tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      description = new System.Windows.Forms.Label();
+      rhinoUnitBindingSource = new System.Windows.Forms.BindingSource(components);
+      defaultUnitsBindingSource = new System.Windows.Forms.BindingSource(components);
+      filteredUnitsBindingSource = new System.Windows.Forms.BindingSource(components);
+      ((System.ComponentModel.ISupportInitialize)(toleranceUpDown)).BeginInit();
+      panel1.SuspendLayout();
+      tableLayoutPanel2.SuspendLayout();
+      panel2.SuspendLayout();
+      tableLayoutPanel3.SuspendLayout();
+      panel3.SuspendLayout();
+      tableLayoutPanel5.SuspendLayout();
+      panel4.SuspendLayout();
+      tableLayoutPanel4.SuspendLayout();
+      tableLayoutPanel1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(rhinoUnitBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(defaultUnitsBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(filteredUnitsBindingSource)).BeginInit();
+      SuspendLayout();
       // 
       // button1
       // 
-      this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.button1.Location = new System.Drawing.Point(12, 356);
-      this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(75, 23);
-      this.button1.TabIndex = 0;
-      this.button1.Text = "O&K";
-      this.button1.UseVisualStyleBackColor = true;
-      this.button1.Click += new System.EventHandler(this.OK_Click);
+      button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      button1.DialogResult = System.Windows.Forms.DialogResult.OK;
+      button1.Location = new System.Drawing.Point(12, 356);
+      button1.Name = "button1";
+      button1.Size = new System.Drawing.Size(75, 23);
+      button1.TabIndex = 0;
+      button1.Text = "O&K";
+      button1.UseVisualStyleBackColor = true;
+      button1.Click += new System.EventHandler(OK_Click);
       // 
       // button2
       // 
-      this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.button2.Location = new System.Drawing.Point(93, 356);
-      this.button2.Name = "button2";
-      this.button2.Size = new System.Drawing.Size(75, 23);
-      this.button2.TabIndex = 1;
-      this.button2.Text = "&Cancel";
-      this.button2.UseVisualStyleBackColor = true;
+      button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+      button2.Location = new System.Drawing.Point(93, 356);
+      button2.Name = "button2";
+      button2.Size = new System.Drawing.Size(75, 23);
+      button2.TabIndex = 1;
+      button2.Text = "&Cancel";
+      button2.UseVisualStyleBackColor = true;
       // 
       // button5
       // 
-      this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button5.Location = new System.Drawing.Point(535, 356);
-      this.button5.Name = "button5";
-      this.button5.Size = new System.Drawing.Size(50, 23);
-      this.button5.TabIndex = 6;
-      this.button5.Text = "kip-&in";
-      this.button5.UseVisualStyleBackColor = true;
-      this.button5.Click += new System.EventHandler(this.kipin_Click);
+      button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      button5.Location = new System.Drawing.Point(535, 356);
+      button5.Name = "button5";
+      button5.Size = new System.Drawing.Size(50, 23);
+      button5.TabIndex = 6;
+      button5.Text = "kip-&in";
+      button5.UseVisualStyleBackColor = true;
+      button5.Click += new System.EventHandler(kipin_Click);
       // 
       // button6
       // 
-      this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button6.Location = new System.Drawing.Point(369, 356);
-      this.button6.Name = "button6";
-      this.button6.Size = new System.Drawing.Size(50, 23);
-      this.button6.TabIndex = 7;
-      this.button6.Text = "&SI";
-      this.button6.UseVisualStyleBackColor = true;
-      this.button6.Click += new System.EventHandler(this.SI_Click);
+      button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      button6.Location = new System.Drawing.Point(369, 356);
+      button6.Name = "button6";
+      button6.Size = new System.Drawing.Size(50, 23);
+      button6.TabIndex = 7;
+      button6.Text = "&SI";
+      button6.UseVisualStyleBackColor = true;
+      button6.Click += new System.EventHandler(SI_Click);
       // 
       // button4
       // 
-      this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button4.Location = new System.Drawing.Point(480, 356);
-      this.button4.Name = "button4";
-      this.button4.Size = new System.Drawing.Size(50, 23);
-      this.button4.TabIndex = 5;
-      this.button4.Text = "kip-&ft";
-      this.button4.UseVisualStyleBackColor = true;
-      this.button4.Click += new System.EventHandler(this.kipft_Click);
+      button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      button4.Location = new System.Drawing.Point(480, 356);
+      button4.Name = "button4";
+      button4.Size = new System.Drawing.Size(50, 23);
+      button4.TabIndex = 5;
+      button4.Text = "kip-&ft";
+      button4.UseVisualStyleBackColor = true;
+      button4.Click += new System.EventHandler(kipft_Click);
       // 
       // button3
       // 
-      this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button3.Location = new System.Drawing.Point(424, 356);
-      this.button3.Name = "button3";
-      this.button3.Size = new System.Drawing.Size(50, 23);
-      this.button3.TabIndex = 4;
-      this.button3.Text = "k&N-m";
-      this.button3.UseVisualStyleBackColor = true;
-      this.button3.Click += new System.EventHandler(this.kNm_Click);
+      button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      button3.Location = new System.Drawing.Point(424, 356);
+      button3.Name = "button3";
+      button3.Size = new System.Drawing.Size(50, 23);
+      button3.TabIndex = 4;
+      button3.Text = "k&N-m";
+      button3.UseVisualStyleBackColor = true;
+      button3.Click += new System.EventHandler(kNm_Click);
       // 
       // label2
       // 
-      this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(3, 32);
-      this.label2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(100, 13);
-      this.label2.TabIndex = 1;
-      this.label2.Text = "Section Dimensions";
+      label2.AutoSize = true;
+      label2.Location = new System.Drawing.Point(3, 32);
+      label2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label2.Name = "label2";
+      label2.Size = new System.Drawing.Size(100, 13);
+      label2.TabIndex = 1;
+      label2.Text = "Section Dimensions";
       // 
       // label3
       // 
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(3, 59);
-      this.label3.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(29, 13);
-      this.label3.TabIndex = 2;
-      this.label3.Text = "Area";
+      label3.AutoSize = true;
+      label3.Location = new System.Drawing.Point(3, 59);
+      label3.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label3.Name = "label3";
+      label3.Size = new System.Drawing.Size(29, 13);
+      label3.TabIndex = 2;
+      label3.Text = "Area";
       // 
       // label4
       // 
-      this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(3, 86);
-      this.label4.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(42, 13);
-      this.label4.TabIndex = 3;
-      this.label4.Text = "Volume";
+      label4.AutoSize = true;
+      label4.Location = new System.Drawing.Point(3, 86);
+      label4.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label4.Name = "label4";
+      label4.Size = new System.Drawing.Size(42, 13);
+      label4.TabIndex = 3;
+      label4.Text = "Volume";
       // 
       // label5
       // 
-      this.label5.AutoSize = true;
-      this.label5.Location = new System.Drawing.Point(3, 113);
-      this.label5.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label5.Name = "label5";
-      this.label5.Size = new System.Drawing.Size(89, 13);
-      this.label5.TabIndex = 4;
-      this.label5.Text = "Moment of Inertia";
+      label5.AutoSize = true;
+      label5.Location = new System.Drawing.Point(3, 113);
+      label5.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label5.Name = "label5";
+      label5.Size = new System.Drawing.Size(89, 13);
+      label5.TabIndex = 4;
+      label5.Text = "Moment of Inertia";
       // 
       // label6
       // 
-      this.label6.AutoSize = true;
-      this.label6.Location = new System.Drawing.Point(3, 140);
-      this.label6.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(32, 13);
-      this.label6.TabIndex = 5;
-      this.label6.Text = "Mass";
+      label6.AutoSize = true;
+      label6.Location = new System.Drawing.Point(3, 140);
+      label6.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label6.Name = "label6";
+      label6.Size = new System.Drawing.Size(32, 13);
+      label6.TabIndex = 5;
+      label6.Text = "Mass";
       // 
       // label7
       // 
-      this.label7.AutoSize = true;
-      this.label7.Location = new System.Drawing.Point(3, 167);
-      this.label7.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label7.Name = "label7";
-      this.label7.Size = new System.Drawing.Size(42, 13);
-      this.label7.TabIndex = 6;
-      this.label7.Text = "Density";
+      label7.AutoSize = true;
+      label7.Location = new System.Drawing.Point(3, 167);
+      label7.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label7.Name = "label7";
+      label7.Size = new System.Drawing.Size(42, 13);
+      label7.TabIndex = 6;
+      label7.Text = "Density";
       // 
       // label8
       // 
-      this.label8.AutoSize = true;
-      this.label8.Location = new System.Drawing.Point(3, 194);
-      this.label8.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label8.Name = "label8";
-      this.label8.Size = new System.Drawing.Size(74, 13);
-      this.label8.TabIndex = 7;
-      this.label8.Text = "Linear Density";
+      label8.AutoSize = true;
+      label8.Location = new System.Drawing.Point(3, 194);
+      label8.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label8.Name = "label8";
+      label8.Size = new System.Drawing.Size(74, 13);
+      label8.TabIndex = 7;
+      label8.Text = "Linear Density";
       // 
       // label9
       // 
-      this.label9.AutoSize = true;
-      this.label9.Location = new System.Drawing.Point(3, 221);
-      this.label9.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label9.Name = "label9";
-      this.label9.Size = new System.Drawing.Size(96, 13);
-      this.label9.TabIndex = 8;
-      this.label9.Text = "Volume per Length";
+      label9.AutoSize = true;
+      label9.Location = new System.Drawing.Point(3, 221);
+      label9.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label9.Name = "label9";
+      label9.Size = new System.Drawing.Size(96, 13);
+      label9.TabIndex = 8;
+      label9.Text = "Volume per Length";
       // 
       // label10
       // 
-      this.label10.AutoSize = true;
-      this.label10.Location = new System.Drawing.Point(3, 248);
-      this.label10.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label10.Name = "label10";
-      this.label10.Size = new System.Drawing.Size(87, 13);
-      this.label10.TabIndex = 9;
-      this.label10.Text = "Material Strength";
+      label10.AutoSize = true;
+      label10.Location = new System.Drawing.Point(3, 248);
+      label10.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label10.Name = "label10";
+      label10.Size = new System.Drawing.Size(87, 13);
+      label10.TabIndex = 9;
+      label10.Text = "Material Strength";
       // 
       // lengthSectionComboBox
       // 
-      this.lengthSectionComboBox.FormattingEnabled = true;
-      this.lengthSectionComboBox.Location = new System.Drawing.Point(113, 27);
-      this.lengthSectionComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.lengthSectionComboBox.Name = "lengthSectionComboBox";
-      this.lengthSectionComboBox.Size = new System.Drawing.Size(69, 21);
-      this.lengthSectionComboBox.TabIndex = 16;
+      lengthSectionComboBox.FormattingEnabled = true;
+      lengthSectionComboBox.Location = new System.Drawing.Point(113, 27);
+      lengthSectionComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      lengthSectionComboBox.Name = "lengthSectionComboBox";
+      lengthSectionComboBox.Size = new System.Drawing.Size(69, 21);
+      lengthSectionComboBox.TabIndex = 16;
       // 
       // areaComboBox
       // 
-      this.areaComboBox.FormattingEnabled = true;
-      this.areaComboBox.Location = new System.Drawing.Point(113, 54);
-      this.areaComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.areaComboBox.Name = "areaComboBox";
-      this.areaComboBox.Size = new System.Drawing.Size(69, 21);
-      this.areaComboBox.TabIndex = 17;
+      areaComboBox.FormattingEnabled = true;
+      areaComboBox.Location = new System.Drawing.Point(113, 54);
+      areaComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      areaComboBox.Name = "areaComboBox";
+      areaComboBox.Size = new System.Drawing.Size(69, 21);
+      areaComboBox.TabIndex = 17;
       // 
       // volumeComboBox
       // 
-      this.volumeComboBox.FormattingEnabled = true;
-      this.volumeComboBox.Location = new System.Drawing.Point(113, 81);
-      this.volumeComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.volumeComboBox.Name = "volumeComboBox";
-      this.volumeComboBox.Size = new System.Drawing.Size(69, 21);
-      this.volumeComboBox.TabIndex = 18;
+      volumeComboBox.FormattingEnabled = true;
+      volumeComboBox.Location = new System.Drawing.Point(113, 81);
+      volumeComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      volumeComboBox.Name = "volumeComboBox";
+      volumeComboBox.Size = new System.Drawing.Size(69, 21);
+      volumeComboBox.TabIndex = 18;
       // 
       // momentOfInertiaComboBox
       // 
-      this.momentOfInertiaComboBox.FormattingEnabled = true;
-      this.momentOfInertiaComboBox.Location = new System.Drawing.Point(113, 108);
-      this.momentOfInertiaComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.momentOfInertiaComboBox.Name = "momentOfInertiaComboBox";
-      this.momentOfInertiaComboBox.Size = new System.Drawing.Size(69, 21);
-      this.momentOfInertiaComboBox.TabIndex = 19;
+      momentOfInertiaComboBox.FormattingEnabled = true;
+      momentOfInertiaComboBox.Location = new System.Drawing.Point(113, 108);
+      momentOfInertiaComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      momentOfInertiaComboBox.Name = "momentOfInertiaComboBox";
+      momentOfInertiaComboBox.Size = new System.Drawing.Size(69, 21);
+      momentOfInertiaComboBox.TabIndex = 19;
       // 
       // massComboBox
       // 
-      this.massComboBox.FormattingEnabled = true;
-      this.massComboBox.Location = new System.Drawing.Point(113, 135);
-      this.massComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.massComboBox.Name = "massComboBox";
-      this.massComboBox.Size = new System.Drawing.Size(69, 21);
-      this.massComboBox.TabIndex = 20;
+      massComboBox.FormattingEnabled = true;
+      massComboBox.Location = new System.Drawing.Point(113, 135);
+      massComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      massComboBox.Name = "massComboBox";
+      massComboBox.Size = new System.Drawing.Size(69, 21);
+      massComboBox.TabIndex = 20;
       // 
       // densityComboBox
       // 
-      this.densityComboBox.FormattingEnabled = true;
-      this.densityComboBox.Location = new System.Drawing.Point(113, 162);
-      this.densityComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.densityComboBox.Name = "densityComboBox";
-      this.densityComboBox.Size = new System.Drawing.Size(69, 21);
-      this.densityComboBox.TabIndex = 21;
+      densityComboBox.FormattingEnabled = true;
+      densityComboBox.Location = new System.Drawing.Point(113, 162);
+      densityComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      densityComboBox.Name = "densityComboBox";
+      densityComboBox.Size = new System.Drawing.Size(69, 21);
+      densityComboBox.TabIndex = 21;
       // 
       // linearDensityComboBox
       // 
-      this.linearDensityComboBox.FormattingEnabled = true;
-      this.linearDensityComboBox.Location = new System.Drawing.Point(113, 189);
-      this.linearDensityComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.linearDensityComboBox.Name = "linearDensityComboBox";
-      this.linearDensityComboBox.Size = new System.Drawing.Size(69, 21);
-      this.linearDensityComboBox.TabIndex = 22;
+      linearDensityComboBox.FormattingEnabled = true;
+      linearDensityComboBox.Location = new System.Drawing.Point(113, 189);
+      linearDensityComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      linearDensityComboBox.Name = "linearDensityComboBox";
+      linearDensityComboBox.Size = new System.Drawing.Size(69, 21);
+      linearDensityComboBox.TabIndex = 22;
       // 
       // volumePerLengthComboBox
       // 
-      this.volumePerLengthComboBox.FormattingEnabled = true;
-      this.volumePerLengthComboBox.Location = new System.Drawing.Point(113, 216);
-      this.volumePerLengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.volumePerLengthComboBox.Name = "volumePerLengthComboBox";
-      this.volumePerLengthComboBox.Size = new System.Drawing.Size(69, 21);
-      this.volumePerLengthComboBox.TabIndex = 23;
+      volumePerLengthComboBox.FormattingEnabled = true;
+      volumePerLengthComboBox.Location = new System.Drawing.Point(113, 216);
+      volumePerLengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      volumePerLengthComboBox.Name = "volumePerLengthComboBox";
+      volumePerLengthComboBox.Size = new System.Drawing.Size(69, 21);
+      volumePerLengthComboBox.TabIndex = 23;
       // 
       // label111
       // 
-      this.label111.AutoSize = true;
-      this.label111.Location = new System.Drawing.Point(3, 302);
-      this.label111.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label111.Name = "label111";
-      this.label111.Size = new System.Drawing.Size(88, 13);
-      this.label111.TabIndex = 10;
-      this.label111.Text = "Young\'s Modulus";
+      label111.AutoSize = true;
+      label111.Location = new System.Drawing.Point(3, 302);
+      label111.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label111.Name = "label111";
+      label111.Size = new System.Drawing.Size(88, 13);
+      label111.TabIndex = 10;
+      label111.Text = "Young\'s Modulus";
       // 
       // youngsModulusComboBox
       // 
-      this.youngsModulusComboBox.FormattingEnabled = true;
-      this.youngsModulusComboBox.Location = new System.Drawing.Point(113, 297);
-      this.youngsModulusComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.youngsModulusComboBox.Name = "youngsModulusComboBox";
-      this.youngsModulusComboBox.Size = new System.Drawing.Size(69, 21);
-      this.youngsModulusComboBox.TabIndex = 25;
+      youngsModulusComboBox.FormattingEnabled = true;
+      youngsModulusComboBox.Location = new System.Drawing.Point(113, 297);
+      youngsModulusComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      youngsModulusComboBox.Name = "youngsModulusComboBox";
+      youngsModulusComboBox.Size = new System.Drawing.Size(69, 21);
+      youngsModulusComboBox.TabIndex = 25;
       // 
       // label11
       // 
-      this.label11.AutoSize = true;
-      this.label11.Location = new System.Drawing.Point(3, 275);
-      this.label11.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label11.Name = "label11";
-      this.label11.Size = new System.Drawing.Size(74, 13);
-      this.label11.TabIndex = 63;
-      this.label11.Text = "Material Strain";
+      label11.AutoSize = true;
+      label11.Location = new System.Drawing.Point(3, 275);
+      label11.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label11.Name = "label11";
+      label11.Size = new System.Drawing.Size(74, 13);
+      label11.TabIndex = 63;
+      label11.Text = "Material Strain";
       // 
       // materialStrainComboBox
       // 
-      this.materialStrainComboBox.FormattingEnabled = true;
-      this.materialStrainComboBox.Location = new System.Drawing.Point(113, 270);
-      this.materialStrainComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.materialStrainComboBox.Name = "materialStrainComboBox";
-      this.materialStrainComboBox.Size = new System.Drawing.Size(69, 21);
-      this.materialStrainComboBox.TabIndex = 24;
+      materialStrainComboBox.FormattingEnabled = true;
+      materialStrainComboBox.Location = new System.Drawing.Point(113, 270);
+      materialStrainComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      materialStrainComboBox.Name = "materialStrainComboBox";
+      materialStrainComboBox.Size = new System.Drawing.Size(69, 21);
+      materialStrainComboBox.TabIndex = 24;
       // 
       // materialStrengthComboBox
       // 
-      this.materialStrengthComboBox.FormattingEnabled = true;
-      this.materialStrengthComboBox.Location = new System.Drawing.Point(113, 243);
-      this.materialStrengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.materialStrengthComboBox.Name = "materialStrengthComboBox";
-      this.materialStrengthComboBox.Size = new System.Drawing.Size(69, 21);
-      this.materialStrengthComboBox.TabIndex = 64;
+      materialStrengthComboBox.FormattingEnabled = true;
+      materialStrengthComboBox.Location = new System.Drawing.Point(113, 243);
+      materialStrengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      materialStrengthComboBox.Name = "materialStrengthComboBox";
+      materialStrengthComboBox.Size = new System.Drawing.Size(69, 21);
+      materialStrengthComboBox.TabIndex = 64;
       // 
       // label23
       // 
-      this.label23.AutoSize = true;
-      this.tableLayoutPanel5.SetColumnSpan(this.label23, 2);
-      this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label23.Location = new System.Drawing.Point(3, 5);
-      this.label23.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label23.Name = "label23";
-      this.label23.Size = new System.Drawing.Size(49, 13);
-      this.label23.TabIndex = 39;
-      this.label23.Text = "Results";
-      this.label23.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+      label23.AutoSize = true;
+      tableLayoutPanel5.SetColumnSpan(label23, 2);
+      label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      label23.Location = new System.Drawing.Point(3, 5);
+      label23.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label23.Name = "label23";
+      label23.Size = new System.Drawing.Size(49, 13);
+      label23.TabIndex = 39;
+      label23.Text = "Results";
+      label23.TextAlign = System.Drawing.ContentAlignment.TopCenter;
       // 
       // label24
       // 
-      this.label24.AutoSize = true;
-      this.label24.Location = new System.Drawing.Point(3, 32);
-      this.label24.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label24.Name = "label24";
-      this.label24.Size = new System.Drawing.Size(71, 13);
-      this.label24.TabIndex = 40;
-      this.label24.Text = "Displacement";
+      label24.AutoSize = true;
+      label24.Location = new System.Drawing.Point(3, 32);
+      label24.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label24.Name = "label24";
+      label24.Size = new System.Drawing.Size(71, 13);
+      label24.TabIndex = 40;
+      label24.Text = "Displacement";
       // 
       // displacementComboBox
       // 
-      this.displacementComboBox.FormattingEnabled = true;
-      this.displacementComboBox.Location = new System.Drawing.Point(113, 27);
-      this.displacementComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.displacementComboBox.Name = "displacementComboBox";
-      this.displacementComboBox.Size = new System.Drawing.Size(69, 21);
-      this.displacementComboBox.TabIndex = 53;
+      displacementComboBox.FormattingEnabled = true;
+      displacementComboBox.Location = new System.Drawing.Point(113, 27);
+      displacementComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      displacementComboBox.Name = "displacementComboBox";
+      displacementComboBox.Size = new System.Drawing.Size(69, 21);
+      displacementComboBox.TabIndex = 53;
       // 
       // label25
       // 
-      this.label25.AutoSize = true;
-      this.label25.Location = new System.Drawing.Point(3, 59);
-      this.label25.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label25.Name = "label25";
-      this.label25.Size = new System.Drawing.Size(36, 13);
-      this.label25.TabIndex = 41;
-      this.label25.Text = "Stress";
+      label25.AutoSize = true;
+      label25.Location = new System.Drawing.Point(3, 59);
+      label25.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label25.Name = "label25";
+      label25.Size = new System.Drawing.Size(36, 13);
+      label25.TabIndex = 41;
+      label25.Text = "Stress";
       // 
       // stressComboBox
       // 
-      this.stressComboBox.FormattingEnabled = true;
-      this.stressComboBox.Location = new System.Drawing.Point(113, 54);
-      this.stressComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.stressComboBox.Name = "stressComboBox";
-      this.stressComboBox.Size = new System.Drawing.Size(69, 21);
-      this.stressComboBox.TabIndex = 54;
+      stressComboBox.FormattingEnabled = true;
+      stressComboBox.Location = new System.Drawing.Point(113, 54);
+      stressComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      stressComboBox.Name = "stressComboBox";
+      stressComboBox.Size = new System.Drawing.Size(69, 21);
+      stressComboBox.TabIndex = 54;
       // 
       // label32
       // 
-      this.label32.AutoSize = true;
-      this.label32.Location = new System.Drawing.Point(3, 86);
-      this.label32.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label32.Name = "label32";
-      this.label32.Size = new System.Drawing.Size(34, 13);
-      this.label32.TabIndex = 61;
-      this.label32.Text = "Strain";
+      label32.AutoSize = true;
+      label32.Location = new System.Drawing.Point(3, 86);
+      label32.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label32.Name = "label32";
+      label32.Size = new System.Drawing.Size(34, 13);
+      label32.TabIndex = 61;
+      label32.Text = "Strain";
       // 
       // strainComboBox
       // 
-      this.strainComboBox.FormattingEnabled = true;
-      this.strainComboBox.Location = new System.Drawing.Point(113, 81);
-      this.strainComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.strainComboBox.Name = "strainComboBox";
-      this.strainComboBox.Size = new System.Drawing.Size(69, 21);
-      this.strainComboBox.TabIndex = 62;
+      strainComboBox.FormattingEnabled = true;
+      strainComboBox.Location = new System.Drawing.Point(113, 81);
+      strainComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      strainComboBox.Name = "strainComboBox";
+      strainComboBox.Size = new System.Drawing.Size(69, 21);
+      strainComboBox.TabIndex = 62;
       // 
       // label26
       // 
-      this.label26.AutoSize = true;
-      this.label26.Location = new System.Drawing.Point(3, 113);
-      this.label26.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label26.Name = "label26";
-      this.label26.Size = new System.Drawing.Size(72, 13);
-      this.label26.TabIndex = 42;
-      this.label26.Text = "Axial Stiffness";
+      label26.AutoSize = true;
+      label26.Location = new System.Drawing.Point(3, 113);
+      label26.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label26.Name = "label26";
+      label26.Size = new System.Drawing.Size(72, 13);
+      label26.TabIndex = 42;
+      label26.Text = "Axial Stiffness";
       // 
       // axialStiffnessComboBox
       // 
-      this.axialStiffnessComboBox.FormattingEnabled = true;
-      this.axialStiffnessComboBox.Location = new System.Drawing.Point(113, 108);
-      this.axialStiffnessComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.axialStiffnessComboBox.Name = "axialStiffnessComboBox";
-      this.axialStiffnessComboBox.Size = new System.Drawing.Size(69, 21);
-      this.axialStiffnessComboBox.TabIndex = 55;
+      axialStiffnessComboBox.FormattingEnabled = true;
+      axialStiffnessComboBox.Location = new System.Drawing.Point(113, 108);
+      axialStiffnessComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      axialStiffnessComboBox.Name = "axialStiffnessComboBox";
+      axialStiffnessComboBox.Size = new System.Drawing.Size(69, 21);
+      axialStiffnessComboBox.TabIndex = 55;
       // 
       // label27
       // 
-      this.label27.AutoSize = true;
-      this.label27.Location = new System.Drawing.Point(3, 140);
-      this.label27.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label27.Name = "label27";
-      this.label27.Size = new System.Drawing.Size(89, 13);
-      this.label27.TabIndex = 43;
-      this.label27.Text = "Bending Stiffness";
+      label27.AutoSize = true;
+      label27.Location = new System.Drawing.Point(3, 140);
+      label27.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label27.Name = "label27";
+      label27.Size = new System.Drawing.Size(89, 13);
+      label27.TabIndex = 43;
+      label27.Text = "Bending Stiffness";
       // 
       // bendingStiffnessComboBox
       // 
-      this.bendingStiffnessComboBox.FormattingEnabled = true;
-      this.bendingStiffnessComboBox.Location = new System.Drawing.Point(113, 135);
-      this.bendingStiffnessComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.bendingStiffnessComboBox.Name = "bendingStiffnessComboBox";
-      this.bendingStiffnessComboBox.Size = new System.Drawing.Size(69, 21);
-      this.bendingStiffnessComboBox.TabIndex = 56;
+      bendingStiffnessComboBox.FormattingEnabled = true;
+      bendingStiffnessComboBox.Location = new System.Drawing.Point(113, 135);
+      bendingStiffnessComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      bendingStiffnessComboBox.Name = "bendingStiffnessComboBox";
+      bendingStiffnessComboBox.Size = new System.Drawing.Size(69, 21);
+      bendingStiffnessComboBox.TabIndex = 56;
       // 
       // label28
       // 
-      this.label28.AutoSize = true;
-      this.label28.Location = new System.Drawing.Point(3, 167);
-      this.label28.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label28.Name = "label28";
-      this.label28.Size = new System.Drawing.Size(44, 13);
-      this.label28.TabIndex = 44;
-      this.label28.Text = "Velocity";
+      label28.AutoSize = true;
+      label28.Location = new System.Drawing.Point(3, 167);
+      label28.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label28.Name = "label28";
+      label28.Size = new System.Drawing.Size(44, 13);
+      label28.TabIndex = 44;
+      label28.Text = "Velocity";
       // 
       // velocityComboBox
       // 
-      this.velocityComboBox.FormattingEnabled = true;
-      this.velocityComboBox.Location = new System.Drawing.Point(113, 162);
-      this.velocityComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.velocityComboBox.Name = "velocityComboBox";
-      this.velocityComboBox.Size = new System.Drawing.Size(69, 21);
-      this.velocityComboBox.TabIndex = 57;
+      velocityComboBox.FormattingEnabled = true;
+      velocityComboBox.Location = new System.Drawing.Point(113, 162);
+      velocityComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      velocityComboBox.Name = "velocityComboBox";
+      velocityComboBox.Size = new System.Drawing.Size(69, 21);
+      velocityComboBox.TabIndex = 57;
       // 
       // label29
       // 
-      this.label29.AutoSize = true;
-      this.label29.Location = new System.Drawing.Point(3, 194);
-      this.label29.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label29.Name = "label29";
-      this.label29.Size = new System.Drawing.Size(66, 13);
-      this.label29.TabIndex = 45;
-      this.label29.Text = "Acceleration";
+      label29.AutoSize = true;
+      label29.Location = new System.Drawing.Point(3, 194);
+      label29.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label29.Name = "label29";
+      label29.Size = new System.Drawing.Size(66, 13);
+      label29.TabIndex = 45;
+      label29.Text = "Acceleration";
       // 
       // accelerationComboBox
       // 
-      this.accelerationComboBox.FormattingEnabled = true;
-      this.accelerationComboBox.Location = new System.Drawing.Point(113, 189);
-      this.accelerationComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.accelerationComboBox.Name = "accelerationComboBox";
-      this.accelerationComboBox.Size = new System.Drawing.Size(69, 21);
-      this.accelerationComboBox.TabIndex = 58;
+      accelerationComboBox.FormattingEnabled = true;
+      accelerationComboBox.Location = new System.Drawing.Point(113, 189);
+      accelerationComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      accelerationComboBox.Name = "accelerationComboBox";
+      accelerationComboBox.Size = new System.Drawing.Size(69, 21);
+      accelerationComboBox.TabIndex = 58;
       // 
       // label30
       // 
-      this.label30.AutoSize = true;
-      this.label30.Location = new System.Drawing.Point(3, 221);
-      this.label30.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label30.Name = "label30";
-      this.label30.Size = new System.Drawing.Size(40, 13);
-      this.label30.TabIndex = 46;
-      this.label30.Text = "Energy";
+      label30.AutoSize = true;
+      label30.Location = new System.Drawing.Point(3, 221);
+      label30.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label30.Name = "label30";
+      label30.Size = new System.Drawing.Size(40, 13);
+      label30.TabIndex = 46;
+      label30.Text = "Energy";
       // 
       // energyComboBox
       // 
-      this.energyComboBox.FormattingEnabled = true;
-      this.energyComboBox.Location = new System.Drawing.Point(113, 216);
-      this.energyComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.energyComboBox.Name = "energyComboBox";
-      this.energyComboBox.Size = new System.Drawing.Size(69, 21);
-      this.energyComboBox.TabIndex = 59;
+      energyComboBox.FormattingEnabled = true;
+      energyComboBox.Location = new System.Drawing.Point(113, 216);
+      energyComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      energyComboBox.Name = "energyComboBox";
+      energyComboBox.Size = new System.Drawing.Size(69, 21);
+      energyComboBox.TabIndex = 59;
       // 
       // label31
       // 
-      this.label31.AutoSize = true;
-      this.label31.Location = new System.Drawing.Point(3, 248);
-      this.label31.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label31.Name = "label31";
-      this.label31.Size = new System.Drawing.Size(53, 13);
-      this.label31.TabIndex = 47;
-      this.label31.Text = "Curvature";
+      label31.AutoSize = true;
+      label31.Location = new System.Drawing.Point(3, 248);
+      label31.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label31.Name = "label31";
+      label31.Size = new System.Drawing.Size(53, 13);
+      label31.TabIndex = 47;
+      label31.Text = "Curvature";
       // 
       // curvatureComboBox
       // 
-      this.curvatureComboBox.FormattingEnabled = true;
-      this.curvatureComboBox.Location = new System.Drawing.Point(113, 243);
-      this.curvatureComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.curvatureComboBox.Name = "curvatureComboBox";
-      this.curvatureComboBox.Size = new System.Drawing.Size(69, 21);
-      this.curvatureComboBox.TabIndex = 60;
+      curvatureComboBox.FormattingEnabled = true;
+      curvatureComboBox.Location = new System.Drawing.Point(113, 243);
+      curvatureComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      curvatureComboBox.Name = "curvatureComboBox";
+      curvatureComboBox.Size = new System.Drawing.Size(69, 21);
+      curvatureComboBox.TabIndex = 60;
       // 
       // label22
       // 
-      this.label22.AutoSize = true;
-      this.label22.Location = new System.Drawing.Point(3, 140);
-      this.label22.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label22.Name = "label22";
-      this.label22.Size = new System.Drawing.Size(67, 13);
-      this.label22.TabIndex = 38;
-      this.label22.Text = "Temperature";
+      label22.AutoSize = true;
+      label22.Location = new System.Drawing.Point(3, 140);
+      label22.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label22.Name = "label22";
+      label22.Size = new System.Drawing.Size(67, 13);
+      label22.TabIndex = 38;
+      label22.Text = "Temperature";
       // 
       // temperatureComboBox
       // 
-      this.temperatureComboBox.FormattingEnabled = true;
-      this.temperatureComboBox.Location = new System.Drawing.Point(113, 135);
-      this.temperatureComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.temperatureComboBox.Name = "temperatureComboBox";
-      this.temperatureComboBox.Size = new System.Drawing.Size(69, 21);
-      this.temperatureComboBox.TabIndex = 52;
+      temperatureComboBox.FormattingEnabled = true;
+      temperatureComboBox.Location = new System.Drawing.Point(113, 135);
+      temperatureComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      temperatureComboBox.Name = "temperatureComboBox";
+      temperatureComboBox.Size = new System.Drawing.Size(69, 21);
+      temperatureComboBox.TabIndex = 52;
       // 
       // label21
       // 
-      this.label21.AutoSize = true;
-      this.label21.Location = new System.Drawing.Point(3, 113);
-      this.label21.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label21.Name = "label21";
-      this.label21.Size = new System.Drawing.Size(45, 13);
-      this.label21.TabIndex = 37;
-      this.label21.Text = "Moment";
+      label21.AutoSize = true;
+      label21.Location = new System.Drawing.Point(3, 113);
+      label21.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label21.Name = "label21";
+      label21.Size = new System.Drawing.Size(45, 13);
+      label21.TabIndex = 37;
+      label21.Text = "Moment";
       // 
       // momentComboBox
       // 
-      this.momentComboBox.FormattingEnabled = true;
-      this.momentComboBox.Location = new System.Drawing.Point(113, 108);
-      this.momentComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.momentComboBox.Name = "momentComboBox";
-      this.momentComboBox.Size = new System.Drawing.Size(69, 21);
-      this.momentComboBox.TabIndex = 51;
+      momentComboBox.FormattingEnabled = true;
+      momentComboBox.Location = new System.Drawing.Point(113, 108);
+      momentComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      momentComboBox.Name = "momentComboBox";
+      momentComboBox.Size = new System.Drawing.Size(69, 21);
+      momentComboBox.TabIndex = 51;
       // 
       // label20
       // 
-      this.label20.AutoSize = true;
-      this.label20.Location = new System.Drawing.Point(3, 86);
-      this.label20.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label20.Name = "label20";
-      this.label20.Size = new System.Drawing.Size(77, 13);
-      this.label20.TabIndex = 36;
-      this.label20.Text = "Force per Area";
+      label20.AutoSize = true;
+      label20.Location = new System.Drawing.Point(3, 86);
+      label20.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label20.Name = "label20";
+      label20.Size = new System.Drawing.Size(77, 13);
+      label20.TabIndex = 36;
+      label20.Text = "Force per Area";
       // 
       // forcePerAreaComboBox
       // 
-      this.forcePerAreaComboBox.FormattingEnabled = true;
-      this.forcePerAreaComboBox.Location = new System.Drawing.Point(113, 81);
-      this.forcePerAreaComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.forcePerAreaComboBox.Name = "forcePerAreaComboBox";
-      this.forcePerAreaComboBox.Size = new System.Drawing.Size(69, 21);
-      this.forcePerAreaComboBox.TabIndex = 50;
+      forcePerAreaComboBox.FormattingEnabled = true;
+      forcePerAreaComboBox.Location = new System.Drawing.Point(113, 81);
+      forcePerAreaComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      forcePerAreaComboBox.Name = "forcePerAreaComboBox";
+      forcePerAreaComboBox.Size = new System.Drawing.Size(69, 21);
+      forcePerAreaComboBox.TabIndex = 50;
       // 
       // label19
       // 
-      this.label19.AutoSize = true;
-      this.label19.Location = new System.Drawing.Point(3, 59);
-      this.label19.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label19.Name = "label19";
-      this.label19.Size = new System.Drawing.Size(88, 13);
-      this.label19.TabIndex = 35;
-      this.label19.Text = "Force per Length";
+      label19.AutoSize = true;
+      label19.Location = new System.Drawing.Point(3, 59);
+      label19.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label19.Name = "label19";
+      label19.Size = new System.Drawing.Size(88, 13);
+      label19.TabIndex = 35;
+      label19.Text = "Force per Length";
       // 
       // forcePerLengthComboBox
       // 
-      this.forcePerLengthComboBox.FormattingEnabled = true;
-      this.forcePerLengthComboBox.Location = new System.Drawing.Point(113, 54);
-      this.forcePerLengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.forcePerLengthComboBox.Name = "forcePerLengthComboBox";
-      this.forcePerLengthComboBox.Size = new System.Drawing.Size(69, 21);
-      this.forcePerLengthComboBox.TabIndex = 49;
+      forcePerLengthComboBox.FormattingEnabled = true;
+      forcePerLengthComboBox.Location = new System.Drawing.Point(113, 54);
+      forcePerLengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      forcePerLengthComboBox.Name = "forcePerLengthComboBox";
+      forcePerLengthComboBox.Size = new System.Drawing.Size(69, 21);
+      forcePerLengthComboBox.TabIndex = 49;
       // 
       // label18
       // 
-      this.label18.AutoSize = true;
-      this.label18.Location = new System.Drawing.Point(3, 32);
-      this.label18.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label18.Name = "label18";
-      this.label18.Size = new System.Drawing.Size(34, 13);
-      this.label18.TabIndex = 34;
-      this.label18.Text = "Force";
+      label18.AutoSize = true;
+      label18.Location = new System.Drawing.Point(3, 32);
+      label18.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label18.Name = "label18";
+      label18.Size = new System.Drawing.Size(34, 13);
+      label18.TabIndex = 34;
+      label18.Text = "Force";
       // 
       // forceComboBox
       // 
-      this.forceComboBox.FormattingEnabled = true;
-      this.forceComboBox.Location = new System.Drawing.Point(113, 27);
-      this.forceComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.forceComboBox.Name = "forceComboBox";
-      this.forceComboBox.Size = new System.Drawing.Size(69, 21);
-      this.forceComboBox.TabIndex = 48;
+      forceComboBox.FormattingEnabled = true;
+      forceComboBox.Location = new System.Drawing.Point(113, 27);
+      forceComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      forceComboBox.Name = "forceComboBox";
+      forceComboBox.Size = new System.Drawing.Size(69, 21);
+      forceComboBox.TabIndex = 48;
       // 
       // label17
       // 
-      this.label17.AutoSize = true;
-      this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label17.Location = new System.Drawing.Point(3, 5);
-      this.label17.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label17.Name = "label17";
-      this.label17.Size = new System.Drawing.Size(41, 13);
-      this.label17.TabIndex = 33;
-      this.label17.Text = "Loads";
+      label17.AutoSize = true;
+      label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      label17.Location = new System.Drawing.Point(3, 5);
+      label17.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label17.Name = "label17";
+      label17.Size = new System.Drawing.Size(41, 13);
+      label17.TabIndex = 33;
+      label17.Text = "Loads";
       // 
       // label13
       // 
-      this.label13.AutoSize = true;
-      this.tableLayoutPanel3.SetColumnSpan(this.label13, 2);
-      this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label13.Location = new System.Drawing.Point(3, 5);
-      this.label13.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label13.Name = "label13";
-      this.label13.Size = new System.Drawing.Size(60, 13);
-      this.label13.TabIndex = 12;
-      this.label13.Text = "Geometry";
-      this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+      label13.AutoSize = true;
+      tableLayoutPanel3.SetColumnSpan(label13, 2);
+      label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      label13.Location = new System.Drawing.Point(3, 5);
+      label13.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label13.Name = "label13";
+      label13.Size = new System.Drawing.Size(60, 13);
+      label13.TabIndex = 12;
+      label13.Text = "Geometry";
+      label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
       // 
       // label14
       // 
-      this.label14.AutoSize = true;
-      this.label14.Location = new System.Drawing.Point(3, 32);
-      this.label14.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label14.Name = "label14";
-      this.label14.Size = new System.Drawing.Size(40, 13);
-      this.label14.TabIndex = 13;
-      this.label14.Text = "Length";
+      label14.AutoSize = true;
+      label14.Location = new System.Drawing.Point(3, 32);
+      label14.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label14.Name = "label14";
+      label14.Size = new System.Drawing.Size(40, 13);
+      label14.TabIndex = 13;
+      label14.Text = "Length";
       // 
       // lengthComboBox
       // 
-      this.lengthComboBox.FormattingEnabled = true;
-      this.lengthComboBox.Location = new System.Drawing.Point(113, 27);
-      this.lengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-      this.lengthComboBox.Name = "lengthComboBox";
-      this.lengthComboBox.Size = new System.Drawing.Size(69, 21);
-      this.lengthComboBox.TabIndex = 29;
-      this.lengthComboBox.SelectedIndexChanged += new System.EventHandler(this.lengthComboBox_SelectedIndexChanged);
+      lengthComboBox.FormattingEnabled = true;
+      lengthComboBox.Location = new System.Drawing.Point(113, 27);
+      lengthComboBox.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+      lengthComboBox.Name = "lengthComboBox";
+      lengthComboBox.Size = new System.Drawing.Size(69, 21);
+      lengthComboBox.TabIndex = 29;
+      lengthComboBox.SelectedIndexChanged += new System.EventHandler(lengthComboBox_SelectedIndexChanged);
       // 
       // toleranceTxt
       // 
-      this.toleranceTxt.AutoSize = true;
-      this.toleranceTxt.Location = new System.Drawing.Point(3, 86);
-      this.toleranceTxt.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.toleranceTxt.Name = "toleranceTxt";
-      this.toleranceTxt.Size = new System.Drawing.Size(55, 13);
-      this.toleranceTxt.TabIndex = 15;
-      this.toleranceTxt.Text = "Tolerance";
+      toleranceTxt.AutoSize = true;
+      toleranceTxt.Location = new System.Drawing.Point(3, 86);
+      toleranceTxt.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      toleranceTxt.Name = "toleranceTxt";
+      toleranceTxt.Size = new System.Drawing.Size(55, 13);
+      toleranceTxt.TabIndex = 15;
+      toleranceTxt.Text = "Tolerance";
       // 
       // toleranceUpDown
       // 
-      this.toleranceUpDown.DecimalPlaces = 6;
-      this.toleranceUpDown.Increment = new decimal(new int[] {
+      toleranceUpDown.DecimalPlaces = 6;
+      toleranceUpDown.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-      this.toleranceUpDown.Location = new System.Drawing.Point(113, 84);
-      this.toleranceUpDown.Minimum = new decimal(new int[] {
+      toleranceUpDown.Location = new System.Drawing.Point(113, 84);
+      toleranceUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             393216});
-      this.toleranceUpDown.Name = "toleranceUpDown";
-      this.toleranceUpDown.Size = new System.Drawing.Size(69, 20);
-      this.toleranceUpDown.TabIndex = 30;
-      this.toleranceUpDown.Value = new decimal(new int[] {
+      toleranceUpDown.Name = "toleranceUpDown";
+      toleranceUpDown.Size = new System.Drawing.Size(69, 20);
+      toleranceUpDown.TabIndex = 30;
+      toleranceUpDown.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -758,295 +758,295 @@
       // 
       // useRhinoLengthUnit
       // 
-      this.useRhinoLengthUnit.AutoSize = true;
-      this.tableLayoutPanel3.SetColumnSpan(this.useRhinoLengthUnit, 2);
-      this.useRhinoLengthUnit.Location = new System.Drawing.Point(3, 57);
-      this.useRhinoLengthUnit.Name = "useRhinoLengthUnit";
-      this.useRhinoLengthUnit.Size = new System.Drawing.Size(98, 17);
-      this.useRhinoLengthUnit.TabIndex = 31;
-      this.useRhinoLengthUnit.Text = "Use Rhino Unit";
-      this.useRhinoLengthUnit.UseVisualStyleBackColor = true;
-      this.useRhinoLengthUnit.CheckedChanged += new System.EventHandler(this.useRhinoLengthUnit_CheckedChanged);
+      useRhinoLengthUnit.AutoSize = true;
+      tableLayoutPanel3.SetColumnSpan(useRhinoLengthUnit, 2);
+      useRhinoLengthUnit.Location = new System.Drawing.Point(3, 57);
+      useRhinoLengthUnit.Name = "useRhinoLengthUnit";
+      useRhinoLengthUnit.Size = new System.Drawing.Size(98, 17);
+      useRhinoLengthUnit.TabIndex = 31;
+      useRhinoLengthUnit.Text = "Use Rhino Unit";
+      useRhinoLengthUnit.UseVisualStyleBackColor = true;
+      useRhinoLengthUnit.CheckedChanged += new System.EventHandler(useRhinoLengthUnit_CheckedChanged);
       // 
       // useRhinoTolerance
       // 
-      this.useRhinoTolerance.AutoSize = true;
-      this.tableLayoutPanel3.SetColumnSpan(this.useRhinoTolerance, 2);
-      this.useRhinoTolerance.Location = new System.Drawing.Point(3, 111);
-      this.useRhinoTolerance.Name = "useRhinoTolerance";
-      this.useRhinoTolerance.Size = new System.Drawing.Size(127, 17);
-      this.useRhinoTolerance.TabIndex = 32;
-      this.useRhinoTolerance.Text = "Use Rhino Tolerance";
-      this.useRhinoTolerance.UseVisualStyleBackColor = true;
-      this.useRhinoTolerance.CheckedChanged += new System.EventHandler(this.useRhinoTolerance_CheckedChanged);
+      useRhinoTolerance.AutoSize = true;
+      tableLayoutPanel3.SetColumnSpan(useRhinoTolerance, 2);
+      useRhinoTolerance.Location = new System.Drawing.Point(3, 111);
+      useRhinoTolerance.Name = "useRhinoTolerance";
+      useRhinoTolerance.Size = new System.Drawing.Size(127, 17);
+      useRhinoTolerance.TabIndex = 32;
+      useRhinoTolerance.Text = "Use Rhino Tolerance";
+      useRhinoTolerance.UseVisualStyleBackColor = true;
+      useRhinoTolerance.CheckedChanged += new System.EventHandler(useRhinoTolerance_CheckedChanged);
       // 
       // label1
       // 
-      this.label1.AutoSize = true;
-      this.tableLayoutPanel2.SetColumnSpan(this.label1, 2);
-      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(3, 5);
-      this.label1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(64, 13);
-      this.label1.TabIndex = 0;
-      this.label1.Text = "Properties";
-      this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+      label1.AutoSize = true;
+      tableLayoutPanel2.SetColumnSpan(label1, 2);
+      label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      label1.Location = new System.Drawing.Point(3, 5);
+      label1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+      label1.Name = "label1";
+      label1.Size = new System.Drawing.Size(64, 13);
+      label1.TabIndex = 0;
+      label1.Text = "Properties";
+      label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
       // 
       // panel1
       // 
-      this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.panel1.Controls.Add(this.tableLayoutPanel2);
-      this.panel1.Location = new System.Drawing.Point(12, 12);
-      this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(185, 326);
-      this.panel1.TabIndex = 66;
+      panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      panel1.Controls.Add(tableLayoutPanel2);
+      panel1.Location = new System.Drawing.Point(12, 12);
+      panel1.Name = "panel1";
+      panel1.Size = new System.Drawing.Size(185, 326);
+      panel1.TabIndex = 66;
       // 
       // tableLayoutPanel2
       // 
-      this.tableLayoutPanel2.ColumnCount = 2;
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-      this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
-      this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
-      this.tableLayoutPanel2.Controls.Add(this.lengthSectionComboBox, 1, 1);
-      this.tableLayoutPanel2.Controls.Add(this.label3, 0, 2);
-      this.tableLayoutPanel2.Controls.Add(this.youngsModulusComboBox, 1, 11);
-      this.tableLayoutPanel2.Controls.Add(this.label111, 0, 11);
-      this.tableLayoutPanel2.Controls.Add(this.label10, 0, 9);
-      this.tableLayoutPanel2.Controls.Add(this.label9, 0, 8);
-      this.tableLayoutPanel2.Controls.Add(this.materialStrainComboBox, 1, 10);
-      this.tableLayoutPanel2.Controls.Add(this.label11, 0, 10);
-      this.tableLayoutPanel2.Controls.Add(this.volumePerLengthComboBox, 1, 8);
-      this.tableLayoutPanel2.Controls.Add(this.label8, 0, 7);
-      this.tableLayoutPanel2.Controls.Add(this.materialStrengthComboBox, 1, 9);
-      this.tableLayoutPanel2.Controls.Add(this.label7, 0, 6);
-      this.tableLayoutPanel2.Controls.Add(this.linearDensityComboBox, 1, 7);
-      this.tableLayoutPanel2.Controls.Add(this.label6, 0, 5);
-      this.tableLayoutPanel2.Controls.Add(this.label5, 0, 4);
-      this.tableLayoutPanel2.Controls.Add(this.densityComboBox, 1, 6);
-      this.tableLayoutPanel2.Controls.Add(this.label4, 0, 3);
-      this.tableLayoutPanel2.Controls.Add(this.areaComboBox, 1, 2);
-      this.tableLayoutPanel2.Controls.Add(this.massComboBox, 1, 5);
-      this.tableLayoutPanel2.Controls.Add(this.volumeComboBox, 1, 3);
-      this.tableLayoutPanel2.Controls.Add(this.momentOfInertiaComboBox, 1, 4);
-      this.tableLayoutPanel2.Location = new System.Drawing.Point(-1, -1);
-      this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-      this.tableLayoutPanel2.RowCount = 12;
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
-      this.tableLayoutPanel2.Size = new System.Drawing.Size(185, 326);
-      this.tableLayoutPanel2.TabIndex = 69;
+      tableLayoutPanel2.ColumnCount = 2;
+      tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+      tableLayoutPanel2.Controls.Add(label1, 0, 0);
+      tableLayoutPanel2.Controls.Add(label2, 0, 1);
+      tableLayoutPanel2.Controls.Add(lengthSectionComboBox, 1, 1);
+      tableLayoutPanel2.Controls.Add(label3, 0, 2);
+      tableLayoutPanel2.Controls.Add(youngsModulusComboBox, 1, 11);
+      tableLayoutPanel2.Controls.Add(label111, 0, 11);
+      tableLayoutPanel2.Controls.Add(label10, 0, 9);
+      tableLayoutPanel2.Controls.Add(label9, 0, 8);
+      tableLayoutPanel2.Controls.Add(materialStrainComboBox, 1, 10);
+      tableLayoutPanel2.Controls.Add(label11, 0, 10);
+      tableLayoutPanel2.Controls.Add(volumePerLengthComboBox, 1, 8);
+      tableLayoutPanel2.Controls.Add(label8, 0, 7);
+      tableLayoutPanel2.Controls.Add(materialStrengthComboBox, 1, 9);
+      tableLayoutPanel2.Controls.Add(label7, 0, 6);
+      tableLayoutPanel2.Controls.Add(linearDensityComboBox, 1, 7);
+      tableLayoutPanel2.Controls.Add(label6, 0, 5);
+      tableLayoutPanel2.Controls.Add(label5, 0, 4);
+      tableLayoutPanel2.Controls.Add(densityComboBox, 1, 6);
+      tableLayoutPanel2.Controls.Add(label4, 0, 3);
+      tableLayoutPanel2.Controls.Add(areaComboBox, 1, 2);
+      tableLayoutPanel2.Controls.Add(massComboBox, 1, 5);
+      tableLayoutPanel2.Controls.Add(volumeComboBox, 1, 3);
+      tableLayoutPanel2.Controls.Add(momentOfInertiaComboBox, 1, 4);
+      tableLayoutPanel2.Location = new System.Drawing.Point(-1, -1);
+      tableLayoutPanel2.Name = "tableLayoutPanel2";
+      tableLayoutPanel2.RowCount = 12;
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333335F));
+      tableLayoutPanel2.Size = new System.Drawing.Size(185, 326);
+      tableLayoutPanel2.TabIndex = 69;
       // 
       // panel2
       // 
-      this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.panel2.Controls.Add(this.tableLayoutPanel3);
-      this.panel2.Location = new System.Drawing.Point(207, 12);
-      this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(185, 137);
-      this.panel2.TabIndex = 67;
+      panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      panel2.Controls.Add(tableLayoutPanel3);
+      panel2.Location = new System.Drawing.Point(207, 12);
+      panel2.Name = "panel2";
+      panel2.Size = new System.Drawing.Size(185, 137);
+      panel2.TabIndex = 67;
       // 
       // tableLayoutPanel3
       // 
-      this.tableLayoutPanel3.ColumnCount = 2;
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-      this.tableLayoutPanel3.Controls.Add(this.label13, 0, 0);
-      this.tableLayoutPanel3.Controls.Add(this.label14, 0, 1);
-      this.tableLayoutPanel3.Controls.Add(this.useRhinoLengthUnit, 0, 2);
-      this.tableLayoutPanel3.Controls.Add(this.lengthComboBox, 1, 1);
-      this.tableLayoutPanel3.Controls.Add(this.toleranceTxt, 0, 3);
-      this.tableLayoutPanel3.Controls.Add(this.toleranceUpDown, 1, 3);
-      this.tableLayoutPanel3.Controls.Add(this.useRhinoTolerance, 0, 4);
-      this.tableLayoutPanel3.Location = new System.Drawing.Point(-1, -1);
-      this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-      this.tableLayoutPanel3.RowCount = 5;
-      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-      this.tableLayoutPanel3.Size = new System.Drawing.Size(185, 139);
-      this.tableLayoutPanel3.TabIndex = 69;
+      tableLayoutPanel3.ColumnCount = 2;
+      tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+      tableLayoutPanel3.Controls.Add(label13, 0, 0);
+      tableLayoutPanel3.Controls.Add(label14, 0, 1);
+      tableLayoutPanel3.Controls.Add(useRhinoLengthUnit, 0, 2);
+      tableLayoutPanel3.Controls.Add(lengthComboBox, 1, 1);
+      tableLayoutPanel3.Controls.Add(toleranceTxt, 0, 3);
+      tableLayoutPanel3.Controls.Add(toleranceUpDown, 1, 3);
+      tableLayoutPanel3.Controls.Add(useRhinoTolerance, 0, 4);
+      tableLayoutPanel3.Location = new System.Drawing.Point(-1, -1);
+      tableLayoutPanel3.Name = "tableLayoutPanel3";
+      tableLayoutPanel3.RowCount = 5;
+      tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+      tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+      tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+      tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+      tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+      tableLayoutPanel3.Size = new System.Drawing.Size(185, 139);
+      tableLayoutPanel3.TabIndex = 69;
       // 
       // panel3
       // 
-      this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.panel3.Controls.Add(this.tableLayoutPanel5);
-      this.panel3.Location = new System.Drawing.Point(400, 12);
-      this.panel3.Name = "panel3";
-      this.panel3.Size = new System.Drawing.Size(185, 272);
-      this.panel3.TabIndex = 67;
+      panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      panel3.Controls.Add(tableLayoutPanel5);
+      panel3.Location = new System.Drawing.Point(400, 12);
+      panel3.Name = "panel3";
+      panel3.Size = new System.Drawing.Size(185, 272);
+      panel3.TabIndex = 67;
       // 
       // tableLayoutPanel5
       // 
-      this.tableLayoutPanel5.ColumnCount = 2;
-      this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-      this.tableLayoutPanel5.Controls.Add(this.label23, 0, 0);
-      this.tableLayoutPanel5.Controls.Add(this.label24, 0, 1);
-      this.tableLayoutPanel5.Controls.Add(this.displacementComboBox, 1, 1);
-      this.tableLayoutPanel5.Controls.Add(this.label25, 0, 2);
-      this.tableLayoutPanel5.Controls.Add(this.curvatureComboBox, 1, 9);
-      this.tableLayoutPanel5.Controls.Add(this.label31, 0, 9);
-      this.tableLayoutPanel5.Controls.Add(this.energyComboBox, 1, 8);
-      this.tableLayoutPanel5.Controls.Add(this.label30, 0, 8);
-      this.tableLayoutPanel5.Controls.Add(this.accelerationComboBox, 1, 7);
-      this.tableLayoutPanel5.Controls.Add(this.label29, 0, 7);
-      this.tableLayoutPanel5.Controls.Add(this.velocityComboBox, 1, 6);
-      this.tableLayoutPanel5.Controls.Add(this.label28, 0, 6);
-      this.tableLayoutPanel5.Controls.Add(this.bendingStiffnessComboBox, 1, 5);
-      this.tableLayoutPanel5.Controls.Add(this.label27, 0, 5);
-      this.tableLayoutPanel5.Controls.Add(this.label26, 0, 4);
-      this.tableLayoutPanel5.Controls.Add(this.strainComboBox, 1, 3);
-      this.tableLayoutPanel5.Controls.Add(this.label32, 0, 3);
-      this.tableLayoutPanel5.Controls.Add(this.stressComboBox, 1, 2);
-      this.tableLayoutPanel5.Controls.Add(this.axialStiffnessComboBox, 1, 4);
-      this.tableLayoutPanel5.Location = new System.Drawing.Point(-3, -1);
-      this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-      this.tableLayoutPanel5.RowCount = 10;
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tableLayoutPanel5.Size = new System.Drawing.Size(185, 273);
-      this.tableLayoutPanel5.TabIndex = 69;
+      tableLayoutPanel5.ColumnCount = 2;
+      tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+      tableLayoutPanel5.Controls.Add(label23, 0, 0);
+      tableLayoutPanel5.Controls.Add(label24, 0, 1);
+      tableLayoutPanel5.Controls.Add(displacementComboBox, 1, 1);
+      tableLayoutPanel5.Controls.Add(label25, 0, 2);
+      tableLayoutPanel5.Controls.Add(curvatureComboBox, 1, 9);
+      tableLayoutPanel5.Controls.Add(label31, 0, 9);
+      tableLayoutPanel5.Controls.Add(energyComboBox, 1, 8);
+      tableLayoutPanel5.Controls.Add(label30, 0, 8);
+      tableLayoutPanel5.Controls.Add(accelerationComboBox, 1, 7);
+      tableLayoutPanel5.Controls.Add(label29, 0, 7);
+      tableLayoutPanel5.Controls.Add(velocityComboBox, 1, 6);
+      tableLayoutPanel5.Controls.Add(label28, 0, 6);
+      tableLayoutPanel5.Controls.Add(bendingStiffnessComboBox, 1, 5);
+      tableLayoutPanel5.Controls.Add(label27, 0, 5);
+      tableLayoutPanel5.Controls.Add(label26, 0, 4);
+      tableLayoutPanel5.Controls.Add(strainComboBox, 1, 3);
+      tableLayoutPanel5.Controls.Add(label32, 0, 3);
+      tableLayoutPanel5.Controls.Add(stressComboBox, 1, 2);
+      tableLayoutPanel5.Controls.Add(axialStiffnessComboBox, 1, 4);
+      tableLayoutPanel5.Location = new System.Drawing.Point(-3, -1);
+      tableLayoutPanel5.Name = "tableLayoutPanel5";
+      tableLayoutPanel5.RowCount = 10;
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+      tableLayoutPanel5.Size = new System.Drawing.Size(185, 273);
+      tableLayoutPanel5.TabIndex = 69;
       // 
       // panel4
       // 
-      this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-      this.panel4.Controls.Add(this.tableLayoutPanel4);
-      this.panel4.Location = new System.Drawing.Point(207, 174);
-      this.panel4.Name = "panel4";
-      this.panel4.Size = new System.Drawing.Size(185, 164);
-      this.panel4.TabIndex = 68;
+      panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      panel4.Controls.Add(tableLayoutPanel4);
+      panel4.Location = new System.Drawing.Point(207, 174);
+      panel4.Name = "panel4";
+      panel4.Size = new System.Drawing.Size(185, 164);
+      panel4.TabIndex = 68;
       // 
       // tableLayoutPanel4
       // 
-      this.tableLayoutPanel4.ColumnCount = 2;
-      this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-      this.tableLayoutPanel4.Controls.Add(this.label17, 0, 0);
-      this.tableLayoutPanel4.Controls.Add(this.label18, 0, 1);
-      this.tableLayoutPanel4.Controls.Add(this.forceComboBox, 1, 1);
-      this.tableLayoutPanel4.Controls.Add(this.label19, 0, 2);
-      this.tableLayoutPanel4.Controls.Add(this.forcePerLengthComboBox, 1, 2);
-      this.tableLayoutPanel4.Controls.Add(this.label20, 0, 3);
-      this.tableLayoutPanel4.Controls.Add(this.forcePerAreaComboBox, 1, 3);
-      this.tableLayoutPanel4.Controls.Add(this.label21, 0, 4);
-      this.tableLayoutPanel4.Controls.Add(this.momentComboBox, 1, 4);
-      this.tableLayoutPanel4.Controls.Add(this.label22, 0, 5);
-      this.tableLayoutPanel4.Controls.Add(this.temperatureComboBox, 1, 5);
-      this.tableLayoutPanel4.Location = new System.Drawing.Point(-1, -1);
-      this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-      this.tableLayoutPanel4.RowCount = 6;
-      this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
-      this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
-      this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
-      this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
-      this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
-      this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
-      this.tableLayoutPanel4.Size = new System.Drawing.Size(185, 164);
-      this.tableLayoutPanel4.TabIndex = 69;
+      tableLayoutPanel4.ColumnCount = 2;
+      tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+      tableLayoutPanel4.Controls.Add(label17, 0, 0);
+      tableLayoutPanel4.Controls.Add(label18, 0, 1);
+      tableLayoutPanel4.Controls.Add(forceComboBox, 1, 1);
+      tableLayoutPanel4.Controls.Add(label19, 0, 2);
+      tableLayoutPanel4.Controls.Add(forcePerLengthComboBox, 1, 2);
+      tableLayoutPanel4.Controls.Add(label20, 0, 3);
+      tableLayoutPanel4.Controls.Add(forcePerAreaComboBox, 1, 3);
+      tableLayoutPanel4.Controls.Add(label21, 0, 4);
+      tableLayoutPanel4.Controls.Add(momentComboBox, 1, 4);
+      tableLayoutPanel4.Controls.Add(label22, 0, 5);
+      tableLayoutPanel4.Controls.Add(temperatureComboBox, 1, 5);
+      tableLayoutPanel4.Location = new System.Drawing.Point(-1, -1);
+      tableLayoutPanel4.Name = "tableLayoutPanel4";
+      tableLayoutPanel4.RowCount = 6;
+      tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+      tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+      tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+      tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+      tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+      tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66666F));
+      tableLayoutPanel4.Size = new System.Drawing.Size(185, 164);
+      tableLayoutPanel4.TabIndex = 69;
       // 
       // tableLayoutPanel1
       // 
-      this.tableLayoutPanel1.ColumnCount = 1;
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.Controls.Add(this.description, 0, 0);
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(400, 291);
-      this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-      this.tableLayoutPanel1.RowCount = 1;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(185, 47);
-      this.tableLayoutPanel1.TabIndex = 69;
+      tableLayoutPanel1.ColumnCount = 1;
+      tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      tableLayoutPanel1.Controls.Add(description, 0, 0);
+      tableLayoutPanel1.Location = new System.Drawing.Point(400, 291);
+      tableLayoutPanel1.Name = "tableLayoutPanel1";
+      tableLayoutPanel1.RowCount = 1;
+      tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      tableLayoutPanel1.Size = new System.Drawing.Size(185, 47);
+      tableLayoutPanel1.TabIndex = 69;
       // 
       // description
       // 
-      this.description.Anchor = System.Windows.Forms.AnchorStyles.Left;
-      this.description.AutoSize = true;
-      this.description.Location = new System.Drawing.Point(3, 4);
-      this.description.Name = "description";
-      this.description.Size = new System.Drawing.Size(165, 39);
-      this.description.TabIndex = 0;
-      this.description.Text = "Default unit settings apply only to new components and when displaying results in" +
+      description.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      description.AutoSize = true;
+      description.Location = new System.Drawing.Point(3, 4);
+      description.Name = "description";
+      description.Size = new System.Drawing.Size(165, 39);
+      description.TabIndex = 0;
+      description.Text = "Default unit settings apply only to new components and when displaying results in" +
     " Rhino.";
       // 
       // rhinoUnitBindingSource
       // 
-      this.rhinoUnitBindingSource.DataSource = typeof(OasysGH.Units.Helpers.RhinoUnit);
+      rhinoUnitBindingSource.DataSource = typeof(OasysGH.Units.Helpers.RhinoUnit);
       // 
       // defaultUnitsBindingSource
       // 
-      this.defaultUnitsBindingSource.DataSource = typeof(OasysGH.Units.DefaultUnits);
+      defaultUnitsBindingSource.DataSource = typeof(OasysGH.Units.DefaultUnits);
       // 
       // filteredUnitsBindingSource
       // 
-      this.filteredUnitsBindingSource.DataSource = typeof(OasysGH.Units.Helpers.FilteredUnits);
+      filteredUnitsBindingSource.DataSource = typeof(OasysGH.Units.Helpers.FilteredUnits);
       // 
       // DefaultUnitsForm
       // 
-      this.AcceptButton = this.button1;
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.CancelButton = this.button2;
-      this.ClientSize = new System.Drawing.Size(595, 391);
-      this.Controls.Add(this.tableLayoutPanel1);
-      this.Controls.Add(this.button5);
-      this.Controls.Add(this.button3);
-      this.Controls.Add(this.button4);
-      this.Controls.Add(this.button6);
-      this.Controls.Add(this.panel4);
-      this.Controls.Add(this.panel2);
-      this.Controls.Add(this.panel1);
-      this.Controls.Add(this.button2);
-      this.Controls.Add(this.button1);
-      this.Controls.Add(this.panel3);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.MaximizeBox = false;
-      this.MinimizeBox = false;
-      this.Name = "DefaultUnitsForm";
-      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-      this.Text = "Default Oasys Units";
-      this.TransparencyKey = System.Drawing.Color.LimeGreen;
-      this.Load += new System.EventHandler(this.DefaultUnitsForm_Load);
-      ((System.ComponentModel.ISupportInitialize)(this.toleranceUpDown)).EndInit();
-      this.panel1.ResumeLayout(false);
-      this.tableLayoutPanel2.ResumeLayout(false);
-      this.tableLayoutPanel2.PerformLayout();
-      this.panel2.ResumeLayout(false);
-      this.tableLayoutPanel3.ResumeLayout(false);
-      this.tableLayoutPanel3.PerformLayout();
-      this.panel3.ResumeLayout(false);
-      this.tableLayoutPanel5.ResumeLayout(false);
-      this.tableLayoutPanel5.PerformLayout();
-      this.panel4.ResumeLayout(false);
-      this.tableLayoutPanel4.ResumeLayout(false);
-      this.tableLayoutPanel4.PerformLayout();
-      this.tableLayoutPanel1.ResumeLayout(false);
-      this.tableLayoutPanel1.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.rhinoUnitBindingSource)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.defaultUnitsBindingSource)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.filteredUnitsBindingSource)).EndInit();
-      this.ResumeLayout(false);
+      AcceptButton = button1;
+      AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      CancelButton = button2;
+      ClientSize = new System.Drawing.Size(595, 391);
+      Controls.Add(tableLayoutPanel1);
+      Controls.Add(button5);
+      Controls.Add(button3);
+      Controls.Add(button4);
+      Controls.Add(button6);
+      Controls.Add(panel4);
+      Controls.Add(panel2);
+      Controls.Add(panel1);
+      Controls.Add(button2);
+      Controls.Add(button1);
+      Controls.Add(panel3);
+      FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+      Icon = ((System.Drawing.Icon)(resources.GetObject("$Icon")));
+      MaximizeBox = false;
+      MinimizeBox = false;
+      Name = "DefaultUnitsForm";
+      StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+      Text = "Default Oasys Units";
+      TransparencyKey = System.Drawing.Color.LimeGreen;
+      Load += new System.EventHandler(DefaultUnitsForm_Load);
+      ((System.ComponentModel.ISupportInitialize)(toleranceUpDown)).EndInit();
+      panel1.ResumeLayout(false);
+      tableLayoutPanel2.ResumeLayout(false);
+      tableLayoutPanel2.PerformLayout();
+      panel2.ResumeLayout(false);
+      tableLayoutPanel3.ResumeLayout(false);
+      tableLayoutPanel3.PerformLayout();
+      panel3.ResumeLayout(false);
+      tableLayoutPanel5.ResumeLayout(false);
+      tableLayoutPanel5.PerformLayout();
+      panel4.ResumeLayout(false);
+      tableLayoutPanel4.ResumeLayout(false);
+      tableLayoutPanel4.PerformLayout();
+      tableLayoutPanel1.ResumeLayout(false);
+      tableLayoutPanel1.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(rhinoUnitBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(defaultUnitsBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(filteredUnitsBindingSource)).EndInit();
+      ResumeLayout(false);
 
     }
 

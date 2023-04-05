@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Grasshopper.Kernel;
 using Newtonsoft.Json;
 using OasysGH.Components;
-using Rhino.PlugIns;
 
 namespace OasysGH.Helpers
 {
@@ -56,7 +55,6 @@ namespace OasysGH.Helpers
       };
       _ = SendToPostHog(pluginInfo, eventName, properties);
     }
-
 
     public static void ModelIO(OasysPluginInfo pluginInfo, string interactionType, int size = 0)
     {
@@ -110,17 +108,18 @@ namespace OasysGH.Helpers
       string ph_event { get; set; }
       [JsonProperty("timestamp")]
       DateTime ph_timestamp { get; set; }
-      public Dictionary<string, object> properties { get; set; }
+      public Dictionary<string, object> Properties { get; set; }
 
       public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties)
       {
-        this.ph_event = eventName;
-        this.properties = properties;
-        this.ph_timestamp = DateTime.UtcNow;
-        this.api_key = pluginInfo.PostHogApiKey;
+        ph_event = eventName;
+        Properties = properties;
+        ph_timestamp = DateTime.UtcNow;
+        api_key = pluginInfo.PostHogApiKey;
       }
     }
   }
+
   internal class User
   {
     public string email { get; set; }

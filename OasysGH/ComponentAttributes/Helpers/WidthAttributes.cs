@@ -1,14 +1,14 @@
-﻿using Grasshopper.GUI;
-using Grasshopper.Kernel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using Grasshopper.GUI;
+using Grasshopper.Kernel;
 
 namespace OasysGH.UI.Helpers
 {
   /// <summary>
   /// Class holding custom UI graphical buttons/boxes
   /// </summary>
-  public class WidthAttributes
+  public static class WidthAttributes
   {
     public static float MaxTextWidth(List<string> spacerTxts, Font font)
     {

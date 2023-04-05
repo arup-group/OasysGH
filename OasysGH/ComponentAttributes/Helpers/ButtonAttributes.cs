@@ -8,7 +8,7 @@ namespace OasysGH.UI.Helpers
   /// 
   /// Call this method when overriding Render method
   /// </summary>
-  public class ButtonAttributes
+  public static class ButtonAttributes
   {
     public static GraphicsPath RoundedRect(RectangleF bounds, int radius, bool overlay = false)
     {
