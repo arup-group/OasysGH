@@ -7,6 +7,7 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Types;
+using Oasys.Taxonomy.Geometry;
 using Oasys.Taxonomy.Profiles;
 using OasysGH.Helpers;
 using OasysGH.Parameters;
@@ -20,6 +21,7 @@ namespace OasysGH.Components
 {
   public abstract class CreateOasysProfile : GH_OasysDropDownComponent
   {
+
     protected enum FoldMode
     {
       Catalogue,
@@ -519,113 +521,46 @@ namespace OasysGH.Components
 
       else if (type == typeof(IPerimeterProfile))
       {
-        ProfileHelper perimeter = new ProfileHelper();
-        perimeter.profileType = ProfileHelper.ProfileTypes.Geometric;
-        GH_Brep gh_Brep = new GH_Brep();
-        if (DA.GetData(0, ref gh_Brep))
+        GH_ObjectWrapper gh_typ = new GH_ObjectWrapper();
+        if (DA.GetData(0, ref gh_typ))
         {
-          Brep brep = new Brep();
-          if (GH_Convert.ToBrep(gh_Brep, ref brep, GH_Conversion.Both))
+          Brep brep = null;
+          Curve crv = null;
+          if (GH_Convert.ToBrep(gh_typ.Value, ref brep, GH_Conversion.Both))
           {
-            // get edge curves from Brep
+            // get edge curves from brep
             Curve[] edgeSegments = brep.DuplicateEdgeCurves();
             Curve[] edges = Curve.JoinCurves(edgeSegments);
 
             // find the best fit plane
-            List<Point3d> ctrl_pts = new List<Point3d>();
+            List<Point3d> ctrlPts = new List<Point3d>();
             if (edges[0].TryGetPolyline(out Polyline tempCrv))
-              ctrl_pts = tempCrv.ToList();
+              ctrlPts = tempCrv.ToList();
             else
             {
-              AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Cannot convert edge to Polyline");
-              return null;
+              throw new Exception("Cannot convert edge to polyline.");
             }
+            Plane.FitPlaneToPoints(ctrlPts, out Plane plane);
+            plane.Origin = tempCrv.CenterPoint();
 
-            bool localPlaneNotSet = true;
-            Plane plane = Plane.Unset;
-            if (DA.GetData(1, ref plane))
-              localPlaneNotSet = false;
-
-            Point3d origin = new Point3d();
-            if (localPlaneNotSet)
+            List<Point3d> solidpts = new List<Point3d>();
+            foreach (Point3d pt3d in ctrlPts)
             {
-              foreach (Point3d p in ctrl_pts)
-              {
-                origin.X += p.X;
-                origin.Y += p.Y;
-                origin.Z += p.Z;
-              }
-              origin.X = origin.X / ctrl_pts.Count;
-              origin.Y = origin.Y / ctrl_pts.Count;
-              origin.Z = origin.Z / ctrl_pts.Count;
-
-              Plane.FitPlaneToPoints(ctrl_pts, out plane);
-
-              Vector3d xDirection = new Vector3d(
-                Math.Abs(plane.XAxis.X),
-                Math.Abs(plane.XAxis.Y),
-                Math.Abs(plane.XAxis.Z));
-              xDirection.Unitize();
-              Vector3d yDirection = new Vector3d(
-                Math.Abs(plane.YAxis.X),
-                Math.Abs(plane.YAxis.Y),
-                Math.Abs(plane.YAxis.Z));
-              xDirection.Unitize();
-
-              Vector3d normal = plane.Normal;
-              normal.Unitize();
-              if (normal.X == 1)
-                plane = Plane.WorldYZ;
-              else if (normal.Y == 1)
-                plane = Plane.WorldZX;
-              else if (normal.Z == 1)
-                plane = Plane.WorldXY;
-              else
-                plane = new Plane(Point3d.Origin, xDirection, yDirection);
-              plane.Origin = origin;
-
-              //double x1 = ctrl_pts[ctrl_pts.Count - 2].X - origin.X;
-              //double y1 = ctrl_pts[ctrl_pts.Count - 2].Y - origin.Y;
-              //double z1 = ctrl_pts[ctrl_pts.Count - 2].Z - origin.Z;
-              //Vector3d xDirection = new Vector3d(x1, y1, z1);
-              //xDirection.Unitize();
-
-              //double x2 = ctrl_pts[1].X - origin.X;
-              //double y2 = ctrl_pts[1].Y - origin.Y;
-              //double z2 = ctrl_pts[1].Z - origin.Z;
-              //Vector3d yDirection = new Vector3d(x2, y2, z2);
-              //yDirection.Unitize();
-
-              //plane = new Plane(Point3d.Origin, xDirection, yDirection);
+              solidpts.Add(pt3d);
             }
-            else
-            {
-              origin = plane.Origin;
-            }
+            Polyline solid = new Polyline(solidpts);
 
-            Transform translation = Transform.Translation(-origin.X, -origin.Y, -origin.Z);
-            Transform rotation = Transform.ChangeBasis(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis, plane.XAxis, plane.YAxis, plane.ZAxis);
-            if (localPlaneNotSet)
-              rotation = Transform.ChangeBasis(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis, plane.YAxis, plane.XAxis, plane.ZAxis);
+            IPolygon perimeter = Geometry.PolygonFromRhinoPolyline(solid, _lengthUnit, plane);
 
-            perimeter.geoType = ProfileHelper.GeoTypes.Perim;
-
-            List<Point2d> pts = new List<Point2d>();
-            foreach (Point3d pt3d in ctrl_pts)
-            {
-              pt3d.Transform(translation);
-              pt3d.Transform(rotation);
-              Point2d pt2d = new Point2d(pt3d);
-              pts.Add(pt2d);
-            }
-            perimeter.perimeterPoints = pts;
-
+            // first set of curve segments is the solid perimeter
+            // consecutive ones are describing voids in the solid perimeter
+            IList<IPolygon> voidPolygons = new List<IPolygon>();
             if (edges.Length > 1)
             {
-              List<List<Point2d>> voidPoints = new List<List<Point2d>>();
               for (int i = 1; i < edges.Length; i++)
               {
-                ctrl_pts.Clear();
+                ctrlPts.Clear();
+                List<Point3d> voidpts = new List<Point3d>();
                 if (!edges[i].IsPlanar())
                 {
                   for (int j = 0; j < edges.Length; j++)
@@ -633,54 +568,57 @@ namespace OasysGH.Components
                 }
                 if (edges[i].TryGetPolyline(out tempCrv))
                 {
-                  ctrl_pts = tempCrv.ToList();
-                  pts = new List<Point2d>();
-                  foreach (Point3d pt3d in ctrl_pts)
+                  ctrlPts = tempCrv.ToList();
+
+                  foreach (Point3d pt3d in ctrlPts)
                   {
-                    pt3d.Transform(translation);
-                    pt3d.Transform(rotation);
-                    Point2d pt2d = new Point2d(pt3d);
-                    pts.Add(pt2d);
+                    //pt3d.Transform(xform);
+                    voidpts.Add(pt3d);
                   }
-                  voidPoints.Add(pts);
                 }
                 else
                 {
-                  AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Cannot convert internal edge  to Polyline");
-                  return null;
+                  throw new Exception("Cannot convert internal edge to polyline.");
                 }
+                Polyline voidCrv = new Polyline(voidpts);
+                voidPolygons.Add(Geometry.PolygonFromRhinoPolyline(voidCrv, _lengthUnit, plane));
               }
-              perimeter.voidPoints = voidPoints;
+            }
+            profile = new PerimeterProfile(perimeter, voidPolygons);
+          }
+          else if (GH_Convert.ToCurve(gh_typ.Value, ref crv, GH_Conversion.Both))
+          {
+            Polyline solid = null;
+            if (crv.TryGetPolyline(out solid))
+            {
+              // get local plane
+              Plane.FitPlaneToPoints(solid.ToList(), out Plane plane);
+
+              IPolygon perimeter = Geometry.PolygonFromRhinoPolyline(solid, _lengthUnit, plane);
+              IList<IPolygon> voidPolygons = new List<IPolygon>();
+
+              profile = new PerimeterProfile(perimeter, voidPolygons);
+            }
+            else
+            {
+              AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert input " + Params.Input[0].NickName + " to polyline");
+              return null;
             }
           }
+          else
+          {
+            AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + Params.Input[0].NickName + " to boundary");
+            return null;
+          }
         }
-        switch (_lengthUnit)
-        {
-          case LengthUnit.Millimeter:
-            perimeter.sectUnit = ProfileHelper.SectUnitOptions.u_mm;
-            break;
-          case LengthUnit.Centimeter:
-            perimeter.sectUnit = ProfileHelper.SectUnitOptions.u_cm;
-            break;
-          case LengthUnit.Meter:
-            perimeter.sectUnit = ProfileHelper.SectUnitOptions.u_m;
-            break;
-          case LengthUnit.Foot:
-            perimeter.sectUnit = ProfileHelper.SectUnitOptions.u_ft;
-            break;
-          case LengthUnit.Inch:
-            perimeter.sectUnit = ProfileHelper.SectUnitOptions.u_in;
-            break;
+        else {
+          AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + Params.Input[0].NickName + " to boundary");
+          return null;
         }
-
-        DA.SetData(0, ConvertSection.ProfileConversion(perimeter));
-        //profile = Input.Boundaries(this, DA, 0, 1, lengthUnit);
-        //DA.SetData(0, Input.Boundaries(this, DA, 0, 1, lengthUnit));
-        return null;
       }
       else
       {
-        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to create profile");
+        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to create perimeter profile.");
         return null;
       }
       return profile;
@@ -745,7 +683,7 @@ namespace OasysGH.Components
       else if (type == typeof(ITSectionProfile))
         return 4;
       else if (type == typeof(IPerimeterProfile))
-        return 2; // or 1???
+        return 1;
 
       return -1;
     }
@@ -796,8 +734,8 @@ namespace OasysGH.Components
       else
         _lastInputWasSecant = false;
 
-      if (isPerimeter)
-        Params.RegisterInputParam(new Param_Plane());
+      //if (isPerimeter)
+      //  Params.RegisterInputParam(new Param_Plane());
     }
 
     protected virtual void Mode2Clicked()
@@ -1650,22 +1588,6 @@ namespace OasysGH.Components
           Params.Input[i].Description = "The outer edge polyline or BRep. If BRep contains openings these will be added as voids";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-          
-          // do we want this input?
-          i++;
-          Params.Input[i].NickName = "V";
-          Params.Input[i].Name = "VoidPolylines";
-          Params.Input[i].Description = "[Optional] The void polygons within the solid polygon of the perimeter profile. If first input is a BRep this input will be ignored.";
-          Params.Input[i].Access = GH_ParamAccess.list;
-          Params.Input[i].Optional = true;
-
-          // is this a "different" _optional_ plane than in case of the other profiles?
-          //i++;
-          //Params.Input[i].NickName = "P";
-          //Params.Input[i].Name = "Plane";
-          //Params.Input[i].Description = "Optional plane in which to project boundary onto. Profile will get coordinates in this plane.";
-          //Params.Input[i].Access = GH_ParamAccess.item;
-          //Params.Input[i].Optional = true;
         }
       }
     }

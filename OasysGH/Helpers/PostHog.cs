@@ -108,12 +108,12 @@ namespace OasysGH.Helpers
       string ph_event { get; set; }
       [JsonProperty("timestamp")]
       DateTime ph_timestamp { get; set; }
-      public Dictionary<string, object> properties { get; set; }
+      public Dictionary<string, object> Properties { get; set; }
 
       public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties)
       {
         ph_event = eventName;
-        properties = properties;
+        Properties = properties;
         ph_timestamp = DateTime.UtcNow;
         api_key = pluginInfo.PostHogApiKey;
       }
