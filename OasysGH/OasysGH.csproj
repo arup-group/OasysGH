@@ -15,7 +15,6 @@
     <Description>OasysGH is a library with shared content for Oasys Grasshopper plugins.</Description>
     <PackageReleaseNotes>This is a release of OasysGH 0.6.1-beta.</PackageReleaseNotes>
     <PackageTags>oasys;grasshopper</PackageTags>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Oasys.Interop">
