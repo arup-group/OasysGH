@@ -15,27 +15,23 @@
     <Description>OasysGH is a library with shared content for Oasys Grasshopper plugins.</Description>
     <PackageReleaseNotes>This is a release of OasysGH 0.6.1-beta.</PackageReleaseNotes>
     <PackageTags>oasys;grasshopper</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Oasys.Interop">
       <HintPath>..\lib\Oasys.Interop.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Oasys.Taxonomy.IGeometry">
       <HintPath>..\lib\Oasys.Taxonomy.IGeometry.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Oasys.Taxonomy.Geometry">
       <HintPath>..\lib\Oasys.Taxonomy.Geometry.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Oasys.Taxonomy.IProfiles">
       <HintPath>..\lib\Oasys.Taxonomy.IProfiles.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Oasys.Taxonomy.Profiles">
       <HintPath>..\lib\Oasys.Taxonomy.Profiles.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +48,28 @@
       <HintPath>..\..\..\..\..\..\Program Files\Rhino 7\System\Yak.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\lib\Oasys.Interop.dll">
+      <Pack>true</Pack>
+      <PackagePath>lib\$(TargetFramework)</PackagePath>
+    </Content>
+    <Content Include="..\lib\Oasys.Taxonomy.IGeometry.dll">
+      <Pack>true</Pack>
+      <PackagePath>lib\$(TargetFramework)</PackagePath>
+    </Content>
+    <Content Include="..\lib\Oasys.Taxonomy.Geometry.dll">
+      <Pack>true</Pack>
+      <PackagePath>lib\$(TargetFramework)</PackagePath>
+    </Content>
+    <Content Include="..\lib\Oasys.Taxonomy.IProfiles.dll">
+      <Pack>true</Pack>
+      <PackagePath>lib\$(TargetFramework)</PackagePath>
+    </Content>
+    <Content Include="..\lib\Oasys.Taxonomy.Profiles.dll">
+      <Pack>true</Pack>
+      <PackagePath>lib\$(TargetFramework)</PackagePath>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Grasshopper" Version="6.27.20176.5001" IncludeAssets="compile;build">
