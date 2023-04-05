@@ -74,12 +74,12 @@ namespace GH_UnitNumber.Components
                 _unitDictionary.Add(abbr, unit.Value);
             }
 
-            DropDownItems[0] = _unitDictionary.Keys.ToList();
+            _dropDownItems[0] = _unitDictionary.Keys.ToList();
             if (!_comingFromSave)
             {
               IQuantity quantity = Quantity.From(0, inUnitNumber.Value.Unit);
               string abbr = quantity.ToString().Replace("0", string.Empty).Trim();
-              SelectedItems[0] = abbr;
+              _selectedItems[0] = abbr;
             }
             else
               _comingFromSave = false;
@@ -108,7 +108,7 @@ namespace GH_UnitNumber.Components
           _selectedUnit = quantity.Unit;
           IQuantity quantity2 = Quantity.From(0, _selectedUnit);
           string abbr = quantity2.ToString().Replace("0", string.Empty).Trim();
-          SelectedItems[0] = abbr;
+          _selectedItems[0] = abbr;
         }
         else
         {
@@ -119,7 +119,7 @@ namespace GH_UnitNumber.Components
       else
       {
         // update selected unit from dropdown
-        _selectedUnit = _unitDictionary[SelectedItems.Last()];
+        _selectedUnit = _unitDictionary[_selectedItems.Last()];
       }
 
       // convert unit to selected output
@@ -131,23 +131,23 @@ namespace GH_UnitNumber.Components
     #region Custom UI
     protected override void InitialiseDropdowns()
     {
-      SpacerDescriptions = new List<string>(new string[] { "Select output unit" });
+      _spacerDescriptions = new List<string>(new string[] { "Select output unit" });
 
-      DropDownItems = new List<List<string>>();
-      SelectedItems = new List<string>();
+      _dropDownItems = new List<List<string>>();
+      _selectedItems = new List<string>();
 
-      DropDownItems.Add(new List<string>(new string[] { " " }));
-      SelectedItems.Add("   ");
+      _dropDownItems.Add(new List<string>(new string[] { " " }));
+      _selectedItems.Add("   ");
 
-      IsInitialised = true;
+      _isInitialised = true;
     }
 
     public override void SetSelected(int i, int j)
     {
       if (_unitDictionary != null)
       {
-        SelectedItems[i] = DropDownItems[i][j];
-        DropDownItems[0] = _unitDictionary.Keys.ToList();
+        _selectedItems[i] = _dropDownItems[i][j];
+        _dropDownItems[0] = _unitDictionary.Keys.ToList();
       }
       base.UpdateUI();
     }

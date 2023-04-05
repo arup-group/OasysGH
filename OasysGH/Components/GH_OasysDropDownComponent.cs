@@ -12,16 +12,16 @@ namespace OasysGH.Components
 {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent
   {
-    protected List<List<string>> DropDownItems;
-    protected List<string> SelectedItems;
-    protected List<string> SpacerDescriptions;
-    protected bool IsInitialised = false;
-    protected bool AlwaysExpireDownStream = false;
-    protected Dictionary<int, List<string>> ExistingOutputsSerialized = new Dictionary<int, List<string>>();
+    protected internal List<List<string>> _dropDownItems;
+    protected internal List<string> _selectedItems;
+    protected internal List<string> _spacerDescriptions;
+    protected internal bool _isInitialised = false;
+    protected internal bool _alwaysExpireDownStream = false;
+    protected internal Dictionary<int, List<string>> _existingOutputsSerialized = new Dictionary<int, List<string>>();
 
     private Dictionary<int, List<bool>> _outputsAreExpired = new Dictionary<int, List<bool>>();
     private Dictionary<int, bool> _outputIsExpired = new Dictionary<int, bool>();
-    private static readonly OasysUnitsIQuantityJsonConverter Converter = new OasysUnitsIQuantityJsonConverter();
+    private static readonly OasysUnitsIQuantityJsonConverter _converter = new OasysUnitsIQuantityJsonConverter();
 
     public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory)
     {
@@ -30,13 +30,13 @@ namespace OasysGH.Components
     #region UI
     public override void CreateAttributes()
     {
-      if (!IsInitialised)
+      if (!_isInitialised)
         InitialiseDropdowns();
 
-      m_attributes = new UI.DropDownComponentAttributes(this, SetSelected, DropDownItems, SelectedItems, SpacerDescriptions);
+      m_attributes = new UI.DropDownComponentAttributes(this, SetSelected, _dropDownItems, _selectedItems, _spacerDescriptions);
     }
 
-    protected abstract void InitialiseDropdowns();
+    protected internal abstract void InitialiseDropdowns();
 
     public abstract void SetSelected(int i, int j);
 
@@ -58,7 +58,7 @@ namespace OasysGH.Components
     #region expire downstream
     protected override void ExpireDownStreamObjects()
     {
-      if (AlwaysExpireDownStream)
+      if (_alwaysExpireDownStream)
       {
         base.ExpireDownStreamObjects();
         return;
@@ -97,9 +97,9 @@ namespace OasysGH.Components
 
     public void OutputChanged<T>(T data, int outputIndex, int index) where T : IGH_Goo
     {
-      if (!ExistingOutputsSerialized.ContainsKey(outputIndex))
+      if (!_existingOutputsSerialized.ContainsKey(outputIndex))
       {
-        ExistingOutputsSerialized.Add(outputIndex, new List<string>());
+        _existingOutputsSerialized.Add(outputIndex, new List<string>());
         _outputsAreExpired.Add(outputIndex, new List<bool>());
       }
 
@@ -108,7 +108,7 @@ namespace OasysGH.Components
       {
         // use IQuantity converter if data is a IQuantity (struct)
         IQuantity quantity = ((GH_UnitNumber)(object)data).Value;
-        outputsSerialized = JsonConvert.SerializeObject(quantity, Converter);
+        outputsSerialized = JsonConvert.SerializeObject(quantity, _converter);
       }
       else
       {
@@ -123,16 +123,16 @@ namespace OasysGH.Components
         }
       }
 
-      if (ExistingOutputsSerialized[outputIndex].Count == index)
+      if (_existingOutputsSerialized[outputIndex].Count == index)
       {
-        ExistingOutputsSerialized[outputIndex].Add(outputsSerialized);
+        _existingOutputsSerialized[outputIndex].Add(outputsSerialized);
         _outputsAreExpired[outputIndex].Add(true);
         return;
       }
 
-      if (ExistingOutputsSerialized[outputIndex][index] != outputsSerialized)
+      if (_existingOutputsSerialized[outputIndex][index] != outputsSerialized)
       {
-        ExistingOutputsSerialized[outputIndex][index] = outputsSerialized;
+        _existingOutputsSerialized[outputIndex][index] = outputsSerialized;
         _outputsAreExpired[outputIndex][index] = true;
         return;
       }
@@ -143,15 +143,15 @@ namespace OasysGH.Components
     #region (de)serialization
     public override bool Write(GH_IO.Serialization.GH_IWriter writer)
     {
-      Helpers.DeSerialization.WriteDropDownComponents(ref writer, DropDownItems, SelectedItems, SpacerDescriptions);
+      Helpers.DeSerialization.WriteDropDownComponents(ref writer, _dropDownItems, _selectedItems, _spacerDescriptions);
       return base.Write(writer);
     }
 
     public override bool Read(GH_IO.Serialization.GH_IReader reader)
     {
-      Helpers.DeSerialization.ReadDropDownComponents(ref reader, ref DropDownItems, ref SelectedItems, ref SpacerDescriptions);
+      Helpers.DeSerialization.ReadDropDownComponents(ref reader, ref _dropDownItems, ref _selectedItems, ref _spacerDescriptions);
 
-      IsInitialised = true;
+      _isInitialised = true;
       UpdateUIFromSelectedItems();
 
       return base.Read(reader);

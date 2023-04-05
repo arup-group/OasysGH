@@ -48,7 +48,7 @@ namespace OasysGH.Helpers
       return writer;
     }
 
-    internal static void ReadDropDownComponents(ref GH_IReader reader, ref List<List<string>> DropDownItems, ref List<string> selecteditems, ref List<string> spacerDescriptions)
+    internal static void ReadDropDownComponents(ref GH_IReader reader, ref List<List<string>> dropDownItems, ref List<string> selecteditems, ref List<string> spacerDescriptions)
     {
       // skip reading anything if dropdown hasnt been set by write method
       if (reader.ItemExists("dropdown"))
@@ -57,14 +57,14 @@ namespace OasysGH.Helpers
         if (reader.GetBoolean("dropdown"))
         {
           int dropdownCount = reader.GetInt32("dropdownCount");
-          DropDownItems = new List<List<string>>();
+          dropDownItems = new List<List<string>>();
           for (int i = 0; i < dropdownCount; i++)
           {
             int dropDownContentsCount = reader.GetInt32("dropdowncontentsCount" + i);
             List<string> tempContent = new List<string>();
             for (int j = 0; j < dropDownContentsCount; j++)
               tempContent.Add(reader.GetString("dropdowncontents" + i + j));
-            DropDownItems.Add(tempContent);
+            dropDownItems.Add(tempContent);
           }
         }
 

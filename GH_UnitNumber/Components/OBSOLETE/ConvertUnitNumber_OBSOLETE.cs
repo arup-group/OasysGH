@@ -57,9 +57,9 @@ namespace GH_UnitNumber.Components
             foreach (UnitInfo unit in inUnitNumber.Value.QuantityInfo.UnitInfos)
               UnitDictionary.Add(unit.Name, unit.Value);
 
-            DropDownItems[0] = UnitDictionary.Keys.ToList();
+            _dropDownItems[0] = UnitDictionary.Keys.ToList();
             if (!ComingFromSave)
-              SelectedItems[0] = inUnitNumber.Value.Unit.ToString();
+              _selectedItems[0] = inUnitNumber.Value.Unit.ToString();
             else
               ComingFromSave = false;
           }
@@ -77,7 +77,7 @@ namespace GH_UnitNumber.Components
       }
 
       // update selected material
-      SelectedUnit = UnitDictionary[SelectedItems.Last()];
+      SelectedUnit = UnitDictionary[_selectedItems.Last()];
 
       // convert unit to selected output
       ConvertedUnitNumber = new OasysGH.Parameters.GH_UnitNumber(inUnitNumber.Value.ToUnit(SelectedUnit));
@@ -93,23 +93,23 @@ namespace GH_UnitNumber.Components
 
     protected override void InitialiseDropdowns()
     {
-      SpacerDescriptions = new List<string>(new string[] { "Select output unit" });
+      _spacerDescriptions = new List<string>(new string[] { "Select output unit" });
 
-      DropDownItems = new List<List<string>>();
-      SelectedItems = new List<string>();
+      _dropDownItems = new List<List<string>>();
+      _selectedItems = new List<string>();
 
-      DropDownItems.Add(new List<string>(new string[] { " " }));
-      SelectedItems.Add("   ");
+      _dropDownItems.Add(new List<string>(new string[] { " " }));
+      _selectedItems.Add("   ");
 
-      IsInitialised = true;
+      _isInitialised = true;
     }
 
     public override void SetSelected(int i, int j)
     {
       if (UnitDictionary != null)
       {
-        SelectedItems[i] = DropDownItems[i][j];
-        DropDownItems[0] = UnitDictionary.Keys.ToList();
+        _selectedItems[i] = _dropDownItems[i][j];
+        _dropDownItems[0] = UnitDictionary.Keys.ToList();
       }
       base.UpdateUI();
     }
