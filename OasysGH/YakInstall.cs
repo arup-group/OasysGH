@@ -3,12 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Yak;
 
-namespace OasysGH
-{
-  internal static class YakInstall
-  {
-    internal static async Task InstallGH_UnitNumberPackageAsync(string plugin)
-    {
+namespace OasysGH {
+
+  internal static class YakInstall {
+    internal static async Task InstallGH_UnitNumberPackageAsync(string plugin) {
       if (Rhino.RhinoApp.ExeVersion < 7)
         return;
 
@@ -16,8 +14,7 @@ namespace OasysGH
       var yak = new YakClient(
         PackageRepositoryFactory.Create(
           "https://yak.rhino3d.com",
-          new ProductHeaderValue("OasysAutomation")))
-      {
+          new ProductHeaderValue("OasysAutomation"))) {
         PackageFolder = Rhino.Runtime.HostUtils.AutoInstallPlugInFolder(true) // user
       };
 
@@ -26,27 +23,24 @@ namespace OasysGH
       versions = versions.Where(v => v.Distributions.Where(d => d.IsCompatible()).Any()).ToArray();
 
       IEnumerable<Package> installed = yak.List(); // list installed packages
-      foreach (Package package in installed)
-      {
-        if (package.Name == pack.Name)
-        {
-          System.Version latestVersion = new System.Version(versions[0].Number.Replace("-beta", string.Empty));
+      foreach (Package package in installed) {
+        if (package.Name == pack.Name) {
+          var latestVersion = new System.Version(versions[0].Number.Replace("-beta", string.Empty));
           if (versions[0].Number.Contains("-beta"))
             latestVersion = new System.Version(latestVersion.Major, latestVersion.Minor, latestVersion.Build, latestVersion.Revision + 1);
 
-          System.Version installedVersion = new System.Version(package.Version.Replace("-beta", string.Empty));
+          var installedVersion = new System.Version(package.Version.Replace("-beta", string.Empty));
           if (package.Version.Contains("-beta"))
             installedVersion = new System.Version(installedVersion.Major, installedVersion.Minor, installedVersion.Build, installedVersion.Revision + 1);
 
-          if (latestVersion > installedVersion)
-          {
-            var tmp_path = await yak.Version.Download(plugin, versions[0].Number);
+          if (latestVersion > installedVersion) {
+            string tmp_path = await yak.Version.Download(plugin, versions[0].Number);
             yak.Install(tmp_path);
           }
           return; // latest version already installed
         }
       }
-      var tmp_path2 = await yak.Version.Download(plugin, versions[0].Number);
+      string tmp_path2 = await yak.Version.Download(plugin, versions[0].Number);
       yak.Install(tmp_path2);
     }
   }

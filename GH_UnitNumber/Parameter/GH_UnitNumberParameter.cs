@@ -6,17 +6,24 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using OasysUnits;
 
-namespace GH_UnitNumber
-{
+namespace GH_UnitNumber {
+
   /// <summary>
   /// This class provides a Parameter interface for the CustomGoo type.
   /// </summary>
-  public class GH_UnitNumberParameter : GH_PersistentParam<OasysGH.Parameters.GH_UnitNumber>
-  {
-    public override string InstanceDescription => m_data.DataCount == 0 ? "Empty " + OasysGH.Parameters.GH_UnitNumber.Name + " parameter" : base.InstanceDescription;
-    public override string TypeName => SourceCount == 0 ? OasysGH.Parameters.GH_UnitNumber.Name : base.TypeName;
+  public class GH_UnitNumberParameter : GH_PersistentParam<OasysGH.Parameters.GH_UnitNumber> {
     public override Guid ComponentGuid => new Guid("007d8fa3-aeb6-492a-b885-4736925f22a8");
     public override GH_Exposure Exposure => GH_Exposure.quinary | GH_Exposure.obscure;
+    public bool Hidden {
+      get { return true; }
+    }
+
+    public override string InstanceDescription => m_data.DataCount == 0 ? "Empty " + OasysGH.Parameters.GH_UnitNumber.Name + " parameter" : base.InstanceDescription;
+    public bool IsPreviewCapable {
+      get { return false; }
+    }
+
+    public override string TypeName => SourceCount == 0 ? OasysGH.Parameters.GH_UnitNumber.Name : base.TypeName;
     protected override System.Drawing.Bitmap Icon => Properties.Resources.UnitParam;
 
     public GH_UnitNumberParameter() : base(new GH_InstanceDescription(
@@ -24,65 +31,36 @@ namespace GH_UnitNumber
       OasysGH.Parameters.GH_UnitNumber.NickName,
       OasysGH.Parameters.GH_UnitNumber.Description,
       "Params",
-      "Primitive"))
-    {
+      "Primitive")) {
     }
 
-    protected override GH_GetterResult Prompt_Plural(ref List<OasysGH.Parameters.GH_UnitNumber> values)
-    {
-      return GH_GetterResult.cancel;
-    }
-
-    protected override GH_GetterResult Prompt_Singular(ref OasysGH.Parameters.GH_UnitNumber value)
-    {
-      return GH_GetterResult.cancel;
-    }
-
-    protected override ToolStripMenuItem Menu_CustomSingleValueItem()
-    {
-      ToolStripMenuItem item = new ToolStripMenuItem
-      {
-        Text = "Not available",
-        Visible = false
-      };
-      return item;
-    }
-    protected override ToolStripMenuItem Menu_CustomMultiValueItem()
-    {
-      ToolStripMenuItem item = new ToolStripMenuItem
-      {
+    protected override ToolStripMenuItem Menu_CustomMultiValueItem() {
+      var item = new ToolStripMenuItem {
         Text = "Not available",
         Visible = false
       };
       return item;
     }
 
-    #region preview methods
-    public bool Hidden
-    {
-      get { return true; }
+    protected override ToolStripMenuItem Menu_CustomSingleValueItem() {
+      var item = new ToolStripMenuItem {
+        Text = "Not available",
+        Visible = false
+      };
+      return item;
     }
 
-    public bool IsPreviewCapable
-    {
-      get { return false; }
-    }
-    #endregion
-
-    protected override OasysGH.Parameters.GH_UnitNumber PreferredCast(object data)
-    {
+    protected override OasysGH.Parameters.GH_UnitNumber PreferredCast(object data) {
       if (data.GetType() == typeof(OasysGH.Parameters.GH_UnitNumber))
         return (OasysGH.Parameters.GH_UnitNumber)data;
-      else if (data.GetType() == typeof(GH_ObjectWrapper))
-      {
+      else if (data.GetType() == typeof(GH_ObjectWrapper)) {
         object val = ((GH_ObjectWrapper)data).Value;
         if (typeof(IQuantity).IsAssignableFrom(val.GetType()))
           return new OasysGH.Parameters.GH_UnitNumber((IQuantity)val);
       }
 
-      if (GH_Convert.ToString(data, out string txt, GH_Conversion.Both))
-      {
-        List<Type> types = Quantity.Infos.Select(x => x.ValueType).ToList();
+      if (GH_Convert.ToString(data, out string txt, GH_Conversion.Both)) {
+        var types = Quantity.Infos.Select(x => x.ValueType).ToList();
 
         Type axialStiffness = types.Where(t => t.Name == "AxialStiffness").ToList()[0];
         types.Remove(axialStiffness);
@@ -92,19 +70,17 @@ namespace GH_UnitNumber
         Type massFraction = types.Where(t => t.Name == "MassFraction").ToList()[0];
         types.Remove(duration);
 
-        foreach (Type type in types)
-        {
+        foreach (Type type in types) {
           if (Quantity.TryParse(type, txt, out IQuantity quantity))
             return new OasysGH.Parameters.GH_UnitNumber(quantity);
         }
 
-        List<Type> alternativeTypes = new List<Type>();
+        var alternativeTypes = new List<Type>();
         types.Add(axialStiffness);
         types.Add(bendingStiffness);
         types.Add(duration);
         types.Add(massFraction);
-        foreach (Type type in alternativeTypes)
-        {
+        foreach (Type type in alternativeTypes) {
           if (Quantity.TryParse(type, txt, out IQuantity quantity))
             return new OasysGH.Parameters.GH_UnitNumber(quantity);
         }
@@ -113,6 +89,14 @@ namespace GH_UnitNumber
         return null;
       }
       return base.PreferredCast(data);
+    }
+
+    protected override GH_GetterResult Prompt_Plural(ref List<OasysGH.Parameters.GH_UnitNumber> values) {
+      return GH_GetterResult.cancel;
+    }
+
+    protected override GH_GetterResult Prompt_Singular(ref OasysGH.Parameters.GH_UnitNumber value) {
+      return GH_GetterResult.cancel;
     }
   }
 }

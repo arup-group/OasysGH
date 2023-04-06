@@ -1,17 +1,22 @@
 ﻿using System;
 
-namespace OasysGH
-{
-  public class OasysPluginInfo
-  {
-    public string ProductName { get; }
-    public string PluginName { get; }
-    public string Version { get; }
-    public bool IsBeta { get; }
-    public string PostHogApiKey { get; }
+namespace OasysGH {
 
-    public OasysPluginInfo(string productName, string pluginName, string version, bool isBeta, string postHogApiKey)
-    {
+  public static class OasysGHVersion {
+    public const bool IsBeta = true;
+
+    // this is the one place to set the version in VS:
+    // also update the version manually in OasysGH.csproj
+    public const string Version = "0.6.1";
+  }
+
+  public class OasysPluginInfo {
+    public bool IsBeta { get; }
+    public string PluginName { get; }
+    public string PostHogApiKey { get; }
+    public string ProductName { get; }
+    public string Version { get; }
+    public OasysPluginInfo(string productName, string pluginName, string version, bool isBeta, string postHogApiKey) {
       ProductName = productName;
       PluginName = pluginName;
       Version = version;
@@ -19,25 +24,16 @@ namespace OasysGH
       PostHogApiKey = postHogApiKey;
     }
   }
-  public static class OasysGHVersion
-  {
-    // this is the one place to set the version in VS:
-    // also update the version manually in OasysGH.csproj
-    public const string Version = "0.6.1";
-    public const bool IsBeta = true;
-  }
 
-  internal sealed class PluginInfo
-  {
+  internal sealed class PluginInfo {
+    public static OasysPluginInfo Instance { get { return lazy.Value; } }
+
     private static readonly Lazy<OasysPluginInfo> lazy =
-        new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
+            new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
           "Oasys Shared Grasshopper", "OasysGH", OasysGHVersion.Version, OasysGHVersion.IsBeta, "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
           ));
 
-    public static OasysPluginInfo Instance { get { return lazy.Value; } }
-
-    private PluginInfo()
-    {
+    private PluginInfo() {
     }
   }
 }
