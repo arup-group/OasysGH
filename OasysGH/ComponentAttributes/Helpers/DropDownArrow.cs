@@ -1,18 +1,15 @@
 ﻿using System.Drawing;
 
-namespace OasysGH.UI.Helpers
-{
+namespace OasysGH.UI.Helpers {
+
   /// <summary>
   /// Method to draw a dropdown arrow
-  /// 
+  ///
   /// Call this method when overriding Render method
   /// </summary>
-  public static class DropDownArrow
-  {
-    public static void DrawDropDownButton(Graphics graphics, PointF center, Color colour, int rectanglesize)
-    {
-      Pen pen = new Pen(new SolidBrush(colour))
-      {
+  public static class DropDownArrow {
+    public static void DrawDropDownButton(Graphics graphics, PointF center, Color colour, int rectanglesize) {
+      var pen = new Pen(new SolidBrush(colour)) {
         Width = rectanglesize / 8
       };
 

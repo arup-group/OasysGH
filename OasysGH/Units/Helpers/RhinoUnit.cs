@@ -1,35 +1,19 @@
-﻿using Rhino;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OasysUnits.Units;
+﻿using System.Collections.Generic;
 using OasysUnits;
+using OasysUnits.Units;
+using Rhino;
 
-namespace OasysGH.Units.Helpers
-{
-  public class RhinoUnit
-  {
-    public static Length GetRhinoTolerance()
-    {
-      if (RhinoDoc.ActiveDoc == null)
-        return new Length(0.01, LengthUnit.Meter);
-      LengthUnit lengthUnit = GetRhinoLengthUnit();
-      double tolerance = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
-      return new Length(tolerance, lengthUnit);
-    }
+namespace OasysGH.Units.Helpers {
 
-    public static LengthUnit GetRhinoLengthUnit()
-    {
+  public class RhinoUnit {
+    public static LengthUnit GetRhinoLengthUnit() {
       if (RhinoDoc.ActiveDoc == null)
         return LengthUnit.Meter;
       return GetRhinoLengthUnit(RhinoDoc.ActiveDoc.ModelUnitSystem);
     }
 
-    public static LengthUnit GetRhinoLengthUnit(Rhino.UnitSystem rhinoUnits)
-    {
-      List<LengthUnit> units = new List<LengthUnit>(new LengthUnit[] {
+    public static LengthUnit GetRhinoLengthUnit(Rhino.UnitSystem rhinoUnits) {
+      var units = new List<LengthUnit>(new LengthUnit[] {
         LengthUnit.Undefined,
         LengthUnit.Micrometer,
         LengthUnit.Millimeter,
@@ -52,6 +36,14 @@ namespace OasysGH.Units.Helpers
         LengthUnit.Yard
       });
       return units[rhinoUnits.GetHashCode()];
+    }
+
+    public static Length GetRhinoTolerance() {
+      if (RhinoDoc.ActiveDoc == null)
+        return new Length(0.01, LengthUnit.Meter);
+      LengthUnit lengthUnit = GetRhinoLengthUnit();
+      double tolerance = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
+      return new Length(tolerance, lengthUnit);
     }
   }
 }

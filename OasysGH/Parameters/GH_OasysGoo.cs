@@ -1,19 +1,11 @@
 ﻿using Grasshopper.Kernel.Types;
-using OasysGH;
 
-namespace OasysGH.Parameters
-{
-  public abstract class GH_OasysGoo<T> : GH_Goo<T>
-  {
-    abstract public OasysPluginInfo PluginInfo { get; }
+namespace OasysGH.Parameters {
 
-    public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
-    public override string TypeDescription => PluginInfo.ProductName + " " + TypeName + " Parameter";
-    public override bool IsValid => (Value == null) ? false : true;
-    public override string IsValidWhyNot
-    {
-      get
-      {
+  public abstract class GH_OasysGoo<T> : GH_Goo<T> {
+    public override bool IsValid => Value != null;
+    public override string IsValidWhyNot {
+      get {
         if (IsValid)
           return string.Empty;
         else
@@ -21,30 +13,38 @@ namespace OasysGH.Parameters
       }
     }
 
-    public GH_OasysGoo(T item)
-    {
+    public abstract OasysPluginInfo PluginInfo { get; }
+
+    public override string TypeDescription => PluginInfo.ProductName + " " + TypeName + " Parameter";
+    public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
+    public GH_OasysGoo(T item) {
       if (item == null)
         Value = item;
       else
         Value = (T)item.Duplicate();
     }
 
-    public override string ToString()
-    {
-      if (Value == null)
-        return "Null";
-      else
-        return PluginInfo.ProductName + " " + TypeName + " (" + Value.ToString() + ")";
+    public override bool CastFrom(object source) {
+      // This function is called when Grasshopper needs to convert other data
+      // into our custom class.
+
+      if (source == null)
+        return false;
+
+      //Cast from this type
+      if (typeof(T).IsAssignableFrom(source.GetType())) {
+        Value = (T)source;
+        return true;
+      }
+
+      return false;
     }
 
-    #region casting methods
-    public override bool CastTo<Q>(ref Q target)
-    {
-      // This function is called when Grasshopper needs to convert this 
-      // instance of our custom class into some other type Q.            
+    public override bool CastTo<Q>(ref Q target) {
+      // This function is called when Grasshopper needs to convert this
+      // instance of our custom class into some other type Q.
 
-      if (typeof(Q).IsAssignableFrom(typeof(T)))
-      {
+      if (typeof(Q).IsAssignableFrom(typeof(T))) {
         if (Value == null)
           target = default;
         else
@@ -56,23 +56,11 @@ namespace OasysGH.Parameters
       return false;
     }
 
-    public override bool CastFrom(object source)
-    {
-      // This function is called when Grasshopper needs to convert other data 
-      // into our custom class.
-
-      if (source == null)
-        return false;
-
-      //Cast from this type
-      if (typeof(T).IsAssignableFrom(source.GetType()))
-      {
-        Value = (T)source;
-        return true;
-      }
-
-      return false;
+    public override string ToString() {
+      if (Value == null)
+        return "Null";
+      else
+        return PluginInfo.ProductName + " " + TypeName + " (" + Value.ToString() + ")";
     }
-    #endregion
   }
 }

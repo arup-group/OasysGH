@@ -5,239 +5,98 @@ using System.Threading;
 using OasysUnits;
 using OasysUnits.Units;
 
-namespace OasysGH.Units.Helpers
-{
-  public class UnitsHelper
-  {
-    public static int SignificantDigits
-    {
-      get
-      {
+namespace OasysGH.Units.Helpers {
+
+  public class UnitsHelper {
+    public static int SignificantDigits {
+      get {
         return BitConverter.GetBytes(
           decimal.GetBits(
             (decimal)DefaultUnits.Tolerance.As(DefaultUnits.LengthUnitGeometry))[3])[2];
       }
     }
-    private static BaseUnits SI = OasysUnits.UnitSystem.SI.BaseUnits;
 
-    public static AreaUnit GetAreaUnit(LengthUnit unit)
-    {
-      switch (unit)
-      {
-        case LengthUnit.Millimeter:
-          return AreaUnit.SquareMillimeter;
-        case LengthUnit.Centimeter:
-          return AreaUnit.SquareCentimeter;
-        case LengthUnit.Meter:
-          return AreaUnit.SquareMeter;
-        case LengthUnit.Foot:
-          return AreaUnit.SquareFoot;
-        case LengthUnit.Inch:
-          return AreaUnit.SquareInch;
-      }
-      // fallback:
-      BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      OasysUnits.UnitSystem unitSystem = new OasysUnits.UnitSystem(baseUnits);
-      return new Area(1, unitSystem).Unit;
-    }
+    private static BaseUnits sI = OasysUnits.UnitSystem.SI.BaseUnits;
 
-    public static VolumeUnit GetVolumeUnit(LengthUnit unit)
-    {
-      switch (unit)
-      {
-        case LengthUnit.Millimeter:
-          return VolumeUnit.CubicMillimeter;
-        case LengthUnit.Centimeter:
-          return VolumeUnit.CubicCentimeter;
-        case LengthUnit.Meter:
-          return VolumeUnit.CubicMeter;
-        case LengthUnit.Foot:
-          return VolumeUnit.CubicFoot;
-        case LengthUnit.Inch:
-          return VolumeUnit.CubicInch;
-      }
-      // fallback:
-      BaseUnits baseUnits = new BaseUnits(unit, SI.Mass, SI.Time, SI.Current, SI.Temperature, SI.Amount, SI.LuminousIntensity);
-      OasysUnits.UnitSystem unitSystem = new OasysUnits.UnitSystem(baseUnits);
-      return new Volume(1, unitSystem).Unit;
-    }
-
-    public static AreaMomentOfInertiaUnit GetAreaMomentOfInertiaUnit(LengthUnit unit)
-    {
-      switch (unit)
-      {
+    public static AreaMomentOfInertiaUnit GetAreaMomentOfInertiaUnit(LengthUnit unit) {
+      switch (unit) {
         case LengthUnit.Millimeter:
           return AreaMomentOfInertiaUnit.MillimeterToTheFourth;
+
         case LengthUnit.Centimeter:
           return AreaMomentOfInertiaUnit.CentimeterToTheFourth;
+
         case LengthUnit.Meter:
           return AreaMomentOfInertiaUnit.MeterToTheFourth;
+
         case LengthUnit.Foot:
           return AreaMomentOfInertiaUnit.FootToTheFourth;
+
         case LengthUnit.Inch:
           return AreaMomentOfInertiaUnit.InchToTheFourth;
       }
       throw new OasysUnitsException("Unable to convert " + unit + " to a known type of AreaMomentOfInertia");
     }
 
-    public static VolumePerLengthUnit GetVolumePerLengthUnit(LengthUnit unit)
-    {
-      switch (unit)
-      {
-        case LengthUnit.Foot:
-        case LengthUnit.Inch:
-          return VolumePerLengthUnit.CubicYardPerFoot;
+    public static AreaUnit GetAreaUnit(LengthUnit unit) {
+      switch (unit) {
         case LengthUnit.Millimeter:
+          return AreaUnit.SquareMillimeter;
+
         case LengthUnit.Centimeter:
+          return AreaUnit.SquareCentimeter;
+
         case LengthUnit.Meter:
-          return VolumePerLengthUnit.CubicMeterPerMeter;
-        default:
-          throw new OasysUnitsException("Unable to convert " + unit + " to a known type of VolumePerLengthUnit");
+          return AreaUnit.SquareMeter;
+
+        case LengthUnit.Foot:
+          return AreaUnit.SquareFoot;
+
+        case LengthUnit.Inch:
+          return AreaUnit.SquareInch;
+      }
+      // fallback:
+      var baseUnits = new BaseUnits(unit, sI.Mass, sI.Time, sI.Current, sI.Temperature, sI.Amount, sI.LuminousIntensity);
+      var unitSystem = new OasysUnits.UnitSystem(baseUnits);
+      return new Area(1, unitSystem).Unit;
+    }
+
+    public static AxialStiffnessUnit GetAxialStiffnessUnit(ForceUnit forceUnit) {
+      try {
+        return AxialStiffness.ParseUnit(Force.GetAbbreviation(forceUnit));
+      }
+      catch (Exception) {
+        throw new Exception("Unable to convert " + forceUnit.ToString() + " to Axial Stiffness");
       }
     }
 
-    public static ForcePerLengthUnit GetForcePerLengthUnit(ForceUnit forceUnit, LengthUnit lengthUnit)
-    {
-      switch (forceUnit)
-      {
+    public static BendingStiffnessUnit GetBendingStiffnessUnit(ForceUnit forceUnit, LengthUnit lengthUnit) {
+      switch (forceUnit) {
         case ForceUnit.Newton:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Millimeter:
-              return ForcePerLengthUnit.NewtonPerMillimeter;
-            case LengthUnit.Centimeter:
-              return ForcePerLengthUnit.NewtonPerCentimeter;
-            case LengthUnit.Meter:
-              return ForcePerLengthUnit.NewtonPerMeter;
-          }
-          break;
-        case ForceUnit.Kilonewton:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Millimeter:
-              return ForcePerLengthUnit.KilonewtonPerMillimeter;
-            case LengthUnit.Centimeter:
-              return ForcePerLengthUnit.KilonewtonPerCentimeter;
-            case LengthUnit.Meter:
-              return ForcePerLengthUnit.KilonewtonPerMeter;
-          }
-          break;
-        case ForceUnit.Meganewton:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Millimeter:
-              return ForcePerLengthUnit.MeganewtonPerMillimeter;
-            case LengthUnit.Centimeter:
-              return ForcePerLengthUnit.MeganewtonPerCentimeter;
-            case LengthUnit.Meter:
-              return ForcePerLengthUnit.MeganewtonPerMeter;
-          }
-          break;
-        case ForceUnit.KilopoundForce:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Inch:
-              return ForcePerLengthUnit.KilopoundForcePerInch;
-            case LengthUnit.Foot:
-              return ForcePerLengthUnit.KilopoundForcePerFoot;
-          }
-          break;
-        case ForceUnit.PoundForce:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Inch:
-              return ForcePerLengthUnit.PoundForcePerInch;
-            case LengthUnit.Foot:
-              return ForcePerLengthUnit.PoundForcePerFoot;
-          }
-          break;
-      }
-
-      throw new OasysUnitsException("Unable to convert " + forceUnit + " x " + lengthUnit + " to a known type of VolumePerLengthUnit");
-    }
-
-    public static PressureUnit GetForcePerAreaUnit(ForceUnit forceUnit, LengthUnit lengthUnit)
-    {
-      switch (forceUnit)
-      {
-        case ForceUnit.Newton:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Millimeter:
-              return PressureUnit.NewtonPerSquareMillimeter;
-            case LengthUnit.Centimeter:
-              return PressureUnit.NewtonPerSquareCentimeter;
-            case LengthUnit.Meter:
-              return PressureUnit.NewtonPerSquareMeter;
-          }
-          break;
-        case ForceUnit.Kilonewton:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Millimeter:
-              return PressureUnit.KilonewtonPerSquareMillimeter;
-            case LengthUnit.Centimeter:
-              return PressureUnit.KilonewtonPerSquareCentimeter;
-            case LengthUnit.Meter:
-              return PressureUnit.KilonewtonPerSquareMeter;
-          }
-          break;
-        case ForceUnit.Meganewton:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Meter:
-              return PressureUnit.MeganewtonPerSquareMeter;
-          }
-          break;
-        case ForceUnit.KilopoundForce:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Inch:
-              return PressureUnit.KilopoundForcePerSquareInch;
-            case LengthUnit.Foot:
-              return PressureUnit.KilopoundForcePerSquareFoot;
-          }
-          break;
-        case ForceUnit.PoundForce:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Inch:
-              return PressureUnit.PoundForcePerSquareInch;
-            case LengthUnit.Foot:
-              return PressureUnit.PoundForcePerSquareFoot;
-          }
-          break;
-      }
-      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to force per area");
-    }
-
-    public static BendingStiffnessUnit GetBendingStiffnessUnit(ForceUnit forceUnit, LengthUnit lengthUnit)
-    {
-      switch (forceUnit)
-      {
-        case ForceUnit.Newton:
-          switch (lengthUnit)
-          {
+          switch (lengthUnit) {
             case LengthUnit.Millimeter:
               return BendingStiffnessUnit.NewtonSquareMillimeter;
+
             case LengthUnit.Meter:
               return BendingStiffnessUnit.NewtonSquareMeter;
           }
           break;
+
         case ForceUnit.Kilonewton:
-          switch (lengthUnit)
-          {
+          switch (lengthUnit) {
             case LengthUnit.Millimeter:
               return BendingStiffnessUnit.KilonewtonSquareMillimeter;
+
             case LengthUnit.Meter:
               return BendingStiffnessUnit.KilonewtonSquareMeter;
           }
           break;
+
         case ForceUnit.PoundForce:
-          switch (lengthUnit)
-          {
+          switch (lengthUnit) {
             case LengthUnit.Inch:
               return BendingStiffnessUnit.PoundForceSquareInch;
+
             case LengthUnit.Foot:
               return BendingStiffnessUnit.PoundForceSquareFoot;
           }
@@ -246,136 +105,34 @@ namespace OasysGH.Units.Helpers
       throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to BendingStiffness");
     }
 
-    public static MomentUnit GetMomentUnit(ForceUnit forceUnit, LengthUnit lengthUnit)
-    {
-      switch (forceUnit)
-      {
-        case ForceUnit.Newton:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Millimeter:
-              return MomentUnit.NewtonMillimeter;
-            case LengthUnit.Centimeter:
-              return MomentUnit.NewtonCentimeter;
-            case LengthUnit.Meter:
-              return MomentUnit.NewtonMeter;
-          }
-          break;
-        case ForceUnit.Kilonewton:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Millimeter:
-              return MomentUnit.KilonewtonMillimeter;
-            case LengthUnit.Centimeter:
-              return MomentUnit.KilonewtonCentimeter;
-            case LengthUnit.Meter:
-              return MomentUnit.KilonewtonMeter;
-          }
-          break;
-        case ForceUnit.Meganewton:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Millimeter:
-              return MomentUnit.MeganewtonMillimeter;
-            case LengthUnit.Centimeter:
-              return MomentUnit.MeganewtonCentimeter;
-            case LengthUnit.Meter:
-              return MomentUnit.MeganewtonMeter;
-          }
-          break;
-        case ForceUnit.KilopoundForce:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Inch:
-              return MomentUnit.KilopoundForceInch;
-            case LengthUnit.Foot:
-              return MomentUnit.KilopoundForceFoot;
-          }
-          break;
-        case ForceUnit.PoundForce:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Inch:
-              return MomentUnit.PoundForceInch;
-            case LengthUnit.Foot:
-              return MomentUnit.PoundForceFoot;
-          }
-          break;
-      }
-      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to moment");
-    }
-
-    public static AxialStiffnessUnit GetAxialStiffnessUnit(ForceUnit forceUnit)
-    {
-      try
-      {
-        return AxialStiffness.ParseUnit(Force.GetAbbreviation(forceUnit));
-      }
-      catch (Exception)
-      {
-        throw new Exception("Unable to convert " + forceUnit.ToString() + " to Axial Stiffness");
-      }
-    }
-
-    public static DensityUnit GetDensityUnit(MassUnit massUnit, LengthUnit lengthUnit)
-    {
-      string mass = massUnit.ToString();
-      string length = lengthUnit.ToString();
-      return (DensityUnit)Enum.Parse(typeof(DensityUnit), mass + "PerCubic" + length );
-      
-      //Mass mass = Mass.From(1, massUnit);
-      //Length len = Length.From(1, lengthUnit);
-      //Volume vol = len * len * len;
-      //return density.Unit;
-    }
-
-    public static LinearDensityUnit GetLinearDensityUnit(MassUnit massUnit, LengthUnit lengthUnit)
-    {
-      switch (massUnit)
-      {
-        case MassUnit.Kilogram:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Millimeter:
-              return LinearDensityUnit.KilogramPerMillimeter;
-            case LengthUnit.Centimeter:
-              return LinearDensityUnit.KilogramPerCentimeter;
-            case LengthUnit.Meter:
-              return LinearDensityUnit.KilogramPerMeter;
-          }
-          break;
-        case MassUnit.Pound:
-          switch (lengthUnit)
-          {
-            case LengthUnit.Foot:
-              return LinearDensityUnit.PoundPerFoot;
-            case LengthUnit.Inch:
-              return LinearDensityUnit.PoundPerInch;
-          }
-          break;
-      }
-      throw new Exception("Unable to convert " + massUnit.ToString() + " combined with " + lengthUnit.ToString() + " to Linear Density");
-    }
-
-    public static CoefficientOfThermalExpansionUnit GetCoefficientOfThermalExpansionUnit(TemperatureUnit temperatureUnit)
-    {
-      switch (temperatureUnit)
-      {
+    public static CoefficientOfThermalExpansionUnit GetCoefficientOfThermalExpansionUnit(TemperatureUnit temperatureUnit) {
+      switch (temperatureUnit) {
         case TemperatureUnit.Kelvin:
           return CoefficientOfThermalExpansionUnit.InverseKelvin;
+
         case TemperatureUnit.DegreeFahrenheit:
           return CoefficientOfThermalExpansionUnit.InverseDegreeFahrenheit;
+
         case TemperatureUnit.DegreeCelsius:
         default:
           return CoefficientOfThermalExpansionUnit.InverseDegreeCelsius;
       }
     }
 
-    public static List<string> GetFilteredAbbreviations(EngineeringUnits unit)
-    {
-      List<string> abbreviations = new List<string>();
-      switch (unit)
-      {
+    public static DensityUnit GetDensityUnit(MassUnit massUnit, LengthUnit lengthUnit) {
+      string mass = massUnit.ToString();
+      string length = lengthUnit.ToString();
+      return (DensityUnit)Enum.Parse(typeof(DensityUnit), mass + "PerCubic" + length);
+
+      //Mass mass = Mass.From(1, massUnit);
+      //Length len = Length.From(1, lengthUnit);
+      //Volume vol = len * len * len;
+      //return density.Unit;
+    }
+
+    public static List<string> GetFilteredAbbreviations(EngineeringUnits unit) {
+      var abbreviations = new List<string>();
+      switch (unit) {
         case EngineeringUnits.Angle:
           foreach (string unitstring in FilteredUnits.FilteredAngleUnits)
             abbreviations.Add(Angle.GetAbbreviation((AngleUnit)Enum.Parse(typeof(AngleUnit), unitstring)));
@@ -501,14 +258,267 @@ namespace OasysGH.Units.Helpers
       }
     }
 
+    public static PressureUnit GetForcePerAreaUnit(ForceUnit forceUnit, LengthUnit lengthUnit) {
+      switch (forceUnit) {
+        case ForceUnit.Newton:
+          switch (lengthUnit) {
+            case LengthUnit.Millimeter:
+              return PressureUnit.NewtonPerSquareMillimeter;
+
+            case LengthUnit.Centimeter:
+              return PressureUnit.NewtonPerSquareCentimeter;
+
+            case LengthUnit.Meter:
+              return PressureUnit.NewtonPerSquareMeter;
+          }
+          break;
+
+        case ForceUnit.Kilonewton:
+          switch (lengthUnit) {
+            case LengthUnit.Millimeter:
+              return PressureUnit.KilonewtonPerSquareMillimeter;
+
+            case LengthUnit.Centimeter:
+              return PressureUnit.KilonewtonPerSquareCentimeter;
+
+            case LengthUnit.Meter:
+              return PressureUnit.KilonewtonPerSquareMeter;
+          }
+          break;
+
+        case ForceUnit.Meganewton:
+          switch (lengthUnit) {
+            case LengthUnit.Meter:
+              return PressureUnit.MeganewtonPerSquareMeter;
+          }
+          break;
+
+        case ForceUnit.KilopoundForce:
+          switch (lengthUnit) {
+            case LengthUnit.Inch:
+              return PressureUnit.KilopoundForcePerSquareInch;
+
+            case LengthUnit.Foot:
+              return PressureUnit.KilopoundForcePerSquareFoot;
+          }
+          break;
+
+        case ForceUnit.PoundForce:
+          switch (lengthUnit) {
+            case LengthUnit.Inch:
+              return PressureUnit.PoundForcePerSquareInch;
+
+            case LengthUnit.Foot:
+              return PressureUnit.PoundForcePerSquareFoot;
+          }
+          break;
+      }
+      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to force per area");
+    }
+
+    public static ForcePerLengthUnit GetForcePerLengthUnit(ForceUnit forceUnit, LengthUnit lengthUnit) {
+      switch (forceUnit) {
+        case ForceUnit.Newton:
+          switch (lengthUnit) {
+            case LengthUnit.Millimeter:
+              return ForcePerLengthUnit.NewtonPerMillimeter;
+
+            case LengthUnit.Centimeter:
+              return ForcePerLengthUnit.NewtonPerCentimeter;
+
+            case LengthUnit.Meter:
+              return ForcePerLengthUnit.NewtonPerMeter;
+          }
+          break;
+
+        case ForceUnit.Kilonewton:
+          switch (lengthUnit) {
+            case LengthUnit.Millimeter:
+              return ForcePerLengthUnit.KilonewtonPerMillimeter;
+
+            case LengthUnit.Centimeter:
+              return ForcePerLengthUnit.KilonewtonPerCentimeter;
+
+            case LengthUnit.Meter:
+              return ForcePerLengthUnit.KilonewtonPerMeter;
+          }
+          break;
+
+        case ForceUnit.Meganewton:
+          switch (lengthUnit) {
+            case LengthUnit.Millimeter:
+              return ForcePerLengthUnit.MeganewtonPerMillimeter;
+
+            case LengthUnit.Centimeter:
+              return ForcePerLengthUnit.MeganewtonPerCentimeter;
+
+            case LengthUnit.Meter:
+              return ForcePerLengthUnit.MeganewtonPerMeter;
+          }
+          break;
+
+        case ForceUnit.KilopoundForce:
+          switch (lengthUnit) {
+            case LengthUnit.Inch:
+              return ForcePerLengthUnit.KilopoundForcePerInch;
+
+            case LengthUnit.Foot:
+              return ForcePerLengthUnit.KilopoundForcePerFoot;
+          }
+          break;
+
+        case ForceUnit.PoundForce:
+          switch (lengthUnit) {
+            case LengthUnit.Inch:
+              return ForcePerLengthUnit.PoundForcePerInch;
+
+            case LengthUnit.Foot:
+              return ForcePerLengthUnit.PoundForcePerFoot;
+          }
+          break;
+      }
+
+      throw new OasysUnitsException("Unable to convert " + forceUnit + " x " + lengthUnit + " to a known type of VolumePerLengthUnit");
+    }
+
+    public static LinearDensityUnit GetLinearDensityUnit(MassUnit massUnit, LengthUnit lengthUnit) {
+      switch (massUnit) {
+        case MassUnit.Kilogram:
+          switch (lengthUnit) {
+            case LengthUnit.Millimeter:
+              return LinearDensityUnit.KilogramPerMillimeter;
+
+            case LengthUnit.Centimeter:
+              return LinearDensityUnit.KilogramPerCentimeter;
+
+            case LengthUnit.Meter:
+              return LinearDensityUnit.KilogramPerMeter;
+          }
+          break;
+
+        case MassUnit.Pound:
+          switch (lengthUnit) {
+            case LengthUnit.Foot:
+              return LinearDensityUnit.PoundPerFoot;
+
+            case LengthUnit.Inch:
+              return LinearDensityUnit.PoundPerInch;
+          }
+          break;
+      }
+      throw new Exception("Unable to convert " + massUnit.ToString() + " combined with " + lengthUnit.ToString() + " to Linear Density");
+    }
+
+    public static MomentUnit GetMomentUnit(ForceUnit forceUnit, LengthUnit lengthUnit) {
+      switch (forceUnit) {
+        case ForceUnit.Newton:
+          switch (lengthUnit) {
+            case LengthUnit.Millimeter:
+              return MomentUnit.NewtonMillimeter;
+
+            case LengthUnit.Centimeter:
+              return MomentUnit.NewtonCentimeter;
+
+            case LengthUnit.Meter:
+              return MomentUnit.NewtonMeter;
+          }
+          break;
+
+        case ForceUnit.Kilonewton:
+          switch (lengthUnit) {
+            case LengthUnit.Millimeter:
+              return MomentUnit.KilonewtonMillimeter;
+
+            case LengthUnit.Centimeter:
+              return MomentUnit.KilonewtonCentimeter;
+
+            case LengthUnit.Meter:
+              return MomentUnit.KilonewtonMeter;
+          }
+          break;
+
+        case ForceUnit.Meganewton:
+          switch (lengthUnit) {
+            case LengthUnit.Millimeter:
+              return MomentUnit.MeganewtonMillimeter;
+
+            case LengthUnit.Centimeter:
+              return MomentUnit.MeganewtonCentimeter;
+
+            case LengthUnit.Meter:
+              return MomentUnit.MeganewtonMeter;
+          }
+          break;
+
+        case ForceUnit.KilopoundForce:
+          switch (lengthUnit) {
+            case LengthUnit.Inch:
+              return MomentUnit.KilopoundForceInch;
+
+            case LengthUnit.Foot:
+              return MomentUnit.KilopoundForceFoot;
+          }
+          break;
+
+        case ForceUnit.PoundForce:
+          switch (lengthUnit) {
+            case LengthUnit.Inch:
+              return MomentUnit.PoundForceInch;
+
+            case LengthUnit.Foot:
+              return MomentUnit.PoundForceFoot;
+          }
+          break;
+      }
+      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to moment");
+    }
+
+    public static VolumePerLengthUnit GetVolumePerLengthUnit(LengthUnit unit) {
+      switch (unit) {
+        case LengthUnit.Foot:
+        case LengthUnit.Inch:
+          return VolumePerLengthUnit.CubicYardPerFoot;
+
+        case LengthUnit.Millimeter:
+        case LengthUnit.Centimeter:
+        case LengthUnit.Meter:
+          return VolumePerLengthUnit.CubicMeterPerMeter;
+
+        default:
+          throw new OasysUnitsException("Unable to convert " + unit + " to a known type of VolumePerLengthUnit");
+      }
+    }
+
+    public static VolumeUnit GetVolumeUnit(LengthUnit unit) {
+      switch (unit) {
+        case LengthUnit.Millimeter:
+          return VolumeUnit.CubicMillimeter;
+
+        case LengthUnit.Centimeter:
+          return VolumeUnit.CubicCentimeter;
+
+        case LengthUnit.Meter:
+          return VolumeUnit.CubicMeter;
+
+        case LengthUnit.Foot:
+          return VolumeUnit.CubicFoot;
+
+        case LengthUnit.Inch:
+          return VolumeUnit.CubicInch;
+      }
+      // fallback:
+      var baseUnits = new BaseUnits(unit, sI.Mass, sI.Time, sI.Current, sI.Temperature, sI.Amount, sI.LuminousIntensity);
+      var unitSystem = new OasysUnits.UnitSystem(baseUnits);
+      return new Volume(1, unitSystem).Unit;
+    }
+
     /// <summary>
     /// Tries to parse a units abbreviation or string representation.
     /// </summary>
     /// <param name="unitType"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static Enum Parse(Type unitType, string value)
-    {
+    public static Enum Parse(Type unitType, string value) {
       CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
       return UnitsHelper.Parse(unitType, value, culture);
     }
@@ -520,19 +530,15 @@ namespace OasysGH.Units.Helpers
     /// <param name="value"></param>
     /// <param name="currentUICulture"></param>
     /// <returns></returns>
-    public static Enum Parse(Type unitType, string value, CultureInfo currentUICulture)
-    {
+    public static Enum Parse(Type unitType, string value, CultureInfo currentUICulture) {
       if (UnitParser.Default.TryParse(value, unitType, out Enum unit))
         return unit;
-      try
-      {
+      try {
         return (Enum)Enum.Parse(unitType, value, true);
       }
-      catch (ArgumentException)
-      {
+      catch (ArgumentException) {
         // try to use current culture to parse unit abbreviation
-        switch (unitType)
-        {
+        switch (unitType) {
           case Type _ when unitType == typeof(AccelerationUnit):
             return Acceleration.ParseUnit(value, currentUICulture);
 

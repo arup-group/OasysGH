@@ -1,55 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using OasysGH.Units.Helpers;
 using OasysUnits;
 using OasysUnits.Units;
 using Xunit;
 
-namespace OasysGHTests.Units.Helpers
-{
-  public class ParseUnitsHelperTest
-  {
-    [Theory]
-    [InlineData("mm", typeof(LengthUnit), LengthUnit.Millimeter)]
-    [InlineData("cm", typeof(LengthUnit), LengthUnit.Centimeter)]
-    [InlineData("m", typeof(LengthUnit), LengthUnit.Meter)]
-    [InlineData("in", typeof(LengthUnit), LengthUnit.Inch)]
-    [InlineData("Millimeter", typeof(LengthUnit), LengthUnit.Millimeter)]
-    [InlineData("millimeter", typeof(LengthUnit), LengthUnit.Millimeter)]
-    [InlineData("Centimeter", typeof(LengthUnit), LengthUnit.Centimeter)]
-    [InlineData("Meter", typeof(LengthUnit), LengthUnit.Meter)]
-    [InlineData("Inch", typeof(LengthUnit), LengthUnit.Inch)]
-    [InlineData("slug/ft³", typeof(DensityUnit), DensityUnit.SlugPerCubicFoot)]
-    [InlineData("lb/ft²", typeof(PressureUnit), PressureUnit.PoundForcePerSquareFoot)]
-    public void ParseTest(string value, Type unitType, Enum expectedUnit)
-    {
-      // Act
-      var unit = UnitsHelper.Parse(unitType, value);
+namespace OasysGHTests.Units.Helpers {
 
-      // Assert
-      Assert.Equal(expectedUnit, unit);
-    }
-
-    [Theory]
-    [InlineData("Müllimeter")]
-    public void ParseExceptionTest(string value)
-    {
-      // Act & Assert
-      Assert.Throws<UnitNotFoundException>(() => UnitsHelper.Parse(typeof(LengthUnit), value));
-    }
-
+  public class ParseUnitsHelperTest {
     [Theory]
     [InlineData("zh-hk")]
     [InlineData("zh-cn")]
     [InlineData("zh-sg")]
     [InlineData("zh-tw")]
     [InlineData("ru-ru")]
-    public void CultureInfoTest(string name)
-    {
+    public void CultureInfoTest(string name) {
       // Arrange
-      CultureInfo culture = new CultureInfo(name);
+      var culture = new CultureInfo(name);
       string accelerationAbbreviation = Acceleration.GetAbbreviation(AccelerationUnit.InchPerSecondSquared, culture);
       string angleAbbreviation = Angle.GetAbbreviation(AngleUnit.Radian, culture);
       string areaMomentOfInertiaAbbreviation = AreaMomentOfInertia.GetAbbreviation(AreaMomentOfInertiaUnit.FootToTheFourth, culture);
@@ -76,30 +43,30 @@ namespace OasysGHTests.Units.Helpers
       string volumeAbbreviation = Volume.GetAbbreviation(VolumeUnit.Liter, culture);
 
       // Act
-      AccelerationUnit accelerationUnit = (AccelerationUnit)UnitsHelper.Parse(typeof(AccelerationUnit), accelerationAbbreviation, culture);
-      AngleUnit angleUnit = (AngleUnit)UnitsHelper.Parse(typeof(AngleUnit), angleAbbreviation, culture);
-      AreaMomentOfInertiaUnit areaMomentOfInertiaUnit = (AreaMomentOfInertiaUnit)UnitsHelper.Parse(typeof(AreaMomentOfInertiaUnit), areaMomentOfInertiaAbbreviation, culture);
-      AreaUnit areaUnit = (AreaUnit)UnitsHelper.Parse(typeof(AreaUnit), areaAbbreviation, culture);
-      AxialStiffnessUnit axialStiffnessUnit = (AxialStiffnessUnit)UnitsHelper.Parse(typeof(AxialStiffnessUnit), axialStiffnessAbbreviation, culture);
-      BendingStiffnessUnit bendingStiffnessUnit = (BendingStiffnessUnit)UnitsHelper.Parse(typeof(BendingStiffnessUnit), bendingStiffnessAbbreviation, culture);
-      CoefficientOfThermalExpansionUnit coefficientOfThermalExpansionUnit = (CoefficientOfThermalExpansionUnit)UnitsHelper.Parse(typeof(CoefficientOfThermalExpansionUnit), coefficientOfThermalExpansionAbbreviation, culture);
-      CurvatureUnit curvatureUnit = (CurvatureUnit)UnitsHelper.Parse(typeof(CurvatureUnit), curvatureAbbreviation, culture);
-      DensityUnit densityUnit = (DensityUnit)UnitsHelper.Parse(typeof(DensityUnit), densityAbbreviation, culture);
-      DurationUnit durationUnit = (DurationUnit)UnitsHelper.Parse(typeof(DurationUnit), durationAbbreviation, culture);
-      EnergyUnit energyUnit = (EnergyUnit)UnitsHelper.Parse(typeof(EnergyUnit), energyAbbreviation, culture);
-      ForcePerLengthUnit forcePerLengthUnit = (ForcePerLengthUnit)UnitsHelper.Parse(typeof(ForcePerLengthUnit), forcePerLengthAbbreviation, culture);
-      ForceUnit forceUnit = (ForceUnit)UnitsHelper.Parse(typeof(ForceUnit), forceAbbreviation, culture);
-      LengthUnit lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), lengthAbbreviation, culture);
-      LinearDensityUnit linearDensityUnit = (LinearDensityUnit)UnitsHelper.Parse(typeof(LinearDensityUnit), linearDensityAbbreviation, culture);
-      MassUnit massUnit = (MassUnit)UnitsHelper.Parse(typeof(MassUnit), massAbbreviation, culture);
-      MomentUnit momentUnit = (MomentUnit)UnitsHelper.Parse(typeof(MomentUnit), momentAbbreviation, culture);
-      PressureUnit pressureUnit = (PressureUnit)UnitsHelper.Parse(typeof(PressureUnit), pressureAbbreviation, culture);
-      RatioUnit ratioUnit = (RatioUnit)UnitsHelper.Parse(typeof(RatioUnit), ratioAbbreviation, culture);
-      SpeedUnit speedUnit = (SpeedUnit)UnitsHelper.Parse(typeof(SpeedUnit), speedAbbreviation, culture);
-      StrainUnit strainUnit = (StrainUnit)UnitsHelper.Parse(typeof(StrainUnit), strainAbbreviation, culture);
-      TemperatureUnit temperatureUnit = (TemperatureUnit)UnitsHelper.Parse(typeof(TemperatureUnit), temperatureAbbreviation, culture);
-      VolumePerLengthUnit volumePerLengthUnit = (VolumePerLengthUnit)UnitsHelper.Parse(typeof(VolumePerLengthUnit), volumePerLengthAbbreviation, culture);
-      VolumeUnit volumeUnit = (VolumeUnit)UnitsHelper.Parse(typeof(VolumeUnit), volumeAbbreviation, culture);
+      var accelerationUnit = (AccelerationUnit)UnitsHelper.Parse(typeof(AccelerationUnit), accelerationAbbreviation, culture);
+      var angleUnit = (AngleUnit)UnitsHelper.Parse(typeof(AngleUnit), angleAbbreviation, culture);
+      var areaMomentOfInertiaUnit = (AreaMomentOfInertiaUnit)UnitsHelper.Parse(typeof(AreaMomentOfInertiaUnit), areaMomentOfInertiaAbbreviation, culture);
+      var areaUnit = (AreaUnit)UnitsHelper.Parse(typeof(AreaUnit), areaAbbreviation, culture);
+      var axialStiffnessUnit = (AxialStiffnessUnit)UnitsHelper.Parse(typeof(AxialStiffnessUnit), axialStiffnessAbbreviation, culture);
+      var bendingStiffnessUnit = (BendingStiffnessUnit)UnitsHelper.Parse(typeof(BendingStiffnessUnit), bendingStiffnessAbbreviation, culture);
+      var coefficientOfThermalExpansionUnit = (CoefficientOfThermalExpansionUnit)UnitsHelper.Parse(typeof(CoefficientOfThermalExpansionUnit), coefficientOfThermalExpansionAbbreviation, culture);
+      var curvatureUnit = (CurvatureUnit)UnitsHelper.Parse(typeof(CurvatureUnit), curvatureAbbreviation, culture);
+      var densityUnit = (DensityUnit)UnitsHelper.Parse(typeof(DensityUnit), densityAbbreviation, culture);
+      var durationUnit = (DurationUnit)UnitsHelper.Parse(typeof(DurationUnit), durationAbbreviation, culture);
+      var energyUnit = (EnergyUnit)UnitsHelper.Parse(typeof(EnergyUnit), energyAbbreviation, culture);
+      var forcePerLengthUnit = (ForcePerLengthUnit)UnitsHelper.Parse(typeof(ForcePerLengthUnit), forcePerLengthAbbreviation, culture);
+      var forceUnit = (ForceUnit)UnitsHelper.Parse(typeof(ForceUnit), forceAbbreviation, culture);
+      var lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), lengthAbbreviation, culture);
+      var linearDensityUnit = (LinearDensityUnit)UnitsHelper.Parse(typeof(LinearDensityUnit), linearDensityAbbreviation, culture);
+      var massUnit = (MassUnit)UnitsHelper.Parse(typeof(MassUnit), massAbbreviation, culture);
+      var momentUnit = (MomentUnit)UnitsHelper.Parse(typeof(MomentUnit), momentAbbreviation, culture);
+      var pressureUnit = (PressureUnit)UnitsHelper.Parse(typeof(PressureUnit), pressureAbbreviation, culture);
+      var ratioUnit = (RatioUnit)UnitsHelper.Parse(typeof(RatioUnit), ratioAbbreviation, culture);
+      var speedUnit = (SpeedUnit)UnitsHelper.Parse(typeof(SpeedUnit), speedAbbreviation, culture);
+      var strainUnit = (StrainUnit)UnitsHelper.Parse(typeof(StrainUnit), strainAbbreviation, culture);
+      var temperatureUnit = (TemperatureUnit)UnitsHelper.Parse(typeof(TemperatureUnit), temperatureAbbreviation, culture);
+      var volumePerLengthUnit = (VolumePerLengthUnit)UnitsHelper.Parse(typeof(VolumePerLengthUnit), volumePerLengthAbbreviation, culture);
+      var volumeUnit = (VolumeUnit)UnitsHelper.Parse(typeof(VolumeUnit), volumeAbbreviation, culture);
 
       // Assert
       Assert.Equal(AccelerationUnit.InchPerSecondSquared, accelerationUnit);
@@ -128,6 +95,31 @@ namespace OasysGHTests.Units.Helpers
       Assert.Equal(VolumeUnit.Liter, volumeUnit);
     }
 
+    [Theory]
+    [InlineData("Müllimeter")]
+    public void ParseExceptionTest(string value) {
+      // Act & Assert
+      Assert.Throws<UnitNotFoundException>(() => UnitsHelper.Parse(typeof(LengthUnit), value));
+    }
 
+    [Theory]
+    [InlineData("mm", typeof(LengthUnit), LengthUnit.Millimeter)]
+    [InlineData("cm", typeof(LengthUnit), LengthUnit.Centimeter)]
+    [InlineData("m", typeof(LengthUnit), LengthUnit.Meter)]
+    [InlineData("in", typeof(LengthUnit), LengthUnit.Inch)]
+    [InlineData("Millimeter", typeof(LengthUnit), LengthUnit.Millimeter)]
+    [InlineData("millimeter", typeof(LengthUnit), LengthUnit.Millimeter)]
+    [InlineData("Centimeter", typeof(LengthUnit), LengthUnit.Centimeter)]
+    [InlineData("Meter", typeof(LengthUnit), LengthUnit.Meter)]
+    [InlineData("Inch", typeof(LengthUnit), LengthUnit.Inch)]
+    [InlineData("slug/ft³", typeof(DensityUnit), DensityUnit.SlugPerCubicFoot)]
+    [InlineData("lb/ft²", typeof(PressureUnit), PressureUnit.PoundForcePerSquareFoot)]
+    public void ParseTest(string value, Type unitType, Enum expectedUnit) {
+      // Act
+      Enum unit = UnitsHelper.Parse(unitType, value);
+
+      // Assert
+      Assert.Equal(expectedUnit, unit);
+    }
   }
 }
