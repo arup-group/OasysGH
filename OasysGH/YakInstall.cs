@@ -6,7 +6,7 @@ using Yak;
 namespace OasysGH {
 
   internal static class YakInstall {
-    internal static async Task InstallGH_UnitNumberPackageAsync(string plugin) {
+    internal static async Task InstallGH_UnitNumberPackageAsync(string plugin, System.Version version = null) {
       if (Rhino.RhinoApp.ExeVersion < 7)
         return;
 
@@ -29,11 +29,15 @@ namespace OasysGH {
           if (versions[0].Number.Contains("-beta"))
             latestVersion = new System.Version(latestVersion.Major, latestVersion.Minor, latestVersion.Build, latestVersion.Revision + 1);
 
+          if(version == null) {
+            version = latestVersion;
+          }
+
           var installedVersion = new System.Version(package.Version.Replace("-beta", string.Empty));
           if (package.Version.Contains("-beta"))
             installedVersion = new System.Version(installedVersion.Major, installedVersion.Minor, installedVersion.Build, installedVersion.Revision + 1);
 
-          if (latestVersion > installedVersion) {
+          if (version > installedVersion) {
             string tmp_path = await yak.Version.Download(plugin, versions[0].Number);
             yak.Install(tmp_path);
           }
