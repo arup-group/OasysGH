@@ -7,7 +7,6 @@ using System.Reflection;
 using Microsoft.Data.Sqlite;
 
 namespace OasysGH.Helpers {
-
   /// <summary>
   /// Class containing functions to interface with SQLite db files.
   /// In case of problems loading SQLite the singleton is executed in a separate AppDomain.

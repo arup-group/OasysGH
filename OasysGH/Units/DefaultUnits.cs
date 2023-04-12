@@ -4,7 +4,6 @@ using OasysUnits.Units;
 using Rhino;
 
 namespace OasysGH.Units {
-
   public static class DefaultUnits {
     public static AccelerationUnit AccelerationUnit { get; set; } = AccelerationUnit.MeterPerSecondSquared;
     public static AngleUnit AngleUnit { get; set; } = AngleUnit.Radian;

@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 
 namespace OasysGH.UI.Helpers {
-
   /// <summary>
   /// Class holding custom UI graphical buttons/boxes
   /// </summary>
   public static class CheckBox {
+
     /// <summary>
     /// Method to draw a check box with GSA-styling
     ///

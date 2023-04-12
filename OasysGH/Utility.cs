@@ -1,9 +1,9 @@
 ﻿using OasysGH.Units.UI.MainMenu;
 
 namespace OasysGH {
-
   public static class Utility {
     private static object unitsLoaded = false;
+
     public static void InitialiseMainMenuAndDefaultUnits(bool installGH_UnitNumber = true) {
       lock (unitsLoaded) // lock so that only one plugin will load this
       {

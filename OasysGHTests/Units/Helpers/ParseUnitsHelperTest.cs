@@ -6,8 +6,8 @@ using OasysUnits.Units;
 using Xunit;
 
 namespace OasysGHTests.Units.Helpers {
-
   public class ParseUnitsHelperTest {
+
     [Theory]
     [InlineData("zh-hk")]
     [InlineData("zh-cn")]

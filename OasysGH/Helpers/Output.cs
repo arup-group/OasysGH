@@ -5,8 +5,8 @@ using Grasshopper.Kernel.Types;
 using OasysGH.Components;
 
 namespace OasysGH.Helpers {
-
   public class Output {
+
     public static void SetItem<T>(GH_OasysDropDownComponent owner, IGH_DataAccess DA, int outputIndex, T data) where T : IGH_Goo {
       DA.SetData(outputIndex, data);
       owner.OutputChanged(data, outputIndex, 0);

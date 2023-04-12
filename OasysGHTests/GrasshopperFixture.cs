@@ -3,7 +3,6 @@ using System.IO;
 using Xunit;
 
 namespace Rhino.Test {
-
   [CollectionDefinition("GrasshopperFixture collection")]
   public class GrasshopperCollection : ICollectionFixture<GrasshopperFixture> {
     // This class has no code, and is never created. Its purpose is simply
@@ -40,6 +39,7 @@ namespace Rhino.Test {
     private object _core = null;
     private object _gHPlugin = null;
     private bool _isDisposed;
+
     static GrasshopperFixture() {
       // This MUST be included in a static constructor to ensure that no Rhino DLLs
       // are loaded before the resolver is set up. Avoid creating other static functions

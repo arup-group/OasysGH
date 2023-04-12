@@ -9,7 +9,6 @@ using OasysUnits;
 using OasysUnits.Serialization.JsonNet;
 
 namespace OasysGH.Components {
-
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent {
     protected internal bool _alwaysExpireDownStream = false;
     protected internal List<List<string>> _dropDownItems;
@@ -20,6 +19,7 @@ namespace OasysGH.Components {
     private static readonly OasysUnitsIQuantityJsonConverter converter = new OasysUnitsIQuantityJsonConverter();
     private Dictionary<int, bool> _outputIsExpired = new Dictionary<int, bool>();
     private Dictionary<int, List<bool>> _outputsAreExpired = new Dictionary<int, List<bool>>();
+
     public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory) {
     }
 

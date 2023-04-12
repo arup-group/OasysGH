@@ -1,7 +1,6 @@
 ﻿using OasysUnits.Units;
 
 namespace OasysGH.Units {
-
   // that should be called something else
   internal class UnitSystem {
     internal AccelerationUnit AccelerationUnit { get; }
@@ -30,6 +29,7 @@ namespace OasysGH.Units {
     internal SpeedUnit VelocityUnit { get; }
     internal VolumePerLengthUnit VolumePerLengthUnit { get; }
     internal PressureUnit YoungsModulusUnit { get; }
+
     internal UnitSystem(LengthUnit sectionLengthUnit, AreaUnit areaUnit, VolumeUnit volumeUnit, AreaMomentOfInertiaUnit areaMomentOfInertiaUnit, MassUnit massUnit, DensityUnit densityUnit, LinearDensityUnit linearDensityUnit, VolumePerLengthUnit volumePerLengthUnit, PressureUnit materialStrengthUnit, StrainUnit materialStrainUnit, PressureUnit youngsModulusUnit, LengthUnit lengthUnit, ForceUnit forceUnit, ForcePerLengthUnit forcePerLengthUnit, PressureUnit forcePerAreaUnit, MomentUnit momentUnit, TemperatureUnit temperatureUnit, LengthUnit displacementUuit, PressureUnit stressUnit, StrainUnit strainUnit, AxialStiffnessUnit axialStiffnessUnit, BendingStiffnessUnit bendingStiffnessUnit, SpeedUnit velocityUnit, AccelerationUnit accelerationUnit, EnergyUnit energyUnit, CurvatureUnit curvatureUnit) {
       SectionLengthUnit = sectionLengthUnit;
       SectionAreaUnit = areaUnit;

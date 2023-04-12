@@ -4,9 +4,34 @@ using System.Linq;
 using OasysUnits.Units;
 
 namespace OasysGH.Units.Helpers {
+  public enum EngineeringUnits {
+    Angle,
+    Length,
+    Area,
+    Volume,
+    AreaMomentOfInertia,
+    Force,
+    ForcePerLength,
+    ForcePerArea,
+    Moment,
+    Stress,
+    Strain,
+    AxialStiffness,
+    BendingStiffness,
+    Curvature,
+    Mass,
+    Density,
+    LinearDensity,
+    VolumePerLength,
+    Temperature,
+    Velocity,
+    Acceleration,
+    Energy,
+    Ratio,
+    Time
+  }
 
   public class FilteredUnits {
-
     public static List<string> FilteredAccelerationUnits = new List<string>(new[]
     {
       AccelerationUnit.MillimeterPerSecondSquared.ToString(),
@@ -213,32 +238,5 @@ namespace OasysGH.Units.Helpers {
       VolumeUnit.CubicInch.ToString(),
       VolumeUnit.CubicFoot.ToString()
     });
-  }
-
-  public enum EngineeringUnits {
-    Angle,
-    Length,
-    Area,
-    Volume,
-    AreaMomentOfInertia,
-    Force,
-    ForcePerLength,
-    ForcePerArea,
-    Moment,
-    Stress,
-    Strain,
-    AxialStiffness,
-    BendingStiffness,
-    Curvature,
-    Mass,
-    Density,
-    LinearDensity,
-    VolumePerLength,
-    Temperature,
-    Velocity,
-    Acceleration,
-    Energy,
-    Ratio,
-    Time
   }
 }

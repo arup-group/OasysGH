@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Yak;
 
 namespace OasysGH {
-
   internal static class YakInstall {
+
     internal static async Task InstallGH_UnitNumberPackageAsync() {
       if (Rhino.RhinoApp.ExeVersion < 7)
         return;

@@ -2,7 +2,6 @@
 using Oasys.Taxonomy.Profiles;
 
 namespace OasysGH.Parameters {
-
   public class OasysProfileGoo : GH_OasysGoo<IProfile> {
     public static string Description => "Profile Parameter";
     public static string Name => "Profile";

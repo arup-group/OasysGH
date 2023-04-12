@@ -8,7 +8,6 @@ using Grasshopper.Kernel.Attributes;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Class to create custom component UI with three buttons and 6 check box toggles underneath
   ///
@@ -67,6 +66,7 @@ namespace OasysGH.UI {
     private bool _zz;
     private RectangleF _zzBounds;
     private RectangleF _zzTxtBounds;
+
     public SupportComponentAttributes(GH_Component owner, Action<bool, bool, bool, bool, bool, bool> updateHandle, string spacerText, bool resx, bool resy, bool resz, bool resxx, bool resyy, bool reszz) : base(owner) {
       _x = resx;
       _y = resy;

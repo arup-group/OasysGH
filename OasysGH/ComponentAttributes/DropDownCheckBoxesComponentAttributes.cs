@@ -9,7 +9,6 @@ using Grasshopper.Kernel.Attributes;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Class to create custom component UI with multiple dropdowns
   ///
@@ -78,6 +77,7 @@ namespace OasysGH.UI {
     private List<RectangleF> _toggleTextBound;
 
     private List<bool> _unfolded;
+
     public DropDownCheckBoxesComponentAttributes(GH_Component owner, Action<int, int> clickHandle, List<List<string>> dropdownContents, List<string> selections,
                                                                                                             Action<List<bool>> toggleHandle, List<bool> checkBoxInitialStates, List<string> checkBoxNames,
         List<string> spacerTexts = null, List<string> initialdescriptions = null) : base(owner) {

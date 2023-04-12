@@ -1,7 +1,6 @@
 ﻿using Grasshopper.Kernel.Types;
 
 namespace OasysGH.Parameters {
-
   public abstract class GH_OasysGoo<T> : GH_Goo<T> {
     public override bool IsValid => Value != null;
     public override string IsValidWhyNot {
@@ -17,6 +16,7 @@ namespace OasysGH.Parameters {
 
     public override string TypeDescription => PluginInfo.ProductName + " " + TypeName + " Parameter";
     public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
+
     public GH_OasysGoo(T item) {
       if (item == null)
         Value = item;

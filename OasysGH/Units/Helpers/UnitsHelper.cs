@@ -6,7 +6,6 @@ using OasysUnits;
 using OasysUnits.Units;
 
 namespace OasysGH.Units.Helpers {
-
   public class UnitsHelper {
     public static int SignificantDigits {
       get {

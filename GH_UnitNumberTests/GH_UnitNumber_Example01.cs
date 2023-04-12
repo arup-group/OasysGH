@@ -8,9 +8,9 @@ using OasysUnits.Units;
 using Xunit;
 
 namespace GH_UnitNumberTests {
-
   [Collection("GrasshopperFixture collection")]
   public class Example01Test {
+
     public static GH_Document Document() {
       string fileName = MethodBase.GetCurrentMethod().DeclaringType.ToString().Replace(".", "_") + ".gh";
       fileName = fileName.Replace("Tests", string.Empty).Replace("Test", string.Empty);

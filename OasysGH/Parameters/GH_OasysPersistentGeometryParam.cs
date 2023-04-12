@@ -3,7 +3,6 @@ using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 
 namespace OasysGH.Parameters {
-
   public abstract class GH_OasysPersistentGeometryParam<T> : GH_OasysPersistentParam<T>, IGH_PreviewObject where T : class, IGH_GeometricGoo {
     public virtual BoundingBox ClippingBox => Preview_ComputeClippingBox();
 

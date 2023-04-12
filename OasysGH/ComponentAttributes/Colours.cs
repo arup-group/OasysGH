@@ -4,7 +4,6 @@ using Grasshopper.GUI.Gradient;
 using Rhino.Display;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Colour class holding the main colours used in colour scheme.
   /// Make calls to this class to be able to easy update colours.

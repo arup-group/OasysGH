@@ -9,7 +9,6 @@ using Grasshopper.Kernel.Attributes;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Class to create custom component UI with multiple dropdowns
   ///
@@ -68,6 +67,7 @@ namespace OasysGH.UI {
     private List<RectangleF> _textBound;
 
     private List<bool> _unfolded;
+
     public DropDownComponentAttributes(GH_Component owner, Action<int, int> clickHandle, List<List<string>> dropdownContents, List<string> selections, List<string> spacerTexts = null, List<string> initialdescriptions = null) : base(owner) {
       _dropdownlists = dropdownContents;
       _spacerTxts = spacerTexts;

@@ -11,7 +11,6 @@ using OasysGH.Components;
 using OasysUnits;
 
 namespace GH_UnitNumber.Components {
-
   public class ConvertUnitNumber : GH_OasysDropDownComponent {
     // This region handles how the component in displayed on the ribbon
     // including name, exposure level and icon
@@ -24,6 +23,7 @@ namespace GH_UnitNumber.Components {
     private OasysGH.Parameters.GH_UnitNumber _convertedUnitNumber;
     private Enum _selectedUnit;
     private Dictionary<string, Enum> _unitDictionary;
+
     public ConvertUnitNumber() : base("Convert UnitNumber",
       "ConvertUnit",
       "Convert a unit number (quantity) into another unit",

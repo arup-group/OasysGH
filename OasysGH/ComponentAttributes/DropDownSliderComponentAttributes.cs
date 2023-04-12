@@ -12,7 +12,6 @@ using Grasshopper.Kernel.Special;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Class to create custom component UI with multiple dropdowns
   ///
@@ -92,6 +91,7 @@ namespace OasysGH.UI {
     private List<RectangleF> _textBound;
 
     private List<bool> _unfolded;
+
     public DropDownSliderComponentAttributes(GH_Component owner, Action<int, int> clickHandle, List<List<string>> dropdownContents, List<string> selections,
                                                                                                                                                     bool Slider, Action<double> sliderValue, Action<double, double> setMaxMinVals, double initValue, double maxVal, double minVal, int digits,
         List<string> spacerTexts = null, List<string> initialdescriptions = null) : base(owner) {

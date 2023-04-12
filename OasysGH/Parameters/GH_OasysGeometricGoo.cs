@@ -3,7 +3,6 @@ using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 
 namespace OasysGH.Parameters {
-
   public abstract class GH_OasysGeometricGoo<T> : GH_GeometricGoo<T>, IGH_PreviewData {
     public override BoundingBox Boundingbox {
       get {
@@ -36,6 +35,7 @@ namespace OasysGH.Parameters {
     public override string TypeDescription => PluginInfo.ProductName + " " + TypeName + " Parameter";
     public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
     private BoundingBox _boundingBox;
+
     public GH_OasysGeometricGoo(T item) {
       if (item == null)
         Value = item;

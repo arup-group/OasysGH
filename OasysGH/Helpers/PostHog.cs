@@ -9,9 +9,7 @@ using Newtonsoft.Json;
 using OasysGH.Components;
 
 namespace OasysGH.Helpers {
-
   public class PostHog {
-
     private class PhContainer {
       public Dictionary<string, object> Properties { get; set; }
       [JsonProperty("api_key")]
@@ -33,6 +31,7 @@ namespace OasysGH.Helpers {
 
     internal static User currentUser = new User();
     private static HttpClient phClient = new HttpClient();
+
     public static void AddedToDocument(GH_OasysComponent component) {
       AddedToDocument(component, component.PluginInfo);
     }

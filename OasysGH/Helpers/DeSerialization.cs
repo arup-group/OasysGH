@@ -2,8 +2,8 @@
 using GH_IO.Serialization;
 
 namespace OasysGH.Helpers {
-
   internal class DeSerialization {
+
     internal static void ReadDropDownComponents(ref GH_IReader reader, ref List<List<string>> dropDownItems, ref List<string> selecteditems, ref List<string> spacerDescriptions) {
       // skip reading anything if dropdown hasnt been set by write method
       if (reader.ItemExists("dropdown")) {

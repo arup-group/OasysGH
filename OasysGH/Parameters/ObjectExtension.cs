@@ -5,8 +5,8 @@ using System.Linq;
 using System.Reflection;
 
 namespace OasysGH {
-
   public static class ObjectExtension {
+
     public static object Duplicate(this object objSource, bool duplicateFields = false) {
       if (objSource == null)
         return null;
