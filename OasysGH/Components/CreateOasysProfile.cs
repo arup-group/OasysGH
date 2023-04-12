@@ -18,7 +18,6 @@ using OasysUnits.Units;
 using Rhino.Geometry;
 
 namespace OasysGH.Components {
-
   public abstract class CreateOasysProfile : GH_OasysDropDownComponent {
     protected enum FoldMode {
       Catalogue,
