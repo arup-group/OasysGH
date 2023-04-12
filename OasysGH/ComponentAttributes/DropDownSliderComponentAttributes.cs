@@ -468,7 +468,7 @@ namespace OasysGH.UI {
 
             // setup size of scroll bar
             _scrollBar.X = _dropdownBound[i].X + _dropdownBound[i].Width - 8; // locate from right-side of dropdown area
-                                                                           // compute height based on number of items in list, but with a minimum size of 2 rows
+                                                                              // compute height based on number of items in list, but with a minimum size of 2 rows
             _scrollBar.Height = (float)Math.Max(2 * h1, _dropdownBound[i].Height * ((double)_maxNoRows / ((double)_dropdownlists[i].Count)));
             _scrollBar.Width = 8; // width of mouse-grab area (actual scroll bar drawn later)
 

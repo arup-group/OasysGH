@@ -78,7 +78,6 @@ namespace OasysGH.UI {
       _spacerTxt = spacerText;
     }
 
-    #region Custom layout logic
     public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e) {
       if (e.Button == System.Windows.Forms.MouseButtons.Left) {
         var comp = Owner as GH_Component;
@@ -330,10 +329,6 @@ namespace OasysGH.UI {
       Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + h0 + h1 / 2 + h2 + h3 + 5 * s);
     }
 
-    #endregion Custom layout logic
-
-
-    #region Custom Render logic
     protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel) {
       base.Render(canvas, graphics, channel);
 
@@ -402,7 +397,5 @@ namespace OasysGH.UI {
         CheckBox.DrawCheckButton(graphics, new PointF(_zzBounds.X + _zzBounds.Width / 2, _zzBounds.Y + _zzBounds.Height / 2), _zz, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
       }
     }
-
-    #endregion Custom Render logic
   }
 }

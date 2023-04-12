@@ -10,8 +10,6 @@ using OasysUnits;
 namespace GH_UnitNumber.Components {
 
   public class ConvertUnitNumber_OBSOLETE : GH_OasysDropDownComponent {
-
-    #region Name and Ribbon Layout
     // This region handles how the component in displayed on the ribbon
     // including name, exposure level and icon
     public override Guid ComponentGuid => new Guid("9e7a3b43-eb15-4f2b-9023-e1582ec63ed2");
@@ -27,10 +25,6 @@ namespace GH_UnitNumber.Components {
                                   : base("Convert UnitNumber", "ConvertUnit", "Convert a unit number (quantity) into another unit",
             "Params",
             "Util") { Hidden = true; } // sets the initial state of the component to hidden
-
-    #endregion Name and Ribbon Layout
-
-    #region Input and output
 
     public override void SetSelected(int i, int j) {
       if (_unitDictionary != null) {
@@ -60,8 +54,6 @@ namespace GH_UnitNumber.Components {
     protected override void RegisterOutputParams(GH_OutputParamManager pManager) {
       pManager.AddParameter(new GH_UnitNumberParameter());
     }
-
-    #endregion Input and output
 
     protected override void SolveInstance(IGH_DataAccess DA) {
       // get input
@@ -103,12 +95,9 @@ namespace GH_UnitNumber.Components {
       OasysGH.Helpers.Output.SetItem(this, DA, 0, _convertedUnitNumber);
     }
 
-    #region Custom UI
     protected override void UpdateUIFromSelectedItems() {
       _comingFromSave = true;
       base.UpdateUIFromSelectedItems();
     }
-
-    #endregion Custom UI
   }
 }

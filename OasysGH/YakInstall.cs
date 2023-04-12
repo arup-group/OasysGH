@@ -27,7 +27,6 @@ namespace OasysGH {
       IEnumerable<Package> installed = yak.List(); // list installed packages
       foreach (Package package in installed) {
         if (package.Name == pack.Name) {
-
           var installedVersion = new System.Version(package.Version.Replace("-beta", string.Empty));
           if (package.Version.Contains("-beta"))
             installedVersion = new System.Version(installedVersion.Major, installedVersion.Minor, installedVersion.Build, installedVersion.Revision + 1);

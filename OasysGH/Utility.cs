@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using OasysGH.Units.UI.MainMenu;
+﻿using OasysGH.Units.UI.MainMenu;
 
 namespace OasysGH {
 

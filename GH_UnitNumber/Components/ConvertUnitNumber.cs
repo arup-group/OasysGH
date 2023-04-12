@@ -13,8 +13,6 @@ using OasysUnits;
 namespace GH_UnitNumber.Components {
 
   public class ConvertUnitNumber : GH_OasysDropDownComponent {
-
-    #region Name and Ribbon Layout
     // This region handles how the component in displayed on the ribbon
     // including name, exposure level and icon
     public override Guid ComponentGuid => new Guid("267b3293-f4ac-48ab-ab66-2d194c86aa52");
@@ -34,9 +32,6 @@ namespace GH_UnitNumber.Components {
       Hidden = true; // sets the initial state of the component to hidden
     }
 
-    #endregion Name and Ribbon Layout
-
-    #region Input and output
     public override void AppendAdditionalMenuItems(ToolStripDropDown menu) {
       Menu_AppendSeparator(menu);
 
@@ -146,8 +141,6 @@ namespace GH_UnitNumber.Components {
       pManager.AddParameter(new GH_UnitNumberParameter());
     }
 
-    #endregion Input and output
-
     protected override void SolveInstance(IGH_DataAccess DA) {
       // get input
       OasysGH.Parameters.GH_UnitNumber inUnitNumber = null;
@@ -213,12 +206,9 @@ namespace GH_UnitNumber.Components {
       OasysGH.Helpers.Output.SetItem(this, DA, 0, _convertedUnitNumber);
     }
 
-    #region Custom UI
     protected override void UpdateUIFromSelectedItems() {
       _comingFromSave = true;
       base.UpdateUIFromSelectedItems();
     }
-
-    #endregion Custom UI
   }
 }

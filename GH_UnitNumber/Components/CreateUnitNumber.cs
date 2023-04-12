@@ -15,8 +15,6 @@ namespace GH_UnitNumber.Components {
   /// Component to create a new UnitNumber
   /// </summary>
   public class CreateUnitNumber : GH_OasysDropDownComponent {
-
-    #region Name and Ribbon Layout
     // This region handles how the component in displayed on the ribbon including name, exposure level and icon
     public override Guid ComponentGuid => new Guid("a6d79db6-844f-4228-b38f-9223762185fb");
 
@@ -37,9 +35,6 @@ namespace GH_UnitNumber.Components {
       Hidden = true; // sets the initial state of the component to hidden
     }
 
-    #endregion Name and Ribbon Layout
-
-    #region Input and output
     public override void SetSelected(int i, int j) {
       _selectedItems[i] = _dropDownItems[i][j];
 
@@ -187,8 +182,6 @@ namespace GH_UnitNumber.Components {
       pManager.AddParameter(new GH_UnitNumberParameter());
     }
 
-    #endregion Input and output
-
     protected override void SolveInstance(IGH_DataAccess DA) {
       if (DA.GetData(0, ref _val)) {
         var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
@@ -292,7 +285,6 @@ namespace GH_UnitNumber.Components {
       }
     }
 
-    #region Custom UI
     protected override void UpdateUIFromSelectedItems() {
       var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
       UpdateQuantityUnitTypeFromUnitString(unit);
@@ -501,7 +493,5 @@ namespace GH_UnitNumber.Components {
           throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
       }
     }
-
-    #endregion Custom UI
   }
 }

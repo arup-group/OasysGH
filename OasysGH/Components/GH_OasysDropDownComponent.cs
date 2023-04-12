@@ -23,7 +23,6 @@ namespace OasysGH.Components {
     public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory) {
     }
 
-    #region UI
     bool IGH_VariableParameterComponent.CanInsertParameter(GH_ParameterSide side, int index) => false;
 
     bool IGH_VariableParameterComponent.CanRemoveParameter(GH_ParameterSide side, int index) => false;
@@ -127,9 +126,6 @@ namespace OasysGH.Components {
       UpdateUI();
     }
 
-    #endregion UI
-
-    #region expire downstream
     private void SetExpireDownStream() {
       if (_outputsAreExpired != null && _outputsAreExpired.Count > 0) {
         _outputIsExpired = new Dictionary<int, bool>();
@@ -141,7 +137,5 @@ namespace OasysGH.Components {
         }
       }
     }
-
-    #endregion expire downstream
   }
 }

@@ -103,10 +103,6 @@ namespace OasysGH.Parameters {
         return PluginInfo.ProductName + " " + TypeName + " (" + Value.ToString() + ")";
     }
 
-
-    #region transformation methods
     public abstract override IGH_GeometricGoo Transform(Transform xform);
-
-    #endregion transformation methods
   }
 }
