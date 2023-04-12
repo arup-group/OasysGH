@@ -4,7 +4,6 @@ using Grasshopper.GUI;
 using Grasshopper.Kernel;
 
 namespace OasysGH.UI.Helpers {
-
   /// <summary>
   /// Class holding custom UI graphical buttons/boxes
   /// </summary>

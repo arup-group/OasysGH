@@ -8,7 +8,6 @@ using OasysGH.Components;
 using OasysUnits;
 
 namespace GH_UnitNumber.Components {
-
   public class ConvertUnitNumber_OBSOLETE : GH_OasysDropDownComponent {
     // This region handles how the component in displayed on the ribbon
     // including name, exposure level and icon

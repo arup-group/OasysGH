@@ -4,7 +4,6 @@ using OasysUnits.Units;
 using Rhino;
 
 namespace OasysGH.Units.Helpers {
-
   public class RhinoUnit {
     public static LengthUnit GetRhinoLengthUnit() {
       if (RhinoDoc.ActiveDoc == null)

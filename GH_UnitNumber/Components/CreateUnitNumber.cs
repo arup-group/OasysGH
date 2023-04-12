@@ -10,7 +10,6 @@ using OasysUnits;
 using OasysUnits.Units;
 
 namespace GH_UnitNumber.Components {
-
   /// <summary>
   /// Component to create a new UnitNumber
   /// </summary>

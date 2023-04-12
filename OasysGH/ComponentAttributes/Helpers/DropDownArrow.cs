@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 
 namespace OasysGH.UI.Helpers {
-
   /// <summary>
   /// Method to draw a dropdown arrow
   ///

@@ -6,7 +6,6 @@ using OasysUnits.Units;
 using Xunit;
 
 namespace OasysGHTests.Parameters {
-
   [Collection("ComposAPI Fixture collection")]
   public class ObjectExtensionTest {
     public static IEnumerable<object[]> GetDataEqualsTest2() {

@@ -5,7 +5,6 @@ using Grasshopper.Kernel.Special;
 using Xunit;
 
 namespace GH_UnitNumberTests.Helpers {
-
   internal class Helper {
     public static GH_Document CreateDocument(string path) {
       var io = new GH_DocumentIO();

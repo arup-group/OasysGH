@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 
 namespace OasysGH.UI.Helpers {
-
   /// <summary>
   /// Class holding custom UI graphical buttons/boxes
   /// </summary>

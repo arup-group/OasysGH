@@ -6,7 +6,6 @@ using OasysUnits.Units;
 using Xunit;
 
 namespace GH_UnitNumberTests.Components.Helpers {
-
   [Collection("GrasshopperFixture collection")]
   public class InputTests {
     public static GH_Document Document() {

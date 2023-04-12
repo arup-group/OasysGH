@@ -2,7 +2,6 @@
 using OasysGH.Helpers;
 
 namespace OasysGH.Components {
-
   public abstract class GH_OasysTaskCapableComponent<T> : GH_TaskCapableComponent<T> {
     public abstract OasysPluginInfo PluginInfo { get; }
 

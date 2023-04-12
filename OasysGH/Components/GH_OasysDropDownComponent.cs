@@ -9,7 +9,6 @@ using OasysUnits;
 using OasysUnits.Serialization.JsonNet;
 
 namespace OasysGH.Components {
-
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent {
     protected internal bool _alwaysExpireDownStream = false;
     protected internal List<List<string>> _dropDownItems;

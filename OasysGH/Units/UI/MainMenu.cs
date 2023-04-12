@@ -4,7 +4,6 @@ using Grasshopper.GUI;
 using Grasshopper.GUI.Canvas;
 
 namespace OasysGH.Units.UI.MainMenu {
-
   internal class LoadMainMenu {
     private static bool menuLoaded = false;
     private static ToolStripMenuItem oasysMenu;

@@ -5,7 +5,6 @@ using OasysUnits.Units;
 using Xunit;
 
 namespace OasysGHTests.Units.Helpers {
-
   [Collection("GrasshopperFixture collection")]
   public class UnitsHelperTests {
     [Theory]

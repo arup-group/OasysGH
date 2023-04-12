@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using OasysGH.Components;
 
 namespace OasysGH.Helpers {
-
   public class PostHog {
 
     private class PhContainer {

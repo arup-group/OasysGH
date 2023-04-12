@@ -9,7 +9,6 @@ using Grasshopper.Kernel.Attributes;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-
   public class CheckBoxComponentComponentAttributes : GH_ComponentAttributes {
     public float MinWidth {
       get => 90;

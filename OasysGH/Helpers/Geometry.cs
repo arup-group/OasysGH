@@ -9,7 +9,6 @@ using OasysUnits.Units;
 using Rhino.Geometry;
 
 namespace OasysGH.Helpers {
-
   public static class Geometry {
     public static Tuple<List<Point3d>, List<List<Point3d>>> PointsFromPerimeterProfile(IPerimeterProfile profile, Plane local) {
       if (profile == null) {

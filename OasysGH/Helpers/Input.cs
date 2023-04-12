@@ -8,7 +8,6 @@ using OasysUnits;
 using OasysUnits.Units;
 
 namespace OasysGH.Helpers {
-
   public static class Input {
     /// <summary>
     /// Helper method to get custom parameter input item

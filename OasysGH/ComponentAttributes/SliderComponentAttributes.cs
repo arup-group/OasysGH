@@ -12,7 +12,6 @@ using Grasshopper.Kernel.Special;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Class to create custom component UI with a single dropdown menu
   ///

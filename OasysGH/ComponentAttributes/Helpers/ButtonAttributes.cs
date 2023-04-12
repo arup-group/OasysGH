@@ -2,7 +2,6 @@
 using System.Drawing.Drawing2D;
 
 namespace OasysGH.UI.Helpers {
-
   /// <summary>
   /// Method to draw a rounded rectangle
   ///

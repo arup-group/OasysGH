@@ -4,7 +4,6 @@ using System.Linq;
 using OasysUnits.Units;
 
 namespace OasysGH.Units.Helpers {
-
   public class FilteredUnits {
 
     public static List<string> FilteredAccelerationUnits = new List<string>(new[]

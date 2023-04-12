@@ -3,7 +3,6 @@ using System.IO;
 using Xunit;
 
 namespace Rhino.Test {
-
   [CollectionDefinition("GrasshopperFixture collection")]
   public class GrasshopperCollection : ICollectionFixture<GrasshopperFixture> {
     // This class has no code, and is never created. Its purpose is simply

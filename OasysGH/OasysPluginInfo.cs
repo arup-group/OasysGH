@@ -1,7 +1,6 @@
 ﻿using System;
 
 namespace OasysGH {
-
   public static class OasysGHVersion {
     public const bool IsBeta = true;
 

@@ -7,7 +7,6 @@ using Grasshopper.Kernel.Types;
 using OasysUnits;
 
 namespace GH_UnitNumber {
-
   /// <summary>
   /// This class provides a Parameter interface for the CustomGoo type.
   /// </summary>

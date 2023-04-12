@@ -1,7 +1,6 @@
 ﻿using Grasshopper.Kernel.Types;
 
 namespace OasysGH.Parameters {
-
   public abstract class GH_OasysGoo<T> : GH_Goo<T> {
     public override bool IsValid => Value != null;
     public override string IsValidWhyNot {

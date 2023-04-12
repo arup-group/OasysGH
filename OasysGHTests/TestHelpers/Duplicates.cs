@@ -6,7 +6,6 @@ using System.Reflection;
 using Xunit;
 
 namespace OasysGHTests.TestHelpers {
-
   public class Duplicates {
     public static bool AreEqual(object objA, object objB, bool excludeGuid = false) {
       if (!(excludeGuid && objA.Equals(typeof(Guid))))
