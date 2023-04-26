@@ -7,7 +7,7 @@ namespace OasysGH.Parameters {
     public override BoundingBox Boundingbox {
       get {
         if (!_boundingBox.IsValid) {
-          _boundingBox = GetBoundingBox(Rhino.Geometry.Transform.ZeroTransformation);
+          _boundingBox = GetGeometry().GetBoundingBox(false);
         }
         return _boundingBox;
       }
