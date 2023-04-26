@@ -4,7 +4,6 @@ using Grasshopper.GUI.Gradient;
 using Rhino.Display;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Colour class holding the main colours used in colour scheme.
   /// Make calls to this class to be able to easy update colours.
@@ -318,7 +317,8 @@ namespace OasysGH.UI {
           return Color.FromArgb(255, 178, 178, 178);
 
         case 10:
-          return Color.FromArgb(255, 32, 32, 32); ;
+          return Color.FromArgb(255, 32, 32, 32);
+          ;
         case 24:
           return Color.FromArgb(255, 51, 82, 82);
 
@@ -357,8 +357,7 @@ namespace OasysGH.UI {
         gH_Gradient.AddGrip(0.333, Color.FromArgb(255, 220, 71));
         gH_Gradient.AddGrip(0.666, Color.FromArgb(255, 127, 71));
         gH_Gradient.AddGrip(1, Color.FromArgb(205, 0, 71));
-      }
-      else {
+      } else {
         for (int i = 0; i < colours.Count; i++) {
           double t = 1.0 - 2.0 / ((double)colours.Count - 1.0) * (double)i;
           gH_Gradient.AddGrip(t, colours[i]);

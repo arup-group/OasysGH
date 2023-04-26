@@ -8,7 +8,6 @@ using Grasshopper.Kernel.Attributes;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Class to create custom component UI with three buttons and 6 check box toggles underneath
   ///
@@ -67,6 +66,7 @@ namespace OasysGH.UI {
     private bool _zz;
     private RectangleF _zzBounds;
     private RectangleF _zzTxtBounds;
+
     public SupportComponentAttributes(GH_Component owner, Action<bool, bool, bool, bool, bool, bool> updateHandle, string spacerText, bool resx, bool resy, bool resz, bool resxx, bool resyy, bool reszz) : base(owner) {
       _x = resx;
       _y = resy;
@@ -78,13 +78,13 @@ namespace OasysGH.UI {
       _spacerTxt = spacerText;
     }
 
-    #region Custom layout logic
     public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e) {
       if (e.Button == System.Windows.Forms.MouseButtons.Left) {
         var comp = Owner as GH_Component;
 
         if (_txtFreeBounds.Contains(e.CanvasLocation)) {
-          if (_x == false & _y == false & _z == false & _xx == false & _yy == false & _zz == false) return GH_ObjectResponse.Handled;
+          if (_x == false & _y == false & _z == false & _xx == false & _yy == false & _zz == false)
+            return GH_ObjectResponse.Handled;
           comp.RecordUndoEvent("Free");
           _x = false;
           _y = false;
@@ -98,7 +98,8 @@ namespace OasysGH.UI {
         }
 
         if (_txtPinBounds.Contains(e.CanvasLocation)) {
-          if (_x == true & _y == true & _z == true & _xx == false & _yy == false & _zz == false) return GH_ObjectResponse.Handled;
+          if (_x == true & _y == true & _z == true & _xx == false & _yy == false & _zz == false)
+            return GH_ObjectResponse.Handled;
           comp.RecordUndoEvent("Pin");
           _x = true;
           _y = true;
@@ -112,7 +113,8 @@ namespace OasysGH.UI {
         }
 
         if (_txtFixBounds.Contains(e.CanvasLocation)) {
-          if (_x == true & _y == true & _z == true & _xx == true & _yy == true & _zz == true) return GH_ObjectResponse.Handled;
+          if (_x == true & _y == true & _z == true & _xx == true & _yy == true & _zz == true)
+            return GH_ObjectResponse.Handled;
           comp.RecordUndoEvent("Fix");
           _x = true;
           _y = true;
@@ -330,10 +332,6 @@ namespace OasysGH.UI {
       Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + h0 + h1 / 2 + h2 + h3 + 5 * s);
     }
 
-    #endregion Custom layout logic
-
-
-    #region Custom Render logic
     protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel) {
       base.Render(canvas, graphics, channel);
 
@@ -402,7 +400,5 @@ namespace OasysGH.UI {
         CheckBox.DrawCheckButton(graphics, new PointF(_zzBounds.X + _zzBounds.Width / 2, _zzBounds.Y + _zzBounds.Height / 2), _zz, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
       }
     }
-
-    #endregion Custom Render logic
   }
 }

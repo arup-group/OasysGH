@@ -4,8 +4,8 @@ using OasysUnits.Units;
 using static OasysGH.Units.DefaultUnits;
 
 namespace OasysGH.Units {
-
   public static class Utility {
+
     public static void SetupUnitsDuringLoad(bool headless = false) {
       bool settingsExist = ReadSettings();
       if (!settingsExist)

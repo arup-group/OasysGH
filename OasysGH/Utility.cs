@@ -1,11 +1,9 @@
-﻿using System;
-using System.Reflection;
-using OasysGH.Units.UI.MainMenu;
+﻿using OasysGH.Units.UI.MainMenu;
 
 namespace OasysGH {
-
   public static class Utility {
     private static object unitsLoaded = false;
+
     public static void InitialiseMainMenuAndDefaultUnits(bool installGH_UnitNumber = true) {
       lock (unitsLoaded) // lock so that only one plugin will load this
       {
@@ -17,8 +15,7 @@ namespace OasysGH {
             try {
               // if triggered by Rhino6 this will fail (which is ok):
               YakInstall.InstallGH_UnitNumberPackageAsync();
-            }
-            catch (System.Exception) {
+            } catch (System.Exception) {
               // do nothing.
             }
           }

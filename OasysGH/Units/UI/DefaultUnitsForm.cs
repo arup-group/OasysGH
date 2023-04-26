@@ -7,7 +7,6 @@ using OasysUnits;
 using OasysUnits.Units;
 
 namespace OasysGH.Units.UI {
-
   public partial class DefaultUnitsForm : Form {
     private readonly List<string> _accelerationAbbr = UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Acceleration);
     private readonly List<string> _areaAbbr = UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Area);

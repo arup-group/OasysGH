@@ -5,8 +5,8 @@ using System.Linq;
 using System.Reflection;
 
 namespace OasysGH {
-
   public static class ObjectExtension {
+
     public static object Duplicate(this object objSource, bool duplicateFields = false) {
       if (objSource == null)
         return null;
@@ -26,8 +26,7 @@ namespace OasysGH {
         }
         try {
           return nativeDuplicate.Invoke(objSource, parametersArray);
-        }
-        catch (Exception) {
+        } catch (Exception) {
         }
       }
 
@@ -66,8 +65,7 @@ namespace OasysGH {
             if (typeof(IEnumerable).IsAssignableFrom(propertyType) && !typeof(string).IsAssignableFrom(propertyType)) {
               if (objPropertyValue == null) {
                 property.SetValue(objTarget, null, null);
-              }
-              else {
+              } else {
                 IEnumerable<object> enumerable = ((IEnumerable)objPropertyValue).Cast<object>();
                 Type enumrableType = enumerable.GetType().GetGenericArguments()[0];
 
@@ -95,19 +93,16 @@ namespace OasysGH {
             // check whether property type is value type, enum or string type
             else if (propertyType.IsValueType || propertyType.IsEnum || propertyType.Equals(typeof(System.String))) {
               property.SetValue(objTarget, objPropertyValue, null);
-            }
-            else
-            // property type is object/complex type, so need to recursively call this method until the end of the tree is reached
-            {
+            } else
+              // property type is object/complex type, so need to recursively call this method until the end of the tree is reached
+              {
               if (objPropertyValue == null) {
                 property.SetValue(objTarget, null, null);
-              }
-              else {
+              } else {
                 property.SetValue(objTarget, objPropertyValue.Duplicate(), null);
               }
             }
-          }
-          catch (TargetParameterCountException) {
+          } catch (TargetParameterCountException) {
           }
         }
       }
@@ -136,8 +131,7 @@ namespace OasysGH {
             if (typeof(IEnumerable).IsAssignableFrom(propertyType) && !typeof(string).IsAssignableFrom(propertyType)) {
               if (objPropertyValue == null) {
                 field.SetValue(objTarget, null);
-              }
-              else {
+              } else {
                 IEnumerable<object> enumerable = ((IEnumerable)objPropertyValue).Cast<object>();
                 Type enumrableType = enumerable.GetType().GetGenericArguments()[0];
 
@@ -165,19 +159,16 @@ namespace OasysGH {
             // check whether property type is value type, enum or string type
             else if (propertyType.IsValueType || propertyType.IsEnum || propertyType.Equals(typeof(System.String))) {
               field.SetValue(objTarget, objPropertyValue);
-            }
-            else
-            // property type is object/complex type, so need to recursively call this method until the end of the tree is reached
-            {
+            } else
+              // property type is object/complex type, so need to recursively call this method until the end of the tree is reached
+              {
               if (objPropertyValue == null) {
                 field.SetValue(objTarget, null);
-              }
-              else {
+              } else {
                 field.SetValue(objTarget, objPropertyValue.Duplicate());
               }
             }
-          }
-          catch (TargetParameterCountException) {
+          } catch (TargetParameterCountException) {
           }
         }
       }

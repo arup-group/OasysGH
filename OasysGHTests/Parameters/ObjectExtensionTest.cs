@@ -6,9 +6,9 @@ using OasysUnits.Units;
 using Xunit;
 
 namespace OasysGHTests.Parameters {
-
   [Collection("ComposAPI Fixture collection")]
   public class ObjectExtensionTest {
+
     public static IEnumerable<object[]> GetDataEqualsTest2() {
       var allData = new List<object[]>
   {
@@ -170,6 +170,13 @@ namespace OasysGHTests.Parameters {
     }
   }
 
+  public enum TestEnum {
+    Value1 = 1,
+    Value2 = 2,
+    Value3 = 3,
+    None = -1
+  }
+
   public class TestObject {
     internal bool B { get; set; }
     internal IList<TestObject> Children { get; set; } = new List<TestObject>();
@@ -181,6 +188,7 @@ namespace OasysGHTests.Parameters {
     internal string S { get; set; }
     internal IList<Length> Structs { get; set; } = new List<Length>();
     internal TestEnum TestEnum { get; set; }
+
     public TestObject() {
     }
 
@@ -217,6 +225,7 @@ namespace OasysGHTests.Parameters {
     internal string _s;
     internal IList<Length> _structs = new List<Length>();
     internal TestEnum _testEnum;
+
     public TestObjectWithFields() {
     }
 
@@ -240,12 +249,5 @@ namespace OasysGHTests.Parameters {
       _iQuantities = iQuantities;
       _structs = structs;
     }
-  }
-
-  public enum TestEnum {
-    Value1 = 1,
-    Value2 = 2,
-    Value3 = 3,
-    None = -1
   }
 }

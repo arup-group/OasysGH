@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 
 namespace OasysGH.UI.Helpers {
-
   /// <summary>
   /// Class holding custom UI graphical buttons/boxes
   /// </summary>
   public static class CheckBox {
+
     /// <summary>
     /// Method to draw a check box with GSA-styling
     ///
@@ -30,8 +30,7 @@ namespace OasysGH.UI.Helpers {
         pen.Color = Color.White;
         pen.Width = size / 8;
         graphics.DrawLines(pen, new PointF[] { new PointF(center.X - size / 2 + pen.Width, center.Y), new PointF(center.X - pen.Width, center.Y + size / 2 - pen.Width), new PointF(center.X + size / 2 - pen.Width, center.Y - size / 2 + pen.Width) });
-      }
-      else {
+      } else {
         graphics.FillRectangle(passiveFill, center.X - size / 2, center.Y - size / 2, size, size);
         var pen = new Pen(passiveEdge) {
           Width = size / 8

@@ -4,11 +4,11 @@ using Grasshopper.GUI;
 using Grasshopper.Kernel;
 
 namespace OasysGH.UI.Helpers {
-
   /// <summary>
   /// Class holding custom UI graphical buttons/boxes
   /// </summary>
   public static class WidthAttributes {
+
     public static float MaxTextWidth(List<string> spacerTxts, Font font) {
       float sp = new float(); //width of spacer text
 

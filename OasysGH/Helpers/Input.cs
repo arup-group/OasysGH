@@ -8,8 +8,8 @@ using OasysUnits;
 using OasysUnits.Units;
 
 namespace OasysGH.Helpers {
-
   public static class Input {
+
     /// <summary>
     /// Helper method to get custom parameter input item
     /// </summary>
@@ -26,13 +26,11 @@ namespace OasysGH.Helpers {
       if (DA.GetData(inputid, ref gh_typ)) {
         if (gh_typ.Value is Type) {
           return (Type)gh_typ.Value;
-        }
-        else {
+        } else {
           owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " input (" + gh_typ.Value.GetType().Name + ") to " + typeof(Type).Name.Replace("Goo", string.Empty));
           return null;
         }
-      }
-      else if (!owner.Params.Input[inputid].Optional)
+      } else if (!owner.Params.Input[inputid].Optional)
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
 
       return null;
@@ -57,15 +55,13 @@ namespace OasysGH.Helpers {
         for (int i = 0; i < gh_typs.Count; i++) {
           if (gh_typs[i].Value is Type) {
             items.Add((Type)gh_typs[i].Value);
-          }
-          else {
+          } else {
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Unable to convert " + owner.Params.Input[inputid].NickName + " input (index " + i + " (" + gh_typs[i].Value.GetType().Name + ")) to " + typeof(Type).Name.Replace("Goo", string.Empty));
             continue;
           }
         }
         return items;
-      }
-      else if (!owner.Params.Input[inputid].Optional) {
+      } else if (!owner.Params.Input[inputid].Optional) {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
       return null;
@@ -108,8 +104,7 @@ namespace OasysGH.Helpers {
           if (txt.EndsWith("%")) {
             NumberFormatInfo noComma = CultureInfo.InvariantCulture.NumberFormat;
             unitNumber = new GH_UnitNumber(new Ratio(Convert.ToDouble(txt.Replace("%", string.Empty).Replace(" ", string.Empty), noComma), RatioUnit.Percent));
-          }
-          else if (Length.TryParse(txt, out Length parsed))
+          } else if (Length.TryParse(txt, out Length parsed))
             unitNumber = new GH_UnitNumber(parsed);
           else if (Length.TryParseFeetInches(txt, out Length parsedFeetInches))
             unitNumber = new GH_UnitNumber(parsedFeetInches);
@@ -117,13 +112,11 @@ namespace OasysGH.Helpers {
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
             return Length.Zero;
           }
-        }
-        else {
+        } else {
           owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
           return null;
         }
-      }
-      else if (!isOptional)
+      } else if (!isOptional)
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
 
       if (unitNumber == null)
@@ -155,8 +148,7 @@ namespace OasysGH.Helpers {
               !unitNumber.Value.QuantityInfo.UnitType.Equals(typeof(RatioUnit))) {
               owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Error in " + owner.Params.Input[inputid].NickName + " (item " + i + ") input: Wrong unit type"
                   + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be Length or Ratio");
-            }
-            else {
+            } else {
               lengths.Add(unitNumber.Value);
             }
           }
@@ -173,8 +165,7 @@ namespace OasysGH.Helpers {
             NumberFormatInfo noComma = CultureInfo.InvariantCulture.NumberFormat;
             if (txt.EndsWith("%")) {
               lengths.Add(new Ratio(Convert.ToDouble(txt.Replace("%", string.Empty).Replace(" ", string.Empty), noComma), RatioUnit.Percent));
-            }
-            else if (Length.TryParse(txt, noComma, out Length parsed))
+            } else if (Length.TryParse(txt, noComma, out Length parsed))
               lengths.Add(parsed);
             else if (Length.TryParseFeetInches(txt, out Length parsedFeetInches, noComma))
               lengths.Add(parsedFeetInches);
@@ -182,15 +173,13 @@ namespace OasysGH.Helpers {
               owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Unable to convert " + owner.Params.Input[inputid].NickName + " (item " + i + ") to UnitNumber");
               continue;
             }
-          }
-          else {
+          } else {
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Unable to convert " + owner.Params.Input[inputid].NickName + " (item " + i + ") to UnitNumber");
             continue;
           }
         }
         return lengths;
-      }
-      else if (!isOptional) {
+      } else if (!isOptional) {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
       return null;
@@ -229,8 +218,7 @@ namespace OasysGH.Helpers {
             return res;
           else
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to Ratio");
-        }
-        else {
+        } else {
           owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
           return new Ratio(1, RatioUnit.DecimalFraction);
         }
@@ -273,8 +261,7 @@ namespace OasysGH.Helpers {
             return res;
           else
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to Ratio");
-        }
-        else {
+        } else {
           owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
           return new Ratio(100, RatioUnit.Percent);
         }
@@ -306,8 +293,7 @@ namespace OasysGH.Helpers {
                 + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be " + typeof(T));
             Quantity.TryFrom(0, unit, out zeroReturn);
             return zeroReturn;
-          }
-          else
+          } else
             return unitNumber.Value;
         }
 
@@ -337,14 +323,12 @@ namespace OasysGH.Helpers {
             Quantity.TryFrom(0, unit, out zeroReturn);
             return zeroReturn;
           }
-        }
-        else {
+        } else {
           owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
           Quantity.TryFrom(0, unit, out zeroReturn);
           return zeroReturn;
         }
-      }
-      else if (!owner.Params.Input[inputid].Optional)
+      } else if (!owner.Params.Input[inputid].Optional)
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
 
       Quantity.TryFrom(0, unit, out zeroReturn);
@@ -376,8 +360,7 @@ namespace OasysGH.Helpers {
               owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Error in " + owner.Params.Input[inputid].NickName + " input (index " + i + " (" + gh_typs[i].Value.GetType().Name + ")): Wrong unit type " + Environment.NewLine + "Unit type is " + unitNumber.Value.QuantityInfo.Name + " but must be " + typeof(T));
               Quantity.TryFrom(0, unit, out zeroReturn);
               items.Add(zeroReturn);
-            }
-            else
+            } else
               items.Add(unitNumber.Value);
           }
 
@@ -407,16 +390,14 @@ namespace OasysGH.Helpers {
               Quantity.TryFrom(0, unit, out zeroReturn);
               items.Add(zeroReturn);
             }
-          }
-          else {
+          } else {
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Unable to convert " + owner.Params.Input[inputid].NickName + " (index " + i + ") to UnitNumber");
             Quantity.TryFrom(0, unit, out zeroReturn);
             items.Add(zeroReturn);
           }
         }
         return items;
-      }
-      else if (!owner.Params.Input[inputid].Optional) {
+      } else if (!owner.Params.Input[inputid].Optional) {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
       return items;
@@ -450,13 +431,11 @@ namespace OasysGH.Helpers {
             return new GH_UnitNumber(res);
           else
             owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to Ratio");
-        }
-        else {
+        } else {
           owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + owner.Params.Input[inputid].NickName + " to UnitNumber");
           return null;
         }
-      }
-      else if (!isOptional) {
+      } else if (!isOptional) {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
       return null;

@@ -9,7 +9,6 @@ using OasysUnits;
 using OasysUnits.Serialization.JsonNet;
 
 namespace OasysGH.Components {
-
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent {
     protected internal bool _alwaysExpireDownStream = false;
     protected internal List<List<string>> _dropDownItems;
@@ -20,10 +19,10 @@ namespace OasysGH.Components {
     private static readonly OasysUnitsIQuantityJsonConverter converter = new OasysUnitsIQuantityJsonConverter();
     private Dictionary<int, bool> _outputIsExpired = new Dictionary<int, bool>();
     private Dictionary<int, List<bool>> _outputsAreExpired = new Dictionary<int, List<bool>>();
+
     public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory) {
     }
 
-    #region UI
     bool IGH_VariableParameterComponent.CanInsertParameter(GH_ParameterSide side, int index) => false;
 
     bool IGH_VariableParameterComponent.CanRemoveParameter(GH_ParameterSide side, int index) => false;
@@ -50,13 +49,11 @@ namespace OasysGH.Components {
         // use IQuantity converter if data is a IQuantity (struct)
         IQuantity quantity = ((GH_UnitNumber)(object)data).Value;
         outputsSerialized = JsonConvert.SerializeObject(quantity, converter);
-      }
-      else {
+      } else {
         object obj = ((T)(object)data).ScriptVariable();
         try {
           outputsSerialized = JsonConvert.SerializeObject(obj);
-        }
-        catch (Exception) {
+        } catch (Exception) {
           outputsSerialized = data.GetHashCode().ToString();
         }
       }
@@ -110,8 +107,7 @@ namespace OasysGH.Components {
             item.ExpireSolution(recompute: false);
           }
         }
-      }
-      else
+      } else
         base.ExpireDownStreamObjects();
     }
 
@@ -127,9 +123,6 @@ namespace OasysGH.Components {
       UpdateUI();
     }
 
-    #endregion UI
-
-    #region expire downstream
     private void SetExpireDownStream() {
       if (_outputsAreExpired != null && _outputsAreExpired.Count > 0) {
         _outputIsExpired = new Dictionary<int, bool>();
@@ -141,7 +134,5 @@ namespace OasysGH.Components {
         }
       }
     }
-
-    #endregion expire downstream
   }
 }

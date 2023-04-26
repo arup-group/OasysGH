@@ -2,13 +2,13 @@
 using System.Drawing.Drawing2D;
 
 namespace OasysGH.UI.Helpers {
-
   /// <summary>
   /// Method to draw a rounded rectangle
   ///
   /// Call this method when overriding Render method
   /// </summary>
   public static class ButtonAttributes {
+
     public static GraphicsPath RoundedRect(RectangleF bounds, int radius, bool overlay = false) {
       var b = new RectangleF(bounds.X, bounds.Y, bounds.Width, bounds.Height);
       int diameter = radius * 2;
@@ -39,8 +39,7 @@ namespace OasysGH.UI.Helpers {
         // bottom left arc
         arc.X = b.Left;
         path.AddArc(arc, 90, 90);
-      }
-      else {
+      } else {
         path.AddLine(new PointF(b.X + b.Width, b.Y + b.Height), new PointF(b.X, b.Y + b.Height));
       }
 

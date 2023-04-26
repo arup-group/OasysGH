@@ -9,7 +9,6 @@ using Grasshopper.Kernel.Attributes;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Class to create custom component UI with a button
   ///
@@ -47,7 +46,9 @@ namespace OasysGH.UI {
     private RectangleF SpacerBounds;
 
     public ButtonComponentAttributes(GH_Component owner, string displayText, Action clickHandle, string spacerText = "") : base(owner) {
-      buttonText = displayText; SpacerTxt = spacerText; action = clickHandle;
+      buttonText = displayText;
+      SpacerTxt = spacerText;
+      action = clickHandle;
     }
 
     public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e) {

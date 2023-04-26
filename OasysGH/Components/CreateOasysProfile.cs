@@ -18,7 +18,6 @@ using OasysUnits.Units;
 using Rhino.Geometry;
 
 namespace OasysGH.Components {
-
   public abstract class CreateOasysProfile : GH_OasysDropDownComponent {
     protected enum FoldMode {
       Catalogue,
@@ -157,8 +156,7 @@ namespace OasysGH.Components {
         _selectedItems[0] = "Catalogue";
         updateCat = true;
         i = 0;
-      }
-      else {
+      } else {
         // change selected item
         _selectedItems[i] = _dropDownItems[i][j];
       }
@@ -236,8 +234,7 @@ namespace OasysGH.Components {
           {
             types = _typeNumbers.ToList(); // use current selected list of type numbers
             types.RemoveAt(0); // remove -1 from beginning of list
-          }
-          else
+          } else
             types = new List<int> { _typeIndex }; // create empty list and add the single selected type
 
           // section list with selected types (only types in selected type)
@@ -259,8 +256,7 @@ namespace OasysGH.Components {
           UpdateProfileDescriptions();
 
         base.UpdateUI();
-      }
-      else {
+      } else {
         // update spacer description to match none-catalogue dropdowns
         _spacerDescriptions[1] = "Measure";// = new List<string>(new string[]
 
@@ -280,8 +276,7 @@ namespace OasysGH.Components {
           // update profile type if change is made to first dropdown menu
           _type = profileTypes[_selectedItems[0]];
           Mode2Clicked();
-        }
-        else {
+        } else {
           // change unit
           _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), _selectedItems[i]);
 
@@ -305,8 +300,7 @@ namespace OasysGH.Components {
         Params.Input[i].Description = "Input true to include superseeded catalogue sections";
         Params.Input[i].Access = GH_ParamAccess.item;
         Params.Input[i].Optional = true;
-      }
-      else {
+      } else {
         string unitAbbreviation = Length.GetAbbreviation(_lengthUnit);
 
         int i = 0;
@@ -337,8 +331,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The flange thickness of the angle profile.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IChannelProfile)) {
+        } else if (_type == typeof(IChannelProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the channel profile.";
@@ -366,8 +359,7 @@ namespace OasysGH.Components {
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(ICircleHollowProfile)) {
+        } else if (_type == typeof(ICircleHollowProfile)) {
           Params.Input[i].NickName = "Ø";
           Params.Input[i].Name = "Diameter [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The diameter of the hollow circle.";
@@ -380,15 +372,13 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The wall thickness of the hollow circle.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(ICircleProfile)) {
+        } else if (_type == typeof(ICircleProfile)) {
           Params.Input[i].NickName = "Ø";
           Params.Input[i].Name = "Diameter [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The diameter of the circle.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(ICruciformSymmetricalProfile)) {
+        } else if (_type == typeof(ICruciformSymmetricalProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth (local z axis leg) of the profile.";
@@ -415,8 +405,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The flange thickness of the cruciform.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IEllipseHollowProfile)) {
+        } else if (_type == typeof(IEllipseHollowProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the hollow ellipse.";
@@ -436,8 +425,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The wall thickness of the hollow ellipse.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IEllipseProfile)) {
+        } else if (_type == typeof(IEllipseProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the ellipse.";
@@ -450,8 +438,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The width of the ellipse.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IGeneralCProfile)) {
+        } else if (_type == typeof(IGeneralCProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the generic c section profile.";
@@ -478,8 +465,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The thickness of the generic c section profile.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IGeneralZProfile)) {
+        } else if (_type == typeof(IGeneralZProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the generic z section profile.";
@@ -520,8 +506,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The thickness of the generic z section profile.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IIBeamAsymmetricalProfile)) {
+        } else if (_type == typeof(IIBeamAsymmetricalProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the profile.";
@@ -562,8 +547,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The bpttom flange thickness.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IIBeamCellularProfile)) {
+        } else if (_type == typeof(IIBeamCellularProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the profile.";
@@ -604,8 +588,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The pitch (spacing) between the web openings.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IIBeamProfile)) {
+        } else if (_type == typeof(IIBeamProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the profile.";
@@ -632,8 +615,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The flange thickness of the angle profile.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IRectangleHollowProfile)) {
+        } else if (_type == typeof(IRectangleHollowProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the hollow rectangle.";
@@ -660,8 +642,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The top/bottom thickness of the hollow rectangle.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IRectangleProfile)) {
+        } else if (_type == typeof(IRectangleProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "Depth of the rectangle, in local z-axis direction.";
@@ -674,8 +655,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "Width of the rectangle, in local y-axis direction.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IRectoEllipseProfile)) {
+        } else if (_type == typeof(IRectoEllipseProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The overall depth of the recto-ellipse profile.";
@@ -702,8 +682,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The flat length of the profile's overall width.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(ISecantPileProfile)) {
+        } else if (_type == typeof(ISecantPileProfile)) {
           Params.Input[i].NickName = "Ø";
           Params.Input[i].Name = "Diameter [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The diameter of the piles.";
@@ -730,8 +709,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "Converts the profile into a wall secant pile profile if true -- Converts the profile into a section secant pile profile if false.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(ISheetPileProfile)) {
+        } else if (_type == typeof(ISheetPileProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the sheet pile section profile.";
@@ -772,8 +750,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The web thickness of the sheet pile section profile.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IRectoCircleProfile)) {
+        } else if (_type == typeof(IRectoCircleProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The profile's overall depth considering the side length of the rectangle and the radii of the semicircles on the two ends.";
@@ -786,8 +763,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The profile's width (diameter of the semicircles).";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(ITrapezoidProfile)) {
+        } else if (_type == typeof(ITrapezoidProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth in z-axis direction of trapezoidal profile.";
@@ -807,8 +783,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The bottom width of trapezoidal profile. Bottom is relative to the local z-axis.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(ITSectionProfile)) {
+        } else if (_type == typeof(ITSectionProfile)) {
           Params.Input[i].NickName = "D";
           Params.Input[i].Name = "Depth [" + unitAbbreviation + "]";
           Params.Input[i].Description = "The depth of the T section profile.";
@@ -835,8 +810,7 @@ namespace OasysGH.Components {
           Params.Input[i].Description = "The flange thickness of the T section profile.";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
-        }
-        else if (_type == typeof(IPerimeterProfile)) {
+        } else if (_type == typeof(IPerimeterProfile)) {
           Params.Input[i].NickName = "B";
           Params.Input[i].Name = "Boundary";
           Params.Input[i].Description = "The outer edge polyline or BRep. If BRep contains openings these will be added as voids";
@@ -990,8 +964,7 @@ namespace OasysGH.Components {
         tree.AddRange(profiles, path);
 
         DA.SetDataTree(0, tree);
-      }
-      else if (_mode == FoldMode.Other) {
+      } else if (_mode == FoldMode.Other) {
         IProfile profile = SolveInstanceForStandardProfile(DA);
 
         DA.SetData(0, new OasysProfileGoo(profile));
@@ -1032,8 +1005,7 @@ namespace OasysGH.Components {
             profiles.Add(new CatalogueProfile(catPart));
 
           return profiles;
-        }
-        else if (_search.Contains("cat")) {
+        } else if (_search.Contains("cat")) {
           string[] s = _search.Split(new string[] { "cat" }, StringSplitOptions.None);
           _search = s[s.Length - 1];
         }
@@ -1048,12 +1020,10 @@ namespace OasysGH.Components {
             _profileDescriptions = new List<string>();
             AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No profile found that matches selected profile and search!");
           }
-        }
-        else if (_search != "") {
+        } else if (_search != "") {
           for (int k = 0; k < _sectionList.Count; k++) {
             if (MatchAndAdd(_sectionList[k], _search, ref filteredlist, tryHard)) {
-            }
-            else if (!_search.Any(char.IsDigit)) {
+            } else if (!_search.Any(char.IsDigit)) {
               string test = _sectionList[k].ToString();
               test = Regex.Replace(test, "[0-9]", string.Empty);
               test = test.Replace(".", string.Empty);
@@ -1069,8 +1039,7 @@ namespace OasysGH.Components {
         if (filteredlist.Count > 0) {
           foreach (string profileDescription in filteredlist)
             _profileDescriptions.Add("CAT " + profileDescription);
-        }
-        else {
+        } else {
           AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No profile found that matches selection and search!");
           return profiles;
         }
@@ -1099,8 +1068,7 @@ namespace OasysGH.Components {
           (Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit),
           flange,
           web);
-      }
-      else if (_type == typeof(IChannelProfile)) {
+      } else if (_type == typeof(IChannelProfile)) {
         var flanges = new Flange(
           (Length)Input.LengthOrRatio(this, DA, 3, _lengthUnit),
           (Length)Input.LengthOrRatio(this, DA, 1, _lengthUnit));
@@ -1112,8 +1080,7 @@ namespace OasysGH.Components {
           (Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit),
           flanges,
           web);
-      }
-      else if (_type == typeof(ICircleHollowProfile))
+      } else if (_type == typeof(ICircleHollowProfile))
         profile = new CircleHollowProfile(
           (Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit),
           (Length)Input.LengthOrRatio(this, DA, 1, _lengthUnit));
@@ -1132,8 +1099,7 @@ namespace OasysGH.Components {
           (Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit),
           flange,
           web);
-      }
-      else if (_type == typeof(IEllipseHollowProfile))
+      } else if (_type == typeof(IEllipseHollowProfile))
         profile = new EllipseHollowProfile(
           (Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit),
           (Length)Input.LengthOrRatio(this, DA, 1, _lengthUnit),
@@ -1172,8 +1138,7 @@ namespace OasysGH.Components {
           topFlange,
           bottomFlange,
           web);
-      }
-      else if (_type == typeof(IIBeamCellularProfile)) {
+      } else if (_type == typeof(IIBeamCellularProfile)) {
         var flanges = new Flange(
           (Length)Input.LengthOrRatio(this, DA, 3, _lengthUnit),
           (Length)Input.LengthOrRatio(this, DA, 1, _lengthUnit));
@@ -1187,8 +1152,7 @@ namespace OasysGH.Components {
           IBeamOpeningType.Cellular,
           (Length)Input.LengthOrRatio(this, DA, 4, _lengthUnit),
           (Length)Input.LengthOrRatio(this, DA, 5, _lengthUnit));
-      }
-      else if (_type == typeof(IIBeamProfile)) {
+      } else if (_type == typeof(IIBeamProfile)) {
         var flanges = new Flange(
           (Length)Input.LengthOrRatio(this, DA, 3, _lengthUnit),
           (Length)Input.LengthOrRatio(this, DA, 1, _lengthUnit));
@@ -1200,8 +1164,7 @@ namespace OasysGH.Components {
           (Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit),
           flanges,
           web);
-      }
-      else if (_type == typeof(IRectangleHollowProfile))
+      } else if (_type == typeof(IRectangleHollowProfile))
         profile = new RectangleHollowProfile(
           (Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit),
           (Length)Input.LengthOrRatio(this, DA, 1, _lengthUnit),
@@ -1230,8 +1193,7 @@ namespace OasysGH.Components {
         }
 
         profile = new SecantPileProfile((Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit), (Length)Input.LengthOrRatio(this, DA, 1, _lengthUnit), pileCount, isWallNotSection);
-      }
-      else if (_type == typeof(ISheetPileProfile))
+      } else if (_type == typeof(ISheetPileProfile))
         profile = new SheetPileProfile(
           (Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit),
           (Length)Input.LengthOrRatio(this, DA, 1, _lengthUnit),
@@ -1260,8 +1222,7 @@ namespace OasysGH.Components {
           (Length)Input.LengthOrRatio(this, DA, 0, _lengthUnit),
           flange,
           web);
-      }
-      else if (_type == typeof(IPerimeterProfile)) {
+      } else if (_type == typeof(IPerimeterProfile)) {
         var gh_typ = new GH_ObjectWrapper();
         if (DA.GetData(0, ref gh_typ)) {
           Brep brep = null;
@@ -1307,8 +1268,7 @@ namespace OasysGH.Components {
                     //pt3d.Transform(xform);
                     voidpts.Add(pt3d);
                   }
-                }
-                else {
+                } else {
                   throw new Exception("Cannot convert internal edge to polyline.");
                 }
                 var voidCrv = new Polyline(voidpts);
@@ -1316,8 +1276,7 @@ namespace OasysGH.Components {
               }
             }
             profile = new PerimeterProfile(perimeter, voidPolygons);
-          }
-          else if (GH_Convert.ToCurve(gh_typ.Value, ref crv, GH_Conversion.Both)) {
+          } else if (GH_Convert.ToCurve(gh_typ.Value, ref crv, GH_Conversion.Both)) {
             Polyline solid = null;
             if (crv.TryGetPolyline(out solid)) {
               // get local plane
@@ -1327,23 +1286,19 @@ namespace OasysGH.Components {
               IList<IPolygon> voidPolygons = new List<IPolygon>();
 
               profile = new PerimeterProfile(perimeter, voidPolygons);
-            }
-            else {
+            } else {
               AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert input " + Params.Input[0].NickName + " to polyline");
               return null;
             }
-          }
-          else {
+          } else {
             AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + Params.Input[0].NickName + " to boundary");
             return null;
           }
-        }
-        else {
+        } else {
           AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert " + Params.Input[0].NickName + " to boundary");
           return null;
         }
-      }
-      else {
+      } else {
         AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to create perimeter profile.");
         return null;
       }
@@ -1389,8 +1344,7 @@ namespace OasysGH.Components {
         Params.RegisterInputParam(new Param_Integer());
         Params.RegisterInputParam(new Param_Boolean());
         _lastInputWasSecant = true;
-      }
-      else
+      } else
         _lastInputWasSecant = false;
 
       //if (isPerimeter)
@@ -1412,8 +1366,7 @@ namespace OasysGH.Components {
         Mode1Clicked();
 
         _profileDescriptions = new List<string>() { "CAT " + _selectedItems[3] };
-      }
-      else {
+      } else {
         // update spacer description to match none-catalogue dropdowns
         _spacerDescriptions = new List<string>(new string[]
         {
@@ -1436,8 +1389,7 @@ namespace OasysGH.Components {
       if (Regex.Match(input, pattern, RegexOptions.Singleline).Success) {
         list.Add(item);
         return true;
-      }
-      else if (tryHard && Regex.Match(pattern, "he[abcm]", RegexOptions.Singleline).Success) {
+      } else if (tryHard && Regex.Match(pattern, "he[abcm]", RegexOptions.Singleline).Success) {
         string[] substring = pattern.Split(new string[] { "he" }, StringSplitOptions.None);
         int count = 1;
         if (substring[substring.Length - 1].Length > 1 && !Char.IsNumber(substring[substring.Length - 1][1]))
@@ -1464,8 +1416,7 @@ namespace OasysGH.Components {
             continue;
           _profileDescriptions.Add("CAT " + profile);
         }
-      }
-      else
+      } else
         _profileDescriptions = new List<string>() { "CAT " + _selectedItems[3] };
     }
 

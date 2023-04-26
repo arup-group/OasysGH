@@ -11,10 +11,7 @@ using OasysGH.Components;
 using OasysUnits;
 
 namespace GH_UnitNumber.Components {
-
   public class ConvertUnitNumber : GH_OasysDropDownComponent {
-
-    #region Name and Ribbon Layout
     // This region handles how the component in displayed on the ribbon
     // including name, exposure level and icon
     public override Guid ComponentGuid => new Guid("267b3293-f4ac-48ab-ab66-2d194c86aa52");
@@ -26,6 +23,7 @@ namespace GH_UnitNumber.Components {
     private OasysGH.Parameters.GH_UnitNumber _convertedUnitNumber;
     private Enum _selectedUnit;
     private Dictionary<string, Enum> _unitDictionary;
+
     public ConvertUnitNumber() : base("Convert UnitNumber",
       "ConvertUnit",
       "Convert a unit number (quantity) into another unit",
@@ -34,9 +32,6 @@ namespace GH_UnitNumber.Components {
       Hidden = true; // sets the initial state of the component to hidden
     }
 
-    #endregion Name and Ribbon Layout
-
-    #region Input and output
     public override void AppendAdditionalMenuItems(ToolStripDropDown menu) {
       Menu_AppendSeparator(menu);
 
@@ -51,8 +46,7 @@ namespace GH_UnitNumber.Components {
       if (_unitDictionary != null) {
         valueList.Enabled = true;
         textPanel.Enabled = true;
-      }
-      else {
+      } else {
         valueList.Enabled = false;
         textPanel.Enabled = false;
       }
@@ -146,8 +140,6 @@ namespace GH_UnitNumber.Components {
       pManager.AddParameter(new GH_UnitNumberParameter());
     }
 
-    #endregion Input and output
-
     protected override void SolveInstance(IGH_DataAccess DA) {
       // get input
       OasysGH.Parameters.GH_UnitNumber inUnitNumber = null;
@@ -171,17 +163,14 @@ namespace GH_UnitNumber.Components {
               IQuantity quantity = Quantity.From(0, inUnitNumber.Value.Unit);
               string abbr = quantity.ToString().Replace("0", string.Empty).Trim();
               _selectedItems[0] = abbr;
-            }
-            else
+            } else
               _comingFromSave = false;
           }
-        }
-        else {
+        } else {
           AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert UnitNumber input");
           return;
         }
-      }
-      else {
+      } else {
         AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input a UnitNumber to populate dropdown menu");
         return;
       }
@@ -196,13 +185,11 @@ namespace GH_UnitNumber.Components {
           IQuantity quantity2 = Quantity.From(0, _selectedUnit);
           string abbr = quantity2.ToString().Replace("0", string.Empty).Trim();
           _selectedItems[0] = abbr;
-        }
-        else {
+        } else {
           AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to parse input parameter u to a recognisable unit");
           return;
         }
-      }
-      else {
+      } else {
         // update selected unit from dropdown
         _selectedUnit = _unitDictionary[_selectedItems.Last()];
       }
@@ -213,12 +200,9 @@ namespace GH_UnitNumber.Components {
       OasysGH.Helpers.Output.SetItem(this, DA, 0, _convertedUnitNumber);
     }
 
-    #region Custom UI
     protected override void UpdateUIFromSelectedItems() {
       _comingFromSave = true;
       base.UpdateUIFromSelectedItems();
     }
-
-    #endregion Custom UI
   }
 }

@@ -3,8 +3,8 @@ using Grasshopper.Kernel;
 using OasysGH;
 
 namespace GH_UnitNumber {
-
   public class AddReferencePriority : GH_AssemblyPriority {
+
     public override GH_LoadingInstruction PriorityLoad() {
       // ### Load OasysGH ###
       Utility.InitialiseMainMenuAndDefaultUnits(false);

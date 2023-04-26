@@ -1,7 +1,6 @@
 ﻿using System;
 
 namespace OasysGH {
-
   public static class OasysGHVersion {
     public const bool IsBeta = true;
 
@@ -16,6 +15,7 @@ namespace OasysGH {
     public string PostHogApiKey { get; }
     public string ProductName { get; }
     public string Version { get; }
+
     public OasysPluginInfo(string productName, string pluginName, string version, bool isBeta, string postHogApiKey) {
       ProductName = productName;
       PluginName = pluginName;

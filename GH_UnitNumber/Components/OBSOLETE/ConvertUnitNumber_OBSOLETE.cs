@@ -8,10 +8,7 @@ using OasysGH.Components;
 using OasysUnits;
 
 namespace GH_UnitNumber.Components {
-
   public class ConvertUnitNumber_OBSOLETE : GH_OasysDropDownComponent {
-
-    #region Name and Ribbon Layout
     // This region handles how the component in displayed on the ribbon
     // including name, exposure level and icon
     public override Guid ComponentGuid => new Guid("9e7a3b43-eb15-4f2b-9023-e1582ec63ed2");
@@ -23,14 +20,11 @@ namespace GH_UnitNumber.Components {
     private OasysGH.Parameters.GH_UnitNumber _convertedUnitNumber;
     private Enum _selectedUnit;
     private Dictionary<string, Enum> _unitDictionary;
+
     public ConvertUnitNumber_OBSOLETE()
                                   : base("Convert UnitNumber", "ConvertUnit", "Convert a unit number (quantity) into another unit",
             "Params",
             "Util") { Hidden = true; } // sets the initial state of the component to hidden
-
-    #endregion Name and Ribbon Layout
-
-    #region Input and output
 
     public override void SetSelected(int i, int j) {
       if (_unitDictionary != null) {
@@ -61,8 +55,6 @@ namespace GH_UnitNumber.Components {
       pManager.AddParameter(new GH_UnitNumberParameter());
     }
 
-    #endregion Input and output
-
     protected override void SolveInstance(IGH_DataAccess DA) {
       // get input
       OasysGH.Parameters.GH_UnitNumber inUnitNumber = null;
@@ -83,13 +75,11 @@ namespace GH_UnitNumber.Components {
             else
               _comingFromSave = false;
           }
-        }
-        else {
+        } else {
           AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert UnitNumber input");
           return;
         }
-      }
-      else {
+      } else {
         AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input a UnitNumber to populate dropdown menu");
         return;
       }
@@ -103,12 +93,9 @@ namespace GH_UnitNumber.Components {
       OasysGH.Helpers.Output.SetItem(this, DA, 0, _convertedUnitNumber);
     }
 
-    #region Custom UI
     protected override void UpdateUIFromSelectedItems() {
       _comingFromSave = true;
       base.UpdateUIFromSelectedItems();
     }
-
-    #endregion Custom UI
   }
 }

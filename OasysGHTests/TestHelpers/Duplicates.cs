@@ -6,8 +6,8 @@ using System.Reflection;
 using Xunit;
 
 namespace OasysGHTests.TestHelpers {
-
   public class Duplicates {
+
     public static bool AreEqual(object objA, object objB, bool excludeGuid = false) {
       if (!(excludeGuid && objA.Equals(typeof(Guid))))
         Assert.Equal(objA.ToString(), objB.ToString());
@@ -51,8 +51,7 @@ namespace OasysGHTests.TestHelpers {
             if (typeof(IEnumerable).IsAssignableFrom(propertyTypeB) && !typeof(string).IsAssignableFrom(propertyTypeB)) {
               if (objPropertyValueA == null || objPropertyValueB == null) {
                 Assert.Equal(objPropertyValueA, objPropertyValueB);
-              }
-              else {
+              } else {
                 IEnumerable<object> enumerableA = ((IEnumerable)objPropertyValueA).Cast<object>();
                 IEnumerable<object> enumerableB = ((IEnumerable)objPropertyValueB).Cast<object>();
 
@@ -92,8 +91,7 @@ namespace OasysGHTests.TestHelpers {
                   }
                 }
               }
-            }
-            else {
+            } else {
               Assert.Equal(objPropertyValueA, objPropertyValueB);
             }
           }
@@ -102,17 +100,14 @@ namespace OasysGHTests.TestHelpers {
             if (excludeGuid && propertyTypeA.Equals(typeof(Guid)))
               continue;
             Assert.Equal(objPropertyValueA, objPropertyValueB);
-          }
-          else if (objPropertyValueA == null || objPropertyValueB == null) {
+          } else if (objPropertyValueA == null || objPropertyValueB == null) {
             Assert.Equal(objPropertyValueA, objPropertyValueB);
-          }
-          else
-          // property type is object/complex type, so need to recursively call this method until the end of the tree is reached
-          {
+          } else
+            // property type is object/complex type, so need to recursively call this method until the end of the tree is reached
+            {
             AreEqual(objPropertyValueA, objPropertyValueB, excludeGuid);
           }
-        }
-        catch (TargetParameterCountException) {
+        } catch (TargetParameterCountException) {
           propertyTypeA = propertyA.PropertyType;
         }
       }

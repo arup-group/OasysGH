@@ -12,7 +12,6 @@ using Grasshopper.Kernel.Special;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-
   /// <summary>
   /// Class to create custom component UI with multiple dropdowns
   ///
@@ -92,6 +91,7 @@ namespace OasysGH.UI {
     private List<RectangleF> _textBound;
 
     private List<bool> _unfolded;
+
     public DropDownSliderComponentAttributes(GH_Component owner, Action<int, int> clickHandle, List<List<string>> dropdownContents, List<string> selections,
                                                                                                                                                     bool Slider, Action<double> sliderValue, Action<double, double> setMaxMinVals, double initValue, double maxVal, double minVal, int digits,
         List<string> spacerTexts = null, List<string> initialdescriptions = null) : base(owner) {
@@ -104,8 +104,7 @@ namespace OasysGH.UI {
         for (int i = 0; i < _dropdownlists.Count; i++)
           tempDisplaytxt.Add((initialdescriptions == null) ? _dropdownlists[i][0] : initialdescriptions[i]);
         _displayTexts = tempDisplaytxt;
-      }
-      else
+      } else
         _displayTexts = selections;
 
       _drawSlider = Slider;
@@ -296,16 +295,14 @@ namespace OasysGH.UI {
 
                     // recalculate component
                     comp.ExpireSolution(true);
-                  }
-                  else {
+                  } else {
                     _unfolded[i] = !_unfolded[i];
                     comp.ExpireSolution(true);
                   }
                   return GH_ObjectResponse.Handled;
                 }
               }
-            }
-            else {
+            } else {
               _unfolded[i] = !_unfolded[i];
               comp.ExpireSolution(true);
               return GH_ObjectResponse.Handled;
@@ -468,7 +465,7 @@ namespace OasysGH.UI {
 
             // setup size of scroll bar
             _scrollBar.X = _dropdownBound[i].X + _dropdownBound[i].Width - 8; // locate from right-side of dropdown area
-                                                                           // compute height based on number of items in list, but with a minimum size of 2 rows
+                                                                              // compute height based on number of items in list, but with a minimum size of 2 rows
             _scrollBar.Height = (float)Math.Max(2 * h1, _dropdownBound[i].Height * ((double)_maxNoRows / ((double)_dropdownlists[i].Count)));
             _scrollBar.Width = 8; // width of mouse-grab area (actual scroll bar drawn later)
 
@@ -480,14 +477,12 @@ namespace OasysGH.UI {
               {
                 // update scroll bar position for normal scroll event within bounds
                 _scrollBar.Y = _dropdownBound[i].Y + _deltaY + _scrollStartY;
-              }
-              else {
+              } else {
                 // scroll reached bottom
                 _scrollStartY = _dropdownBound[i].Height - _scrollBar.Height;
                 _deltaY = 0;
               }
-            }
-            else {
+            } else {
               // scroll reached top
               _scrollStartY = 0;
               _deltaY = 0;
@@ -504,8 +499,7 @@ namespace OasysGH.UI {
           for (int j = 0; j < _dropdownlists[i].Count; j++) {
             _dropdownBounds[i].Add(new RectangleF(_borderBound[i].X, _borderBound[i].Y + (j + 1) * h1 + s + contentScroll, _borderBound[i].Width, h1));
           }
-        }
-        else {
+        } else {
           if (_dropdownBounds != null) {
             if (_dropdownBounds.Count == i)
               _dropdownBounds.Add(new List<RectangleF>());
@@ -564,16 +558,14 @@ namespace OasysGH.UI {
             dragPercentage = (_deltaX + _scrollStartX) / (_sliderBound.Width - _grabBound.Width);
             _currentValue = Math.Round(_minValue + dragPercentage * (_maxValue - _minValue), _noDigits);
             dragPercentage = (_currentValue - _minValue) / (_maxValue - _minValue);
-          }
-          else {
+          } else {
             // scroll reached end
             dragPercentage = 1;
             _scrollStartX = _sliderBound.Width - _grabBound.Width;
             _deltaX = 0;
             _currentValue = _maxValue;
           }
-        }
-        else {
+        } else {
           // scroll reached start
           dragPercentage = 0;
           _scrollStartX = 0;
@@ -660,19 +652,16 @@ namespace OasysGH.UI {
                 if (listItem.Y + listItem.Height < _dropdownBound[i].Y) {
                   _dropdownBounds[i][j] = new RectangleF();
                   continue;
-                }
-                else {
+                } else {
                   listItem.Height = listItem.Height - (_dropdownBound[i].Y - listItem.Y);
                   listItem.Y = _dropdownBound[i].Y;
                   _dropdownBounds[i][j] = listItem;
                 }
-              }
-              else if (listItem.Y + listItem.Height > _dropdownBound[i].Y + _dropdownBound[i].Height) {
+              } else if (listItem.Y + listItem.Height > _dropdownBound[i].Y + _dropdownBound[i].Height) {
                 if (listItem.Y > _dropdownBound[i].Y + _dropdownBound[i].Height) {
                   _dropdownBounds[i][j] = new RectangleF();
                   continue;
-                }
-                else {
+                } else {
                   listItem.Height = _dropdownBound[i].Y + _dropdownBound[i].Height - listItem.Y;
                   _dropdownBounds[i][j] = listItem;
                 }

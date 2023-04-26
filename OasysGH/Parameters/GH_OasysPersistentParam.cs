@@ -4,7 +4,6 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 
 namespace OasysGH.Parameters {
-
   public abstract class GH_OasysPersistentParam<T> : GH_PersistentParam<T> where T : class, IGH_Goo {
     public virtual bool Hidden {
       get { return true; }

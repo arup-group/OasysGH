@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Yak;
 
 namespace OasysGH {
-
   internal static class YakInstall {
+
     internal static async Task InstallGH_UnitNumberPackageAsync() {
       if (Rhino.RhinoApp.ExeVersion < 7)
         return;
@@ -27,7 +27,6 @@ namespace OasysGH {
       IEnumerable<Package> installed = yak.List(); // list installed packages
       foreach (Package package in installed) {
         if (package.Name == pack.Name) {
-
           var installedVersion = new System.Version(package.Version.Replace("-beta", string.Empty));
           if (package.Version.Contains("-beta"))
             installedVersion = new System.Version(installedVersion.Major, installedVersion.Minor, installedVersion.Build, installedVersion.Revision + 1);
