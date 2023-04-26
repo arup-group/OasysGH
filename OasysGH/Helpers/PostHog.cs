@@ -127,8 +127,7 @@ namespace OasysGH.Helpers {
           }
           return;
         }
-      }
-      catch (Exception) { }
+      } catch (Exception) { }
 
       if (Environment.UserDomainName.ToLower() == "global")
         email = userName + "@arup.com";

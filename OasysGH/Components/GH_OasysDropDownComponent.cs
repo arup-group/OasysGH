@@ -49,13 +49,11 @@ namespace OasysGH.Components {
         // use IQuantity converter if data is a IQuantity (struct)
         IQuantity quantity = ((GH_UnitNumber)(object)data).Value;
         outputsSerialized = JsonConvert.SerializeObject(quantity, converter);
-      }
-      else {
+      } else {
         object obj = ((T)(object)data).ScriptVariable();
         try {
           outputsSerialized = JsonConvert.SerializeObject(obj);
-        }
-        catch (Exception) {
+        } catch (Exception) {
           outputsSerialized = data.GetHashCode().ToString();
         }
       }
@@ -109,8 +107,7 @@ namespace OasysGH.Components {
             item.ExpireSolution(recompute: false);
           }
         }
-      }
-      else
+      } else
         base.ExpireDownStreamObjects();
     }
 

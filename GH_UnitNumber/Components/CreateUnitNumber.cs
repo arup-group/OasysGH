@@ -43,9 +43,8 @@ namespace GH_UnitNumber.Components {
         UpdateQuantityUnitTypeFromUnitString(unit);
         UpdateMeasureDictionary();
         _selectedItems[1] = _selectedMeasure.ToString();
-      }
-      else // if change is made to the measure of a unit
-      {
+      } else // if change is made to the measure of a unit
+        {
         _selectedMeasure = _measureDictionary[_selectedItems.Last()];
         UpdateUnitMeasureAndAbbreviation();
       }
@@ -86,7 +85,8 @@ namespace GH_UnitNumber.Components {
 
         case EngineeringUnits.ForcePerArea:
           unitAbbreviation = Pressure.GetAbbreviation((PressureUnit)_selectedMeasure);
-          break; ;
+          break;
+          ;
 
         case EngineeringUnits.Moment:
           unitAbbreviation = Moment.GetAbbreviation((MomentUnit)_selectedMeasure);
@@ -216,7 +216,8 @@ namespace GH_UnitNumber.Components {
 
           case EngineeringUnits.ForcePerArea:
             _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
-            break; ;
+            break;
+            ;
 
           case EngineeringUnits.Moment:
             _quantity = new Moment(_val, (MomentUnit)_selectedMeasure);
@@ -332,7 +333,8 @@ namespace GH_UnitNumber.Components {
 
         case EngineeringUnits.ForcePerArea:
           _quantity = new Pressure(_val, DefaultUnits.ForcePerAreaUnit);
-          break; ;
+          break;
+          ;
 
         case EngineeringUnits.Moment:
           _quantity = new Moment(_val, DefaultUnits.MomentUnit);
@@ -430,7 +432,8 @@ namespace GH_UnitNumber.Components {
 
         case EngineeringUnits.ForcePerArea:
           _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
-          break; ;
+          break;
+          ;
 
         case EngineeringUnits.Moment:
           _quantity = new Moment(_val, (MomentUnit)_selectedMeasure);

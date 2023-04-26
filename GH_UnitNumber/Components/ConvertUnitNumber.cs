@@ -46,8 +46,7 @@ namespace GH_UnitNumber.Components {
       if (_unitDictionary != null) {
         valueList.Enabled = true;
         textPanel.Enabled = true;
-      }
-      else {
+      } else {
         valueList.Enabled = false;
         textPanel.Enabled = false;
       }
@@ -164,17 +163,14 @@ namespace GH_UnitNumber.Components {
               IQuantity quantity = Quantity.From(0, inUnitNumber.Value.Unit);
               string abbr = quantity.ToString().Replace("0", string.Empty).Trim();
               _selectedItems[0] = abbr;
-            }
-            else
+            } else
               _comingFromSave = false;
           }
-        }
-        else {
+        } else {
           AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to convert UnitNumber input");
           return;
         }
-      }
-      else {
+      } else {
         AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input a UnitNumber to populate dropdown menu");
         return;
       }
@@ -189,13 +185,11 @@ namespace GH_UnitNumber.Components {
           IQuantity quantity2 = Quantity.From(0, _selectedUnit);
           string abbr = quantity2.ToString().Replace("0", string.Empty).Trim();
           _selectedItems[0] = abbr;
-        }
-        else {
+        } else {
           AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to parse input parameter u to a recognisable unit");
           return;
         }
-      }
-      else {
+      } else {
         // update selected unit from dropdown
         _selectedUnit = _unitDictionary[_selectedItems.Last()];
       }

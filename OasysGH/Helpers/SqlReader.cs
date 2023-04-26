@@ -204,8 +204,7 @@ namespace OasysGH.Helpers {
         Tuple<List<string>, List<int>> typeData = GetTypesDataFromSQLite(-1, filePath, inclSuperseeded);
         types = typeData.Item2;
         types.RemoveAt(0); // remove -1 from beginning of list
-      }
-      else
+      } else
         types = type_numbers;
 
       using (SqliteConnection db = Connection(filePath)) {
@@ -231,8 +230,7 @@ namespace OasysGH.Helpers {
               date = date.Replace("-", "");
               date = date.Substring(0, 8);
               sections.Add(profile + " " + date);
-            }
-            else {
+            } else {
               string profile = Convert.ToString(r["SECT_NAME"]);
               // BSI-IPE IPEAA80
               sections.Add(profile);
@@ -271,8 +269,7 @@ namespace OasysGH.Helpers {
         Tuple<List<string>, List<int>> catalogueData = GetCataloguesDataFromSQLite(filePath);
         catNumbers = catalogueData.Item2;
         catNumbers.RemoveAt(0); // remove -1 from beginning of list
-      }
-      else
+      } else
         catNumbers.Add(catalogue_number);
 
       using (SqliteConnection db = Connection(filePath)) {

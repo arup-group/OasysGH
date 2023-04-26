@@ -258,16 +258,14 @@ namespace OasysGH.UI {
           dragPercentage = (_deltaX + _scrollStartX) / (_sliderBound.Width - _grabBound.Width);
           _currentValue = Math.Round(_minValue + dragPercentage * (_maxValue - _minValue), _noDigits);
           dragPercentage = (_currentValue - _minValue) / (_maxValue - _minValue);
-        }
-        else {
+        } else {
           // scroll reached end
           dragPercentage = 1;
           _scrollStartX = _sliderBound.Width - _grabBound.Width;
           _deltaX = 0;
           _currentValue = _maxValue;
         }
-      }
-      else {
+      } else {
         // scroll reached start
         dragPercentage = 0;
         _scrollStartX = 0;

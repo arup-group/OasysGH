@@ -83,7 +83,8 @@ namespace OasysGH.UI {
         var comp = Owner as GH_Component;
 
         if (_txtFreeBounds.Contains(e.CanvasLocation)) {
-          if (_x == false & _y == false & _z == false & _xx == false & _yy == false & _zz == false) return GH_ObjectResponse.Handled;
+          if (_x == false & _y == false & _z == false & _xx == false & _yy == false & _zz == false)
+            return GH_ObjectResponse.Handled;
           comp.RecordUndoEvent("Free");
           _x = false;
           _y = false;
@@ -97,7 +98,8 @@ namespace OasysGH.UI {
         }
 
         if (_txtPinBounds.Contains(e.CanvasLocation)) {
-          if (_x == true & _y == true & _z == true & _xx == false & _yy == false & _zz == false) return GH_ObjectResponse.Handled;
+          if (_x == true & _y == true & _z == true & _xx == false & _yy == false & _zz == false)
+            return GH_ObjectResponse.Handled;
           comp.RecordUndoEvent("Pin");
           _x = true;
           _y = true;
@@ -111,7 +113,8 @@ namespace OasysGH.UI {
         }
 
         if (_txtFixBounds.Contains(e.CanvasLocation)) {
-          if (_x == true & _y == true & _z == true & _xx == true & _yy == true & _zz == true) return GH_ObjectResponse.Handled;
+          if (_x == true & _y == true & _z == true & _xx == true & _yy == true & _zz == true)
+            return GH_ObjectResponse.Handled;
           comp.RecordUndoEvent("Fix");
           _x = true;
           _y = true;

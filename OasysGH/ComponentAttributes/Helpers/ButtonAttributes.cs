@@ -39,8 +39,7 @@ namespace OasysGH.UI.Helpers {
         // bottom left arc
         arc.X = b.Left;
         path.AddArc(arc, 90, 90);
-      }
-      else {
+      } else {
         path.AddLine(new PointF(b.X + b.Width, b.Y + b.Height), new PointF(b.X, b.Y + b.Height));
       }
 

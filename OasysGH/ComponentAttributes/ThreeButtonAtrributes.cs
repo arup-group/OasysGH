@@ -101,7 +101,8 @@ namespace OasysGH.UI {
         if (rec3.Contains(e.CanvasLocation)) {
           _mouseDown1 = false;
           _mouseDown2 = false;
-          _mouseDown3 = true; ;
+          _mouseDown3 = true;
+          ;
           Owner.ExpireSolution(true);
           return GH_ObjectResponse.Capture;
         }

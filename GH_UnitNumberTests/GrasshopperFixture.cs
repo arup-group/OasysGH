@@ -13,21 +13,24 @@ namespace Rhino.Test {
   public class GrasshopperFixture : IDisposable {
     public Rhino.Runtime.InProcess.RhinoCore Core {
       get {
-        if (null == _core) InitializeCore();
+        if (null == _core)
+          InitializeCore();
         return _core as Rhino.Runtime.InProcess.RhinoCore;
       }
     }
 
     public Grasshopper.Kernel.GH_DocumentIO DocIO {
       get {
-        if (null == _DocIO) InitializeDocIO();
+        if (null == _DocIO)
+          InitializeDocIO();
         return _DocIO as Grasshopper.Kernel.GH_DocumentIO;
       }
     }
 
     public Grasshopper.Plugin.GH_RhinoScriptInterface GHPlugin {
       get {
-        if (null == _gHPlugin) InitializeGrasshopperPlugin();
+        if (null == _gHPlugin)
+          InitializeGrasshopperPlugin();
         return _gHPlugin as Grasshopper.Plugin.GH_RhinoScriptInterface;
       }
     }
@@ -72,7 +75,8 @@ namespace Rhino.Test {
     }
 
     protected virtual void Dispose(bool disposing) {
-      if (_isDisposed) return;
+      if (_isDisposed)
+        return;
       if (disposing) {
         _Doc = null;
         _DocIO = null;
@@ -99,7 +103,8 @@ namespace Rhino.Test {
     private void InitializeDocIO() {
       // we do this in a seperate function to absolutely ensure that the core is initialized before we load the GH plugin,
       // which will happen automatically when we enter the function containing GH references
-      if (null == _gHPlugin) InitializeGrasshopperPlugin();
+      if (null == _gHPlugin)
+        InitializeGrasshopperPlugin();
       InitializeDocIO2();
     }
 
@@ -109,7 +114,8 @@ namespace Rhino.Test {
     }
 
     private void InitializeGrasshopperPlugin() {
-      if (null == _core) InitializeCore();
+      if (null == _core)
+        InitializeCore();
       // we do this in a seperate function to absolutely ensure that the core is initialized before we load the GH plugin,
       // which will happen automatically when we enter the function containing GH references
       InitializeGrasshopperPlugin2();
