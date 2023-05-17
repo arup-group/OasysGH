@@ -4,27 +4,17 @@ using Rhino.Geometry;
 
 namespace OasysGH.Parameters {
   public abstract class GH_OasysGeometricGoo<T> : GH_GeometricGoo<T>, IGH_PreviewData {
-    public override BoundingBox Boundingbox {
-      get {
-        if (!_boundingBox.IsValid) {
-          _boundingBox = GetGeometry().GetBoundingBox(false);
-        }
-        return _boundingBox;
-      }
-    }
+    public override BoundingBox Boundingbox => GetGeometry().GetBoundingBox(true);
 
-    public virtual BoundingBox ClippingBox {
-      get { return Boundingbox; }
-    }
+    public virtual BoundingBox ClippingBox => GetGeometry().GetBoundingBox(false);
 
-    public override bool IsValid => (GetGeometry() == null) ? false : GetGeometry().IsValid ? true : false;
+    public override bool IsValid => GetGeometry() != null && GetGeometry().IsValid;
     public override string IsValidWhyNot {
       get {
         if (IsValid)
           return string.Empty;
         else {
-          string whyNot = "";
-          GetGeometry().IsValidWithLog(out whyNot);
+          GetGeometry().IsValidWithLog(out string whyNot);
           return whyNot;
         }
       }
@@ -81,15 +71,13 @@ namespace OasysGH.Parameters {
 
     public abstract new IGH_GeometricGoo Duplicate();
 
-    public override IGH_GeometricGoo DuplicateGeometry() {
-      return Duplicate();
-    }
+    public override IGH_GeometricGoo DuplicateGeometry() => Duplicate();
 
     public override BoundingBox GetBoundingBox(Transform xform) {
       GeometryBase geom = GetGeometry();
       if (geom == null)
         return BoundingBox.Empty;
-      return geom.GetBoundingBox(Rhino.Geometry.Transform.ZeroTransformation);
+      return geom.GetBoundingBox(true);
     }
 
     public abstract GeometryBase GetGeometry();
