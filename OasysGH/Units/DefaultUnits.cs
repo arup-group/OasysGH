@@ -43,6 +43,7 @@ namespace OasysGH.Units {
     public static RatioUnit RatioUnit { get; set; } = RatioUnit.DecimalFraction;
     public static AreaMomentOfInertiaUnit SectionAreaMomentOfInertiaUnit { get; set; } = AreaMomentOfInertiaUnit.CentimeterToTheFourth;
     public static AreaUnit SectionAreaUnit { get; set; } = AreaUnit.SquareCentimeter;
+    public static SectionModulusUnit SectionModulusUnit { get; set; } = SectionModulusUnit.CubicCentimeter;
     public static VolumeUnit SectionVolumeUnit { get; set; } = VolumeUnit.CubicCentimeter;
     public static StrainUnit StrainUnitResult { get; set; } = StrainUnit.Ratio;
     public static PressureUnit StressUnitResult { get; set; } = PressureUnit.Megapascal;
