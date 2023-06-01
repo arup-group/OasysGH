@@ -34,6 +34,7 @@ namespace OasysGH.Units.Helpers {
         case LengthUnit.Inch:
           return AreaMomentOfInertiaUnit.InchToTheFourth;
       }
+
       throw new OasysUnitsException("Unable to convert " + unit + " to a known type of AreaMomentOfInertia");
     }
 
@@ -78,6 +79,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return BendingStiffnessUnit.NewtonSquareMeter;
           }
+
           break;
 
         case ForceUnit.Kilonewton:
@@ -88,6 +90,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return BendingStiffnessUnit.KilonewtonSquareMeter;
           }
+
           break;
 
         case ForceUnit.PoundForce:
@@ -98,8 +101,10 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Foot:
               return BendingStiffnessUnit.PoundForceSquareFoot;
           }
+
           break;
       }
+
       throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to BendingStiffness");
     }
 
@@ -121,11 +126,6 @@ namespace OasysGH.Units.Helpers {
       string mass = massUnit.ToString();
       string length = lengthUnit.ToString();
       return (DensityUnit)Enum.Parse(typeof(DensityUnit), mass + "PerCubic" + length);
-
-      //Mass mass = Mass.From(1, massUnit);
-      //Length len = Length.From(1, lengthUnit);
-      //Volume vol = len * len * len;
-      //return density.Unit;
     }
 
     public static List<string> GetFilteredAbbreviations(EngineeringUnits unit) {
@@ -269,6 +269,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return PressureUnit.NewtonPerSquareMeter;
           }
+
           break;
 
         case ForceUnit.Kilonewton:
@@ -282,6 +283,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return PressureUnit.KilonewtonPerSquareMeter;
           }
+
           break;
 
         case ForceUnit.Meganewton:
@@ -289,6 +291,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return PressureUnit.MeganewtonPerSquareMeter;
           }
+
           break;
 
         case ForceUnit.KilopoundForce:
@@ -299,6 +302,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Foot:
               return PressureUnit.KilopoundForcePerSquareFoot;
           }
+
           break;
 
         case ForceUnit.PoundForce:
@@ -309,8 +313,10 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Foot:
               return PressureUnit.PoundForcePerSquareFoot;
           }
+
           break;
       }
+
       throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to force per area");
     }
 
@@ -327,6 +333,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return ForcePerLengthUnit.NewtonPerMeter;
           }
+
           break;
 
         case ForceUnit.Kilonewton:
@@ -340,6 +347,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return ForcePerLengthUnit.KilonewtonPerMeter;
           }
+
           break;
 
         case ForceUnit.Meganewton:
@@ -353,6 +361,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return ForcePerLengthUnit.MeganewtonPerMeter;
           }
+
           break;
 
         case ForceUnit.KilopoundForce:
@@ -363,6 +372,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Foot:
               return ForcePerLengthUnit.KilopoundForcePerFoot;
           }
+
           break;
 
         case ForceUnit.PoundForce:
@@ -373,6 +383,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Foot:
               return ForcePerLengthUnit.PoundForcePerFoot;
           }
+
           break;
       }
 
@@ -392,6 +403,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return LinearDensityUnit.KilogramPerMeter;
           }
+
           break;
 
         case MassUnit.Pound:
@@ -402,8 +414,10 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Inch:
               return LinearDensityUnit.PoundPerInch;
           }
+
           break;
       }
+
       throw new Exception("Unable to convert " + massUnit.ToString() + " combined with " + lengthUnit.ToString() + " to Linear Density");
     }
 
@@ -420,6 +434,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return MomentUnit.NewtonMeter;
           }
+
           break;
 
         case ForceUnit.Kilonewton:
@@ -433,6 +448,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return MomentUnit.KilonewtonMeter;
           }
+
           break;
 
         case ForceUnit.Meganewton:
@@ -446,6 +462,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Meter:
               return MomentUnit.MeganewtonMeter;
           }
+
           break;
 
         case ForceUnit.KilopoundForce:
@@ -456,6 +473,7 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Foot:
               return MomentUnit.KilopoundForceFoot;
           }
+
           break;
 
         case ForceUnit.PoundForce:
@@ -466,9 +484,34 @@ namespace OasysGH.Units.Helpers {
             case LengthUnit.Foot:
               return MomentUnit.PoundForceFoot;
           }
+
           break;
       }
+
       throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to moment");
+    }
+
+    public static SectionModulusUnit GetSectionModulusUnit(LengthUnit unit) {
+      switch (unit) {
+        case LengthUnit.Millimeter:
+          return SectionModulusUnit.CubicMillimeter;
+
+        case LengthUnit.Centimeter:
+          return SectionModulusUnit.CubicCentimeter;
+
+        case LengthUnit.Meter:
+          return SectionModulusUnit.CubicMeter;
+
+        case LengthUnit.Foot:
+          return SectionModulusUnit.CubicFoot;
+
+        case LengthUnit.Inch:
+          return SectionModulusUnit.CubicInch;
+      }
+      // fallback:
+      var baseUnits = new BaseUnits(unit, sI.Mass, sI.Time, sI.Current, sI.Temperature, sI.Amount, sI.LuminousIntensity);
+      var unitSystem = new OasysUnits.UnitSystem(baseUnits);
+      return new SectionModulus(1, unitSystem).Unit;
     }
 
     public static VolumePerLengthUnit GetVolumePerLengthUnit(LengthUnit unit) {
