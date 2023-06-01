@@ -106,6 +106,7 @@ namespace OasysGHTests.Units.Helpers {
     [InlineData(EngineeringUnits.Length, typeof(LengthUnit))]
     [InlineData(EngineeringUnits.Area, typeof(AreaUnit))]
     [InlineData(EngineeringUnits.Volume, typeof(VolumeUnit))]
+    [InlineData(EngineeringUnits.SectionModulus, typeof(SectionModulusUnit))]
     [InlineData(EngineeringUnits.AreaMomentOfInertia, typeof(AreaMomentOfInertiaUnit))]
     [InlineData(EngineeringUnits.Force, typeof(ForceUnit))]
     [InlineData(EngineeringUnits.ForcePerLength, typeof(ForcePerLengthUnit))]
@@ -209,6 +210,20 @@ namespace OasysGHTests.Units.Helpers {
     public void GetMomentUnitTest(MomentUnit expected, ForceUnit forceUnit, LengthUnit lengthUnit) {
       // Act
       MomentUnit unit = UnitsHelper.GetMomentUnit(forceUnit, lengthUnit);
+
+      // Assert
+      Assert.Equal(expected, unit);
+    }
+
+    [Theory]
+    [InlineData(SectionModulusUnit.CubicMillimeter, LengthUnit.Millimeter)]
+    [InlineData(SectionModulusUnit.CubicCentimeter, LengthUnit.Centimeter)]
+    [InlineData(SectionModulusUnit.CubicMeter, LengthUnit.Meter)]
+    [InlineData(SectionModulusUnit.CubicFoot, LengthUnit.Foot)]
+    [InlineData(SectionModulusUnit.CubicInch, LengthUnit.Inch)]
+    public void GetSectionModulusUnitTest(SectionModulusUnit expected, LengthUnit lengthUnit) {
+      // Act
+      SectionModulusUnit unit = UnitsHelper.GetSectionModulusUnit(lengthUnit);
 
       // Assert
       Assert.Equal(expected, unit);

@@ -22,6 +22,7 @@ namespace OasysGH.Units {
     internal AreaMomentOfInertiaUnit SectionAreaMomentOfInertiaUnit { get; }
     internal AreaUnit SectionAreaUnit { get; }
     internal LengthUnit SectionLengthUnit { get; }
+    internal SectionModulusUnit SectionModulusUnit { get; }
     internal VolumeUnit SectionVolumeUnit { get; }
     internal StrainUnit StrainUnitResult { get; }
     internal PressureUnit StressUnitResult { get; }
@@ -30,7 +31,7 @@ namespace OasysGH.Units {
     internal VolumePerLengthUnit VolumePerLengthUnit { get; }
     internal PressureUnit YoungsModulusUnit { get; }
 
-    internal UnitSystem(LengthUnit sectionLengthUnit, AreaUnit areaUnit, VolumeUnit volumeUnit, AreaMomentOfInertiaUnit areaMomentOfInertiaUnit, MassUnit massUnit, DensityUnit densityUnit, LinearDensityUnit linearDensityUnit, VolumePerLengthUnit volumePerLengthUnit, PressureUnit materialStrengthUnit, StrainUnit materialStrainUnit, PressureUnit youngsModulusUnit, LengthUnit lengthUnit, ForceUnit forceUnit, ForcePerLengthUnit forcePerLengthUnit, PressureUnit forcePerAreaUnit, MomentUnit momentUnit, TemperatureUnit temperatureUnit, LengthUnit displacementUuit, PressureUnit stressUnit, StrainUnit strainUnit, AxialStiffnessUnit axialStiffnessUnit, BendingStiffnessUnit bendingStiffnessUnit, SpeedUnit velocityUnit, AccelerationUnit accelerationUnit, EnergyUnit energyUnit, CurvatureUnit curvatureUnit) {
+    internal UnitSystem(LengthUnit sectionLengthUnit, AreaUnit areaUnit, VolumeUnit volumeUnit, AreaMomentOfInertiaUnit areaMomentOfInertiaUnit, MassUnit massUnit, DensityUnit densityUnit, LinearDensityUnit linearDensityUnit, VolumePerLengthUnit volumePerLengthUnit, PressureUnit materialStrengthUnit, StrainUnit materialStrainUnit, PressureUnit youngsModulusUnit, LengthUnit lengthUnit, ForceUnit forceUnit, ForcePerLengthUnit forcePerLengthUnit, PressureUnit forcePerAreaUnit, MomentUnit momentUnit, TemperatureUnit temperatureUnit, LengthUnit displacementUuit, PressureUnit stressUnit, StrainUnit strainUnit, AxialStiffnessUnit axialStiffnessUnit, BendingStiffnessUnit bendingStiffnessUnit, SpeedUnit velocityUnit, AccelerationUnit accelerationUnit, EnergyUnit energyUnit, CurvatureUnit curvatureUnit, SectionModulusUnit sectionModulusUnit) {
       SectionLengthUnit = sectionLengthUnit;
       SectionAreaUnit = areaUnit;
       SectionVolumeUnit = volumeUnit;
@@ -57,6 +58,7 @@ namespace OasysGH.Units {
       AccelerationUnit = accelerationUnit;
       EnergyUnit = energyUnit;
       CurvatureUnit = curvatureUnit;
+      SectionModulusUnit = sectionModulusUnit;
     }
   }
 }

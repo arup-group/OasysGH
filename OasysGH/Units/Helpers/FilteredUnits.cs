@@ -28,12 +28,12 @@ namespace OasysGH.Units.Helpers {
     Acceleration,
     Energy,
     Ratio,
-    Time
+    Time,
+    SectionModulus
   }
 
   public class FilteredUnits {
-    public static List<string> FilteredAccelerationUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredAccelerationUnits = new List<string>(new[] {
       AccelerationUnit.MillimeterPerSecondSquared.ToString(),
       AccelerationUnit.CentimeterPerSecondSquared.ToString(),
       AccelerationUnit.MeterPerSecondSquared.ToString(),
@@ -42,14 +42,12 @@ namespace OasysGH.Units.Helpers {
       AccelerationUnit.InchPerSecondSquared.ToString(),
     });
 
-    public static List<string> FilteredAngleUnits = new List<string>(new[]
-        {
+    public static List<string> FilteredAngleUnits = new List<string>(new[] {
       AngleUnit.Radian.ToString(),
       AngleUnit.Degree.ToString()
     });
 
-    public static List<string> FilteredAreaMomentOfInertiaUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredAreaMomentOfInertiaUnits = new List<string>(new[] {
       AreaMomentOfInertiaUnit.MillimeterToTheFourth.ToString(),
       AreaMomentOfInertiaUnit.CentimeterToTheFourth.ToString(),
       AreaMomentOfInertiaUnit.MeterToTheFourth.ToString(),
@@ -57,8 +55,7 @@ namespace OasysGH.Units.Helpers {
       AreaMomentOfInertiaUnit.FootToTheFourth.ToString()
     });
 
-    public static List<string> FilteredAreaUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredAreaUnits = new List<string>(new[] {
       AreaUnit.SquareMillimeter.ToString(),
       AreaUnit.SquareCentimeter.ToString(),
       AreaUnit.SquareMeter.ToString(),
@@ -72,8 +69,7 @@ namespace OasysGH.Units.Helpers {
 
     public static List<string> FilteredCurvatureUnits = new List<string>(Enum.GetNames(typeof(CurvatureUnit)).Skip(1).ToList());
 
-    public static List<string> FilteredDensityUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredDensityUnits = new List<string>(new[] {
       DensityUnit.GramPerCubicMillimeter.ToString(),
       DensityUnit.GramPerCubicCentimeter.ToString(),
       DensityUnit.GramPerCubicMeter.ToString(),
@@ -90,8 +86,7 @@ namespace OasysGH.Units.Helpers {
       DensityUnit.SlugPerCubicFoot.ToString(),
     });
 
-    public static List<string> FilteredEnergyUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredEnergyUnits = new List<string>(new[] {
       EnergyUnit.Joule.ToString(),
       EnergyUnit.Kilojoule.ToString(),
       EnergyUnit.Megajoule.ToString(),
@@ -102,8 +97,7 @@ namespace OasysGH.Units.Helpers {
       EnergyUnit.BritishThermalUnit.ToString(),
     });
 
-    public static List<string> FilteredForcePerAreaUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredForcePerAreaUnits = new List<string>(new[] {
       PressureUnit.NewtonPerSquareMillimeter.ToString(),
       PressureUnit.NewtonPerSquareCentimeter.ToString(),
       PressureUnit.NewtonPerSquareMeter.ToString(),
@@ -116,8 +110,7 @@ namespace OasysGH.Units.Helpers {
       PressureUnit.KilopoundForcePerSquareFoot.ToString(),
     });
 
-    public static List<string> FilteredForcePerLengthUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredForcePerLengthUnits = new List<string>(new[] {
       ForcePerLengthUnit.NewtonPerMillimeter.ToString(),
       ForcePerLengthUnit.NewtonPerCentimeter.ToString(),
       ForcePerLengthUnit.NewtonPerMeter.ToString(),
@@ -135,8 +128,7 @@ namespace OasysGH.Units.Helpers {
       ForcePerLengthUnit.KilopoundForcePerFoot.ToString()
     });
 
-    public static List<string> FilteredForceUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredForceUnits = new List<string>(new[] {
       ForceUnit.Newton.ToString(),
       ForceUnit.Kilonewton.ToString(),
       ForceUnit.Meganewton.ToString(),
@@ -145,8 +137,7 @@ namespace OasysGH.Units.Helpers {
       ForceUnit.TonneForce.ToString()
     });
 
-    public static List<string> FilteredLengthUnits = new List<string>(new[]
-                                            {
+    public static List<string> FilteredLengthUnits = new List<string>(new[] {
       LengthUnit.Millimeter.ToString(),
       LengthUnit.Centimeter.ToString(),
       LengthUnit.Meter.ToString(),
@@ -154,8 +145,7 @@ namespace OasysGH.Units.Helpers {
       LengthUnit.Foot.ToString()
     });
 
-    public static List<string> FilteredLinearDensityUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredLinearDensityUnits = new List<string>(new[] {
       LinearDensityUnit.GramPerMillimeter.ToString(),
       LinearDensityUnit.GramPerCentimeter.ToString(),
       LinearDensityUnit.GramPerMeter.ToString(),
@@ -166,8 +156,7 @@ namespace OasysGH.Units.Helpers {
       LinearDensityUnit.PoundPerFoot.ToString(),
     });
 
-    public static List<string> FilteredMassUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredMassUnits = new List<string>(new[] {
       MassUnit.Gram.ToString(),
       MassUnit.Kilogram.ToString(),
       MassUnit.Tonne.ToString(),
@@ -181,10 +170,16 @@ namespace OasysGH.Units.Helpers {
 
     public static List<string> FilteredRatioUnits = new List<string>(Enum.GetNames(typeof(RatioUnit)).Skip(1).ToList());
 
+    public static List<string> FilteredSectionModulusUnits = new List<string>(new[] {
+      SectionModulusUnit.CubicMillimeter.ToString(),
+      SectionModulusUnit.CubicCentimeter.ToString(),
+      SectionModulusUnit.CubicMeter.ToString(),
+      SectionModulusUnit.CubicInch.ToString(),
+      SectionModulusUnit.CubicFoot.ToString()
+    });
     public static List<string> FilteredStrainUnits = new List<string>(Enum.GetNames(typeof(StrainUnit)).Skip(1).ToList());
 
-    public static List<string> FilteredStressUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredStressUnits = new List<string>(new[] {
       PressureUnit.Pascal.ToString(),
       PressureUnit.Kilopascal.ToString(),
       PressureUnit.Megapascal.ToString(),
@@ -197,15 +192,13 @@ namespace OasysGH.Units.Helpers {
       PressureUnit.KilopoundForcePerSquareFoot.ToString()
     });
 
-    public static List<string> FilteredTemperatureUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredTemperatureUnits = new List<string>(new[] {
       TemperatureUnit.DegreeCelsius.ToString(),
       TemperatureUnit.Kelvin.ToString(),
       TemperatureUnit.DegreeFahrenheit.ToString(),
     });
 
-    public static List<string> FilteredTimeUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredTimeUnits = new List<string>(new[] {
       DurationUnit.Millisecond.ToString(),
       DurationUnit.Second.ToString(),
       DurationUnit.Minute.ToString(),
@@ -213,8 +206,7 @@ namespace OasysGH.Units.Helpers {
       DurationUnit.Day.ToString(),
     });
 
-    public static List<string> FilteredVelocityUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredVelocityUnits = new List<string>(new[] {
       SpeedUnit.MillimeterPerSecond.ToString(),
       SpeedUnit.CentimeterPerSecond.ToString(),
       SpeedUnit.MeterPerSecond.ToString(),
@@ -224,14 +216,12 @@ namespace OasysGH.Units.Helpers {
       SpeedUnit.MilePerHour.ToString(),
     });
 
-    public static List<string> FilteredVolumePerLengthUnits = new List<string>(new[]
-    {
+    public static List<string> FilteredVolumePerLengthUnits = new List<string>(new[] {
       VolumePerLengthUnit.CubicMeterPerMeter.ToString(),
       VolumePerLengthUnit.CubicYardPerFoot.ToString()
     });
 
-    public static List<string> FilteredVolumeUnits = new List<string>(new[]
-                                            {
+    public static List<string> FilteredVolumeUnits = new List<string>(new[] {
       VolumeUnit.CubicMillimeter.ToString(),
       VolumeUnit.CubicCentimeter.ToString(),
       VolumeUnit.CubicMeter.ToString(),

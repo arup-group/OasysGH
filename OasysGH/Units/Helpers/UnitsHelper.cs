@@ -251,6 +251,11 @@ namespace OasysGH.Units.Helpers {
             abbreviations.Add(Duration.GetAbbreviation((DurationUnit)Enum.Parse(typeof(DurationUnit), unitstring)));
           return abbreviations;
 
+        case EngineeringUnits.SectionModulus:
+          foreach (string unitstring in FilteredUnits.FilteredSectionModulusUnits)
+            abbreviations.Add(SectionModulus.GetAbbreviation((SectionModulusUnit)Enum.Parse(typeof(SectionModulusUnit), unitstring)));
+          return abbreviations;
+
         default:
           throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
       }
