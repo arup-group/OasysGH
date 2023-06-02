@@ -41,6 +41,7 @@ namespace OasysGHTests.Units.Helpers {
       string temperatureAbbreviation = Temperature.GetAbbreviation(TemperatureUnit.DegreeCelsius, culture);
       string volumePerLengthAbbreviation = VolumePerLength.GetAbbreviation(VolumePerLengthUnit.CubicYardPerFoot, culture);
       string volumeAbbreviation = Volume.GetAbbreviation(VolumeUnit.Liter, culture);
+      string sectionModulusAbbreviation = SectionModulus.GetAbbreviation(SectionModulusUnit.CubicMillimeter, culture);
 
       // Act
       var accelerationUnit = (AccelerationUnit)UnitsHelper.Parse(typeof(AccelerationUnit), accelerationAbbreviation, culture);
@@ -67,6 +68,7 @@ namespace OasysGHTests.Units.Helpers {
       var temperatureUnit = (TemperatureUnit)UnitsHelper.Parse(typeof(TemperatureUnit), temperatureAbbreviation, culture);
       var volumePerLengthUnit = (VolumePerLengthUnit)UnitsHelper.Parse(typeof(VolumePerLengthUnit), volumePerLengthAbbreviation, culture);
       var volumeUnit = (VolumeUnit)UnitsHelper.Parse(typeof(VolumeUnit), volumeAbbreviation, culture);
+      var sectionModulusUnit = (SectionModulusUnit)UnitsHelper.Parse(typeof(SectionModulus), sectionModulusAbbreviation, culture);
 
       // Assert
       Assert.Equal(AccelerationUnit.InchPerSecondSquared, accelerationUnit);
@@ -93,6 +95,7 @@ namespace OasysGHTests.Units.Helpers {
       Assert.Equal(TemperatureUnit.DegreeCelsius, temperatureUnit);
       Assert.Equal(VolumePerLengthUnit.CubicYardPerFoot, volumePerLengthUnit);
       Assert.Equal(VolumeUnit.Liter, volumeUnit);
+      Assert.Equal(SectionModulusUnit.CubicMillimeter, sectionModulusUnit);
     }
 
     [Theory]

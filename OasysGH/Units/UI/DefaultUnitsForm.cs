@@ -28,7 +28,7 @@ namespace OasysGH.Units.UI {
     private readonly List<string> _temperatureAbbr = UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Temperature);
     private readonly List<string> _velocityAbbr = UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Velocity);
     private readonly List<string> _volPerLengthAbbr = UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.VolumePerLength);
-    private readonly List<string> _volumeAbbr = UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Volume);
+    private readonly List<string> _sectionModulusAbbr = UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.SectionModulus);
     private Length _tempTolerance = DefaultUnits.Tolerance;
 
     public DefaultUnitsForm() {
@@ -37,7 +37,7 @@ namespace OasysGH.Units.UI {
       // Properties
       InitialiseDropdown(lengthSectionComboBox, _lengthAbbr, Length.GetAbbreviation(DefaultUnits.LengthUnitSection));
       InitialiseDropdown(areaComboBox, _areaAbbr, Area.GetAbbreviation(DefaultUnits.SectionAreaUnit));
-      InitialiseDropdown(volumeComboBox, _volumeAbbr, Volume.GetAbbreviation(DefaultUnits.SectionVolumeUnit));
+      InitialiseDropdown(volumeComboBox, _sectionModulusAbbr, SectionModulus.GetAbbreviation(DefaultUnits.SectionModulusUnit));
       InitialiseDropdown(momentOfInertiaComboBox, _inertiaAbbr, AreaMomentOfInertia.GetAbbreviation(DefaultUnits.SectionAreaMomentOfInertiaUnit));
       InitialiseDropdown(massComboBox, _massAbbr, Mass.GetAbbreviation(DefaultUnits.MassUnit));
       InitialiseDropdown(densityComboBox, _densityAbbr, Density.GetAbbreviation(DefaultUnits.DensityUnit));
@@ -117,7 +117,8 @@ namespace OasysGH.Units.UI {
         SpeedUnit.FootPerSecond,
         AccelerationUnit.FootPerSecondSquared,
         EnergyUnit.FootPound,
-        CurvatureUnit.PerInch));
+        CurvatureUnit.PerInch,
+        SectionModulusUnit.CubicFoot));
     }
 
     private void kipin_Click(object sender, EventArgs e) {
@@ -147,7 +148,8 @@ namespace OasysGH.Units.UI {
         SpeedUnit.FootPerSecond,
         AccelerationUnit.FootPerSecondSquared,
         EnergyUnit.FootPound,
-        CurvatureUnit.PerInch));
+        CurvatureUnit.PerInch,
+        SectionModulusUnit.CubicInch));
     }
 
     private void kNm_Click(object sender, EventArgs e) {
@@ -177,7 +179,8 @@ namespace OasysGH.Units.UI {
         SpeedUnit.MeterPerSecond,
         AccelerationUnit.MeterPerSecondSquared,
         EnergyUnit.Megajoule,
-        CurvatureUnit.PerMeter));
+        CurvatureUnit.PerMeter,
+        SectionModulusUnit.CubicCentimeter));
     }
 
     private void lengthComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -269,14 +272,15 @@ namespace OasysGH.Units.UI {
         SpeedUnit.MeterPerSecond,
         AccelerationUnit.MeterPerSecondSquared,
         EnergyUnit.Joule,
-        CurvatureUnit.PerMeter));
+        CurvatureUnit.PerMeter,
+        SectionModulusUnit.CubicMeter));
     }
 
     private void UpdateSelectedFromUnitSystem(UnitSystem unitSystem) {
       // Properties
       SetSelectedDropdown(lengthSectionComboBox, _lengthAbbr, Length.GetAbbreviation(unitSystem.SectionLengthUnit));
       SetSelectedDropdown(areaComboBox, _areaAbbr, Area.GetAbbreviation(unitSystem.SectionAreaUnit));
-      SetSelectedDropdown(volumeComboBox, _volumeAbbr, Volume.GetAbbreviation(unitSystem.SectionVolumeUnit));
+      SetSelectedDropdown(volumeComboBox, _sectionModulusAbbr, SectionModulus.GetAbbreviation(unitSystem.SectionModulusUnit));
       SetSelectedDropdown(momentOfInertiaComboBox, _inertiaAbbr, AreaMomentOfInertia.GetAbbreviation(unitSystem.SectionAreaMomentOfInertiaUnit));
       SetSelectedDropdown(massComboBox, _massAbbr, Mass.GetAbbreviation(unitSystem.MassUnit));
       SetSelectedDropdown(densityComboBox, _densityAbbr, Density.GetAbbreviation(unitSystem.DensityUnit));
@@ -332,8 +336,7 @@ namespace OasysGH.Units.UI {
         toleranceUpDown.Enabled = true;
         toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
         SetTempTolerance(Length.ParseUnit(lengthComboBox.Text));
-      }
-      else {
+      } else {
         toleranceUpDown.Enabled = false;
         LengthUnit unit = RhinoUnit.GetRhinoLengthUnit();
         toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(unit) + "]";
