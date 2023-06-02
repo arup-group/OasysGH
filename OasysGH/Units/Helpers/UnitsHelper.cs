@@ -65,7 +65,7 @@ namespace OasysGH.Units.Helpers {
       try {
         return AxialStiffness.ParseUnit(Force.GetAbbreviation(forceUnit));
       } catch (Exception) {
-        throw new Exception("Unable to convert " + forceUnit.ToString() + " to Axial Stiffness");
+        throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " to Axial Stiffness");
       }
     }
 
@@ -105,7 +105,7 @@ namespace OasysGH.Units.Helpers {
           break;
       }
 
-      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to BendingStiffness");
+      throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to BendingStiffness");
     }
 
     public static CoefficientOfThermalExpansionUnit GetCoefficientOfThermalExpansionUnit(TemperatureUnit temperatureUnit) {
@@ -257,7 +257,7 @@ namespace OasysGH.Units.Helpers {
           return abbreviations;
 
         default:
-          throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
+          throw new OasysUnitsException("Unable to get abbreviations for unit type " + unit.ToString());
       }
     }
 
@@ -322,7 +322,7 @@ namespace OasysGH.Units.Helpers {
           break;
       }
 
-      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to force per area");
+      throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to force per area");
     }
 
     public static ForcePerLengthUnit GetForcePerLengthUnit(ForceUnit forceUnit, LengthUnit lengthUnit) {
@@ -423,7 +423,7 @@ namespace OasysGH.Units.Helpers {
           break;
       }
 
-      throw new Exception("Unable to convert " + massUnit.ToString() + " combined with " + lengthUnit.ToString() + " to Linear Density");
+      throw new OasysUnitsException("Unable to convert " + massUnit.ToString() + " combined with " + lengthUnit.ToString() + " to Linear Density");
     }
 
     public static MomentUnit GetMomentUnit(ForceUnit forceUnit, LengthUnit lengthUnit) {
@@ -493,7 +493,7 @@ namespace OasysGH.Units.Helpers {
           break;
       }
 
-      throw new Exception("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to moment");
+      throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to moment");
     }
 
     public static SectionModulusUnit GetSectionModulusUnit(LengthUnit unit) {
@@ -570,7 +570,7 @@ namespace OasysGH.Units.Helpers {
     }
 
     /// <summary>
-    /// Tries to parse a units abbreviation or string representation.
+    /// Tries to parse a unit´s abbreviation or string representation.
     /// </summary>
     /// <param name="unitType"></param>
     /// <param name="value"></param>
@@ -655,6 +655,9 @@ namespace OasysGH.Units.Helpers {
 
           case Type _ when unitType == typeof(VolumeUnit):
             return Volume.ParseUnit(value, currentUICulture);
+
+          case Type _ when unitType == typeof(SectionModulus):
+            return SectionModulus.ParseUnit(value, currentUICulture);
 
           default:
             throw new ArgumentException();
