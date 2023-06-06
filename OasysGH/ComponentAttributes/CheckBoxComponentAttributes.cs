@@ -223,9 +223,9 @@ namespace OasysGH.UI {
         var pen = new Pen(borderColour);
 
         for (int r = 0; r < _rows; r++) {
-          graphics.DrawString(_spacerTxts[0], sml, annoText, _spacerBounds[r], GH_TextRenderingConstants.CenterCenter);
-          graphics.DrawLine(pen, _spacerBounds[r].X, _spacerBounds[r].Y + _spacerBounds[r].Height / 2, _spacerBounds[r].X + (_spacerBounds[r].Width - GH_FontServer.StringWidth(_spacerTxts[0], sml)) / 2 - 4, _spacerBounds[r].Y + _spacerBounds[r].Height / 2);
-          graphics.DrawLine(pen, _spacerBounds[r].X + (_spacerBounds[r].Width - GH_FontServer.StringWidth(_spacerTxts[0], sml)) / 2 + GH_FontServer.StringWidth(_spacerTxts[0], sml) + 4, _spacerBounds[r].Y + _spacerBounds[r].Height / 2, _spacerBounds[r].X + _spacerBounds[r].Width, _spacerBounds[r].Y + _spacerBounds[r].Height / 2);
+          graphics.DrawString(_spacerTxts[r], sml, annoText, _spacerBounds[r], GH_TextRenderingConstants.CenterCenter);
+          graphics.DrawLine(pen, _spacerBounds[r].X, _spacerBounds[r].Y + _spacerBounds[r].Height / 2, _spacerBounds[r].X + (_spacerBounds[r].Width - GH_FontServer.StringWidth(_spacerTxts[r], sml)) / 2 - 4, _spacerBounds[r].Y + _spacerBounds[r].Height / 2);
+          graphics.DrawLine(pen, _spacerBounds[r].X + (_spacerBounds[r].Width - GH_FontServer.StringWidth(_spacerTxts[r], sml)) / 2 + GH_FontServer.StringWidth(_spacerTxts[r], sml) + 4, _spacerBounds[r].Y + _spacerBounds[r].Height / 2, _spacerBounds[r].X + _spacerBounds[r].Width, _spacerBounds[r].Y + _spacerBounds[r].Height / 2);
 
           for (int c = 0; c < _columns[r]; c++) {
             graphics.DrawString(_text[r][c], font, annoText, _textBounds[r][c], GH_TextRenderingConstants.CenterCenter);
