@@ -18,7 +18,7 @@ namespace GH_UnitNumber.Components {
     public override Guid ComponentGuid => new Guid("a6d79db6-844f-4228-b38f-9223762185fb");
 
     public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.obscure;
-    public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
+    public override OasysPluginInfo PluginInfo => GH_UnitNumber.PluginInfo.Instance;
     protected override System.Drawing.Bitmap Icon => Properties.Resources.CreateUnitNumber;
     private Dictionary<string, Enum> _measureDictionary;
     private IQuantity _quantity;
