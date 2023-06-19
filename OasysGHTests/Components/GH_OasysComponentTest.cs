@@ -9,6 +9,7 @@ namespace GsaGHTests.Components {
 
     [Theory]
     [InlineData(typeof(TestButtonComponent))]
+    [InlineData(typeof(TestCheckBoxComponentComponent))]
     //[InlineData(typeof(TestCreateOasysProfile))]
     public void GH_OasysComponentTest(Type t) {
       var comp = (GH_OasysComponent)Activator.CreateInstance(t);

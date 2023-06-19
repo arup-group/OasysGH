@@ -13,7 +13,7 @@ namespace OasysGHTests.Components {
     }
 
     public override void CreateAttributes() {
-      m_attributes = new ButtonComponentAttributes(this, "displayText", ClickHandle);
+      m_attributes = new ButtonComponentAttributes(this, "displayText", ClickHandle, "spacerText");
     }
 
     public override void SetSelected(int i, int j) {
