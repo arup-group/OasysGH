@@ -20,6 +20,7 @@ namespace OasysGHTests.Components {
     }
 
     protected internal override void InitialiseDropdowns() {
+      _isInitialised = true;
     }
 
     protected override void RegisterInputParams(GH_InputParamManager pManager) {
