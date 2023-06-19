@@ -12,6 +12,7 @@ namespace GsaGHTests.Components {
     //[InlineData(typeof(TestCreateOasysProfile))]
     public void GH_OasysComponentTest(Type t) {
       var comp = (GH_OasysComponent)Activator.CreateInstance(t);
+      comp.CreateAttributes();
       Assert.NotNull(comp.Icon_24x24);
       Assert.NotEqual(Grasshopper.Kernel.GH_Exposure.hidden, comp.Exposure);
       Assert.NotEqual(new Guid(), comp.ComponentGuid);
