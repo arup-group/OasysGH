@@ -19,11 +19,11 @@ namespace OasysGH.UI {
   public class ButtonComponentAttributes : GH_ComponentAttributes {
     private float MinWidth {
       get {
-        List<string> spacers = new List<string>();
-        spacers.Add(SpacerTxt);
+        var spacers = new List<string>();
+        spacers.Add(_spacerTxt);
         float sp = WidthAttributes.MaxTextWidth(spacers, GH_FontServer.Small);
-        List<string> buttons = new List<string>();
-        buttons.Add(buttonText);
+        var buttons = new List<string>();
+        buttons.Add(_buttonText);
         float bt = WidthAttributes.MaxTextWidth(buttons, GH_FontServer.Standard);
 
         float num = Math.Max(Math.Max(sp, bt), 90);
@@ -32,30 +32,30 @@ namespace OasysGH.UI {
       set { MinWidth = value; }
     }
 
-    private readonly Action action;
-    private readonly string buttonText;
-    private readonly string SpacerTxt;
+    private readonly Action _action;
+    private readonly string _buttonText;
+    private readonly string _spacerTxt;
 
     // text to be displayed
-    private RectangleF ButtonBounds;
+    private RectangleF _buttonBounds;
 
-    private bool mouseDown;
-    private bool mouseOver;
+    private bool _mouseDown;
+    private bool _mouseOver;
 
     // area for button to be displayed
-    private RectangleF SpacerBounds;
+    private RectangleF _spacerBounds;
 
     public ButtonComponentAttributes(GH_Component owner, string displayText, Action clickHandle, string spacerText = "") : base(owner) {
-      buttonText = displayText;
-      SpacerTxt = spacerText;
-      action = clickHandle;
+      _buttonText = displayText;
+      _spacerTxt = spacerText;
+      _action = clickHandle;
     }
 
     public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e) {
       if (e.Button == System.Windows.Forms.MouseButtons.Left) {
-        RectangleF rec = ButtonBounds;
+        RectangleF rec = _buttonBounds;
         if (rec.Contains(e.CanvasLocation)) {
-          mouseDown = true;
+          _mouseDown = true;
           Owner.OnDisplayExpired(false);
           return GH_ObjectResponse.Capture;
         }
@@ -64,15 +64,15 @@ namespace OasysGH.UI {
     }
 
     public override GH_ObjectResponse RespondToMouseMove(GH_Canvas sender, GH_CanvasMouseEvent e) {
-      if (ButtonBounds.Contains(e.CanvasLocation)) {
-        mouseOver = true;
+      if (_buttonBounds.Contains(e.CanvasLocation)) {
+        _mouseOver = true;
         Owner.OnDisplayExpired(false);
         sender.Cursor = System.Windows.Forms.Cursors.Hand;
         return GH_ObjectResponse.Capture;
       }
 
-      if (mouseOver) {
-        mouseOver = false;
+      if (_mouseOver) {
+        _mouseOver = false;
         Owner.OnDisplayExpired(false);
         Instances.CursorServer.ResetCursor(sender);
         return GH_ObjectResponse.Release;
@@ -83,13 +83,13 @@ namespace OasysGH.UI {
 
     public override GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, GH_CanvasMouseEvent e) {
       if (e.Button == System.Windows.Forms.MouseButtons.Left) {
-        RectangleF rec = ButtonBounds;
+        RectangleF rec = _buttonBounds;
         if (rec.Contains(e.CanvasLocation)) {
-          if (mouseDown) {
-            mouseDown = false;
-            mouseOver = false;
+          if (_mouseDown) {
+            _mouseDown = false;
+            _mouseOver = false;
             Owner.OnDisplayExpired(false);
-            action();
+            _action();
             //                        Owner.ExpireSolution(true);
             return GH_ObjectResponse.Release;
           }
@@ -161,15 +161,15 @@ namespace OasysGH.UI {
 
       int h0 = 0;
       //spacer and title
-      if (SpacerTxt != "") {
+      if (_spacerTxt != "") {
         Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height - (CentralSettings.CanvasObjectIcons ? 5 : 0));
         h0 = 10;
-        SpacerBounds = new RectangleF(Bounds.X, Bounds.Bottom + s / 2, Bounds.Width, h0);
+        _spacerBounds = new RectangleF(Bounds.X, Bounds.Bottom + s / 2, Bounds.Width, h0);
       }
 
       int h1 = 20; // height of button
                    // create text box placeholders
-      ButtonBounds = new RectangleF(Bounds.X + 2 * s, Bounds.Bottom + h0 + 2 * s, Bounds.Width - 4 * s, h1);
+      _buttonBounds = new RectangleF(Bounds.X + 2 * s, Bounds.Bottom + h0 + 2 * s, Bounds.Width - 4 * s, h1);
 
       //update component bounds
       Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + h0 + h1 + 4 * s);
@@ -179,7 +179,7 @@ namespace OasysGH.UI {
       base.Render(canvas, graphics, channel);
 
       if (channel == GH_CanvasChannel.Objects) {
-        Pen spacer = new Pen(Colour.SpacerColour);
+        var spacer = new Pen(Colour.SpacerColour);
 
         Font font = GH_FontServer.Standard;
         // adjust fontsize to high resolution displays
@@ -190,38 +190,38 @@ namespace OasysGH.UI {
         sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
 
         //Draw divider line
-        if (SpacerTxt != "") {
-          graphics.DrawString(SpacerTxt, sml, Colour.AnnotationTextDark, SpacerBounds, GH_TextRenderingConstants.CenterCenter);
-          graphics.DrawLine(spacer, SpacerBounds.X, SpacerBounds.Y + SpacerBounds.Height / 2, SpacerBounds.X + (SpacerBounds.Width - GH_FontServer.StringWidth(SpacerTxt, sml)) / 2 - 4, SpacerBounds.Y + SpacerBounds.Height / 2);
-          graphics.DrawLine(spacer, SpacerBounds.X + (SpacerBounds.Width - GH_FontServer.StringWidth(SpacerTxt, sml)) / 2 + GH_FontServer.StringWidth(SpacerTxt, sml) + 4, SpacerBounds.Y + SpacerBounds.Height / 2, SpacerBounds.X + SpacerBounds.Width, SpacerBounds.Y + SpacerBounds.Height / 2);
+        if (_spacerTxt != "") {
+          graphics.DrawString(_spacerTxt, sml, Colour.AnnotationTextDark, _spacerBounds, GH_TextRenderingConstants.CenterCenter);
+          graphics.DrawLine(spacer, _spacerBounds.X, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 - 4, _spacerBounds.Y + _spacerBounds.Height / 2);
+          graphics.DrawLine(spacer, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 + GH_FontServer.StringWidth(_spacerTxt, sml) + 4, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + _spacerBounds.Width, _spacerBounds.Y + _spacerBounds.Height / 2);
         }
 
         // Draw button box
-        System.Drawing.Drawing2D.GraphicsPath button = ButtonAttributes.RoundedRect(ButtonBounds, 2);
+        System.Drawing.Drawing2D.GraphicsPath button = ButtonAttributes.RoundedRect(_buttonBounds, 2);
 
         Brush normal_colour = Colour.ButtonColour;
         Brush hover_colour = Colour.HoverButtonColour;
         Brush clicked_colour = Colour.ClickedButtonColour;
 
-        Brush butCol = (mouseOver) ? hover_colour : normal_colour;
-        graphics.FillPath(mouseDown ? clicked_colour : butCol, button);
+        Brush butCol = (_mouseOver) ? hover_colour : normal_colour;
+        graphics.FillPath(_mouseDown ? clicked_colour : butCol, button);
 
         // draw button edge
         Color edgeColor = Colour.ButtonBorderColour;
         Color edgeHover = Colour.HoverBorderColour;
         Color edgeClick = Colour.ClickedBorderColour;
-        Color edgeCol = (mouseOver) ? edgeHover : edgeColor;
-        Pen pen = new Pen(mouseDown ? edgeClick : edgeCol) {
-          Width = (mouseDown) ? 0.8f : 0.5f
+        Color edgeCol = (_mouseOver) ? edgeHover : edgeColor;
+        var pen = new Pen(_mouseDown ? edgeClick : edgeCol) {
+          Width = (_mouseDown) ? 0.8f : 0.5f
         };
         graphics.DrawPath(pen, button);
 
         // draw button glow
-        System.Drawing.Drawing2D.GraphicsPath overlay = ButtonAttributes.RoundedRect(ButtonBounds, 2, true);
-        graphics.FillPath(new SolidBrush(Color.FromArgb(mouseDown ? 0 : mouseOver ? 40 : 60, 255, 255, 255)), overlay);
+        System.Drawing.Drawing2D.GraphicsPath overlay = ButtonAttributes.RoundedRect(_buttonBounds, 2, true);
+        graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown ? 0 : _mouseOver ? 40 : 60, 255, 255, 255)), overlay);
 
         // draw button text
-        graphics.DrawString(buttonText, font, Colour.AnnotationTextBright, ButtonBounds, GH_TextRenderingConstants.CenterCenter);
+        graphics.DrawString(_buttonText, font, Colour.AnnotationTextBright, _buttonBounds, GH_TextRenderingConstants.CenterCenter);
       }
     }
   }
