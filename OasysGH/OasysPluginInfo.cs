@@ -6,7 +6,7 @@ namespace OasysGH {
 
     // this is the one place to set the version in VS:
     // also update the version manually in OasysGH.csproj
-    public const string Version = "0.6.8";
+    public const string Version = "0.6.9";
   }
 
   public class OasysPluginInfo {
