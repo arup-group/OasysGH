@@ -18,20 +18,22 @@ namespace OasysGH.UI {
   /// To use this method override CreateAttributes() in component class and set m_attributes = new DropDownComponentAttributes(...
   /// </summary>
   public class DropDownComponentAttributes : GH_ComponentAttributes {
-    private float MinWidth {
+    private int MinWidth {
       get {
-        float sp = WidthAttributes.MaxTextWidth(_spacerTxts, GH_FontServer.Standard);
-        float bt = 0;
+        int sp = WidthAttributes.MaxTextWidth(_spacerTxts, GH_FontServer.Standard);
+        int bt = 0;
         for (int i = 0; i < _dropdownlists.Count; i++) {
-          float tbt = WidthAttributes.MaxTextWidth(_dropdownlists[i], new Font(GH_FontServer.FamilyStandard, 8));
+          int tbt = WidthAttributes.MaxTextWidth(_dropdownlists[i], new Font(GH_FontServer.FamilyStandard, 7));
           if (tbt > bt)
             bt = tbt;
         }
 
-        float num = Math.Max(Math.Max(sp, bt), 90);
+        bt += 12; // another magic number
+
+        int num = Math.Max(Math.Max(sp, bt), 90);
         return Math.Min(num, 170);
       }
-      set { MinWidth = value; }
+      set => MinWidth = value;
     }
 
     private readonly Action<int, int> _action;
@@ -291,7 +293,7 @@ namespace OasysGH.UI {
       if (_unfolded == null)
         _unfolded = new List<bool>();
 
-      int s = 2; //spacing to edges and internal between boxes
+      int s = 2; // spacing to edges and internal between boxes
 
       int h0 = 0;
 
@@ -331,12 +333,12 @@ namespace OasysGH.UI {
         else
           _buttonBound[i] = tempButton;
 
-        //update component bounds
+        // update component bounds
         Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + h0 + h1 + 4 * s);
 
         // create list of bounds for dropdown if dropdown is unfolded
         if (_unfolded.Count == i)
-          _unfolded.Add(new bool()); //ensure we have a bool for every list
+          _unfolded.Add(new bool()); // ensure we have a bool for every list
 
         if (_unfolded[i]) // if unfolded checked create dropdown list
         {
@@ -351,7 +353,7 @@ namespace OasysGH.UI {
           }
           _dropdownBound[i] = new RectangleF(_borderBound[i].X, _borderBound[i].Y + h1 + s, _borderBound[i].Width, Math.Min(_dropdownlists[i].Count, _maxNoRows) * _borderBound[i].Height);
 
-          //update component size if dropdown is unfolded to be able to capture mouseclicks
+          // update component size if dropdown is unfolded to be able to capture mouseclicks
           Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + _dropdownBound[i].Height + s);
 
           // additional move for the content (moves more than the scroll bar)
@@ -432,14 +434,14 @@ namespace OasysGH.UI {
         sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
 
         for (int i = 0; i < _dropdownlists.Count; i++) {
-          //Draw divider line
+          // draw divider line
           if (_spacerTxts[i] != "") {
             graphics.DrawString(_spacerTxts[i], sml, Colour.AnnotationTextDark, _spacerBounds[i], GH_TextRenderingConstants.CenterCenter);
             graphics.DrawLine(spacer, _spacerBounds[i].X, _spacerBounds[i].Y + _spacerBounds[i].Height / 2, _spacerBounds[i].X + (_spacerBounds[i].Width - GH_FontServer.StringWidth(_spacerTxts[i], sml)) / 2 - 4, _spacerBounds[i].Y + _spacerBounds[i].Height / 2);
             graphics.DrawLine(spacer, _spacerBounds[i].X + (_spacerBounds[i].Width - GH_FontServer.StringWidth(_spacerTxts[i], sml)) / 2 + GH_FontServer.StringWidth(_spacerTxts[i], sml) + 4, _spacerBounds[i].Y + _spacerBounds[i].Height / 2, _spacerBounds[i].X + _spacerBounds[i].Width, _spacerBounds[i].Y + _spacerBounds[i].Height / 2);
           }
 
-          // Draw selected item
+          // draw selected item
           // set font and colour depending on inital or selected text
           var font = new Font(GH_FontServer.FamilyStandard, 7);
           // adjust fontsize to high resolution displays

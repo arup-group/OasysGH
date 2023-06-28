@@ -27,7 +27,7 @@ namespace OasysGH.UI {
           if (tbt > bt)
             bt = tbt;
         }
-        float tbt2 = 15 + WidthAttributes.MaxTextWidth(_toggleTexts, new Font(GH_FontServer.FamilyStandard, 7)); //add 15 for button width
+        float tbt2 = 15 + WidthAttributes.MaxTextWidth(_toggleTexts, new Font(GH_FontServer.FamilyStandard, 7)); // add 15 for button width
         if (tbt2 > bt)
           bt = tbt2;
         float num = Math.Max(Math.Max(sp, bt), 90);

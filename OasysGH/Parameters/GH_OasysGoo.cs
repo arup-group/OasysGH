@@ -17,6 +17,9 @@ namespace OasysGH.Parameters {
     public override string TypeDescription => PluginInfo.ProductName + " " + TypeName + " Parameter";
     public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
 
+    public GH_OasysGoo() : base() {
+    }
+
     public GH_OasysGoo(T item) {
       if (item == null)
         Value = item;
