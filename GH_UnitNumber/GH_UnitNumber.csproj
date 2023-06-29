@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>UnitNumberLogo64.png</PackageIcon>
-    <Version>0.6.8-beta</Version>
+    <Version>0.6.10-beta</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <BaseOutputPath>bin\</BaseOutputPath>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
