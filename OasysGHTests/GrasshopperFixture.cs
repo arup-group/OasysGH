@@ -41,8 +41,6 @@ namespace Rhino.Test {
     private static string linkFileName = "OasysGhTests.ghlink";
     private static string linkFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
       "Grasshopper", "Libraries");
-    private static string yakFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-      "McNeel", "Rhinoceros", "packages");
     private object _core = null;
     private object _gHPlugin = null;
     private bool _isDisposed;
@@ -56,8 +54,6 @@ namespace Rhino.Test {
     }
 
     public GrasshopperFixture() {
-      TryUninstallUnitNumber();
-
       AddPluginToGH();
 
       InitializeCore();
@@ -73,16 +69,6 @@ namespace Rhino.Test {
       writer.Close();
     }
 
-    public void TryUninstallUnitNumber() {
-      // initialise yak client and set package install folder for this version of rhino
-      var yak = new YakClient(
-        PackageRepositoryFactory.Create(
-          "https://yak.rhino3d.com",
-          new ProductHeaderValue("OasysAutomation"))) {
-        PackageFolder = yakFolderPath // user
-      };
-      yak.Remove("UnitNumber");
-    }
 
     public void Dispose() {
       // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
