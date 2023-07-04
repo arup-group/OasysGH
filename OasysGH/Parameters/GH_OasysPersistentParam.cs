@@ -18,7 +18,7 @@ namespace OasysGH.Parameters {
     }
 
     protected override ToolStripMenuItem Menu_CustomMultiValueItem() {
-      var item = new System.Windows.Forms.ToolStripMenuItem {
+      var item = new ToolStripMenuItem {
         Text = "Not available",
         Visible = false
       };
