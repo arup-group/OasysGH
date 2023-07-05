@@ -81,16 +81,7 @@ namespace OasysGH.Units.UI {
       InitialiseDropdown(curvatureComboBox, _curvatureAbbr, Curvature.GetAbbreviation(DefaultUnits.CurvatureUnit));
     }
 
-    private void DefaultUnitsForm_Load(object sender, EventArgs e) {
-    }
-
-    private void InitialiseDropdown(ComboBox comboBox, List<string> dataSource, string selected) {
-      comboBox.DataSource = dataSource.ToList();
-      comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-      comboBox.SelectedIndex = dataSource.IndexOf(selected);
-    }
-
-    private void kipft_Click(object sender, EventArgs e) {
+    internal void kipft_Click(object sender, EventArgs e) {
       UpdateSelectedFromUnitSystem(new UnitSystem(
         LengthUnit.Inch,
         AreaUnit.SquareInch,
@@ -121,7 +112,7 @@ namespace OasysGH.Units.UI {
         SectionModulusUnit.CubicFoot));
     }
 
-    private void kipin_Click(object sender, EventArgs e) {
+    internal void kipin_Click(object sender, EventArgs e) {
       UpdateSelectedFromUnitSystem(new UnitSystem(
         LengthUnit.Inch,
         AreaUnit.SquareInch,
@@ -152,7 +143,7 @@ namespace OasysGH.Units.UI {
         SectionModulusUnit.CubicInch));
     }
 
-    private void kNm_Click(object sender, EventArgs e) {
+    internal void kNm_Click(object sender, EventArgs e) {
       UpdateSelectedFromUnitSystem(new UnitSystem(
         LengthUnit.Centimeter,
         AreaUnit.SquareCentimeter,
@@ -183,17 +174,7 @@ namespace OasysGH.Units.UI {
         SectionModulusUnit.CubicCentimeter));
     }
 
-    private void lengthComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-      if (!useRhinoTolerance.Checked) {
-        toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
-
-        LengthUnit unit = Length.ParseUnit(lengthComboBox.Text);
-
-        SetTempTolerance(unit);
-      }
-    }
-
-    private void OK_Click(object sender, EventArgs e) {
+    internal void OK_Click(object sender, EventArgs e) {
       DefaultUnits.LengthUnitSection = Length.ParseUnit(lengthSectionComboBox.Text);
       DefaultUnits.SectionAreaUnit = Area.ParseUnit(areaComboBox.Text);
       DefaultUnits.SectionVolumeUnit = Volume.ParseUnit(volumeComboBox.Text);
@@ -227,25 +208,7 @@ namespace OasysGH.Units.UI {
       Utility.SaveSettings();
     }
 
-    private void SetSelectedDropdown(ComboBox comboBox, List<string> dataSource, string selected) {
-      comboBox.SelectedIndex = dataSource.IndexOf(selected);
-    }
-
-    private void SetTempTolerance(LengthUnit unit) {
-      decimal tolerance = (decimal)new Length((double)toleranceUpDown.Value, _tempTolerance.Unit).As(unit);
-
-      // check if chosen tolerance is inside min/max values, and reset form to min/max values if outside
-      if (tolerance >= toleranceUpDown.Minimum && tolerance <= toleranceUpDown.Maximum)
-        toleranceUpDown.Value = tolerance;
-      else if (tolerance < toleranceUpDown.Minimum)
-        toleranceUpDown.Value = toleranceUpDown.Minimum;
-      else
-        toleranceUpDown.Value = toleranceUpDown.Maximum;
-
-      _tempTolerance = new Length((double)toleranceUpDown.Value, unit);
-    }
-
-    private void SI_Click(object sender, EventArgs e) {
+    internal void SI_Click(object sender, EventArgs e) {
       UpdateSelectedFromUnitSystem(new UnitSystem(
         LengthUnit.Meter,
         AreaUnit.SquareMeter,
@@ -274,6 +237,43 @@ namespace OasysGH.Units.UI {
         EnergyUnit.Joule,
         CurvatureUnit.PerMeter,
         SectionModulusUnit.CubicMeter));
+    }
+
+    private void DefaultUnitsForm_Load(object sender, EventArgs e) {
+    }
+
+    private void InitialiseDropdown(ComboBox comboBox, List<string> dataSource, string selected) {
+      comboBox.DataSource = dataSource.ToList();
+      comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+      comboBox.SelectedIndex = dataSource.IndexOf(selected);
+    }
+
+    private void lengthComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+      if (!useRhinoTolerance.Checked) {
+        toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
+
+        LengthUnit unit = Length.ParseUnit(lengthComboBox.Text);
+
+        SetTempTolerance(unit);
+      }
+    }
+
+    private void SetSelectedDropdown(ComboBox comboBox, List<string> dataSource, string selected) {
+      comboBox.SelectedIndex = dataSource.IndexOf(selected);
+    }
+
+    private void SetTempTolerance(LengthUnit unit) {
+      decimal tolerance = (decimal)new Length((double)toleranceUpDown.Value, _tempTolerance.Unit).As(unit);
+
+      // check if chosen tolerance is inside min/max values, and reset form to min/max values if outside
+      if (tolerance >= toleranceUpDown.Minimum && tolerance <= toleranceUpDown.Maximum)
+        toleranceUpDown.Value = tolerance;
+      else if (tolerance < toleranceUpDown.Minimum)
+        toleranceUpDown.Value = toleranceUpDown.Minimum;
+      else
+        toleranceUpDown.Value = toleranceUpDown.Maximum;
+
+      _tempTolerance = new Length((double)toleranceUpDown.Value, unit);
     }
 
     private void UpdateSelectedFromUnitSystem(UnitSystem unitSystem) {
@@ -319,7 +319,7 @@ namespace OasysGH.Units.UI {
       SetSelectedDropdown(curvatureComboBox, _curvatureAbbr, Curvature.GetAbbreviation(unitSystem.CurvatureUnit));
     }
 
-    private void useRhinoLengthUnit_CheckedChanged(object sender, EventArgs e) {
+    internal void useRhinoLengthUnit_CheckedChanged(object sender, EventArgs e) {
       lengthComboBox.Enabled = !useRhinoLengthUnit.Checked;
       LengthUnit unit = lengthComboBox.Enabled ? DefaultUnits.LengthUnitGeometry : RhinoUnit.GetRhinoLengthUnit();
       SetSelectedDropdown(lengthComboBox, _lengthAbbr, Length.GetAbbreviation(unit));
@@ -331,7 +331,7 @@ namespace OasysGH.Units.UI {
       }
     }
 
-    private void useRhinoTolerance_CheckedChanged(object sender, EventArgs e) {
+    internal void useRhinoTolerance_CheckedChanged(object sender, EventArgs e) {
       if (!useRhinoTolerance.Checked) {
         toleranceUpDown.Enabled = true;
         toleranceTxt.Text = "Tolerance [" + Length.GetAbbreviation(Length.ParseUnit(lengthComboBox.Text)) + "]";
