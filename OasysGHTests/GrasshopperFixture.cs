@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Xunit;
+using Yak;
 
 namespace Rhino.Test {
   [CollectionDefinition("GrasshopperFixture collection")]
@@ -38,7 +39,8 @@ namespace Rhino.Test {
     private object _Doc { get; set; }
     private object _DocIO { get; set; }
     private static string linkFileName = "OasysGhTests.ghlink";
-    private static string linkFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Grasshopper", "Libraries");
+    private static string linkFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+      "Grasshopper", "Libraries");
     private object _core = null;
     private object _gHPlugin = null;
     private bool _isDisposed;
@@ -66,6 +68,7 @@ namespace Rhino.Test {
       writer.Write(Environment.CurrentDirectory);
       writer.Close();
     }
+
 
     public void Dispose() {
       // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method

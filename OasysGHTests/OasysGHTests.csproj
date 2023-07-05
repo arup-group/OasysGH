@@ -20,7 +20,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GH_UnitNumber\GH_UnitNumber.csproj" />
+    <ProjectReference Include="..\OasysGHComponentTests\OasysGHComponentTests.csproj" />
     <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Yak.Core">
+      <HintPath>..\..\..\..\..\..\Program Files\Rhino 7\System\Yak.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

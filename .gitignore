@@ -11,3 +11,7 @@
 /GH_UnitNumberTests/bin
 /GH_UnitNumber/GH_UnitNumber.csproj.user
 *.user
+/IntegrationTests/bin
+/IntegrationTests/obj
+/OasysGHComponentTests/bin
+/OasysGHComponentTests/obj

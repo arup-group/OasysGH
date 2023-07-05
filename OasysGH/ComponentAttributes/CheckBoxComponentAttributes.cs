@@ -9,7 +9,7 @@ using Grasshopper.Kernel.Attributes;
 using OasysGH.UI.Helpers;
 
 namespace OasysGH.UI {
-  public class CheckBoxComponentComponentAttributes : GH_ComponentAttributes {
+  public class CheckBoxComponentAttributes : GH_ComponentAttributes {
     public float MinWidth {
       get => 90;
       set => MinWidth = value;
@@ -44,7 +44,7 @@ namespace OasysGH.UI {
     // annotation text bounds
     private List<List<RectangleF>> _textBounds = new List<List<RectangleF>>();
 
-    public CheckBoxComponentComponentAttributes(GH_Component owner, Action<List<List<bool>>> updateHandle, List<string> spacerTexts, List<List<bool>> checks, List<List<string>> text) : base(owner) {
+    public CheckBoxComponentAttributes(GH_Component owner, Action<List<List<bool>>> updateHandle, List<string> spacerTexts, List<List<bool>> checks, List<List<string>> text) : base(owner) {
       _checks = checks;
       _update = updateHandle;
       _spacerTxts = spacerTexts;
@@ -200,37 +200,39 @@ namespace OasysGH.UI {
 
     protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel) {
       base.Render(canvas, graphics, channel);
-
       if (channel == GH_CanvasChannel.Objects) {
-        // Text boxes
-        Brush activeFillBrush = new SolidBrush(Colour.OasysDarkBlue);
-        Brush passiveFillBrush = Brushes.LightGray;
-        Color borderColour = Colour.OasysDarkBlue;
-        Color passiveBorder = Color.DarkGray;
-        Brush annoText = Brushes.Black;
+        CustomRender(graphics);
+      }
+    }
+    internal void CustomRender(Graphics graphics) {
+      // Text boxes
+      Brush activeFillBrush = new SolidBrush(Colour.OasysDarkBlue);
+      Brush passiveFillBrush = Brushes.LightGray;
+      Color borderColour = Colour.OasysDarkBlue;
+      Color passiveBorder = Color.DarkGray;
+      Brush annoText = Brushes.Black;
 
-        Font font = GH_FontServer.Standard;
-        int s = 8;
-        if (CentralSettings.CanvasFullNames) {
-          s = 10;
-          font = GH_FontServer.Standard;
-        }
+      Font font = GH_FontServer.Standard;
+      int s = 8;
+      if (CentralSettings.CanvasFullNames) {
+        s = 10;
+        font = GH_FontServer.Standard;
+      }
 
-        // adjust fontsize to high resolution displays
-        font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-        Font sml = GH_FontServer.Small;
-        sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-        var pen = new Pen(borderColour);
+      // adjust fontsize to high resolution displays
+      font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+      Font sml = GH_FontServer.Small;
+      sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+      var pen = new Pen(borderColour);
 
-        for (int r = 0; r < _rows; r++) {
-          graphics.DrawString(_spacerTxts[r], sml, annoText, _spacerBounds[r], GH_TextRenderingConstants.CenterCenter);
-          graphics.DrawLine(pen, _spacerBounds[r].X, _spacerBounds[r].Y + _spacerBounds[r].Height / 2, _spacerBounds[r].X + (_spacerBounds[r].Width - GH_FontServer.StringWidth(_spacerTxts[r], sml)) / 2 - 4, _spacerBounds[r].Y + _spacerBounds[r].Height / 2);
-          graphics.DrawLine(pen, _spacerBounds[r].X + (_spacerBounds[r].Width - GH_FontServer.StringWidth(_spacerTxts[r], sml)) / 2 + GH_FontServer.StringWidth(_spacerTxts[r], sml) + 4, _spacerBounds[r].Y + _spacerBounds[r].Height / 2, _spacerBounds[r].X + _spacerBounds[r].Width, _spacerBounds[r].Y + _spacerBounds[r].Height / 2);
+      for (int r = 0; r < _rows; r++) {
+        graphics.DrawString(_spacerTxts[r], sml, annoText, _spacerBounds[r], GH_TextRenderingConstants.CenterCenter);
+        graphics.DrawLine(pen, _spacerBounds[r].X, _spacerBounds[r].Y + _spacerBounds[r].Height / 2, _spacerBounds[r].X + (_spacerBounds[r].Width - GH_FontServer.StringWidth(_spacerTxts[r], sml)) / 2 - 4, _spacerBounds[r].Y + _spacerBounds[r].Height / 2);
+        graphics.DrawLine(pen, _spacerBounds[r].X + (_spacerBounds[r].Width - GH_FontServer.StringWidth(_spacerTxts[r], sml)) / 2 + GH_FontServer.StringWidth(_spacerTxts[r], sml) + 4, _spacerBounds[r].Y + _spacerBounds[r].Height / 2, _spacerBounds[r].X + _spacerBounds[r].Width, _spacerBounds[r].Y + _spacerBounds[r].Height / 2);
 
-          for (int c = 0; c < _columns[r]; c++) {
-            graphics.DrawString(_text[r][c], font, annoText, _textBounds[r][c], GH_TextRenderingConstants.CenterCenter);
-            CheckBox.DrawCheckButton(graphics, new PointF(_bounds[r][c].X + _bounds[r][c].Width / 2, _bounds[r][c].Y + _bounds[r][c].Height / 2), _checks[r][c], activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
-          }
+        for (int c = 0; c < _columns[r]; c++) {
+          graphics.DrawString(_text[r][c], font, annoText, _textBounds[r][c], GH_TextRenderingConstants.CenterCenter);
+          CheckBox.DrawCheckButton(graphics, new PointF(_bounds[r][c].X + _bounds[r][c].Width / 2, _bounds[r][c].Y + _bounds[r][c].Height / 2), _checks[r][c], activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
         }
       }
     }
