@@ -179,50 +179,54 @@ namespace OasysGH.UI {
       base.Render(canvas, graphics, channel);
 
       if (channel == GH_CanvasChannel.Objects) {
-        Pen spacer = new Pen(Colour.SpacerColour);
-
-        Font font = GH_FontServer.Standard;
-        // adjust fontsize to high resolution displays
-        font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-
-        Font sml = GH_FontServer.Small;
-        // adjust fontsize to high resolution displays
-        sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-
-        //Draw divider line
-        if (SpacerTxt != "") {
-          graphics.DrawString(SpacerTxt, sml, Colour.AnnotationTextDark, SpacerBounds, GH_TextRenderingConstants.CenterCenter);
-          graphics.DrawLine(spacer, SpacerBounds.X, SpacerBounds.Y + SpacerBounds.Height / 2, SpacerBounds.X + (SpacerBounds.Width - GH_FontServer.StringWidth(SpacerTxt, sml)) / 2 - 4, SpacerBounds.Y + SpacerBounds.Height / 2);
-          graphics.DrawLine(spacer, SpacerBounds.X + (SpacerBounds.Width - GH_FontServer.StringWidth(SpacerTxt, sml)) / 2 + GH_FontServer.StringWidth(SpacerTxt, sml) + 4, SpacerBounds.Y + SpacerBounds.Height / 2, SpacerBounds.X + SpacerBounds.Width, SpacerBounds.Y + SpacerBounds.Height / 2);
-        }
-
-        // Draw button box
-        System.Drawing.Drawing2D.GraphicsPath button = ButtonAttributes.RoundedRect(ButtonBounds, 2);
-
-        Brush normal_colour = Colour.ButtonColour;
-        Brush hover_colour = Colour.HoverButtonColour;
-        Brush clicked_colour = Colour.ClickedButtonColour;
-
-        Brush butCol = (mouseOver) ? hover_colour : normal_colour;
-        graphics.FillPath(mouseDown ? clicked_colour : butCol, button);
-
-        // draw button edge
-        Color edgeColor = Colour.ButtonBorderColour;
-        Color edgeHover = Colour.HoverBorderColour;
-        Color edgeClick = Colour.ClickedBorderColour;
-        Color edgeCol = (mouseOver) ? edgeHover : edgeColor;
-        Pen pen = new Pen(mouseDown ? edgeClick : edgeCol) {
-          Width = (mouseDown) ? 0.8f : 0.5f
-        };
-        graphics.DrawPath(pen, button);
-
-        // draw button glow
-        System.Drawing.Drawing2D.GraphicsPath overlay = ButtonAttributes.RoundedRect(ButtonBounds, 2, true);
-        graphics.FillPath(new SolidBrush(Color.FromArgb(mouseDown ? 0 : mouseOver ? 40 : 60, 255, 255, 255)), overlay);
-
-        // draw button text
-        graphics.DrawString(buttonText, font, Colour.AnnotationTextBright, ButtonBounds, GH_TextRenderingConstants.CenterCenter);
+        CustomRender(graphics);
       }
+    }
+
+    internal void CustomRender(Graphics graphics) {
+      Pen spacer = new Pen(Colour.SpacerColour);
+
+      Font font = GH_FontServer.Standard;
+      // adjust fontsize to high resolution displays
+      font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+
+      Font sml = GH_FontServer.Small;
+      // adjust fontsize to high resolution displays
+      sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+
+      //Draw divider line
+      if (SpacerTxt != "") {
+        graphics.DrawString(SpacerTxt, sml, Colour.AnnotationTextDark, SpacerBounds, GH_TextRenderingConstants.CenterCenter);
+        graphics.DrawLine(spacer, SpacerBounds.X, SpacerBounds.Y + SpacerBounds.Height / 2, SpacerBounds.X + (SpacerBounds.Width - GH_FontServer.StringWidth(SpacerTxt, sml)) / 2 - 4, SpacerBounds.Y + SpacerBounds.Height / 2);
+        graphics.DrawLine(spacer, SpacerBounds.X + (SpacerBounds.Width - GH_FontServer.StringWidth(SpacerTxt, sml)) / 2 + GH_FontServer.StringWidth(SpacerTxt, sml) + 4, SpacerBounds.Y + SpacerBounds.Height / 2, SpacerBounds.X + SpacerBounds.Width, SpacerBounds.Y + SpacerBounds.Height / 2);
+      }
+
+      // Draw button box
+      System.Drawing.Drawing2D.GraphicsPath button = ButtonAttributes.RoundedRect(ButtonBounds, 2);
+
+      Brush normal_colour = Colour.ButtonColour;
+      Brush hover_colour = Colour.HoverButtonColour;
+      Brush clicked_colour = Colour.ClickedButtonColour;
+
+      Brush butCol = (mouseOver) ? hover_colour : normal_colour;
+      graphics.FillPath(mouseDown ? clicked_colour : butCol, button);
+
+      // draw button edge
+      Color edgeColor = Colour.ButtonBorderColour;
+      Color edgeHover = Colour.HoverBorderColour;
+      Color edgeClick = Colour.ClickedBorderColour;
+      Color edgeCol = (mouseOver) ? edgeHover : edgeColor;
+      Pen pen = new Pen(mouseDown ? edgeClick : edgeCol) {
+        Width = (mouseDown) ? 0.8f : 0.5f
+      };
+      graphics.DrawPath(pen, button);
+
+      // draw button glow
+      System.Drawing.Drawing2D.GraphicsPath overlay = ButtonAttributes.RoundedRect(ButtonBounds, 2, true);
+      graphics.FillPath(new SolidBrush(Color.FromArgb(mouseDown ? 0 : mouseOver ? 40 : 60, 255, 255, 255)), overlay);
+
+      // draw button text
+      graphics.DrawString(buttonText, font, Colour.AnnotationTextBright, ButtonBounds, GH_TextRenderingConstants.CenterCenter);
     }
   }
 }

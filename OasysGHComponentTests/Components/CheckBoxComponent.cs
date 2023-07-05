@@ -22,7 +22,7 @@ namespace OasysGH.Components.Tests {
       : base("CheckBoxComponent", "CB", "A checkbox component", "OasysGH", "Test") { }
 
     public override void CreateAttributes() {
-      m_attributes = new CheckBoxComponentComponentAttributes(this, SetReleases,
+      m_attributes = new CheckBoxComponentAttributes(this, SetReleases,
         new List<string>() {
           "Set 6 DOF",
         },

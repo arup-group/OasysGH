@@ -17,7 +17,7 @@ namespace OasysGH.UI {
   ///
   /// To use this method override CreateAttributes() in component class and set m_attributes = new ThreeButtonAtrributes(...
   /// </summary>
-  public class ThreeButtonAtrributes : GH_ComponentAttributes {
+  public class ThreeButtonComponentAttributes : GH_ComponentAttributes {
     private float MinWidth {
       get {
         var spacers = new List<string>();
@@ -68,7 +68,7 @@ namespace OasysGH.UI {
     private bool _mouseOver3;
     private RectangleF _spacerBounds;
 
-    public ThreeButtonAtrributes(GH_Component owner, string display1Text, string display2Text, string display3Text, Action clickHandle1, Action clickHandle2, Action clickHandle3, bool canOpen, string spacerText = "") : base(owner) {
+    public ThreeButtonComponentAttributes(GH_Component owner, string display1Text, string display2Text, string display3Text, Action clickHandle1, Action clickHandle2, Action clickHandle3, bool canOpen, string spacerText = "") : base(owner) {
       _button1Text = display1Text;
       _button2Text = display2Text;
       _button3Text = display3Text;
@@ -266,110 +266,115 @@ namespace OasysGH.UI {
     }
 
     protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel) {
-      base.Render(canvas, graphics, channel);
+      if (graphics != null) {
+        base.Render(canvas, graphics, channel);
+      }
 
       if (channel == GH_CanvasChannel.Objects) {
-        var spacer = new Pen(Colour.SpacerColour);
-
-        Font font = GH_FontServer.Standard;
-        // adjust fontsize to high resolution displays
-        font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-
-        Font sml = GH_FontServer.Small;
-        // adjust fontsize to high resolution displays
-        sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-
-        //Draw divider line
-        if (_spacerTxt != "") {
-          graphics.DrawString(_spacerTxt, sml, Colour.AnnotationTextDark, _spacerBounds, GH_TextRenderingConstants.CenterCenter);
-          graphics.DrawLine(spacer, _spacerBounds.X, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 - 4, _spacerBounds.Y + _spacerBounds.Height / 2);
-          graphics.DrawLine(spacer, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 + GH_FontServer.StringWidth(_spacerTxt, sml) + 4, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + _spacerBounds.Width, _spacerBounds.Y + _spacerBounds.Height / 2);
-        }
-
-        // ### button 1 ###
-        // Draw button box
-        System.Drawing.Drawing2D.GraphicsPath button1 = ButtonAttributes.RoundedRect(_button1Bounds, 2);
-
-        Brush normal_colour1 = Colour.ButtonColour;
-        Brush hover_colour1 = Colour.HoverButtonColour;
-        Brush clicked_colour1 = Colour.ClickedButtonColour;
-
-        Brush butCol1 = (_mouseOver1) ? hover_colour1 : normal_colour1;
-        graphics.FillPath(_mouseDown1 ? clicked_colour1 : butCol1, button1);
-
-        // draw button edge
-        Color edgeColor1 = Colour.ButtonBorderColour;
-        Color edgeHover1 = Colour.HoverBorderColour;
-        Color edgeClick1 = Colour.ClickedBorderColour;
-        Color edgeCol1 = (_mouseOver1) ? edgeHover1 : edgeColor1;
-        var pen1 = new Pen(_mouseDown1 ? edgeClick1 : edgeCol1) {
-          Width = (_mouseDown1) ? 0.8f : 0.5f
-        };
-        graphics.DrawPath(pen1, button1);
-
-        // draw button glow
-        System.Drawing.Drawing2D.GraphicsPath overlay1 = ButtonAttributes.RoundedRect(_button1Bounds, 2, true);
-        graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown1 ? 0 : _mouseOver1 ? 40 : 60, 255, 255, 255)), overlay1);
-
-        // draw button text
-        graphics.DrawString(_button1Text, font, Colour.AnnotationTextBright, _button1Bounds, GH_TextRenderingConstants.CenterCenter);
-
-        // ### button 2 ###
-        // Draw button box
-        System.Drawing.Drawing2D.GraphicsPath button2 = ButtonAttributes.RoundedRect(_button2Bounds, 2);
-
-        Brush normal_colour2 = Colour.ButtonColour;
-        Brush hover_colour2 = Colour.HoverButtonColour;
-        Brush clicked_colour2 = Colour.ClickedButtonColour;
-
-        Brush butCol2 = (_mouseOver2) ? hover_colour2 : normal_colour2;
-        graphics.FillPath(_mouseDown2 ? clicked_colour2 : butCol2, button2);
-
-        // draw button edge
-        Color edgeColor2 = Colour.ButtonBorderColour;
-        Color edgeHover2 = Colour.HoverBorderColour;
-        Color edgeClick2 = Colour.ClickedBorderColour;
-        Color edgeCol2 = (_mouseOver2) ? edgeHover2 : edgeColor2;
-        var pen2 = new Pen(_mouseDown2 ? edgeClick2 : edgeCol2) {
-          Width = (_mouseDown2) ? 0.8f : 0.5f
-        };
-        graphics.DrawPath(pen2, button2);
-
-        // draw button glow
-        System.Drawing.Drawing2D.GraphicsPath overlay2 = ButtonAttributes.RoundedRect(_button2Bounds, 2, true);
-        graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown2 ? 0 : _mouseOver2 ? 40 : 60, 255, 255, 255)), overlay2);
-
-        // draw button text
-        graphics.DrawString(_button2Text, font, Colour.AnnotationTextBright, _button2Bounds, GH_TextRenderingConstants.CenterCenter);
-
-        // ### button 3 ###
-        // Draw button box
-        System.Drawing.Drawing2D.GraphicsPath button3 = ButtonAttributes.RoundedRect(_button3Bounds, 2);
-
-        Brush normal_colour3 = Colour.ButtonColour;
-        Brush hover_colour3 = Colour.HoverButtonColour;
-        Brush clicked_colour3 = Colour.ClickedButtonColour;
-
-        Brush butCol3 = (_mouseOver3) ? hover_colour3 : normal_colour3;
-        graphics.FillPath(_mouseDown3 ? clicked_colour3 : butCol3, button3);
-
-        // draw button edge
-        Color edgeColor3 = Colour.ButtonBorderColour;
-        Color edgeHover3 = Colour.HoverBorderColour;
-        Color edgeClick3 = Colour.ClickedBorderColour;
-        Color edgeCol3 = (_mouseOver3) ? edgeHover3 : edgeColor3;
-        var pen3 = new Pen(_mouseDown3 ? edgeClick3 : edgeCol3) {
-          Width = (_mouseDown3) ? 0.8f : 0.5f
-        };
-        graphics.DrawPath(pen3, button3);
-
-        // draw button glow
-        System.Drawing.Drawing2D.GraphicsPath overlay3 = ButtonAttributes.RoundedRect(_button3Bounds, 2, true);
-        graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown3 ? 0 : _mouseOver3 ? 40 : 60, 255, 255, 255)), overlay3);
-
-        // draw button text
-        graphics.DrawString(_button3Text, font, Colour.AnnotationTextBright, _button3Bounds, GH_TextRenderingConstants.CenterCenter);
+        CustomRender(graphics);
       }
+    }
+    internal void CustomRender(Graphics graphics) {
+      var spacer = new Pen(Colour.SpacerColour);
+
+      Font font = GH_FontServer.Standard;
+      // adjust fontsize to high resolution displays
+      font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+
+      Font sml = GH_FontServer.Small;
+      // adjust fontsize to high resolution displays
+      sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+
+      //Draw divider line
+      if (_spacerTxt != "") {
+        graphics.DrawString(_spacerTxt, sml, Colour.AnnotationTextDark, _spacerBounds, GH_TextRenderingConstants.CenterCenter);
+        graphics.DrawLine(spacer, _spacerBounds.X, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 - 4, _spacerBounds.Y + _spacerBounds.Height / 2);
+        graphics.DrawLine(spacer, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 + GH_FontServer.StringWidth(_spacerTxt, sml) + 4, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + _spacerBounds.Width, _spacerBounds.Y + _spacerBounds.Height / 2);
+      }
+
+      // ### button 1 ###
+      // Draw button box
+      System.Drawing.Drawing2D.GraphicsPath button1 = ButtonAttributes.RoundedRect(_button1Bounds, 2);
+
+      Brush normal_colour1 = Colour.ButtonColour;
+      Brush hover_colour1 = Colour.HoverButtonColour;
+      Brush clicked_colour1 = Colour.ClickedButtonColour;
+
+      Brush butCol1 = (_mouseOver1) ? hover_colour1 : normal_colour1;
+      graphics.FillPath(_mouseDown1 ? clicked_colour1 : butCol1, button1);
+
+      // draw button edge
+      Color edgeColor1 = Colour.ButtonBorderColour;
+      Color edgeHover1 = Colour.HoverBorderColour;
+      Color edgeClick1 = Colour.ClickedBorderColour;
+      Color edgeCol1 = (_mouseOver1) ? edgeHover1 : edgeColor1;
+      var pen1 = new Pen(_mouseDown1 ? edgeClick1 : edgeCol1) {
+        Width = (_mouseDown1) ? 0.8f : 0.5f
+      };
+      graphics.DrawPath(pen1, button1);
+
+      // draw button glow
+      System.Drawing.Drawing2D.GraphicsPath overlay1 = ButtonAttributes.RoundedRect(_button1Bounds, 2, true);
+      graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown1 ? 0 : _mouseOver1 ? 40 : 60, 255, 255, 255)), overlay1);
+
+      // draw button text
+      graphics.DrawString(_button1Text, font, Colour.AnnotationTextBright, _button1Bounds, GH_TextRenderingConstants.CenterCenter);
+
+      // ### button 2 ###
+      // Draw button box
+      System.Drawing.Drawing2D.GraphicsPath button2 = ButtonAttributes.RoundedRect(_button2Bounds, 2);
+
+      Brush normal_colour2 = Colour.ButtonColour;
+      Brush hover_colour2 = Colour.HoverButtonColour;
+      Brush clicked_colour2 = Colour.ClickedButtonColour;
+
+      Brush butCol2 = (_mouseOver2) ? hover_colour2 : normal_colour2;
+      graphics.FillPath(_mouseDown2 ? clicked_colour2 : butCol2, button2);
+
+      // draw button edge
+      Color edgeColor2 = Colour.ButtonBorderColour;
+      Color edgeHover2 = Colour.HoverBorderColour;
+      Color edgeClick2 = Colour.ClickedBorderColour;
+      Color edgeCol2 = (_mouseOver2) ? edgeHover2 : edgeColor2;
+      var pen2 = new Pen(_mouseDown2 ? edgeClick2 : edgeCol2) {
+        Width = (_mouseDown2) ? 0.8f : 0.5f
+      };
+      graphics.DrawPath(pen2, button2);
+
+      // draw button glow
+      System.Drawing.Drawing2D.GraphicsPath overlay2 = ButtonAttributes.RoundedRect(_button2Bounds, 2, true);
+      graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown2 ? 0 : _mouseOver2 ? 40 : 60, 255, 255, 255)), overlay2);
+
+      // draw button text
+      graphics.DrawString(_button2Text, font, Colour.AnnotationTextBright, _button2Bounds, GH_TextRenderingConstants.CenterCenter);
+
+      // ### button 3 ###
+      // Draw button box
+      System.Drawing.Drawing2D.GraphicsPath button3 = ButtonAttributes.RoundedRect(_button3Bounds, 2);
+
+      Brush normal_colour3 = Colour.ButtonColour;
+      Brush hover_colour3 = Colour.HoverButtonColour;
+      Brush clicked_colour3 = Colour.ClickedButtonColour;
+
+      Brush butCol3 = (_mouseOver3) ? hover_colour3 : normal_colour3;
+      graphics.FillPath(_mouseDown3 ? clicked_colour3 : butCol3, button3);
+
+      // draw button edge
+      Color edgeColor3 = Colour.ButtonBorderColour;
+      Color edgeHover3 = Colour.HoverBorderColour;
+      Color edgeClick3 = Colour.ClickedBorderColour;
+      Color edgeCol3 = (_mouseOver3) ? edgeHover3 : edgeColor3;
+      var pen3 = new Pen(_mouseDown3 ? edgeClick3 : edgeCol3) {
+        Width = (_mouseDown3) ? 0.8f : 0.5f
+      };
+      graphics.DrawPath(pen3, button3);
+
+      // draw button glow
+      System.Drawing.Drawing2D.GraphicsPath overlay3 = ButtonAttributes.RoundedRect(_button3Bounds, 2, true);
+      graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown3 ? 0 : _mouseOver3 ? 40 : 60, 255, 255, 255)), overlay3);
+
+      // draw button text
+      graphics.DrawString(_button3Text, font, Colour.AnnotationTextBright, _button3Bounds, GH_TextRenderingConstants.CenterCenter);
     }
   }
 }

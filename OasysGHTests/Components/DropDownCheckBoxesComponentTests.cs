@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
 using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
+using OasysGH.UI;
 using OasysGHTests.TestHelpers;
 using Xunit;
 
@@ -49,6 +52,8 @@ namespace OasysGHTests.Components {
       var comp = new DropDownCheckBoxesComponent();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));
+      var attributes = (DropDownCheckBoxesComponentAttributes)Document.Attributes(comp);
+      attributes.CustomRender(new PictureBox().CreateGraphics());
     }
   }
 }

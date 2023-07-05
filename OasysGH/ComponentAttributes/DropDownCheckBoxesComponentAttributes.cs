@@ -480,133 +480,135 @@ namespace OasysGH.UI {
 
     protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel) {
       base.Render(canvas, graphics, channel);
-
       if (channel == GH_CanvasChannel.Objects) {
-        var spacer = new Pen(Colour.SpacerColour);
-        var pen = new Pen(Colour.OasysDarkBlue) {
-          Width = 0.5f
-        };
+        CustomRender(graphics);
+      }
+    }
+    internal void CustomRender(Graphics graphics) {
+      var spacer = new Pen(Colour.SpacerColour);
+      var pen = new Pen(Colour.OasysDarkBlue) {
+        Width = 0.5f
+      };
 
-        Font sml = GH_FontServer.Small;
-        // adjust fontsize to high resolution displays
-        sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+      Font sml = GH_FontServer.Small;
+      // adjust fontsize to high resolution displays
+      sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
 
-        for (int i = 0; i < _dropdownlists.Count; i++) {
-          //Draw divider line
-          if (_spacerTxts[i] != "") {
-            graphics.DrawString(_spacerTxts[i], sml, Colour.AnnotationTextDark, _spacerBounds[i], GH_TextRenderingConstants.CenterCenter);
-            graphics.DrawLine(spacer, _spacerBounds[i].X, _spacerBounds[i].Y + _spacerBounds[i].Height / 2, _spacerBounds[i].X + (_spacerBounds[i].Width - GH_FontServer.StringWidth(_spacerTxts[i], sml)) / 2 - 4, _spacerBounds[i].Y + _spacerBounds[i].Height / 2);
-            graphics.DrawLine(spacer, _spacerBounds[i].X + (_spacerBounds[i].Width - GH_FontServer.StringWidth(_spacerTxts[i], sml)) / 2 + GH_FontServer.StringWidth(_spacerTxts[i], sml) + 4, _spacerBounds[i].Y + _spacerBounds[i].Height / 2, _spacerBounds[i].X + _spacerBounds[i].Width, _spacerBounds[i].Y + _spacerBounds[i].Height / 2);
-          }
-
-          // Draw selected item
-          // set font and colour depending on inital or selected text
-          var font = new Font(GH_FontServer.FamilyStandard, 7);
-          // adjust fontsize to high resolution displays
-          font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-          Brush fontColour = Colour.AnnotationTextDark;
-          if (_initialTxts != null) {
-            if (_displayTexts[i] == _initialTxts[i]) {
-              pen = new Pen(Colour.BorderColour);
-              font = sml;
-              fontColour = Brushes.Gray;
-            }
-          }
-
-          // background
-          Brush background = new SolidBrush(Colour.OasysLightGrey);
-          // background
-          graphics.FillRectangle(background, _borderBound[i]);
-          // border
-          graphics.DrawRectangle(pen, _borderBound[i].X, _borderBound[i].Y, _borderBound[i].Width, _borderBound[i].Height);
-          // text
-          graphics.DrawString(_displayTexts[i], font, fontColour, _textBound[i], GH_TextRenderingConstants.NearCenter);
-          // draw dropdown arrow
-          DropDownArrow.DrawDropDownButton(graphics, new PointF(_buttonBound[i].X + _buttonBound[i].Width / 2, _buttonBound[i].Y + _buttonBound[i].Height / 2), Colour.OasysDarkBlue, 15);
-
-          // draw dropdown list
-          font = new Font(GH_FontServer.FamilyStandard, 7);
-          // adjust fontsize to high resolution displays
-          font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-          fontColour = Colour.AnnotationTextDark;
-          if (_unfolded[i]) {
-            var penborder = new Pen(Brushes.Gray);
-            Brush dropdownbackground = new SolidBrush(Colour.OasysLightGrey);
-            penborder.Width = 0.3f;
-            for (int j = 0; j < _dropdownBounds[i].Count; j++) {
-              RectangleF listItem = _dropdownBounds[i][j];
-              if (listItem.Y < _dropdownBound[i].Y) {
-                if (listItem.Y + listItem.Height < _dropdownBound[i].Y) {
-                  _dropdownBounds[i][j] = new RectangleF();
-                  continue;
-                } else {
-                  listItem.Height = listItem.Height - (_dropdownBound[i].Y - listItem.Y);
-                  listItem.Y = _dropdownBound[i].Y;
-                  _dropdownBounds[i][j] = listItem;
-                }
-              } else if (listItem.Y + listItem.Height > _dropdownBound[i].Y + _dropdownBound[i].Height) {
-                if (listItem.Y > _dropdownBound[i].Y + _dropdownBound[i].Height) {
-                  _dropdownBounds[i][j] = new RectangleF();
-                  continue;
-                } else {
-                  listItem.Height = _dropdownBound[i].Y + _dropdownBound[i].Height - listItem.Y;
-                  _dropdownBounds[i][j] = listItem;
-                }
-              }
-
-              // background
-              graphics.FillRectangle(dropdownbackground, _dropdownBounds[i][j]);
-              // border
-              graphics.DrawRectangle(penborder, _dropdownBounds[i][j].X, _dropdownBounds[i][j].Y, _dropdownBounds[i][j].Width, _dropdownBounds[i][j].Height);
-              // text
-              if (_dropdownBounds[i][j].Height > 2)
-                graphics.DrawString(_dropdownlists[i][j], font, fontColour, _dropdownBounds[i][j], GH_TextRenderingConstants.NearCenter);
-            }
-            // border
-            graphics.DrawRectangle(pen, _dropdownBound[i].X, _dropdownBound[i].Y, _dropdownBound[i].Width, _dropdownBound[i].Height);
-
-            // draw vertical scroll bar
-            Brush scrollbar = new SolidBrush(Color.FromArgb(_drag ? 160 : 120, Color.Black));
-            var scrollPen = new Pen(scrollbar);
-            scrollPen.Width = _scrollBar.Width - 2;
-            scrollPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
-            scrollPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
-            graphics.DrawLine(scrollPen, _scrollBar.X + 4, _scrollBar.Y + 4, _scrollBar.X + 4, _scrollBar.Y + _scrollBar.Height - 4);
-          }
-        }
-
+      for (int i = 0; i < _dropdownlists.Count; i++) {
         //Draw divider line
-        int k = _dropdownlists.Count;
-        if (_spacerTxts[k] != "") {
-          graphics.DrawString(_spacerTxts[k], sml, Colour.AnnotationTextDark, _spacerBounds[k], GH_TextRenderingConstants.CenterCenter);
-          graphics.DrawLine(spacer, _spacerBounds[k].X, _spacerBounds[k].Y + _spacerBounds[k].Height / 2, _spacerBounds[k].X + (_spacerBounds[k].Width - GH_FontServer.StringWidth(_spacerTxts[k], sml)) / 2 - 4, _spacerBounds[k].Y + _spacerBounds[k].Height / 2);
-          graphics.DrawLine(spacer, _spacerBounds[k].X + (_spacerBounds[k].Width - GH_FontServer.StringWidth(_spacerTxts[k], sml)) / 2 + GH_FontServer.StringWidth(_spacerTxts[k], sml) + 4, _spacerBounds[k].Y + _spacerBounds[k].Height / 2, _spacerBounds[k].X + _spacerBounds[k].Width, _spacerBounds[k].Y + _spacerBounds[k].Height / 2);
+        if (_spacerTxts[i] != "") {
+          graphics.DrawString(_spacerTxts[i], sml, Colour.AnnotationTextDark, _spacerBounds[i], GH_TextRenderingConstants.CenterCenter);
+          graphics.DrawLine(spacer, _spacerBounds[i].X, _spacerBounds[i].Y + _spacerBounds[i].Height / 2, _spacerBounds[i].X + (_spacerBounds[i].Width - GH_FontServer.StringWidth(_spacerTxts[i], sml)) / 2 - 4, _spacerBounds[i].Y + _spacerBounds[i].Height / 2);
+          graphics.DrawLine(spacer, _spacerBounds[i].X + (_spacerBounds[i].Width - GH_FontServer.StringWidth(_spacerTxts[i], sml)) / 2 + GH_FontServer.StringWidth(_spacerTxts[i], sml) + 4, _spacerBounds[i].Y + _spacerBounds[i].Height / 2, _spacerBounds[i].X + _spacerBounds[i].Width, _spacerBounds[i].Y + _spacerBounds[i].Height / 2);
         }
 
-        // #### check boxes ####
-        for (int i = 0; i < _toggleTexts.Count; i++) {
-          var font = new Font(GH_FontServer.FamilyStandard, 7);
-          // adjust fontsize to high resolution displays
-          font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-          Brush fontColour = Colour.AnnotationTextDark;
-
-          Color myColour = Colour.OasysDarkBlue;
-          Brush myBrush = new SolidBrush(myColour);
-          Brush activeFillBrush = myBrush;
-          Brush passiveFillBrush = Brushes.LightGray;
-          Color borderColour = myColour;
-          Color passiveBorder = Color.DarkGray;
-          int s = 8;
-          // draw text
-          graphics.DrawString(_toggleTexts[i], font, fontColour, _toggleTextBound[i], GH_TextRenderingConstants.NearCenter);
-          // draw check box
-          CheckBox.DrawCheckButton(graphics, new PointF(_toggleBoxBound[i].X + _toggleBoxBound[i].Width / 2, _toggleBoxBound[i].Y + _toggleBoxBound[i].Height / 2), _toggles[i], activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
-
-          // update width of text box for mouse-over event handling
-          RectangleF txtBound = _toggleTextBound[i];
-          txtBound.Width = WidthAttributes.MaxTextWidth(new List<string>() { _toggleTexts[i] }, new Font(GH_FontServer.FamilyStandard, 7));
-          _toggleTextBound[i] = txtBound;
+        // Draw selected item
+        // set font and colour depending on inital or selected text
+        var font = new Font(GH_FontServer.FamilyStandard, 7);
+        // adjust fontsize to high resolution displays
+        font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+        Brush fontColour = Colour.AnnotationTextDark;
+        if (_initialTxts != null) {
+          if (_displayTexts[i] == _initialTxts[i]) {
+            pen = new Pen(Colour.BorderColour);
+            font = sml;
+            fontColour = Brushes.Gray;
+          }
         }
+
+        // background
+        Brush background = new SolidBrush(Colour.OasysLightGrey);
+        // background
+        graphics.FillRectangle(background, _borderBound[i]);
+        // border
+        graphics.DrawRectangle(pen, _borderBound[i].X, _borderBound[i].Y, _borderBound[i].Width, _borderBound[i].Height);
+        // text
+        graphics.DrawString(_displayTexts[i], font, fontColour, _textBound[i], GH_TextRenderingConstants.NearCenter);
+        // draw dropdown arrow
+        DropDownArrow.DrawDropDownButton(graphics, new PointF(_buttonBound[i].X + _buttonBound[i].Width / 2, _buttonBound[i].Y + _buttonBound[i].Height / 2), Colour.OasysDarkBlue, 15);
+
+        // draw dropdown list
+        font = new Font(GH_FontServer.FamilyStandard, 7);
+        // adjust fontsize to high resolution displays
+        font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+        fontColour = Colour.AnnotationTextDark;
+        if (_unfolded[i]) {
+          var penborder = new Pen(Brushes.Gray);
+          Brush dropdownbackground = new SolidBrush(Colour.OasysLightGrey);
+          penborder.Width = 0.3f;
+          for (int j = 0; j < _dropdownBounds[i].Count; j++) {
+            RectangleF listItem = _dropdownBounds[i][j];
+            if (listItem.Y < _dropdownBound[i].Y) {
+              if (listItem.Y + listItem.Height < _dropdownBound[i].Y) {
+                _dropdownBounds[i][j] = new RectangleF();
+                continue;
+              } else {
+                listItem.Height = listItem.Height - (_dropdownBound[i].Y - listItem.Y);
+                listItem.Y = _dropdownBound[i].Y;
+                _dropdownBounds[i][j] = listItem;
+              }
+            } else if (listItem.Y + listItem.Height > _dropdownBound[i].Y + _dropdownBound[i].Height) {
+              if (listItem.Y > _dropdownBound[i].Y + _dropdownBound[i].Height) {
+                _dropdownBounds[i][j] = new RectangleF();
+                continue;
+              } else {
+                listItem.Height = _dropdownBound[i].Y + _dropdownBound[i].Height - listItem.Y;
+                _dropdownBounds[i][j] = listItem;
+              }
+            }
+
+            // background
+            graphics.FillRectangle(dropdownbackground, _dropdownBounds[i][j]);
+            // border
+            graphics.DrawRectangle(penborder, _dropdownBounds[i][j].X, _dropdownBounds[i][j].Y, _dropdownBounds[i][j].Width, _dropdownBounds[i][j].Height);
+            // text
+            if (_dropdownBounds[i][j].Height > 2)
+              graphics.DrawString(_dropdownlists[i][j], font, fontColour, _dropdownBounds[i][j], GH_TextRenderingConstants.NearCenter);
+          }
+          // border
+          graphics.DrawRectangle(pen, _dropdownBound[i].X, _dropdownBound[i].Y, _dropdownBound[i].Width, _dropdownBound[i].Height);
+
+          // draw vertical scroll bar
+          Brush scrollbar = new SolidBrush(Color.FromArgb(_drag ? 160 : 120, Color.Black));
+          var scrollPen = new Pen(scrollbar);
+          scrollPen.Width = _scrollBar.Width - 2;
+          scrollPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+          scrollPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+          graphics.DrawLine(scrollPen, _scrollBar.X + 4, _scrollBar.Y + 4, _scrollBar.X + 4, _scrollBar.Y + _scrollBar.Height - 4);
+        }
+      }
+
+      //Draw divider line
+      int k = _dropdownlists.Count;
+      if (_spacerTxts[k] != "") {
+        graphics.DrawString(_spacerTxts[k], sml, Colour.AnnotationTextDark, _spacerBounds[k], GH_TextRenderingConstants.CenterCenter);
+        graphics.DrawLine(spacer, _spacerBounds[k].X, _spacerBounds[k].Y + _spacerBounds[k].Height / 2, _spacerBounds[k].X + (_spacerBounds[k].Width - GH_FontServer.StringWidth(_spacerTxts[k], sml)) / 2 - 4, _spacerBounds[k].Y + _spacerBounds[k].Height / 2);
+        graphics.DrawLine(spacer, _spacerBounds[k].X + (_spacerBounds[k].Width - GH_FontServer.StringWidth(_spacerTxts[k], sml)) / 2 + GH_FontServer.StringWidth(_spacerTxts[k], sml) + 4, _spacerBounds[k].Y + _spacerBounds[k].Height / 2, _spacerBounds[k].X + _spacerBounds[k].Width, _spacerBounds[k].Y + _spacerBounds[k].Height / 2);
+      }
+
+      // #### check boxes ####
+      for (int i = 0; i < _toggleTexts.Count; i++) {
+        var font = new Font(GH_FontServer.FamilyStandard, 7);
+        // adjust fontsize to high resolution displays
+        font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+        Brush fontColour = Colour.AnnotationTextDark;
+
+        Color myColour = Colour.OasysDarkBlue;
+        Brush myBrush = new SolidBrush(myColour);
+        Brush activeFillBrush = myBrush;
+        Brush passiveFillBrush = Brushes.LightGray;
+        Color borderColour = myColour;
+        Color passiveBorder = Color.DarkGray;
+        int s = 8;
+        // draw text
+        graphics.DrawString(_toggleTexts[i], font, fontColour, _toggleTextBound[i], GH_TextRenderingConstants.NearCenter);
+        // draw check box
+        CheckBox.DrawCheckButton(graphics, new PointF(_toggleBoxBound[i].X + _toggleBoxBound[i].Width / 2, _toggleBoxBound[i].Y + _toggleBoxBound[i].Height / 2), _toggles[i], activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
+
+        // update width of text box for mouse-over event handling
+        RectangleF txtBound = _toggleTextBound[i];
+        txtBound.Width = WidthAttributes.MaxTextWidth(new List<string>() { _toggleTexts[i] }, new Font(GH_FontServer.FamilyStandard, 7));
+        _toggleTextBound[i] = txtBound;
       }
     }
   }

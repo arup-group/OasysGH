@@ -35,6 +35,9 @@ namespace OasysGHTests.Components {
       var comp = new ButtonComponent();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));
+      var attributes = (ButtonComponentAttributes)Document.Attributes(comp);
+      Graphics g = new PictureBox().CreateGraphics();
+      attributes.CustomRender(g);
     }
   }
 }

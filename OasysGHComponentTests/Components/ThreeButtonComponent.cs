@@ -17,7 +17,7 @@ namespace OasysGH.Components.Tests {
       : base("ThreeButtonComponent", "3B", "A three button component", "OasysGH", "Test") { }
 
     public override void CreateAttributes() {
-      m_attributes = new ThreeButtonAtrributes(this, "Button1", "Button2", "Button3",
+      m_attributes = new ThreeButtonComponentAttributes(this, "Button1", "Button2", "Button3",
         ClickedFirst, ClickedSecond, ClickedThird, true, "Three buttons");
     }
 

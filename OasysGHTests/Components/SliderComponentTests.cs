@@ -1,5 +1,8 @@
-﻿using Grasshopper.Kernel.Types;
+﻿using System.Drawing;
+using System.Windows.Forms;
+using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
+using OasysGH.UI;
 using OasysGHTests.TestHelpers;
 using Xunit;
 
@@ -44,6 +47,8 @@ namespace OasysGHTests.Components {
       var comp = new SliderComponent();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));
+      var attributes = (SliderComponentAttributes)Document.Attributes(comp);
+      attributes.CustomRender(new PictureBox().CreateGraphics());
     }
   }
 }

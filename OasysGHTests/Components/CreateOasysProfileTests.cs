@@ -1,4 +1,7 @@
-﻿using OasysGH.Components.Tests;
+﻿using System.Drawing;
+using System.Windows.Forms;
+using OasysGH.Components.Tests;
+using OasysGH.UI;
 using OasysGHTests.TestHelpers;
 using Xunit;
 
@@ -31,6 +34,8 @@ namespace OasysGHTests.Components {
       var comp = new CreateProfile();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));
+      var attributes = (DropDownComponentAttributes)Document.Attributes(comp);
+      attributes.CustomRender(new PictureBox().CreateGraphics());
     }
   }
 }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
+using OasysGH.UI;
 using OasysGHTests.TestHelpers;
 using Xunit;
 
@@ -55,6 +58,8 @@ namespace OasysGHTests.Components {
       var comp = new CheckBoxComponent();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));
+      var attributes = (CheckBoxComponentAttributes)Document.Attributes(comp);
+      attributes.CustomRender(new PictureBox().CreateGraphics());
     }
   }
 }

@@ -334,71 +334,73 @@ namespace OasysGH.UI {
 
     protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel) {
       base.Render(canvas, graphics, channel);
-
       if (channel == GH_CanvasChannel.Objects) {
-        //Text boxes
-        Brush activeTextBrush = Brushes.White;
-        Brush passiveTextBrush = new SolidBrush(Colour.OasysDarkBlue);
-        Brush activeFillBrush = Colour.ButtonColour;
-        Brush passiveFillBrush = new SolidBrush(Colour.OasysLightGrey);
-        Color borderColour = Colour.OasysDarkBlue;
-        Color passiveBorder = Color.DarkGray;
-        Brush annoText = Brushes.Black;
-
-        Font font = GH_FontServer.Standard;
-        int s = 8;
-        if (CentralSettings.CanvasFullNames) {
-          s = 10;
-          font = GH_FontServer.Standard;
-        }
-
-        // adjust fontsize to high resolution displays
-        font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-
-        Font sml = GH_FontServer.Small;
-        // adjust fontsize to high resolution displays
-        sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-
-        var pen = new Pen(borderColour);
-
-        graphics.DrawString(_spacerTxt, sml, annoText, _spacerBounds, GH_TextRenderingConstants.CenterCenter);
-        graphics.DrawLine(pen, _spacerBounds.X, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 - 4, _spacerBounds.Y + _spacerBounds.Height / 2);
-        graphics.DrawLine(pen, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 + GH_FontServer.StringWidth(_spacerTxt, sml) + 4, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + _spacerBounds.Width, _spacerBounds.Y + _spacerBounds.Height / 2);
-
-        graphics.DrawRectangle(pen, _txtFreeBounds.X, _txtFreeBounds.Y, _txtFreeBounds.Width, _txtFreeBounds.Height);
-        graphics.DrawRectangle(pen, _txtPinBounds.X, _txtPinBounds.Y, _txtPinBounds.Width, _txtPinBounds.Height);
-        graphics.DrawRectangle(pen, _txtFixBounds.X, _txtFixBounds.Y, _txtFixBounds.Width, _txtFixBounds.Height);
-
-        Brush freeBrushPassive = (_mouseOverFree) ? Colour.HoverInactiveButtonColour : passiveFillBrush;
-        graphics.FillRectangle((_x == false & _y == false & _z == false & _xx == false & _yy == false & _zz == false) ? activeFillBrush : freeBrushPassive, _txtFreeBounds);
-        graphics.DrawString("Free", font, (_x == false & _y == false & _z == false & _xx == false & _yy == false & _zz == false) ? activeTextBrush : passiveTextBrush, _txtFreeBounds, GH_TextRenderingConstants.CenterCenter);
-
-        Brush pinBrushPassive = (_mouseOverPin) ? Colour.HoverInactiveButtonColour : passiveFillBrush;
-        graphics.FillRectangle((_x == true & _y == true & _z == true & _xx == false & _yy == false & _zz == false) ? activeFillBrush : pinBrushPassive, _txtPinBounds);
-        graphics.DrawString("Pin", font, (_x == true & _y == true & _z == true & _xx == false & _yy == false & _zz == false) ? activeTextBrush : passiveTextBrush, _txtPinBounds, GH_TextRenderingConstants.CenterCenter);
-
-        Brush fixBrushPassive = (_mouseOverFix) ? Colour.HoverInactiveButtonColour : passiveFillBrush;
-        graphics.FillRectangle((_x == true & _y == true & _z == true & _xx == true & _yy == true & _zz == true) ? activeFillBrush : fixBrushPassive, _txtFixBounds);
-        graphics.DrawString("Fix", font, (_x == true & _y == true & _z == true & _xx == true & _yy == true & _zz == true) ? activeTextBrush : passiveTextBrush, _txtFixBounds, GH_TextRenderingConstants.CenterCenter);
-
-        graphics.DrawString("x", font, annoText, _xTxtBounds, GH_TextRenderingConstants.CenterCenter);
-        CheckBox.DrawCheckButton(graphics, new PointF(_xBounds.X + _xBounds.Width / 2, _xBounds.Y + _xBounds.Height / 2), _x, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
-
-        graphics.DrawString("y", font, annoText, _yTxtBounds, GH_TextRenderingConstants.CenterCenter);
-        CheckBox.DrawCheckButton(graphics, new PointF(_yBounds.X + _yBounds.Width / 2, _yBounds.Y + _yBounds.Height / 2), _y, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
-
-        graphics.DrawString("z", font, annoText, _zTxtBounds, GH_TextRenderingConstants.CenterCenter);
-        CheckBox.DrawCheckButton(graphics, new PointF(_zBounds.X + _zBounds.Width / 2, _zBounds.Y + _zBounds.Height / 2), _z, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
-
-        graphics.DrawString("xx", font, annoText, _xxTxtBounds, GH_TextRenderingConstants.CenterCenter);
-        CheckBox.DrawCheckButton(graphics, new PointF(_xxBounds.X + _xxBounds.Width / 2, _xxBounds.Y + _xxBounds.Height / 2), _xx, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
-
-        graphics.DrawString("yy", font, annoText, _yyTxtBounds, GH_TextRenderingConstants.CenterCenter);
-        CheckBox.DrawCheckButton(graphics, new PointF(_yyBounds.X + _yyBounds.Width / 2, _yyBounds.Y + _yyBounds.Height / 2), _yy, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
-
-        graphics.DrawString("zz", font, annoText, _zzTxtBounds, GH_TextRenderingConstants.CenterCenter);
-        CheckBox.DrawCheckButton(graphics, new PointF(_zzBounds.X + _zzBounds.Width / 2, _zzBounds.Y + _zzBounds.Height / 2), _zz, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
+        CustomRender(graphics);
       }
+    }
+    internal void CustomRender(Graphics graphics) {
+      //Text boxes
+      Brush activeTextBrush = Brushes.White;
+      Brush passiveTextBrush = new SolidBrush(Colour.OasysDarkBlue);
+      Brush activeFillBrush = Colour.ButtonColour;
+      Brush passiveFillBrush = new SolidBrush(Colour.OasysLightGrey);
+      Color borderColour = Colour.OasysDarkBlue;
+      Color passiveBorder = Color.DarkGray;
+      Brush annoText = Brushes.Black;
+
+      Font font = GH_FontServer.Standard;
+      int s = 8;
+      if (CentralSettings.CanvasFullNames) {
+        s = 10;
+        font = GH_FontServer.Standard;
+      }
+
+      // adjust fontsize to high resolution displays
+      font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+
+      Font sml = GH_FontServer.Small;
+      // adjust fontsize to high resolution displays
+      sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+
+      var pen = new Pen(borderColour);
+
+      graphics.DrawString(_spacerTxt, sml, annoText, _spacerBounds, GH_TextRenderingConstants.CenterCenter);
+      graphics.DrawLine(pen, _spacerBounds.X, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 - 4, _spacerBounds.Y + _spacerBounds.Height / 2);
+      graphics.DrawLine(pen, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 + GH_FontServer.StringWidth(_spacerTxt, sml) + 4, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + _spacerBounds.Width, _spacerBounds.Y + _spacerBounds.Height / 2);
+
+      graphics.DrawRectangle(pen, _txtFreeBounds.X, _txtFreeBounds.Y, _txtFreeBounds.Width, _txtFreeBounds.Height);
+      graphics.DrawRectangle(pen, _txtPinBounds.X, _txtPinBounds.Y, _txtPinBounds.Width, _txtPinBounds.Height);
+      graphics.DrawRectangle(pen, _txtFixBounds.X, _txtFixBounds.Y, _txtFixBounds.Width, _txtFixBounds.Height);
+
+      Brush freeBrushPassive = (_mouseOverFree) ? Colour.HoverInactiveButtonColour : passiveFillBrush;
+      graphics.FillRectangle((_x == false & _y == false & _z == false & _xx == false & _yy == false & _zz == false) ? activeFillBrush : freeBrushPassive, _txtFreeBounds);
+      graphics.DrawString("Free", font, (_x == false & _y == false & _z == false & _xx == false & _yy == false & _zz == false) ? activeTextBrush : passiveTextBrush, _txtFreeBounds, GH_TextRenderingConstants.CenterCenter);
+
+      Brush pinBrushPassive = (_mouseOverPin) ? Colour.HoverInactiveButtonColour : passiveFillBrush;
+      graphics.FillRectangle((_x == true & _y == true & _z == true & _xx == false & _yy == false & _zz == false) ? activeFillBrush : pinBrushPassive, _txtPinBounds);
+      graphics.DrawString("Pin", font, (_x == true & _y == true & _z == true & _xx == false & _yy == false & _zz == false) ? activeTextBrush : passiveTextBrush, _txtPinBounds, GH_TextRenderingConstants.CenterCenter);
+
+      Brush fixBrushPassive = (_mouseOverFix) ? Colour.HoverInactiveButtonColour : passiveFillBrush;
+      graphics.FillRectangle((_x == true & _y == true & _z == true & _xx == true & _yy == true & _zz == true) ? activeFillBrush : fixBrushPassive, _txtFixBounds);
+      graphics.DrawString("Fix", font, (_x == true & _y == true & _z == true & _xx == true & _yy == true & _zz == true) ? activeTextBrush : passiveTextBrush, _txtFixBounds, GH_TextRenderingConstants.CenterCenter);
+
+      graphics.DrawString("x", font, annoText, _xTxtBounds, GH_TextRenderingConstants.CenterCenter);
+      CheckBox.DrawCheckButton(graphics, new PointF(_xBounds.X + _xBounds.Width / 2, _xBounds.Y + _xBounds.Height / 2), _x, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
+
+      graphics.DrawString("y", font, annoText, _yTxtBounds, GH_TextRenderingConstants.CenterCenter);
+      CheckBox.DrawCheckButton(graphics, new PointF(_yBounds.X + _yBounds.Width / 2, _yBounds.Y + _yBounds.Height / 2), _y, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
+
+      graphics.DrawString("z", font, annoText, _zTxtBounds, GH_TextRenderingConstants.CenterCenter);
+      CheckBox.DrawCheckButton(graphics, new PointF(_zBounds.X + _zBounds.Width / 2, _zBounds.Y + _zBounds.Height / 2), _z, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
+
+      graphics.DrawString("xx", font, annoText, _xxTxtBounds, GH_TextRenderingConstants.CenterCenter);
+      CheckBox.DrawCheckButton(graphics, new PointF(_xxBounds.X + _xxBounds.Width / 2, _xxBounds.Y + _xxBounds.Height / 2), _xx, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
+
+      graphics.DrawString("yy", font, annoText, _yyTxtBounds, GH_TextRenderingConstants.CenterCenter);
+      CheckBox.DrawCheckButton(graphics, new PointF(_yyBounds.X + _yyBounds.Width / 2, _yyBounds.Y + _yyBounds.Height / 2), _yy, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
+
+      graphics.DrawString("zz", font, annoText, _zzTxtBounds, GH_TextRenderingConstants.CenterCenter);
+      CheckBox.DrawCheckButton(graphics, new PointF(_zzBounds.X + _zzBounds.Width / 2, _zzBounds.Y + _zzBounds.Height / 2), _zz, activeFillBrush, borderColour, passiveFillBrush, passiveBorder, s);
     }
   }
 }

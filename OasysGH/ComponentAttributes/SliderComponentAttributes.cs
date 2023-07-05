@@ -292,43 +292,45 @@ namespace OasysGH.UI {
 
     protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel) {
       base.Render(canvas, graphics, channel);
-
       if (channel == GH_CanvasChannel.Objects) {
-        //Draw divider line
-        if (_spacerTxt != "") {
-          var spacer = new Pen(Colour.SpacerColour);
-          Font sml = GH_FontServer.Small;
-          // adjust fontsize to high resolution displays
-          sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-
-          graphics.DrawString(_spacerTxt, sml, Colour.AnnotationTextDark, _spacerBounds, GH_TextRenderingConstants.CenterCenter);
-          graphics.DrawLine(spacer, _spacerBounds.X, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 - 4, _spacerBounds.Y + _spacerBounds.Height / 2);
-          graphics.DrawLine(spacer, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 + GH_FontServer.StringWidth(_spacerTxt, sml) + 4, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + _spacerBounds.Width, _spacerBounds.Y + _spacerBounds.Height / 2);
-        }
-
-        // draw drag line and intervals
-        var line = new Pen(Colour.OasysDarkGrey);
-        graphics.DrawLine(line, new PointF(_sliderBound.X + _grabBound.Width / 2, _sliderBound.Y + _sliderBound.Height / 2), new PointF(_sliderBound.X + _sliderBound.Width - _grabBound.Width / 2, _sliderBound.Y + _sliderBound.Height / 2));
-        //graphics.DrawLine(line, new PointF(BorderBound.X + GrabBound.Width / 2, BorderBound.Y + BorderBound.Height / 3), new PointF(BorderBound.X + GrabBound.Width / 2, BorderBound.Y + BorderBound.Height * 2 / 3));
-        //graphics.DrawLine(line, new PointF(BorderBound.X + BorderBound.Width - GrabBound.Width / 2, BorderBound.Y + BorderBound.Height / 3), new PointF(BorderBound.X + BorderBound.Width - GrabBound.Width / 2, BorderBound.Y + BorderBound.Height * 2 / 3));
-
-        // draw grab item
-        var pen = new Pen(Colour.OasysDarkBlue);
-        pen.Width = 2f;
-        var button = new RectangleF(_grabBound.X, _grabBound.Y, _grabBound.Width, _grabBound.Height);
-        button.Inflate(-2, -2);
-        Brush fill = new SolidBrush(Colour.OasysLightGrey);
-        graphics.FillEllipse(fill, button);
-        graphics.DrawEllipse(pen, button);
-
-        // Draw display value text
-        var font = new Font(GH_FontServer.FamilyStandard, 7);
-        // adjust fontsize to high resolution displays
-        font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
-        string val = string.Format(new System.Globalization.NumberFormatInfo() { NumberDecimalDigits = _noDigits }, "{0:F}", new decimal(_currentValue));
-
-        graphics.DrawString(val, font, Colour.AnnotationTextDark, _sliderValTextBound, ((_currentValue - _minValue) / (_maxValue - _minValue) < 0.5) ? GH_TextRenderingConstants.NearCenter : GH_TextRenderingConstants.FarCenter);
+        CustomRender(graphics);
       }
+    }
+    internal void CustomRender(Graphics graphics) {
+      //Draw divider line
+      if (_spacerTxt != "") {
+        var spacer = new Pen(Colour.SpacerColour);
+        Font sml = GH_FontServer.Small;
+        // adjust fontsize to high resolution displays
+        sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+
+        graphics.DrawString(_spacerTxt, sml, Colour.AnnotationTextDark, _spacerBounds, GH_TextRenderingConstants.CenterCenter);
+        graphics.DrawLine(spacer, _spacerBounds.X, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 - 4, _spacerBounds.Y + _spacerBounds.Height / 2);
+        graphics.DrawLine(spacer, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 + GH_FontServer.StringWidth(_spacerTxt, sml) + 4, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + _spacerBounds.Width, _spacerBounds.Y + _spacerBounds.Height / 2);
+      }
+
+      // draw drag line and intervals
+      var line = new Pen(Colour.OasysDarkGrey);
+      graphics.DrawLine(line, new PointF(_sliderBound.X + _grabBound.Width / 2, _sliderBound.Y + _sliderBound.Height / 2), new PointF(_sliderBound.X + _sliderBound.Width - _grabBound.Width / 2, _sliderBound.Y + _sliderBound.Height / 2));
+      //graphics.DrawLine(line, new PointF(BorderBound.X + GrabBound.Width / 2, BorderBound.Y + BorderBound.Height / 3), new PointF(BorderBound.X + GrabBound.Width / 2, BorderBound.Y + BorderBound.Height * 2 / 3));
+      //graphics.DrawLine(line, new PointF(BorderBound.X + BorderBound.Width - GrabBound.Width / 2, BorderBound.Y + BorderBound.Height / 3), new PointF(BorderBound.X + BorderBound.Width - GrabBound.Width / 2, BorderBound.Y + BorderBound.Height * 2 / 3));
+
+      // draw grab item
+      var pen = new Pen(Colour.OasysDarkBlue);
+      pen.Width = 2f;
+      var button = new RectangleF(_grabBound.X, _grabBound.Y, _grabBound.Width, _grabBound.Height);
+      button.Inflate(-2, -2);
+      Brush fill = new SolidBrush(Colour.OasysLightGrey);
+      graphics.FillEllipse(fill, button);
+      graphics.DrawEllipse(pen, button);
+
+      // Draw display value text
+      var font = new Font(GH_FontServer.FamilyStandard, 7);
+      // adjust fontsize to high resolution displays
+      font = new Font(font.FontFamily, font.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
+      string val = string.Format(new System.Globalization.NumberFormatInfo() { NumberDecimalDigits = _noDigits }, "{0:F}", new decimal(_currentValue));
+
+      graphics.DrawString(val, font, Colour.AnnotationTextDark, _sliderValTextBound, ((_currentValue - _minValue) / (_maxValue - _minValue) < 0.5) ? GH_TextRenderingConstants.NearCenter : GH_TextRenderingConstants.FarCenter);
     }
   }
 }

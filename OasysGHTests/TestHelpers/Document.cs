@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Grasshopper.GUI.Canvas;
+﻿using Grasshopper.GUI.Canvas;
 using Grasshopper.Kernel;
-using Xunit;
+using OasysGH.Components;
 
 namespace OasysGHTests.TestHelpers {
   internal class Document {
@@ -20,6 +15,14 @@ namespace OasysGHTests.TestHelpers {
         Document = doc ?? CreateDocument()
       };
       return canvas;
+    }
+
+    public static IGH_Attributes Attributes(GH_OasysDropDownComponent comp) {
+      GH_Canvas canvas = Document.CreateCanvas();
+      canvas.Document.AddObject(comp, true);
+      comp.CreateAttributes();
+      comp.Attributes.PerformLayout();
+      return comp.Attributes;
     }
   }
 }
