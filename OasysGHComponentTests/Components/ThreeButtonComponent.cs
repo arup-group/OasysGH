@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using Grasshopper.Kernel;
+using OasysGH;
+using OasysGH.Components;
 using OasysGH.UI;
+using static OasysGHComponentTests.OasysGHComponentTestsInfo;
 
-namespace OasysGH.Components.TestComponents {
+namespace OasysGH.Components.Tests {
   public class ThreeButtonComponent : GH_OasysDropDownComponent {
     public override Guid ComponentGuid => new Guid("e6e42b78-1255-42be-88cd-2b8043e376da");
     public override GH_Exposure Exposure => GH_Exposure.hidden;
-    public override OasysPluginInfo PluginInfo => OasysGH.PluginInfo.Instance;
+    public override OasysPluginInfo PluginInfo => OasysGHComponentTestsPluginInfo.Instance;
     private bool _firstWasClicked = false;
     private bool _secondWasClicked = false;
     private bool _thirdWasClicked = false;
@@ -32,7 +34,7 @@ namespace OasysGH.Components.TestComponents {
       base.UpdateUI();
     }
     public override void SetSelected(int i, int j) { }
-    protected internal override void InitialiseDropdowns() { }
+    protected override void InitialiseDropdowns() { }
     protected override void RegisterInputParams(GH_InputParamManager pManager) { }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager) {
       pManager.AddBooleanParameter(

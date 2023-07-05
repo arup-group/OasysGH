@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using Grasshopper.Kernel;
 using OasysGH.UI;
-using OasysGH.Units.Helpers;
-using OasysUnits.Units;
-using OasysUnits;
-using OasysGH.Units;
+using OasysGH.Components;
+using OasysGH;
+using static OasysGHComponentTests.OasysGHComponentTestsInfo;
 
-namespace OasysGH.Components.TestComponents {
+namespace OasysGH.Components.Tests {
   public class SliderComponent : GH_OasysDropDownComponent {
     public override Guid ComponentGuid => new Guid("3d185ae4-3013-425c-bfe0-029cf8b46d29");
     public override GH_Exposure Exposure => GH_Exposure.hidden;
-    public override OasysPluginInfo PluginInfo => OasysGH.PluginInfo.Instance;
+    public override OasysPluginInfo PluginInfo => OasysGHComponentTestsPluginInfo.Instance;
     private double _value = 500;
     private double _maxValue = 1000;
     private double _minValue = -250;
@@ -32,7 +30,7 @@ namespace OasysGH.Components.TestComponents {
       _minValue = min;
     }
 
-    protected internal override void InitialiseDropdowns() { }
+    protected override void InitialiseDropdowns() { }
     public override void SetSelected(int i, int j) { }
     protected override void RegisterInputParams(GH_InputParamManager pManager) { }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager) {

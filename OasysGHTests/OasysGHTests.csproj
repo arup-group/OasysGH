@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GH_UnitNumber\GH_UnitNumber.csproj" />
+    <ProjectReference Include="..\OasysGHComponentTests\OasysGHComponentTests.csproj" />
     <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 ﻿using Grasshopper.Kernel.Types;
-using OasysGH.Components.TestComponents;
+using OasysGH.Components.Tests;
+using OasysGH.UI;
 using Xunit;
 
 namespace OasysGHTests.Components {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Grasshopper.Kernel.Types;
-using OasysGH.Components.TestComponents;
+using OasysGH.Components.Tests;
 using Xunit;
 
 namespace OasysGHTests.Components {

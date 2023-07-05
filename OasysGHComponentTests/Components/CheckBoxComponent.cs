@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Grasshopper.Kernel;
+using OasysGH;
+using OasysGH.Components;
 using OasysGH.UI;
+using static OasysGHComponentTests.OasysGHComponentTestsInfo;
 
-namespace OasysGH.Components.TestComponents {
-  public class SupportComponent : GH_OasysDropDownComponent {
-    public override Guid ComponentGuid => new Guid("351bcef4-bf86-46c8-a9a8-8a3ef23248a2");
+namespace OasysGH.Components.Tests {
+  public class CheckBoxComponent : GH_OasysDropDownComponent {
+    public override Guid ComponentGuid => new Guid("f58b0461-4f16-4051-bc00-1ac45d4d8b46");
     public override GH_Exposure Exposure => GH_Exposure.hidden;
-    public override OasysPluginInfo PluginInfo => OasysGH.PluginInfo.Instance;
+    public override OasysPluginInfo PluginInfo => OasysGHComponentTestsPluginInfo.Instance;
     private bool _x;
     private bool _xx;
     private bool _y;
@@ -15,26 +18,37 @@ namespace OasysGH.Components.TestComponents {
     private bool _z;
     private bool _zz;
 
-    public SupportComponent()
-      : base("SupportComponent", "Sup", "A support component", "OasysGH", "Test") { }
+    public CheckBoxComponent()
+      : base("CheckBoxComponent", "CB", "A checkbox component", "OasysGH", "Test") { }
 
     public override void CreateAttributes() {
-      m_attributes = new SupportComponentAttributes(this, SetRestraints, "Restraints",
-        _x, _y, _z, _xx, _yy, _zz);
+      m_attributes = new CheckBoxComponentComponentAttributes(this, SetReleases,
+        new List<string>() {
+          "Set 6 DOF",
+        },
+        new List<List<bool>>() {
+          new List<bool>() {
+            _x, _y, _z, _xx, _yy, _zz,
+            },
+          },
+        new List<List<string>>() {
+          new List<string>() {
+            "x", "y", "z", "xx", "yy", "zz",
+          },
+        });
     }
 
-    public void SetRestraints(bool resx, bool resy, bool resz, bool resxx, bool resyy, bool reszz) {
-      _x = resx;
-      _y = resy;
-      _z = resz;
-      _xx = resxx;
-      _yy = resyy;
-      _zz = reszz;
-
+    public void SetReleases(List<List<bool>> bool6) {
+      _x = bool6[0][0];
+      _y = bool6[0][1];
+      _z = bool6[0][2];
+      _xx = bool6[0][3];
+      _yy = bool6[0][4];
+      _zz = bool6[0][5];
       base.UpdateUI();
     }
     public override void SetSelected(int i, int j) { }
-    protected internal override void InitialiseDropdowns() { }
+    protected override void InitialiseDropdowns() { }
     protected override void RegisterInputParams(GH_InputParamManager pManager) { }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager) {
       pManager.AddBooleanParameter("X", "X", "X", GH_ParamAccess.item);

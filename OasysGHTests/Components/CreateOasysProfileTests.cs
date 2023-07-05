@@ -1,4 +1,4 @@
-﻿using OasysGH.Components.TestComponents;
+﻿using OasysGH.Components.Tests;
 using Xunit;
 
 namespace OasysGHTests.Components {
