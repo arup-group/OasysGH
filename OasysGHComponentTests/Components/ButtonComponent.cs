@@ -22,7 +22,9 @@ namespace OasysGH.Components.Tests {
     }
     public override void SetSelected(int i, int j) { }
     protected override void InitialiseDropdowns() { }
-    protected override void RegisterInputParams(GH_InputParamManager pManager) { }
+    protected override void RegisterInputParams(GH_InputParamManager pManager) {
+      pManager.AddBooleanParameter("Dummy", "D", "A dummy input", GH_ParamAccess.item, true);
+    }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager) {
       pManager.AddBooleanParameter("Clicked", "C", "The button was clicked", GH_ParamAccess.item);
     }

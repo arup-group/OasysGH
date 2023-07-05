@@ -32,7 +32,9 @@ namespace OasysGH.Components.Tests {
 
     protected override void InitialiseDropdowns() { }
     public override void SetSelected(int i, int j) { }
-    protected override void RegisterInputParams(GH_InputParamManager pManager) { }
+    protected override void RegisterInputParams(GH_InputParamManager pManager) {
+      pManager.AddBooleanParameter("Dummy", "D", "A dummy input", GH_ParamAccess.item, true);
+    }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager) {
       pManager.AddNumberParameter("Value", "Val", "The slider's value", GH_ParamAccess.item);
       pManager.AddNumberParameter("MaxValue", "Max", "The slider's upper bound value", GH_ParamAccess.item);
