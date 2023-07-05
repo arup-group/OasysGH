@@ -1,5 +1,6 @@
 ﻿using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
+using OasysGHTests.TestHelpers;
 using Xunit;
 
 namespace OasysGHTests.Components {
@@ -36,6 +37,13 @@ namespace OasysGHTests.Components {
       Assert.Equal(max, newMax.Value);
       var newMin = (GH_Number)comp.Params.Output[2].VolatileData.get_Branch(0)[0];
       Assert.Equal(min, newMin.Value);
+    }
+
+    [Fact]
+    public static void TestAttributes() {
+      var comp = new SliderComponent();
+      Assert.True(Mouse.TestMouseMove(comp));
+      Assert.True(Mouse.TestMouseClick(comp));
     }
   }
 }

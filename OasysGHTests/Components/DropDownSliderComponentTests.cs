@@ -1,5 +1,6 @@
 ﻿using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
+using OasysGHTests.TestHelpers;
 using Xunit;
 
 namespace OasysGHTests.Components {
@@ -57,6 +58,13 @@ namespace OasysGHTests.Components {
           Assert.Equal(comp._selectedItems[i], comp._dropDownItems[i][j]);
         }
       }
+    }
+
+    [Fact]
+    public static void TestAttributes() {
+      var comp = new DropDownSliderComponent();
+      Assert.True(Mouse.TestMouseMove(comp));
+      Assert.True(Mouse.TestMouseClick(comp));
     }
   }
 }

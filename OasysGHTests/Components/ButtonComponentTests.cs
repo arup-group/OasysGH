@@ -1,6 +1,13 @@
-﻿using Grasshopper.Kernel.Types;
+﻿using System.Drawing;
+using System.Windows.Forms;
+using Grasshopper.GUI;
+using Grasshopper.GUI.Canvas;
+using Grasshopper.Kernel.Attributes;
+using Grasshopper.Kernel.Types;
+using OasysGH.Components;
 using OasysGH.Components.Tests;
 using OasysGH.UI;
+using OasysGHTests.TestHelpers;
 using Xunit;
 
 namespace OasysGHTests.Components {
@@ -20,6 +27,14 @@ namespace OasysGHTests.Components {
       comp.Params.Output[0].CollectData();
       var wasClicked = (GH_Boolean)comp.Params.Output[0].VolatileData.get_Branch(0)[0];
       Assert.True(wasClicked.Value);
+    }
+
+
+    [Fact]
+    public static void TestAttributes() {
+      var comp = new ButtonComponent();
+      Assert.True(Mouse.TestMouseMove(comp));
+      Assert.True(Mouse.TestMouseClick(comp));
     }
   }
 }

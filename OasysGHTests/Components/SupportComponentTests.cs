@@ -1,5 +1,6 @@
 ﻿using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
+using OasysGHTests.TestHelpers;
 using Xunit;
 
 namespace OasysGHTests.Components {
@@ -31,6 +32,13 @@ namespace OasysGHTests.Components {
       Assert.Equal(xx, outxx.Value);
       Assert.Equal(yy, outyy.Value);
       Assert.Equal(zz, outzz.Value);
+    }
+
+    [Fact]
+    public static void TestAttributes() {
+      var comp = new SupportComponent();
+      Assert.True(Mouse.TestMouseMove(comp));
+      Assert.True(Mouse.TestMouseClick(comp));
     }
   }
 }

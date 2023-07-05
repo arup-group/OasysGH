@@ -1,5 +1,6 @@
 ﻿using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
+using OasysGHTests.TestHelpers;
 using Xunit;
 
 namespace OasysGHTests.Components {
@@ -51,6 +52,13 @@ namespace OasysGHTests.Components {
       comp.Params.Output[2].CollectData();
       var wasClicked = (GH_Boolean)comp.Params.Output[2].VolatileData.get_Branch(0)[0];
       Assert.True(wasClicked.Value);
+    }
+
+    [Fact]
+    public static void TestAttributes() {
+      var comp = new ThreeButtonComponent();
+      Assert.True(Mouse.TestMouseMove(comp));
+      Assert.True(Mouse.TestMouseClick(comp));
     }
   }
 }
