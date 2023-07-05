@@ -13,3 +13,5 @@
 *.user
 /IntegrationTests/bin
 /IntegrationTests/obj
+/OasysGHComponentTests/bin
+/OasysGHComponentTests/obj
