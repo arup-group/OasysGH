@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-using OasysGH.Units;
-using OasysGH.Units.UI;
+﻿using OasysGH.Units.UI;
 using OasysUnits;
 using OasysUnits.Units;
 using Xunit;
