@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace OasysGHTests.Components {
+namespace OasysGHTests.Units {
   [Collection("GrasshopperFixture collection")]
   public class UtilityTests {
     [Fact]

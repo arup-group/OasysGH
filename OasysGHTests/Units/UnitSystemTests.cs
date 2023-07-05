@@ -2,7 +2,7 @@
 using OasysUnits.Units;
 using Xunit;
 
-namespace OasysGHTests.Components {
+namespace OasysGHTests.Units {
   [Collection("GrasshopperFixture collection")]
   public class UnitSystemTests {
     [Fact]

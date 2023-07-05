@@ -3,11 +3,13 @@ using OasysUnits;
 using OasysUnits.Units;
 using Xunit;
 
-namespace OasysGHTests.Components {
+namespace OasysGHTests.Units {
   [Collection("GrasshopperFixture collection")]
   public class DefaultUnitsTests {
     [Fact]
     public static void DefaultUnitsTest() {
+      // this test may fail locally if you have overwritten the default units in Grasshopper
+
       Assert.Equal(
         AccelerationUnit.MeterPerSecondSquared,
         DefaultUnits.AccelerationUnit);
