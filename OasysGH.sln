@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GH_UnitNumberTests", "GH_Un
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{78EA1CAF-C93F-44A2-9058-4B0C7625C2EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OasysGHComponentTests", "OasysGHComponentTests\OasysGHComponentTests.csproj", "{DDDAE389-129C-4322-8E66-EF82742A40CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OasysGHTestComponents", "OasysGHTestComponents\OasysGHTestComponents.csproj", "{DDDAE389-129C-4322-8E66-EF82742A40CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,13 +3,13 @@ using Grasshopper.Kernel;
 using OasysGH;
 using OasysGH.Components;
 using OasysGH.UI;
-using static OasysGHComponentTests.OasysGHComponentTestsInfo;
+using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
 namespace OasysGH.Components.Tests {
   public class ThreeButtonComponent : GH_OasysDropDownComponent {
     public override Guid ComponentGuid => new Guid("e6e42b78-1255-42be-88cd-2b8043e376da");
     public override GH_Exposure Exposure => GH_Exposure.hidden;
-    public override OasysPluginInfo PluginInfo => OasysGHComponentTestsPluginInfo.Instance;
+    public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
     private bool _firstWasClicked = false;
     private bool _secondWasClicked = false;
     private bool _thirdWasClicked = false;

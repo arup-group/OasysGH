@@ -18,6 +18,43 @@ steps:
 - powershell: Remove-Item -Path 'C:\Users\**\AppData\Roaming\McNeel\Rhinoceros\packages' -Recurse
   displayName: 'Delete Rhino plugins'
 
+- powershell: |
+    Get-ChildItem *.msi -Recurse | Remove-Item
+    aws s3 cp s3://oasys-installer-store/GSA/latest . --exclude "*" --include *Arup*.msi --recursive
+    Get-ChildItem *.msi | Rename-Item -NewName gsa.msi
+  displayName: 'Download GSA latest'
+  failOnStderr: true
+
+- powershell: |
+    $installerPath = $(ls -r $(Pipeline.Workspace)\gsa.msi)
+    Write-output "Installer Path: ${installerPath}"
+    Write-output "GSA Version:"
+    if (!(Test-Path $installerPath.FullName)) { 
+      Write-output "File '{0}' does not exist" -f $installerPath.FullName 
+    } 
+    try { 
+      $WindowsInstaller = New-Object -com WindowsInstaller.Installer 
+      $Database = $WindowsInstaller.GetType().InvokeMember("OpenDatabase", "InvokeMethod", $Null, $WindowsInstaller, @($installerPath.FullName, 0)) 
+      $Query = "SELECT Value FROM Property WHERE Property = 'ProductVersion'"
+      $View = $database.GetType().InvokeMember("OpenView", "InvokeMethod", $Null, $Database, ($Query)) 
+      $View.GetType().InvokeMember("Execute", "InvokeMethod", $Null, $View, $Null) | Out-Null
+      $Record = $View.GetType().InvokeMember( "Fetch", "InvokeMethod", $Null, $View, $Null ) 
+      $Version = $Record.GetType().InvokeMember( "StringData", "GetProperty", $Null, $Record, 1 ) 
+      Write-output $Version
+    } catch { 
+      Write-output "Failed to get MSI file version: {0}." -f $_
+    }  
+    $app = Start-Process ${installerPath} -ArgumentList '/passive /quiet /l* msiLog.txt' -PassThru -Wait
+    $app.WaitForExit()
+    Write-Output "Exit code: $($app.ExitCode)"
+    Write-Output "Exit time: $($app.ExitTime.ToUniversalTime().ToString('yyyy-MM-dd HH:mm:ss')) UTC"
+    if ($app.ExitCode -ne 0) {
+      Write-Error "Application could not be installed. Error code $($app.ExitCode)"
+      exit(1)
+    }
+  displayName: 'Install GSA'
+  failOnStderr: true
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
@@ -40,6 +77,7 @@ steps:
 - powershell: |
     dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\6.0.0\build --results-directory .\results\unitnumber .\GH_UnitNumberTests\bin\x64\Release\net48\GH_UnitNumberTests.dll
     dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\6.0.0\build --results-directory .\results\oasysgh .\OasysGHTests\bin\x64\Release\net48\OasysGHTests.dll
+    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\6.0.0\build --results-directory .\results\integration .\IntegrationTests\bin\x64\Release\net48\IntegrationTests.dll
   displayName: dotnet test
   failOnStderr: true
 
@@ -57,6 +95,13 @@ steps:
     pathToSources: '$(System.DefaultWorkingDirectory)' 
   displayName: 'Upload OasysGH coverage to Azure'
 
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/integration/**/coverage.cobertura.xml'
+    pathToSources: '$(System.DefaultWorkingDirectory)' 
+  displayName: 'Upload Integration Test coverage to Azure'
+
 - powershell: |
     if (200 -ne (Invoke-WebRequest -Uri https://codecov.io/validate -Body (Get-Content -Raw -LiteralPath .\codecov.yml) -Method post | Select-Object StatusCode).StatusCode) { 
       Write-Output "codecov.yml is invalid"
@@ -73,14 +118,18 @@ steps:
     echo $coverage_file_unitnumber
     $coverage_file_oasysgh = (Resolve-Path $(System.DefaultWorkingDirectory)/results/oasysgh/*/coverage.cobertura.xml).Path
     echo $coverage_file_oasysgh
+    $coverage_file_integration = (Resolve-Path $(System.DefaultWorkingDirectory)/results/integration/*/coverage.cobertura.xml).Path
+    echo $coverage_file_integration
     Copy-Item $coverage_file_unitnumber $(System.DefaultWorkingDirectory)\results\coverage_unitnumber.xml
     Copy-Item $coverage_file_oasysgh $(System.DefaultWorkingDirectory)\results\coverage_oasysgh.xml
+    Copy-Item $coverage_file_integration $(System.DefaultWorkingDirectory)\results\coverage_integration.xml
     $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe
     ls $(System.DefaultWorkingDirectory)\
     cd $(System.DefaultWorkingDirectory)\
     .\codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_unitnumber.xml -F unitnumber
     .\codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_oasysgh.xml -F oasysgh
+    .\codecov.exe -t $env:CODECOV_TOKEN --dir $(System.DefaultWorkingDirectory)\results --file coverage_integration.xml -F integration
   env:
     CODECOV_TOKEN: $(CODECOV_TOKEN)
   displayName: Upload Code Coverage to codecovio
@@ -91,6 +140,9 @@ steps:
 
 - publish: $(System.DefaultWorkingDirectory)\results\coverage_oasysgh.xml
   artifact: OasysGHTestsCoverage
+
+- publish: $(System.DefaultWorkingDirectory)\results\coverage_integration.xml
+  artifact: IntegrationTestsCoverage
 
 - task: PowerShell@2
   displayName: Check for existing tags
@@ -167,3 +219,23 @@ steps:
     addChangeLog: false
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
   displayName: 'Publishing assets to Github'
+
+- powershell: |
+    $installerPath = $(ls -r $(Pipeline.Workspace)\gsa.msi)
+    Write-output "Installer Path: ${installerPath}"
+    $app = Start-Process "msiexec.exe" -ArgumentList "/x ${installerPath} /quiet /passive /norestart /l* msiUninstallLog.txt" -PassThru -Wait
+    $app.WaitForExit()
+    Write-Output "Exit code: $($app.ExitCode)"
+    Write-Output "Exit time: $($app.ExitTime.ToUniversalTime().ToString('yyyy-MM-dd HH:mm:ss')) UTC"
+    ### Success error codes: 0 = ERROR_SUCCESS, 1641 = ERROR_SUCCESS_REBOOT_INITIATED, 3010 = ERROR_SUCCESS_REBOOT_REQUIRED
+    ### See https://docs.microsoft.com/en-us/windows/win32/msi/error-codes
+    if (($app.ExitCode -eq 0) -or ($app.ExitCode -eq 1641) -or ($app.ExitCode -eq 3010)) {
+      Write-Output "Application successfully uninstalled with exit code $($app.ExitCode)"
+      rm $installerPath
+      exit(0)
+    } else {
+      Write-Error "Application could not be uninstalled. Error code $($app.ExitCode)"
+      exit(1)
+    }
+  condition: always()
+  displayName: 'Uninstall Application'

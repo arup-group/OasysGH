@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GH_UnitNumber\GH_UnitNumber.csproj" />
-    <ProjectReference Include="..\OasysGHComponentTests\OasysGHComponentTests.csproj" />
+    <ProjectReference Include="..\OasysGHTestComponents\OasysGHTestComponents.csproj" />
     <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
   </ItemGroup>
 
@@ -40,6 +40,6 @@
   <Import Project="PreBuild.targets" />
 
   <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetDir)GH_UnitNumber.dll" "$(TargetDir)GH_UnitNumber.gha"</PostBuildEvent>
+    <PostBuildEvent>Copy "$(TargetDir)OasysGH.dll" "$(TargetDir)OasysGH.gha"</PostBuildEvent>
   </PropertyGroup>
 </Project>
