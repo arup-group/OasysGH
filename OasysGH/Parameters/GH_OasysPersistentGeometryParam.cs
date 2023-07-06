@@ -12,8 +12,6 @@ namespace OasysGH.Parameters {
       get { return true; }
     }
 
-    private bool _hidden = false;
-
     protected GH_OasysPersistentGeometryParam(GH_InstanceDescription nTag) : base(nTag) {
     }
 

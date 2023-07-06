@@ -1,7 +1,5 @@
-﻿namespace OasysGH.Units.UI
-{
-  partial class DefaultUnitsForm
-  {
+﻿namespace OasysGH.Units.UI {
+  partial class DefaultUnitsForm {
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -11,10 +9,8 @@
     /// Clean up any resources being used.
     /// </summary>
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
-    {
-      if (disposing && (components != null))
-      {
+    protected override void Dispose(bool disposing) {
+      if (disposing && (components != null)) {
         components.Dispose();
       }
       base.Dispose(disposing);
@@ -26,8 +22,7 @@
     /// Required method for Designer support - do not modify
     /// the contents of this method with the code editor.
     /// </summary>
-    private void InitializeComponent()
-    {
+    private void InitializeComponent() {
       components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DefaultUnitsForm));
       button1 = new System.Windows.Forms.Button();
@@ -1050,74 +1045,74 @@
 
     }
 
-        #endregion
+    #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label111;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label toleranceTxt;
-        private System.Windows.Forms.ComboBox lengthSectionComboBox;
-        private System.Windows.Forms.ComboBox areaComboBox;
-        private System.Windows.Forms.ComboBox volumeComboBox;
-        private System.Windows.Forms.ComboBox momentOfInertiaComboBox;
-        private System.Windows.Forms.ComboBox massComboBox;
-        private System.Windows.Forms.ComboBox densityComboBox;
-        private System.Windows.Forms.ComboBox linearDensityComboBox;
-        private System.Windows.Forms.ComboBox volumePerLengthComboBox;
-        private System.Windows.Forms.ComboBox materialStrainComboBox;
-        private System.Windows.Forms.ComboBox youngsModulusComboBox;
-        private System.Windows.Forms.ComboBox lengthComboBox;
-        private System.Windows.Forms.NumericUpDown toleranceUpDown;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.CheckBox useRhinoLengthUnit;
-        private System.Windows.Forms.CheckBox useRhinoTolerance;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.ComboBox forceComboBox;
-        private System.Windows.Forms.ComboBox forcePerLengthComboBox;
-        private System.Windows.Forms.ComboBox forcePerAreaComboBox;
-        private System.Windows.Forms.ComboBox momentComboBox;
-        private System.Windows.Forms.ComboBox temperatureComboBox;
-        private System.Windows.Forms.ComboBox displacementComboBox;
-        private System.Windows.Forms.ComboBox stressComboBox;
-        private System.Windows.Forms.ComboBox axialStiffnessComboBox;
-        private System.Windows.Forms.ComboBox bendingStiffnessComboBox;
-        private System.Windows.Forms.ComboBox velocityComboBox;
-        private System.Windows.Forms.ComboBox accelerationComboBox;
-        private System.Windows.Forms.ComboBox energyComboBox;
-        private System.Windows.Forms.ComboBox curvatureComboBox;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.ComboBox strainComboBox;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox materialStrengthComboBox;
+    private System.Windows.Forms.Button button1;
+    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.Label label6;
+    private System.Windows.Forms.Label label7;
+    private System.Windows.Forms.Label label8;
+    private System.Windows.Forms.Label label9;
+    private System.Windows.Forms.Label label10;
+    private System.Windows.Forms.Label label111;
+    private System.Windows.Forms.Label label13;
+    private System.Windows.Forms.Label label14;
+    private System.Windows.Forms.Label toleranceTxt;
+    internal System.Windows.Forms.ComboBox lengthSectionComboBox;
+    internal System.Windows.Forms.ComboBox areaComboBox;
+    internal System.Windows.Forms.ComboBox volumeComboBox;
+    internal System.Windows.Forms.ComboBox momentOfInertiaComboBox;
+    internal System.Windows.Forms.ComboBox massComboBox;
+    internal System.Windows.Forms.ComboBox densityComboBox;
+    internal System.Windows.Forms.ComboBox linearDensityComboBox;
+    internal System.Windows.Forms.ComboBox volumePerLengthComboBox;
+    internal System.Windows.Forms.ComboBox materialStrainComboBox;
+    internal System.Windows.Forms.ComboBox youngsModulusComboBox;
+    internal System.Windows.Forms.ComboBox lengthComboBox;
+    internal System.Windows.Forms.NumericUpDown toleranceUpDown;
+    private System.Windows.Forms.Label label24;
+    internal System.Windows.Forms.CheckBox useRhinoLengthUnit;
+    internal System.Windows.Forms.CheckBox useRhinoTolerance;
+    private System.Windows.Forms.Label label17;
+    private System.Windows.Forms.Label label18;
+    private System.Windows.Forms.Label label19;
+    private System.Windows.Forms.Label label20;
+    private System.Windows.Forms.Label label21;
+    private System.Windows.Forms.Label label22;
+    private System.Windows.Forms.Label label23;
+    private System.Windows.Forms.Label label25;
+    private System.Windows.Forms.Label label26;
+    private System.Windows.Forms.Label label27;
+    private System.Windows.Forms.Label label28;
+    private System.Windows.Forms.Label label29;
+    private System.Windows.Forms.Label label30;
+    private System.Windows.Forms.Label label31;
+    internal System.Windows.Forms.ComboBox forceComboBox;
+    internal System.Windows.Forms.ComboBox forcePerLengthComboBox;
+    internal System.Windows.Forms.ComboBox forcePerAreaComboBox;
+    internal System.Windows.Forms.ComboBox momentComboBox;
+    internal System.Windows.Forms.ComboBox temperatureComboBox;
+    internal System.Windows.Forms.ComboBox displacementComboBox;
+    internal System.Windows.Forms.ComboBox stressComboBox;
+    internal System.Windows.Forms.ComboBox axialStiffnessComboBox;
+    internal System.Windows.Forms.ComboBox bendingStiffnessComboBox;
+    internal System.Windows.Forms.ComboBox velocityComboBox;
+    internal System.Windows.Forms.ComboBox accelerationComboBox;
+    internal System.Windows.Forms.ComboBox energyComboBox;
+    internal System.Windows.Forms.ComboBox curvatureComboBox;
+    private System.Windows.Forms.Label label32;
+    internal System.Windows.Forms.ComboBox strainComboBox;
+    private System.Windows.Forms.Button button3;
+    private System.Windows.Forms.Button button4;
+    private System.Windows.Forms.Button button5;
+    private System.Windows.Forms.Button button6;
+    private System.Windows.Forms.Label label11;
+    internal System.Windows.Forms.ComboBox materialStrengthComboBox;
     private System.Windows.Forms.BindingSource rhinoUnitBindingSource;
     private System.Windows.Forms.BindingSource defaultUnitsBindingSource;
     private System.Windows.Forms.BindingSource filteredUnitsBindingSource;

@@ -58,7 +58,9 @@ namespace OasysGH.Components.Tests {
       _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), _selectedItems[i]);
       base.UpdateUI();
     }
-    protected override void RegisterInputParams(GH_InputParamManager pManager) { }
+    protected override void RegisterInputParams(GH_InputParamManager pManager) {
+      pManager.AddBooleanParameter("Dummy", "D", "A dummy input", GH_ParamAccess.item, true);
+    }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager) {
       pManager.AddBooleanParameter("Checked", "C", "The check box is checked", GH_ParamAccess.item);
     }

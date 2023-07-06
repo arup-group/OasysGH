@@ -68,6 +68,10 @@ namespace OasysGH.Parameters {
     public override IGH_Goo Duplicate() => new GH_UnitNumber(Value);
 
     public override string ToString() {
+      if (Value == null) {
+        return "Null";
+      }
+
       return Value.ToString().Replace(",", string.Empty).Replace(" ", string.Empty);
     }
   }

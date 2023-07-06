@@ -14,7 +14,7 @@ namespace OasysGH {
           if (installGH_UnitNumber) {
             try {
               // if triggered by Rhino6 this will fail (which is ok):
-              YakInstall.InstallGH_UnitNumberPackageAsync();
+              _ = YakInstall.InstallGH_UnitNumberPackageAsync();
             } catch (System.Exception) {
               // do nothing.
             }
