@@ -25,6 +25,8 @@ flags:
     carryforward: false
   oasysgh:
     carryforward: false
+  integration:
+    carryforward: false
 ignore:
   - "OasysGHTests"  # ignore project (as it is referenced by Integration test)
   - "GH_UnitNumber/Components/OBSOLETE"  # ignore old versions of components in graveyard folder
