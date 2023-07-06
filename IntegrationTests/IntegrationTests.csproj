@@ -24,6 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="GsaAPI">
+      <HintPath>..\..\..\..\..\..\Program Files\Oasys\GSA 10.2\GsaAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Update="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -32,7 +39,7 @@
   <Import Project="PreBuild.targets" />
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="Copy &quot;$(TargetDir)OasysGH.dll&quot; &quot;$(TargetDir)OasysGH.gha&quot;" />
+    <Exec Command="Copy &quot;$(TargetDir)OasysGHComponentTests.dll&quot; &quot;$(TargetDir)OasysGHComponentTests.gha&quot;" />
   </Target>
 
 </Project>
