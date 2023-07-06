@@ -49,8 +49,9 @@ namespace OasysGHTests.Parameters {
     public void GetBoundingBoxTest() {
       var goo = new OasysGeometricGoo(new LineCurve(
         new Line(new Point3d(0, 0, 0), new Point3d(10, 10, 10))));
-      BoundingBox bbox = goo.GetBoundingBox(Transform.ZeroTransformation);
-      Assert.Equal(10 * 10 * 10, bbox.Volume);
+      var scale = Transform.Scale(new Point3d(0, 0, 0), 0.5);
+      BoundingBox bbox = goo.GetBoundingBox(scale);
+      Assert.Equal(5 * 5 * 5, bbox.Volume);
     }
 
     [Fact]

@@ -76,7 +76,9 @@ namespace OasysGH.Parameters {
       GeometryBase geom = GetGeometry();
       if (geom == null)
         return BoundingBox.Empty;
-      return geom.GetBoundingBox(true);
+      BoundingBox bbox = geom.GetBoundingBox(true);
+      bbox.Transform(xform);
+      return bbox;
     }
 
     public abstract GeometryBase GetGeometry();
