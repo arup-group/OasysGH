@@ -1,14 +1,14 @@
 ﻿using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
-using static OasysGHComponentTests.OasysGHComponentTestsInfo;
+using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
 namespace OasysGH.Parameters.Tests {
   public class OasysGeometricGoo : GH_OasysGeometricGoo<LineCurve> {
     public static string Description => "A LineCurve example";
     public static string Name => "LineCrv";
     public static string NickName => "LC";
-    public override OasysPluginInfo PluginInfo => OasysGHComponentTestsPluginInfo.Instance;
+    public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
 
     public OasysGeometricGoo(LineCurve item) : base(item) { }
 

@@ -39,7 +39,7 @@
   <Import Project="PreBuild.targets" />
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="Copy &quot;$(TargetDir)OasysGHComponentTests.dll&quot; &quot;$(TargetDir)OasysGHComponentTests.gha&quot;" />
+    <Exec Command="Copy &quot;$(TargetDir)OasysGHTestComponents.dll&quot; &quot;$(TargetDir)OasysGHTestComponents.gha&quot;" />
   </Target>
 
 </Project>

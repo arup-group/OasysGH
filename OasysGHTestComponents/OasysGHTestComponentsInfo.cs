@@ -4,9 +4,9 @@ using Grasshopper;
 using Grasshopper.Kernel;
 using OasysGH;
 
-namespace OasysGHComponentTests {
-  public class OasysGHComponentTestsInfo : GH_AssemblyInfo {
-    public override string Name => "OasysGHComponentTests";
+namespace OasysGHTestComponents {
+  public class OasysGHTestComponentsInfo : GH_AssemblyInfo {
+    public override string Name => "OasysGHTestComponents";
 
     //Return a 24x24 pixel bitmap to represent this GHA library.
     public override Bitmap Icon => null;
@@ -22,19 +22,19 @@ namespace OasysGHComponentTests {
     //Return a string representing your preferred contact details.
     public override string AuthorContact => "";
 
-    internal sealed class OasysGHComponentTestsPluginInfo {
+    internal sealed class OasysGHTestComponentsPluginInfo {
       public static OasysPluginInfo Instance { get { return lazy.Value; } }
 
       private static readonly Lazy<OasysPluginInfo> lazy =
               new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
             "OasysGH",
-            "OasysGHComponentTests",
+            "OasysGHTestComponents",
             "0.0.1",
             true,
             "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
             ));
 
-      private OasysGHComponentTestsPluginInfo() {
+      private OasysGHTestComponentsPluginInfo() {
       }
     }
   }

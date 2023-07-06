@@ -8,41 +8,43 @@ using OasysUnits;
 using OasysGH.Units;
 using OasysGH.Components;
 using OasysGH;
-using static OasysGHComponentTests.OasysGHComponentTestsInfo;
+using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
 namespace OasysGH.Components.Tests {
-  public class DropDownCheckBoxesComponent : GH_OasysDropDownComponent {
-    public override Guid ComponentGuid => new Guid("1d8ef8e7-2a17-4fb9-bab1-2527a7bfc7b9");
+  public class DropDownSliderComponent : GH_OasysDropDownComponent {
+    public override Guid ComponentGuid => new Guid("dbcce9f9-2028-42ed-b392-73cba819218a");
     public override GH_Exposure Exposure => GH_Exposure.hidden;
-    public override OasysPluginInfo PluginInfo => OasysGHComponentTestsPluginInfo.Instance;
-    private bool _isChecked = false;
+    public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
     private LengthUnit _lengthUnit = DefaultUnits.LengthUnitGeometry;
-    private List<bool> _initialCheckState = new List<bool>() {
-      false,
-    };
-    private readonly List<string> _checkboxTexts = new List<string>() {
-      "CheckBox",
-    };
-    public DropDownCheckBoxesComponent()
-      : base("DropDownCheckBoxes", "DDC", "A DropDown and CheckBoxes component", "OasysGH", "Test") { }
+    private double _value = 500;
+    private double _maxValue = 1000;
+    private double _minValue = -250;
+
+    public DropDownSliderComponent()
+      : base("DropDownSliderComponent", "DDS", "A DropDown and Slider component", "OasysGH", "Test") { }
 
     public override void CreateAttributes() {
       if (!_isInitialised) {
         InitialiseDropdowns();
       }
 
-      m_attributes = new DropDownCheckBoxesComponentAttributes(this, SetSelected, _dropDownItems,
-        _selectedItems, CheckBox, _initialCheckState, _checkboxTexts, _spacerDescriptions);
+      m_attributes = new DropDownSliderComponentAttributes(this, SetSelected, _dropDownItems,
+        _selectedItems, true, SetVal, SetMaxMin, _value, _maxValue, _minValue, 3,
+        _spacerDescriptions);
     }
 
-    public void CheckBox(List<bool> value) {
-      _isChecked = value[0];
+    public void SetVal(double value) {
+      _value = value;
+    }
+    public void SetMaxMin(double max, double min) {
+      _maxValue = max;
+      _minValue = min;
     }
 
     protected override void InitialiseDropdowns() {
       _spacerDescriptions = new List<string>(new[] {
         "Dropdown",
-        "CheckBox",
+        "Slider",
       });
 
       _dropDownItems = new List<List<string>>();
@@ -62,11 +64,15 @@ namespace OasysGH.Components.Tests {
       pManager.AddBooleanParameter("Dummy", "D", "A dummy input", GH_ParamAccess.item, true);
     }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager) {
-      pManager.AddBooleanParameter("Checked", "C", "The check box is checked", GH_ParamAccess.item);
+      pManager.AddNumberParameter("Value", "Val", "The slider's value", GH_ParamAccess.item);
+      pManager.AddNumberParameter("MaxValue", "Max", "The slider's upper bound value", GH_ParamAccess.item);
+      pManager.AddNumberParameter("MinValue", "Min", "The slider's lower bound value", GH_ParamAccess.item);
     }
 
     protected override void SolveInstance(IGH_DataAccess da) {
-      da.SetData(0, _isChecked);
+      da.SetData(0, _value);
+      da.SetData(1, _maxValue);
+      da.SetData(2, _minValue);
     }
   }
 }
