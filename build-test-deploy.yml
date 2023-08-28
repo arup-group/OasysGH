@@ -107,15 +107,6 @@ steps:
 
 - publish: $(System.DefaultWorkingDirectory)\results\coverage_unitnumber.xml
   artifact: UnitNumberTestsCoverage
-
-- publish: $(System.DefaultWorkingDirectory)\results\coverage_oasysgh.xml
-  artifact: OasysGHTestsCoverage
-
-- publish: $(System.DefaultWorkingDirectory)\results\coverage_integration.xml
-  artifact: IntegrationTestsCoverage
-
-- publish: $(System.DefaultWorkingDirectory)\results\coverage_unitnumber.xml
-  artifact: UnitNumberTestsCoverage
   continueOnError: true
 
 - publish: $(System.DefaultWorkingDirectory)\results\coverage_oasysgh.xml
