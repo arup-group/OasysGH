@@ -24,7 +24,6 @@ namespace OasysGH.Components {
       Other
     }
 
-    // This region handles how the component in displayed on the ribbon including name, exposure level and icon
     public abstract string DataSource { get; }
 
     protected LengthUnit _lengthUnit = DefaultUnits.LengthUnitSection;
@@ -221,7 +220,7 @@ namespace OasysGH.Components {
           _selectedItems[2] = _typeNames[j];
 
           // create type list
-          var types = new List<int>();
+          List<int> types;
           if (_typeIndex == -1) // if all
           {
             types = _typeNumbers.ToList(); // use current selected list of type numbers
@@ -805,7 +804,7 @@ namespace OasysGH.Components {
         } else if (_type == typeof(IPerimeterProfile)) {
           Params.Input[i].NickName = "B";
           Params.Input[i].Name = "Boundary";
-          Params.Input[i].Description = "The outer edge polyline or BRep. If BRep contains openings these will be added as voids";
+          Params.Input[i].Description = "The outer edge polyline or Brep. If Brep contains openings these will be added as voids";
           Params.Input[i].Access = GH_ParamAccess.item;
           Params.Input[i].Optional = false;
         }
@@ -1231,12 +1230,13 @@ namespace OasysGH.Components {
             Curve[] edges = Curve.JoinCurves(edgeSegments);
 
             // find the best fit plane
-            var ctrlPts = new List<Point3d>();
+            List<Point3d> ctrlPts;
             if (edges[0].TryGetPolyline(out Polyline tempCrv)) {
               ctrlPts = tempCrv.ToList();
             } else {
-              throw new Exception("Cannot convert edge to polyline.");
+              throw new Exception("Data conversion failed to create a polyline from input geometry. Please input a polyline approximation of your Brep/outline.");
             }
+
             Plane.FitPlaneToPoints(ctrlPts, out Plane plane);
             plane.Origin = tempCrv.CenterPoint();
 
@@ -1260,6 +1260,7 @@ namespace OasysGH.Components {
                     edges[j] = Curve.ProjectToPlane(edges[j], plane);
                   }
                 }
+
                 if (edges[i].TryGetPolyline(out tempCrv)) {
                   ctrlPts = tempCrv.ToList();
 
@@ -1270,14 +1271,14 @@ namespace OasysGH.Components {
                 } else {
                   throw new Exception("Cannot convert internal edge to polyline.");
                 }
+
                 var voidCrv = new Polyline(voidpts);
                 voidPolygons.Add(Geometry.PolygonFromRhinoPolyline(voidCrv, _lengthUnit, plane));
               }
             }
             profile = new PerimeterProfile(perimeter, voidPolygons);
           } else if (GH_Convert.ToCurve(gh_typ.Value, ref crv, GH_Conversion.Both)) {
-            Polyline solid = null;
-            if (crv.TryGetPolyline(out solid)) {
+            if (crv.TryGetPolyline(out Polyline solid)) {
               // get local plane
               Plane.FitPlaneToPoints(solid.ToList(), out Plane plane);
 
@@ -1301,6 +1302,7 @@ namespace OasysGH.Components {
         AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to create perimeter profile.");
         return null;
       }
+
       return profile;
     }
 
