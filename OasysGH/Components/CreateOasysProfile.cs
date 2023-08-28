@@ -1234,7 +1234,7 @@ namespace OasysGH.Components {
             if (edges[0].TryGetPolyline(out Polyline tempCrv)) {
               ctrlPts = tempCrv.ToList();
             } else {
-              throw new Exception("Data conversion failed to create a polyline from input geometry. Please create a polyline approximation of your Brep/outline.");
+              throw new Exception("Data conversion failed to create a polyline from input geometry. Please input a polyline approximation of your Brep/outline.");
             }
 
             Plane.FitPlaneToPoints(ctrlPts, out Plane plane);
