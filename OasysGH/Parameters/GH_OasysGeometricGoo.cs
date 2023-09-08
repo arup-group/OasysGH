@@ -11,8 +11,9 @@ namespace OasysGH.Parameters {
     public override bool IsValid => GetGeometry() != null && GetGeometry().IsValid;
     public override string IsValidWhyNot {
       get {
-        if (IsValid)
+        if (IsValid) {
           return string.Empty;
+        }
         else {
           GetGeometry().IsValidWithLog(out string whyNot);
           return whyNot;
@@ -26,20 +27,14 @@ namespace OasysGH.Parameters {
     public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
 
     public GH_OasysGeometricGoo(T item) {
-      if (item == null)
-        Value = item;
-      else
-        Value = (T)item.Duplicate();
+      Value = item;
     }
 
     public override bool CastFrom(object source) {
-      // This function is called when Grasshopper needs to convert other data
-      // into our custom class.
-
-      if (source == null)
+      if (source == null) {
         return false;
+      }
 
-      //Cast from this type
       if (typeof(T).IsAssignableFrom(source.GetType())) {
         Value = (T)source;
         return true;
@@ -49,14 +44,14 @@ namespace OasysGH.Parameters {
     }
 
     public override bool CastTo<Q>(ref Q target) {
-      // This function is called when Grasshopper needs to convert this
-      // instance of our custom class into some other type Q.
-
       if (typeof(Q).IsAssignableFrom(typeof(T))) {
-        if (Value == null)
+        if (Value == null) {
           target = default;
-        else
+        }
+        else {
           target = (Q)(object)Value;
+        }
+
         return true;
       }
 
@@ -68,14 +63,15 @@ namespace OasysGH.Parameters {
 
     public abstract void DrawViewportWires(GH_PreviewWireArgs args);
 
-    public abstract new IGH_GeometricGoo Duplicate();
+    public new abstract IGH_GeometricGoo Duplicate();
 
     public override IGH_GeometricGoo DuplicateGeometry() => Duplicate();
 
     public override BoundingBox GetBoundingBox(Transform xform) {
       GeometryBase geom = GetGeometry();
-      if (geom == null)
+      if (geom == null) {
         return BoundingBox.Empty;
+      }
       BoundingBox bbox = geom.GetBoundingBox(true);
       bbox.Transform(xform);
       return bbox;
@@ -86,10 +82,11 @@ namespace OasysGH.Parameters {
     public abstract override IGH_GeometricGoo Morph(SpaceMorph xmorph);
 
     public override string ToString() {
-      if (Value == null)
+      if (Value == null) {
         return "Null";
-      else
+      } else {
         return PluginInfo.ProductName + " " + TypeName + " (" + Value.ToString() + ")";
+      }
     }
 
     public abstract override IGH_GeometricGoo Transform(Transform xform);

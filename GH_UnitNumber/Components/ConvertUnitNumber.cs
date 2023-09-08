@@ -140,7 +140,7 @@ namespace GH_UnitNumber.Components {
       pManager.AddParameter(new GH_UnitNumberParameter());
     }
 
-    protected override void SolveInstance(IGH_DataAccess DA) {
+    protected override void SolveInternal(IGH_DataAccess DA) {
       // get input
       OasysGH.Parameters.GH_UnitNumber inUnitNumber = null;
 
@@ -197,7 +197,7 @@ namespace GH_UnitNumber.Components {
       // convert unit to selected output
       _convertedUnitNumber = new OasysGH.Parameters.GH_UnitNumber(inUnitNumber.Value.ToUnit(_selectedUnit));
 
-      OasysGH.Helpers.Output.SetItem(this, DA, 0, _convertedUnitNumber);
+      SetItem(DA, 0, _convertedUnitNumber);
     }
 
     protected override void UpdateUIFromSelectedItems() {
