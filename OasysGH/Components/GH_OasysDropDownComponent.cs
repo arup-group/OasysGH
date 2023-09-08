@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using GH_IO.Serialization;
 using Grasshopper;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
-using OasysGH.Helpers;
-using OasysUnits;
 
 namespace OasysGH.Components {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent {
-    public IParameterExpirationManager OutputManager { get; set; }
-    public IParameterExpirationManager InputManager { get; set; }
+    public IParameterCacheManager ParameterCacheManager { get; set; }
 
     protected internal List<List<string>> _dropDownItems;
     protected internal bool _isInitialised = false;
@@ -55,18 +51,22 @@ namespace OasysGH.Components {
       return base.Write(writer);
     }
 
+    protected override void BeforeSolveInstance() {
+      if (ParameterCacheManager != null) {
+        ParameterCacheManager.SetInput(Params.Input);
+        ParameterCacheManager.AddAddidionalInput(6, _selectedItems);
+      }
+    }
+
     protected sealed override void SolveInstance(IGH_DataAccess da) {
-      if (InputManager != null) {
+      if (ParameterCacheManager != null) {
+        if (!ParameterCacheManager.InputManager.IsExpired()) {
+          List<DataTree<IGH_Goo>> output = ParameterCacheManager.GetOutput(RunCount);
 
-        int paramCount;
-        for (paramCount = 0; paramCount < Params.Input.Count; paramCount++) {
-          IGH_Goo goo = Params.Input[paramCount].VolatileData.AllData(false).FirstOrDefault();
-          InputManager.AddItem(paramCount, goo, RunCount);
-        }
+          for (int index = 0; index < output.Count; index++) {
+            da.SetDataTree(index, output[index]);
+          }
 
-        InputManager.AddItem(paramCount++, _selectedItems, RunCount);
-
-        if (!InputManager.IsExpired()) {
           return;
         }
       }
@@ -74,33 +74,48 @@ namespace OasysGH.Components {
       SolveInternal(da);
     }
 
-    protected abstract void SolveInternal(IGH_DataAccess da);
+    protected override void AfterSolveInstance() {
+      if (ParameterCacheManager == null) {
+        return;
+      }
 
+      if (ParameterCacheManager.InputManager.IsExpired()) {
+        var output = new List<DataTree<IGH_Goo>>();
+        for (int index = 0; index < Params.Output.Count; index++) {
+          var structure = (IGH_Structure)Params.Output[index].VolatileData;
+
+          var tree = new DataTree<IGH_Goo>();
+          tree.MergeStructure(structure, null);
+
+          output.Add(tree);
+        }
+
+        ParameterCacheManager.SetOutput(output, RunCount);
+      }
+    }
+
+    protected abstract void SolveInternal(IGH_DataAccess da);
 
     protected internal abstract void InitialiseDropdowns();
 
     protected override void ExpireDownStreamObjects() {
-      if (OutputManager == null && InputManager == null) {
+      if (ParameterCacheManager == null) {
         base.ExpireDownStreamObjects();
         return;
       }
 
-      if (InputManager != null) {
-        if (InputManager.IsExpired()) {
-          base.ExpireDownStreamObjects();
-        }
-
+      if (!ParameterCacheManager.InputManager.IsExpired()) {
         return;
       }
 
-      if (OutputManager != null) {
-        for (int outputIndex = 0; outputIndex < Params.Output.Count; outputIndex++) {
-          if (OutputManager.IsExpired(outputIndex)) {
-            IGH_Param item = Params.Output[outputIndex];
-            item.ExpireSolution(recompute: false);
-          }
-        }
-      }
+      //for (int outputIndex = 0; outputIndex < Params.Output.Count; outputIndex++) {
+      //  if (ParameterCacheManager.OutputManager.IsExpired(outputIndex)) {
+      //    IGH_Param item = Params.Output[outputIndex];
+      //    item.ExpireSolution(recompute: false);
+      //  }
+      //}
+
+      base.ExpireDownStreamObjects();
     }
 
     protected virtual void UpdateUI() {
@@ -113,30 +128,6 @@ namespace OasysGH.Components {
     protected virtual void UpdateUIFromSelectedItems() {
       CreateAttributes();
       UpdateUI();
-    }
-
-    public void SetItem<T>(IGH_DataAccess da, int outputIndex, T item) where T : IGH_Goo {
-      da.SetData(outputIndex, item);
-
-      if (OutputManager != null) {
-        OutputManager.AddItem(outputIndex, item, RunCount);
-      }
-    }
-
-    public void SetList<T>(IGH_DataAccess da, int outputIndex, List<T> data) where T : IGH_Goo {
-      da.SetDataList(outputIndex, data);
-
-      if (OutputManager != null) {
-        OutputManager.AddList(outputIndex, data, RunCount);
-      }
-    }
-
-    public void SetTree<T>(IGH_DataAccess da, int outputIndex, DataTree<T> dataTree) where T : IGH_Goo {
-      da.SetDataTree(outputIndex, dataTree);
-
-      if (OutputManager != null) {
-        OutputManager.AddTree(outputIndex, dataTree, RunCount);
-      }
     }
   }
 }

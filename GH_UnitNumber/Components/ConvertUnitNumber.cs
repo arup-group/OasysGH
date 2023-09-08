@@ -197,7 +197,7 @@ namespace GH_UnitNumber.Components {
       // convert unit to selected output
       _convertedUnitNumber = new OasysGH.Parameters.GH_UnitNumber(inUnitNumber.Value.ToUnit(_selectedUnit));
 
-      SetItem(DA, 0, _convertedUnitNumber);
+      DA.SetData(0, _convertedUnitNumber);
     }
 
     protected override void UpdateUIFromSelectedItems() {

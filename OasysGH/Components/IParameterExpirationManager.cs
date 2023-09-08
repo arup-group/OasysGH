@@ -4,6 +4,8 @@ using Grasshopper.Kernel.Types;
 
 namespace OasysGH.Components {
   public interface IParameterExpirationManager {
+    int ParamCount { get; }
+
     void AddItem<T>(int paramIndex, T item, int runCount) where T : IGH_Goo;
     void AddItem(int paramIndex, object item, int runCount);
     void AddList<T>(int paramIndex, List<T> data, int runCount) where T : IGH_Goo;

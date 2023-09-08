@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using GH_IO.Serialization;
 using Grasshopper;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
@@ -120,8 +121,7 @@ namespace OasysGH.Components {
     private Type _type = typeof(IRectangleProfile);
 
     protected CreateOasysProfile(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory) {
-      OutputManager = new OasysUnitsParameterExpirationManager(1);
-      InputManager = new OasysUnitsParameterExpirationManager(10);
+      ParameterCacheManager = new ParameterCacheManager(new OasysUnitsParameterExpirationManager(), new OasysUnitsParameterExpirationManager());
 
       Tuple<List<string>, List<int>> catalogueData = SqlReader.Instance.GetCataloguesDataFromSQLite(DataSource);
       _catalogueNames = catalogueData.Item1;
@@ -130,7 +130,7 @@ namespace OasysGH.Components {
       _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(new List<int> { -1 }, DataSource, false);
     }
 
-    public override bool Read(GH_IO.Serialization.GH_IReader reader) {
+    public override bool Read(GH_IReader reader) {
       _mode = (FoldMode)Enum.Parse(typeof(FoldMode), reader.GetString("mode"));
       _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), reader.GetString("lengthUnit"));
       _inclSS = reader.GetBoolean("inclSS");
@@ -814,7 +814,7 @@ namespace OasysGH.Components {
       }
     }
 
-    public override bool Write(GH_IO.Serialization.GH_IWriter writer) {
+    public override bool Write(GH_IWriter writer) {
       writer.SetString("mode", _mode.ToString());
       writer.SetString("lengthUnit", _lengthUnit.ToString());
       writer.SetBoolean("inclSS", _inclSS);
@@ -942,6 +942,9 @@ namespace OasysGH.Components {
 
     protected override void SolveInternal(IGH_DataAccess da) {
       ClearRuntimeMessages();
+
+      var data = new Dictionary<int, IGH_Goo>();
+
       for (int i = 0; i < Params.Input.Count; i++)
         Params.Input[i].ClearRuntimeMessages();
 
@@ -963,7 +966,7 @@ namespace OasysGH.Components {
       } else if (_mode == FoldMode.Other) {
         IProfile profile = SolveInstanceForStandardProfile(da);
 
-        da.SetData(0, new OasysProfileGoo(profile));
+        data.Add(0, new OasysProfileGoo(profile));
       }
     }
 

@@ -2,7 +2,7 @@
 
 namespace OasysGH.Components {
   public class OasysUnitsParameterExpirationManager : ParameterExpirationManager {
-    public OasysUnitsParameterExpirationManager(int maxParamIndex) : base(maxParamIndex) {
+    public OasysUnitsParameterExpirationManager() : base() {
       Converter = new OasysUnitsIQuantityJsonConverter();
     }
   }

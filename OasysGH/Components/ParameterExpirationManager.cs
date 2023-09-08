@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace OasysGH.Components {
   public class ParameterExpirationManager : IParameterExpirationManager {
     public JsonConverter Converter { get; set; } = null;
-    public int ParamCount { get; }
+    public int ParamCount { get; private set; } = 0;
     private Dictionary<int, List<string>> _existingParamsSerialized = new Dictionary<int, List<string>>();
     private Dictionary<int, int> _index = new Dictionary<int, int>();
     private Dictionary<int, bool> _paramIsExpired = new Dictionary<int, bool>();
@@ -16,21 +16,17 @@ namespace OasysGH.Components {
     private Dictionary<int, int> _lastRunCount = new Dictionary<int, int>();
     private Dictionary<int, int> _runCount = new Dictionary<int, int>();
 
-    public ParameterExpirationManager(int paramCount) {
-      ParamCount = paramCount;
-
-      InitialiseFields();
+    public ParameterExpirationManager() {
+      UpdateParamIndex(1);
     }
 
     public ParameterExpirationManager(int maxParamIndex, JsonConverter converter) {
       Converter = converter;
-      ParamCount = maxParamIndex;
-
-      InitialiseFields();
+      UpdateParamIndex(1);
     }
 
     public void AddItem(int paramIndex, object item, int runCount) {
-      CheckParamIndex(paramIndex);
+      UpdateParamIndex(paramIndex);
 
       if (runCount == 1) {
         Reset(paramIndex);
@@ -46,7 +42,7 @@ namespace OasysGH.Components {
     }
 
     public void AddItem<T>(int paramIndex, T item, int runCount) where T : IGH_Goo {
-      CheckParamIndex(paramIndex);
+      UpdateParamIndex(paramIndex);
 
       if (runCount == 1) {
         Reset(paramIndex);
@@ -62,7 +58,7 @@ namespace OasysGH.Components {
     }
 
     public void AddList<T>(int paramIndex, List<T> data, int runCount) where T : IGH_Goo {
-      CheckParamIndex(paramIndex);
+      UpdateParamIndex(paramIndex);
 
       if (runCount == 1) {
         Reset(paramIndex);
@@ -78,7 +74,7 @@ namespace OasysGH.Components {
     }
 
     public void AddTree<T>(int paramIndex, DataTree<T> dataTree, int runCount) where T : IGH_Goo {
-      CheckParamIndex(paramIndex);
+      UpdateParamIndex(paramIndex);
 
       if (runCount == 1) {
         Reset(paramIndex);
@@ -90,9 +86,18 @@ namespace OasysGH.Components {
         _runCount[paramIndex] = runCount;
       }
 
+      if (dataTree.Paths.Count == 0) {
+        _paramIsExpired[paramIndex] = ParamChanged(null, paramIndex);
+        return;
+      }
+
       foreach (GH_Path path in dataTree.Paths) {
         List<T> data = dataTree.Branch(path);
-        _paramIsExpired[paramIndex] = ParamChanged(data, paramIndex);
+        if (data.Count == 0) {
+          _paramIsExpired[paramIndex] = ParamChanged(null, paramIndex);
+        } else {
+          _paramIsExpired[paramIndex] = ParamChanged(data, paramIndex);
+        }
       }
     }
 
@@ -106,6 +111,10 @@ namespace OasysGH.Components {
     }
 
     public bool IsExpired(int paramIndex) {
+      //if(paramIndex > ParamCount) {
+      //  return true;
+      //}
+
       if (_runCount[paramIndex] != _lastRunCount[paramIndex]) {
         return true;
       } else if (_index[paramIndex] != _lastIndex[paramIndex]) {
@@ -113,30 +122,29 @@ namespace OasysGH.Components {
       } else if (_paramIsExpired[paramIndex]) {
         return true;
       }
+
       return false;
     }
 
-    private void CheckParamIndex(int paramIndex) {
-      if (paramIndex > ParamCount) {
-        throw new ArgumentException("Parameter index too high!");
-      }
-    }
-
-    private void InitialiseFields() {
-      for (int paramIndex = 0; paramIndex < ParamCount; paramIndex++) {
-        {
-          _existingParamsSerialized.Add(paramIndex, new List<string>());
-          _index.Add(paramIndex, 0);
-          _paramIsExpired.Add(paramIndex, true);
-          _lastIndex.Add(paramIndex, 0);
-          _lastRunCount.Add(paramIndex, 0);
-          _runCount.Add(paramIndex, 0);
+    private void UpdateParamIndex(int index) {
+      if (index >= ParamCount) {
+        for (int paramIndex = ParamCount; paramIndex <= index; paramIndex++) {
+          {
+            _existingParamsSerialized.Add(paramIndex, new List<string>());
+            _index.Add(paramIndex, 0);
+            _paramIsExpired.Add(paramIndex, true);
+            _lastIndex.Add(paramIndex, 0);
+            _lastRunCount.Add(paramIndex, 0);
+            _runCount.Add(paramIndex, 0);
+          }
         }
+
+        ParamCount = index + 1;
       }
     }
 
     private bool ParamChanged<T>(T item, int paramIndex) where T : IGH_Goo {
-      if(item == null) {
+      if (item == null) {
         return ParamChanged((object)item, paramIndex);
       }
       object obj = ((T)(object)item).ScriptVariable();

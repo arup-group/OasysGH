@@ -281,7 +281,7 @@ namespace GH_UnitNumber.Components {
 
         var unitNumber = new OasysGH.Parameters.GH_UnitNumber(_quantity);
 
-        SetItem(DA, 0, unitNumber);
+        DA.SetData(0, unitNumber);
       }
     }
 
