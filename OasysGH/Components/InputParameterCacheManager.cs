@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Grasshopper;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
@@ -9,6 +9,7 @@ using Grasshopper.Kernel.Types;
 namespace OasysGH.Components {
   public class InputParameterCacheManager : IInputParameterCacheManager {
     public IParameterExpirationManager EpirationManager { get; set; }
+    public bool RunOnce { get; private set; }
 
     private readonly Dictionary<int, List<DataTree<IGH_Goo>>> _outputCache = new Dictionary<int, List<DataTree<IGH_Goo>>>();
 
@@ -51,30 +52,31 @@ namespace OasysGH.Components {
               continue;
             }
 
-            object target = null;
+            //object target = null;
             //if (hint != null) {
             //  hint.Cast(RuntimeHelpers.GetObjectValue(list[j]), out target);
             //  if (target != null && target is T) {
             //    list2.Add((T)target);
             //  }
             //} else {
-            var target2 = default(IGH_Goo);
-            if (((IGH_Goo)list[j]).CastTo<IGH_Goo>(out target2)) {
-              list2.Add(target2);
-            } else if (list[j] is IGH_Goo) {
-              list2.Add((IGH_Goo)list[j]);
-            }
-            else {
-              list2.Add(default(IGH_Goo));
-            }
+            //var target2 = default(IGH_Goo);
+            //if (((IGH_Goo)list[j]).CastTo<IGH_Goo>(out target2)) {
+            //  list2.Add(target2);
+            //} else if (list[j] is IGH_Goo) {
+            //  list2.Add((IGH_Goo)list[j]);
+            //} else {
+            //  list2.Add(default(IGH_Goo));
+            //}
             //}
 
+            list2.Add((IGH_Goo)list[j]);
             tree.AddRange(list2, structure.get_Path(i));
           }
         }
 
         EpirationManager.AddTree(index, tree, 1);
       }
+      RunOnce = true;
     }
 
     //public void SetInput(Dictionary<int, object> data, int runCount) {
@@ -115,6 +117,10 @@ namespace OasysGH.Components {
       return _outputCache[runCount];
     }
 
+    public void Reset() {
+      RunOnce = false;
+    }
+
     public void SetOutput(List<DataTree<IGH_Goo>> output, int runCount) {
       if (_outputCache.ContainsKey(runCount)) {
         _outputCache[runCount] = output;
@@ -122,6 +128,7 @@ namespace OasysGH.Components {
         _outputCache.Add(runCount, output);
       }
     }
+
 
     //public void SetOutput(List<IGH_Goo> output, int runCount) {
     //  if (_outputCache.ContainsKey(runCount)) {

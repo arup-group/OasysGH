@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using GH_IO.Serialization;
 using Grasshopper;
 using Grasshopper.Kernel;
@@ -54,15 +55,13 @@ namespace OasysGH.Components {
 
     protected override void BeforeSolveInstance() {
       if (InputParameterCacheManager != null) {
-        InputParameterCacheManager.SetInput(Params.Input);
-        InputParameterCacheManager.AddAddidionalInput(6, _selectedItems);
+        InputParameterCacheManager.Reset();
       }
     }
-
     protected sealed override void SolveInstance(IGH_DataAccess da) {
       if (InputParameterCacheManager != null) {
         if (!InputParameterCacheManager.IsExpired()) {
-          List<DataTree<IGH_Goo>> output = InputParameterCacheManager.GetOutput(RunCount);
+          List<DataTree<IGH_Goo>> output = InputParameterCacheManager.GetOutput(1);
 
           for (int index = 0; index < output.Count; index++) {
             da.SetDataTree(index, output[index]);
@@ -77,13 +76,48 @@ namespace OasysGH.Components {
 
     protected override void AfterSolveInstance() {
       if (InputParameterCacheManager != null) {
-          if (InputParameterCacheManager.IsExpired()) {
+        if (InputParameterCacheManager.IsExpired()) {
           var output = new List<DataTree<IGH_Goo>>();
           for (int index = 0; index < Params.Output.Count; index++) {
             var structure = (IGH_Structure)Params.Output[index].VolatileData;
 
             var tree = new DataTree<IGH_Goo>();
-            tree.MergeStructure(structure, null);
+            //tree.MergeStructure(structure, null);
+
+            int num = structure.PathCount - 1;
+            for (int i = 0; i <= num; i++) {
+              IList list = structure.get_Branch(i);
+              var list2 = new List<IGH_Goo>(list.Count);
+              int num2 = list.Count - 1;
+              for (int j = 0; j <= num2; j++) {
+                if (list[j] == null) {
+                  list2.Add(default(IGH_Goo));
+                  continue;
+                }
+
+                //object target = null;
+                //if (hint != null) {
+                //  hint.Cast(RuntimeHelpers.GetObjectValue(list[j]), out target);
+                //  if (target != null && target is T) {
+                //    list2.Add((T)target);
+                //  }
+                //} else {
+                //var target2 = default(IGH_Goo);
+                //if (((IGH_Goo)list[j]).CastTo<IGH_Goo>(out target2)) {
+                //  list2.Add(target2);
+                //} else if (list[j] is IGH_Goo) {
+                //  list2.Add((IGH_Goo)list[j]);
+                //} else {
+                //  list2.Add(default(IGH_Goo));
+                //}
+                //}
+                list2.Add((IGH_Goo)list[j]);
+
+                tree.AddRange(list2, structure.get_Path(i));
+              }
+            }
+
+
 
             output.Add(tree);
           }
@@ -107,8 +141,15 @@ namespace OasysGH.Components {
         return;
       }
 
-      if (InputParameterCacheManager != null && !InputParameterCacheManager.IsExpired()) {
-        return;
+      if (InputParameterCacheManager != null) {
+        if (!InputParameterCacheManager.RunOnce) {
+          InputParameterCacheManager.SetInput(Params.Input);
+          InputParameterCacheManager.AddAddidionalInput(Params.Input.Count, _selectedItems);
+        }
+
+        if (!InputParameterCacheManager.IsExpired()) {
+          return;
+        }
       }
 
       if (OutputParameterExpirationManager != null) {
