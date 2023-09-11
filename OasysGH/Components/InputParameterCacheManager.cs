@@ -1,49 +1,79 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Grasshopper;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
 namespace OasysGH.Components {
-  public class ParameterCacheManager : IParameterCacheManager {
-    public IParameterExpirationManager InputManager { get; set; }
-    public IParameterExpirationManager OutputManager { get; set; }
+  public class InputParameterCacheManager : IInputParameterCacheManager {
+    public IParameterExpirationManager EpirationManager { get; set; }
 
     private readonly Dictionary<int, List<DataTree<IGH_Goo>>> _outputCache = new Dictionary<int, List<DataTree<IGH_Goo>>>();
 
-    public ParameterCacheManager(IParameterExpirationManager inputManager, IParameterExpirationManager outputManager) {
-      InputManager = inputManager;
-      OutputManager = outputManager;
+    public InputParameterCacheManager(IParameterExpirationManager epirationManager) {
+      EpirationManager = epirationManager;
     }
 
     public void AddAddidionalInput(int index, object item) {
       if (item is IGH_Goo goo) {
-        InputManager.AddItem(index, goo, 1);
+        EpirationManager.AddItem(index, goo, 1);
       } else if (item is IGH_DataTree tree) {
-        InputManager.AddItem(index, tree, 1);
+        EpirationManager.AddItem(index, tree, 1);
       } else if (item is List<IGH_Goo> list) {
-        InputManager.AddItem(index, list, 1);
+        EpirationManager.AddItem(index, list, 1);
       } else {
-        InputManager.AddItem(index, item, 1);
+        EpirationManager.AddItem(index, item, 1);
       }
     }
 
+    public bool IsExpired() {
+      return EpirationManager.IsExpired();
+    }
+
     public void SetInput(List<IGH_Param> input) {
-      //for (int index = 0; index < input.Count; index++) {
-      //  IEnumerator<IGH_Goo> enumerator = input[index].VolatileData.AllData(false).GetEnumerator();
-      //  while (enumerator.MoveNext()) {
-      //    IGH_Goo goo = enumerator.Current;
-      //    InputManager.AddItem(index, goo, 1);
-      //  }
-      //}
       for (int index = 0; index < input.Count; index++) {
         IGH_Structure structure = input[index].VolatileData;
 
         // this does not always work!
         var tree = new DataTree<IGH_Goo>();
-        tree.MergeStructure(structure, null);
+        //tree.MergeStructure(structure, null);
 
-        InputManager.AddTree(index, tree, 1);
+        int num = structure.PathCount - 1;
+        for (int i = 0; i <= num; i++) {
+          IList list = structure.get_Branch(i);
+          var list2 = new List<IGH_Goo>(list.Count);
+          int num2 = list.Count - 1;
+          for (int j = 0; j <= num2; j++) {
+            if (list[j] == null) {
+              list2.Add(default(IGH_Goo));
+              continue;
+            }
+
+            object target = null;
+            //if (hint != null) {
+            //  hint.Cast(RuntimeHelpers.GetObjectValue(list[j]), out target);
+            //  if (target != null && target is T) {
+            //    list2.Add((T)target);
+            //  }
+            //} else {
+            var target2 = default(IGH_Goo);
+            if (((IGH_Goo)list[j]).CastTo<IGH_Goo>(out target2)) {
+              list2.Add(target2);
+            } else if (list[j] is IGH_Goo) {
+              list2.Add((IGH_Goo)list[j]);
+            }
+            else {
+              list2.Add(default(IGH_Goo));
+            }
+            //}
+
+            tree.AddRange(list2, structure.get_Path(i));
+          }
+        }
+
+        EpirationManager.AddTree(index, tree, 1);
       }
     }
 
