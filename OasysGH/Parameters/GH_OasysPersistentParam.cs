@@ -6,13 +6,11 @@ using Grasshopper.Kernel.Types;
 namespace OasysGH.Parameters {
   public abstract class GH_OasysPersistentParam<T> : GH_PersistentParam<T> where T : class, IGH_Goo {
     public virtual bool Hidden {
-      get { return true; }
+      get => true;
       set { }
     }
 
-    public virtual bool IsPreviewCapable {
-      get { return false; }
-    }
+    public virtual bool IsPreviewCapable => false;
 
     protected GH_OasysPersistentParam(GH_InstanceDescription nTag) : base(nTag) {
     }

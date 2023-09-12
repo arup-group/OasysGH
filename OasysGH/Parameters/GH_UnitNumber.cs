@@ -18,19 +18,14 @@ namespace OasysGH.Parameters {
     }
 
     public override bool CastFrom(object source) {
-      // This function is called when Grasshopper needs to convert other data
-      // into this parameter.
-
       if (source == null) { return false; }
 
-      //Cast from own type
       if (typeof(GH_UnitNumber).IsAssignableFrom(source.GetType())) {
         var num = (GH_UnitNumber)source;
         Value = num.m_value;
         return true;
       }
 
-      // Try parse from string
       if (GH_Convert.ToString(source, out string txt, GH_Conversion.Both)) {
         var types = Quantity.Infos.Select(x => x.ValueType).ToList();
         foreach (Type type in types) {
@@ -45,9 +40,6 @@ namespace OasysGH.Parameters {
     }
 
     public override bool CastTo<Q>(ref Q target) {
-      // This function is called when Grasshopper needs to convert this
-      // instance of UnitNumber into some other type Q.
-
       if (typeof(Q).IsAssignableFrom(typeof(GH_UnitNumber))) {
         target = (Q)(object)new GH_UnitNumber(Value);
         return true;
