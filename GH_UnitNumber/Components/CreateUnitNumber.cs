@@ -181,7 +181,7 @@ namespace GH_UnitNumber.Components {
       pManager.AddParameter(new GH_UnitNumberParameter());
     }
 
-    protected override void SolveInstance(IGH_DataAccess DA) {
+    protected override void SolveInternal(IGH_DataAccess DA) {
       if (DA.GetData(0, ref _val)) {
         var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
 
@@ -281,7 +281,7 @@ namespace GH_UnitNumber.Components {
 
         var unitNumber = new OasysGH.Parameters.GH_UnitNumber(_quantity);
 
-        OasysGH.Helpers.Output.SetItem(this, DA, 0, unitNumber);
+        DA.SetData(0, unitNumber);
       }
     }
 

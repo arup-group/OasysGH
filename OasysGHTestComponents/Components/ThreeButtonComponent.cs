@@ -47,7 +47,7 @@ namespace OasysGH.Components.Tests {
         "3Clicked", "C3", "The third button was clicked", GH_ParamAccess.item);
     }
 
-    protected override void SolveInstance(IGH_DataAccess da) {
+    protected override void SolveInternal(IGH_DataAccess da) {
       da.SetData(0, _firstWasClicked);
       da.SetData(1, _secondWasClicked);
       da.SetData(2, _thirdWasClicked);

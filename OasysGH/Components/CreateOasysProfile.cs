@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using GH_IO.Serialization;
 using Grasshopper;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
@@ -127,7 +128,7 @@ namespace OasysGH.Components {
       _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(new List<int> { -1 }, DataSource, false);
     }
 
-    public override bool Read(GH_IO.Serialization.GH_IReader reader) {
+    public override bool Read(GH_IReader reader) {
       _mode = (FoldMode)Enum.Parse(typeof(FoldMode), reader.GetString("mode"));
       _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), reader.GetString("lengthUnit"));
       _inclSS = reader.GetBoolean("inclSS");
@@ -811,7 +812,7 @@ namespace OasysGH.Components {
       }
     }
 
-    public override bool Write(GH_IO.Serialization.GH_IWriter writer) {
+    public override bool Write(GH_IWriter writer) {
       writer.SetString("mode", _mode.ToString());
       writer.SetString("lengthUnit", _lengthUnit.ToString());
       writer.SetBoolean("inclSS", _inclSS);
@@ -937,7 +938,7 @@ namespace OasysGH.Components {
       pManager.AddTextParameter("Profile", "Pf", "Profile for a GSA Section", GH_ParamAccess.tree);
     }
 
-    protected override void SolveInstance(IGH_DataAccess DA) {
+    protected override void SolveInternal(IGH_DataAccess da) {
       ClearRuntimeMessages();
       for (int i = 0; i < Params.Input.Count; i++)
         Params.Input[i].ClearRuntimeMessages();
@@ -948,26 +949,27 @@ namespace OasysGH.Components {
           pathCount = Params.Output[0].VolatileData.PathCount;
         }
 
-        var path = new GH_Path(new int[] { pathCount });
-        List<IProfile> profiles = SolveInstanceForCatalogueProfile(DA);
+        var path = new GH_Path(pathCount);
+        List<IProfile> profiles = SolveInstanceForCatalogueProfile(da);
         var tree = new DataTree<OasysProfileGoo>();
         foreach (IProfile profile in profiles) {
           tree.Add(new OasysProfileGoo(profile), path);
         }
 
-        DA.SetDataTree(0, tree);
-      } else if (_mode == FoldMode.Other) {
-        IProfile profile = SolveInstanceForStandardProfile(DA);
+        da.SetDataTree(0, tree);
 
-        DA.SetData(0, new OasysProfileGoo(profile));
+      } else if (_mode == FoldMode.Other) {
+        IProfile profile = SolveInstanceForStandardProfile(da);
+
+        da.SetData(0, new OasysProfileGoo(profile));
       }
     }
 
-    protected List<IProfile> SolveInstanceForCatalogueProfile(IGH_DataAccess DA) {
+    protected List<IProfile> SolveInstanceForCatalogueProfile(IGH_DataAccess da) {
       var profiles = new List<IProfile>();
       // get user input filter search string
       bool incl = false;
-      if (DA.GetData(1, ref incl)) {
+      if (da.GetData(1, ref incl)) {
         if (_inclSS != incl) {
           _inclSS = incl;
           UpdateTypeData();
@@ -986,7 +988,7 @@ namespace OasysGH.Components {
       // get user input filter search string
       _search = null;
       string inSearch = "";
-      if (DA.GetData(0, ref inSearch)) {
+      if (da.GetData(0, ref inSearch)) {
         _search = inSearch.Trim().ToLower().Replace(".", string.Empty).Replace("*", ".*").Replace(" ", ".*");
         if (_search == "cat") {
           string eventName = "EasterCat";

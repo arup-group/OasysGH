@@ -65,7 +65,7 @@ namespace OasysGH.Components.Tests {
       pManager.AddBooleanParameter("Checked", "C", "The check box is checked", GH_ParamAccess.item);
     }
 
-    protected override void SolveInstance(IGH_DataAccess da) {
+    protected override void SolveInternal(IGH_DataAccess da) {
       da.SetData(0, _isChecked);
     }
   }

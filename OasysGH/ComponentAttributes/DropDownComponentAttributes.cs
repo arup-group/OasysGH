@@ -115,6 +115,7 @@ namespace OasysGH.UI {
           }
         }
       }
+
       return base.RespondToMouseDown(sender, e);
     }
 
@@ -135,6 +136,7 @@ namespace OasysGH.UI {
           return GH_ObjectResponse.Capture;
         }
       }
+
       if (_mouseOver) {
         _mouseOver = false;
         Grasshopper.Instances.CursorServer.ResetCursor(sender);
@@ -145,6 +147,7 @@ namespace OasysGH.UI {
     }
 
     public override GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, GH_CanvasMouseEvent e) {
+
       if (e.Button == MouseButtons.Left) {
         var comp = Owner as GH_Component;
         if (_drag) {
@@ -171,6 +174,7 @@ namespace OasysGH.UI {
                 continue;
               _unfolded[j] = false;
             }
+
             comp.ExpireSolution(true);
             return GH_ObjectResponse.Handled;
           }
@@ -206,6 +210,7 @@ namespace OasysGH.UI {
                     _unfolded[i] = !_unfolded[i];
                     comp.ExpireSolution(true);
                   }
+
                   return GH_ObjectResponse.Handled;
                 }
               }
@@ -217,6 +222,7 @@ namespace OasysGH.UI {
           }
         }
       }
+
       return base.RespondToMouseUp(sender, e);
     }
 
