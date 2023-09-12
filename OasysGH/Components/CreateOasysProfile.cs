@@ -252,7 +252,7 @@ namespace OasysGH.Components {
         base.UpdateUI();
       } else {
         // update spacer description to match none-catalogue dropdowns
-        _spacerDescriptions[1] = "Measure";// = new List<string>(new string[]
+        _spacerDescriptions[1] = "Measure";
 
         if (_mode != FoldMode.Other) {
           // remove all catalogue dropdowns
@@ -942,11 +942,9 @@ namespace OasysGH.Components {
 
     protected override void SolveInternal(IGH_DataAccess da) {
       ClearRuntimeMessages();
-
-      var data = new Dictionary<int, IGH_Goo>();
-
-      for (int i = 0; i < Params.Input.Count; i++)
+      for (int i = 0; i < Params.Input.Count; i++) {
         Params.Input[i].ClearRuntimeMessages();
+      }
 
       if (_mode == FoldMode.Catalogue) {
         int pathCount = 0;
@@ -966,7 +964,7 @@ namespace OasysGH.Components {
       } else if (_mode == FoldMode.Other) {
         IProfile profile = SolveInstanceForStandardProfile(da);
 
-        data.Add(0, new OasysProfileGoo(profile));
+        da.SetData(0, new OasysProfileGoo(profile));
       }
     }
 
@@ -1354,9 +1352,6 @@ namespace OasysGH.Components {
         _lastInputWasSecant = true;
       } else
         _lastInputWasSecant = false;
-
-      //if (isPerimeter)
-      //  Params.RegisterInputParam(new Param_Plane());
     }
 
     protected override void UpdateUIFromSelectedItems() {
