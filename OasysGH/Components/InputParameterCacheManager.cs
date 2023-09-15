@@ -7,11 +7,10 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
 namespace OasysGH.Components {
-  public class InputParameterCacheManager : IInputParameterCacheManager {
+  public class InputParameterCacheManager  {
     public IParameterExpirationManager EpirationManager { get; set; }
     public bool RunOnce { get; private set; }
 
-    private readonly Dictionary<int, List<DataTree<IGH_Goo>>> _outputCache = new Dictionary<int, List<DataTree<IGH_Goo>>>();
 
     public InputParameterCacheManager(IParameterExpirationManager epirationManager) {
       EpirationManager = epirationManager;
@@ -33,51 +32,7 @@ namespace OasysGH.Components {
       return EpirationManager.IsExpired();
     }
 
-    public void SetInput(List<IGH_Param> input) {
-      for (int index = 0; index < input.Count; index++) {
-        IGH_Structure structure = input[index].VolatileData;
-
-        // this does not always work!
-        var tree = new DataTree<IGH_Goo>();
-        //tree.MergeStructure(structure, null);
-
-        int num = structure.PathCount - 1;
-        for (int i = 0; i <= num; i++) {
-          IList list = structure.get_Branch(i);
-          var list2 = new List<IGH_Goo>(list.Count);
-          int num2 = list.Count - 1;
-          for (int j = 0; j <= num2; j++) {
-            if (list[j] == null) {
-              list2.Add(default(IGH_Goo));
-              continue;
-            }
-
-            //object target = null;
-            //if (hint != null) {
-            //  hint.Cast(RuntimeHelpers.GetObjectValue(list[j]), out target);
-            //  if (target != null && target is T) {
-            //    list2.Add((T)target);
-            //  }
-            //} else {
-            //var target2 = default(IGH_Goo);
-            //if (((IGH_Goo)list[j]).CastTo<IGH_Goo>(out target2)) {
-            //  list2.Add(target2);
-            //} else if (list[j] is IGH_Goo) {
-            //  list2.Add((IGH_Goo)list[j]);
-            //} else {
-            //  list2.Add(default(IGH_Goo));
-            //}
-            //}
-
-            list2.Add((IGH_Goo)list[j]);
-            tree.AddRange(list2, structure.get_Path(i));
-          }
-        }
-
-        EpirationManager.AddTree(index, tree, 1);
-      }
-      RunOnce = true;
-    }
+   
 
     //public void SetInput(Dictionary<int, object> data, int runCount) {
     //  foreach (int index in data.Keys) {
@@ -113,22 +68,7 @@ namespace OasysGH.Components {
     //  }
     //}
 
-    public List<DataTree<IGH_Goo>> GetOutput(int runCount) {
-      return _outputCache[runCount];
-    }
-
-    public void Reset() {
-      RunOnce = false;
-    }
-
-    public void SetOutput(List<DataTree<IGH_Goo>> output, int runCount) {
-      if (_outputCache.ContainsKey(runCount)) {
-        _outputCache[runCount] = output;
-      } else {
-        _outputCache.Add(runCount, output);
-      }
-    }
-
+ 
 
     //public void SetOutput(List<IGH_Goo> output, int runCount) {
     //  if (_outputCache.ContainsKey(runCount)) {

@@ -121,7 +121,7 @@ namespace OasysGH.Components {
     private Type _type = typeof(IRectangleProfile);
 
     protected CreateOasysProfile(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory) {
-      OutputParameterExpirationManager = new OutputParameterExpirationManager(new OasysUnitsParameterExpirationManager());
+      OutputParameterManager = new OutputParameterExpirationManager(new OasysUnitsParameterExpirationManager());
 
       Tuple<List<string>, List<int>> catalogueData = SqlReader.Instance.GetCataloguesDataFromSQLite(DataSource);
       _catalogueNames = catalogueData.Item1;

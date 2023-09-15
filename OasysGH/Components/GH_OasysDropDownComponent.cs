@@ -8,8 +8,7 @@ using Grasshopper.Kernel.Types;
 
 namespace OasysGH.Components {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent {
-    public IInputParameterCacheManager InputParameterCacheManager { get; set; }
-    public IOutputParameterExpirationManager OutputParameterExpirationManager { get; set; }
+    public IOutputParameterExpirationManager OutputParameterManager { get; set; }
 
     protected internal List<List<string>> _dropDownItems;
     protected internal bool _isInitialised = false;
@@ -54,29 +53,26 @@ namespace OasysGH.Components {
     }
 
     protected override void BeforeSolveInstance() {
-      if (InputParameterCacheManager != null) {
-        InputParameterCacheManager.Reset();
+      if (OutputParameterManager != null) {
+
+
       }
     }
+
     protected sealed override void SolveInstance(IGH_DataAccess da) {
-      if (InputParameterCacheManager != null) {
-        if (!InputParameterCacheManager.IsExpired()) {
-          List<DataTree<IGH_Goo>> output = InputParameterCacheManager.GetOutput(1);
+      if (OutputParameterManager != null) {
+        OutputParameterManager.Reset();
 
-          for (int index = 0; index < output.Count; index++) {
-            da.SetDataTree(index, output[index]);
-          }
 
-          return;
-        }
+
       }
 
       SolveInternal(da);
     }
 
     protected override void AfterSolveInstance() {
-      if (InputParameterCacheManager != null) {
-        if (InputParameterCacheManager.IsExpired()) {
+      if (OutputParameterManager != null) {
+        if (OutputParameterManager.IsExpired()) {
           var output = new List<DataTree<IGH_Goo>>();
           for (int index = 0; index < Params.Output.Count; index++) {
             var structure = (IGH_Structure)Params.Output[index].VolatileData;
@@ -122,12 +118,8 @@ namespace OasysGH.Components {
             output.Add(tree);
           }
 
-          InputParameterCacheManager.SetOutput(output, 1);
+          OutputParameterManager.SetOutput(output, 1);
         }
-      }
-
-      if (OutputParameterExpirationManager != null) {
-        OutputParameterExpirationManager.SetOutput(Params.Output);
       }
     }
 
@@ -136,25 +128,9 @@ namespace OasysGH.Components {
     protected internal abstract void InitialiseDropdowns();
 
     protected override void ExpireDownStreamObjects() {
-      if (InputParameterCacheManager == null && OutputParameterExpirationManager == null) {
-        base.ExpireDownStreamObjects();
-        return;
-      }
-
-      if (InputParameterCacheManager != null) {
-        if (!InputParameterCacheManager.RunOnce) {
-          InputParameterCacheManager.SetInput(Params.Input);
-          InputParameterCacheManager.AddAddidionalInput(Params.Input.Count, _selectedItems);
-        }
-
-        if (!InputParameterCacheManager.IsExpired()) {
-          return;
-        }
-      }
-
-      if (OutputParameterExpirationManager != null) {
+      if (OutputParameterManager != null) {
         for (int outputIndex = 0; outputIndex < Params.Output.Count; outputIndex++) {
-          if (OutputParameterExpirationManager.IsExpired(outputIndex)) {
+          if (OutputParameterManager.IsExpired(outputIndex)) {
             IGH_Param item = Params.Output[outputIndex];
             item.ExpireSolution(recompute: false);
           }
