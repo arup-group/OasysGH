@@ -9,7 +9,6 @@ using Grasshopper.Kernel.Types;
 namespace OasysGH.Components {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent {
     public IInputParameterCacheManager InputParameterCacheManager { get; set; }
-    public IOutputParameterExpirationManager OutputParameterExpirationManager { get; set; }
 
     protected internal List<List<string>> _dropDownItems;
     protected internal bool _isInitialised = false;
@@ -56,8 +55,14 @@ namespace OasysGH.Components {
     protected override void BeforeSolveInstance() {
       if (InputParameterCacheManager != null) {
         InputParameterCacheManager.Reset();
+
+        if (!InputParameterCacheManager.RunOnce) {
+          InputParameterCacheManager.SetInput(Params.Input);
+          InputParameterCacheManager.AddAddidionalInput(Params.Input.Count, _selectedItems);
+        }
       }
     }
+
     protected sealed override void SolveInstance(IGH_DataAccess da) {
       if (InputParameterCacheManager != null) {
         if (!InputParameterCacheManager.IsExpired()) {
@@ -125,44 +130,11 @@ namespace OasysGH.Components {
           InputParameterCacheManager.SetOutput(output, 1);
         }
       }
-
-      if (OutputParameterExpirationManager != null) {
-        OutputParameterExpirationManager.SetOutput(Params.Output);
-      }
     }
 
     protected abstract void SolveInternal(IGH_DataAccess da);
 
     protected internal abstract void InitialiseDropdowns();
-
-    protected override void ExpireDownStreamObjects() {
-      if (InputParameterCacheManager == null && OutputParameterExpirationManager == null) {
-        base.ExpireDownStreamObjects();
-        return;
-      }
-
-      if (InputParameterCacheManager != null) {
-        if (!InputParameterCacheManager.RunOnce) {
-          InputParameterCacheManager.SetInput(Params.Input);
-          InputParameterCacheManager.AddAddidionalInput(Params.Input.Count, _selectedItems);
-        }
-
-        if (!InputParameterCacheManager.IsExpired()) {
-          return;
-        }
-      }
-
-      if (OutputParameterExpirationManager != null) {
-        for (int outputIndex = 0; outputIndex < Params.Output.Count; outputIndex++) {
-          if (OutputParameterExpirationManager.IsExpired(outputIndex)) {
-            IGH_Param item = Params.Output[outputIndex];
-            item.ExpireSolution(recompute: false);
-          }
-        }
-      }
-
-      base.ExpireDownStreamObjects();
-    }
 
     protected virtual void UpdateUI() {
       (this as IGH_VariableParameterComponent).VariableParameterMaintenance();
