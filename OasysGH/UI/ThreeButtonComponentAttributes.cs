@@ -13,26 +13,28 @@ namespace OasysGH.UI {
   /// <summary>
   /// Class to create custom component UI with a button
   ///
-  /// This class is made for the open and save components
+  /// This class has been made for the open and save components.
   ///
-  /// To use this method override CreateAttributes() in component class and set m_attributes = new ThreeButtonAtrributes(...
+  /// To use this class override CreateAttributes() in component class and set m_attributes to an instance of this class.
   /// </summary>
   public class ThreeButtonComponentAttributes : GH_ComponentAttributes {
     private float MinWidth {
       get {
-        var spacers = new List<string>();
-        spacers.Add(_spacerTxt);
+        var spacers = new List<string> {
+          _spacerTxt
+        };
         float sp = WidthAttributes.MaxTextWidth(spacers, GH_FontServer.Small);
-        var buttons = new List<string>();
-        buttons.Add(_button1Text);
-        buttons.Add(_button2Text);
-        buttons.Add(_button3Text);
+        var buttons = new List<string> {
+          _button1Text,
+          _button2Text,
+          _button3Text
+        };
         float bt = WidthAttributes.MaxTextWidth(buttons, GH_FontServer.Standard);
 
         float num = Math.Max(Math.Max(sp, bt), 90);
         return num;
       }
-      set { MinWidth = value; }
+      set => MinWidth = value;
     }
 
     private readonly Action _action1;
@@ -107,6 +109,7 @@ namespace OasysGH.UI {
           return GH_ObjectResponse.Capture;
         }
       }
+
       return base.RespondToMouseDown(sender, e);
     }
 
@@ -119,6 +122,7 @@ namespace OasysGH.UI {
         sender.Cursor = Cursors.Hand;
         return GH_ObjectResponse.Capture;
       }
+
       if (_button2Bounds.Contains(e.CanvasLocation)) {
         _mouseOver2 = true;
         _mouseOver1 = false;
@@ -127,6 +131,7 @@ namespace OasysGH.UI {
         sender.Cursor = Cursors.Hand;
         return GH_ObjectResponse.Capture;
       }
+
       if (_button3Bounds.Contains(e.CanvasLocation)) {
         _mouseOver3 = true;
         _mouseOver1 = false;
@@ -161,6 +166,7 @@ namespace OasysGH.UI {
             return GH_ObjectResponse.Release;
           }
         }
+
         RectangleF rec2 = _button2Bounds;
         if (rec2.Contains(e.CanvasLocation)) {
           if (_mouseDown2) {
@@ -172,6 +178,7 @@ namespace OasysGH.UI {
             return GH_ObjectResponse.Release;
           }
         }
+
         RectangleF rec3 = _button3Bounds;
         if (rec3.Contains(e.CanvasLocation)) {
           if (_mouseDown3) {
@@ -184,6 +191,7 @@ namespace OasysGH.UI {
           }
         }
       }
+
       return base.RespondToMouseUp(sender, e);
     }
 
@@ -224,6 +232,7 @@ namespace OasysGH.UI {
         if (inputwidth < item.Attributes.Bounds.Width)
           inputwidth = item.Attributes.Bounds.Width;
       }
+
       foreach (IGH_Param item2 in Owner.Params.Input) {
         PointF pivot2 = item2.Attributes.Pivot; // original anchor location of input
         RectangleF bounds2 = item2.Attributes.Bounds;
@@ -285,7 +294,7 @@ namespace OasysGH.UI {
       // adjust fontsize to high resolution displays
       sml = new Font(sml.FontFamily, sml.Size / GH_GraphicsUtil.UiScale, FontStyle.Regular);
 
-      //Draw divider line
+      // Draw divider line
       if (_spacerTxt != "") {
         graphics.DrawString(_spacerTxt, sml, Colour.AnnotationTextDark, _spacerBounds, GH_TextRenderingConstants.CenterCenter);
         graphics.DrawLine(spacer, _spacerBounds.X, _spacerBounds.Y + _spacerBounds.Height / 2, _spacerBounds.X + (_spacerBounds.Width - GH_FontServer.StringWidth(_spacerTxt, sml)) / 2 - 4, _spacerBounds.Y + _spacerBounds.Height / 2);

@@ -14,22 +14,24 @@ namespace OasysGH.UI {
   ///
   /// This class is made for the open and save components
   ///
-  /// To use this method override CreateAttributes() in component class and set m_attributes = new ButtonComponentAttributes(...
+  /// To use this class override CreateAttributes() in component class and set m_attributes to an instance of this class.
   /// </summary>
   public class ButtonComponentAttributes : GH_ComponentAttributes {
     private float MinWidth {
       get {
-        var spacers = new List<string>();
-        spacers.Add(_spacerTxt);
+        var spacers = new List<string> {
+          _spacerTxt
+        };
         float sp = WidthAttributes.MaxTextWidth(spacers, GH_FontServer.Small);
-        var buttons = new List<string>();
-        buttons.Add(_buttonText);
+        var buttons = new List<string> {
+          _buttonText
+        };
         float bt = WidthAttributes.MaxTextWidth(buttons, GH_FontServer.Standard);
 
         float num = Math.Max(Math.Max(sp, bt), 90);
         return num;
       }
-      set { MinWidth = value; }
+      set => MinWidth = value;
     }
 
     private readonly Action _action;

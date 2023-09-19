@@ -29,5 +29,11 @@ namespace OasysGHTests.Helpers {
 
       Assert.NotNull(appDomain);
     }
+
+
+    [Fact]
+    public void InitializeLifetimeServiceTest() {
+      Assert.Null(SqlReader.Instance.InitializeLifetimeService());
+    }
   }
 }
