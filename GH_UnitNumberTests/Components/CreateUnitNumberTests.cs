@@ -1,10 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
+using System.Reflection;
+using System.Resources;
 using System.Windows.Forms;
 using GH_IO.Serialization;
 using GH_UnitNumber;
 using GH_UnitNumber.Components;
+using GH_UnitNumber.Properties;
 using GH_UnitNumberTests.Helpers;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Types;
@@ -56,6 +60,22 @@ namespace GH_UnitNumberTests.Components {
       ComponentTestHelper.SetInput(comp, "1.5");
       var output = (OasysGH.Parameters.GH_UnitNumber)ComponentTestHelper.GetOutput(comp);
       Assert.Equal($"1.5{abbreviation}", output.ToString());
+    }
+
+    [Fact]
+    public void IconTest() {
+      var component = new CreateUnitNumber();
+      string className = "CreateUnitNumber";
+
+      // Test component icon is equal to class name
+      ResourceManager rm = Resources.ResourceManager;
+      // Find icon with expected name in resources
+      var iconExpected = (Bitmap)rm.GetObject(className);
+      Assert.True(iconExpected != null, $"{className} not found in resources");
+      PropertyInfo pInfo = component.GetType().GetProperty("Icon",
+        BindingFlags.NonPublic | BindingFlags.Instance);
+      var icon = (Bitmap)pInfo.GetValue(component, null);
+      Assert.Equal(iconExpected.RawFormat.Guid, icon.RawFormat.Guid);
     }
   }
 }
