@@ -33,21 +33,11 @@ namespace OasysGH.Helpers {
         // Get the full name of the EXE assembly.
         string exeAssembly = Assembly.GetCallingAssembly().FullName;
 
-        // Construct and initialize settings for a second AppDomain.
-        var ads = new AppDomainSetup {
-          ApplicationBase = Path.GetDirectoryName(codeBasePath),
-          PrivateBinPath = @"x64",
-          DisallowBindingRedirects = false,
-          DisallowCodeDownload = true,
-          ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile
-        };
-
-        // Create the second AppDomain.
-        var ad = AppDomain.CreateDomain("SQLite AppDomain", null, ads);
+        AppDomain appDomain = CreateSecondAppDomain(codeBasePath);
 
         // Create an instance of MarshalbyRefType in the second AppDomain.
         // A proxy to the object is returned.
-        var reader = (SqlReader)ad.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
+        var reader = (SqlReader)appDomain.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
         return reader;
       }
     }
@@ -315,6 +305,22 @@ namespace OasysGH.Helpers {
     public override object InitializeLifetimeService() {
       // disable the leasing and then the object is only reclaimed when the AppDomain is unloaded
       return null;
+    }
+
+    internal static AppDomain CreateSecondAppDomain(string codeBasePath) {
+      // Construct and initialize settings for a second AppDomain.
+      var ads = new AppDomainSetup {
+        ApplicationBase = Path.GetDirectoryName(codeBasePath),
+        PrivateBinPath = @"x64",
+        DisallowBindingRedirects = false,
+        DisallowCodeDownload = true,
+        ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile
+      };
+
+      // Create the second AppDomain.
+      var appDomain = AppDomain.CreateDomain("SQLite AppDomain", null, ads);
+
+      return appDomain;
     }
   }
 }
