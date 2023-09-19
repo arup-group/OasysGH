@@ -294,7 +294,7 @@ namespace OasysGH.UI {
 
       // ### button 1 ###
       // Draw button box
-      System.Drawing.Drawing2D.GraphicsPath button1 = ButtonAttributes.RoundedRect(_button1Bounds, 2);
+      System.Drawing.Drawing2D.GraphicsPath button1 = ButtonAttributes.DrawRoundedRect(_button1Bounds, 2);
 
       Brush normal_colour1 = Colour.ButtonColour;
       Brush hover_colour1 = Colour.HoverButtonColour;
@@ -314,7 +314,7 @@ namespace OasysGH.UI {
       graphics.DrawPath(pen1, button1);
 
       // draw button glow
-      System.Drawing.Drawing2D.GraphicsPath overlay1 = ButtonAttributes.RoundedRect(_button1Bounds, 2, true);
+      System.Drawing.Drawing2D.GraphicsPath overlay1 = ButtonAttributes.DrawRoundedRect(_button1Bounds, 2, true);
       graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown1 ? 0 : _mouseOver1 ? 40 : 60, 255, 255, 255)), overlay1);
 
       // draw button text
@@ -322,7 +322,7 @@ namespace OasysGH.UI {
 
       // ### button 2 ###
       // Draw button box
-      System.Drawing.Drawing2D.GraphicsPath button2 = ButtonAttributes.RoundedRect(_button2Bounds, 2);
+      System.Drawing.Drawing2D.GraphicsPath button2 = ButtonAttributes.DrawRoundedRect(_button2Bounds, 2);
 
       Brush normal_colour2 = Colour.ButtonColour;
       Brush hover_colour2 = Colour.HoverButtonColour;
@@ -342,7 +342,7 @@ namespace OasysGH.UI {
       graphics.DrawPath(pen2, button2);
 
       // draw button glow
-      System.Drawing.Drawing2D.GraphicsPath overlay2 = ButtonAttributes.RoundedRect(_button2Bounds, 2, true);
+      System.Drawing.Drawing2D.GraphicsPath overlay2 = ButtonAttributes.DrawRoundedRect(_button2Bounds, 2, true);
       graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown2 ? 0 : _mouseOver2 ? 40 : 60, 255, 255, 255)), overlay2);
 
       // draw button text
@@ -350,7 +350,7 @@ namespace OasysGH.UI {
 
       // ### button 3 ###
       // Draw button box
-      System.Drawing.Drawing2D.GraphicsPath button3 = ButtonAttributes.RoundedRect(_button3Bounds, 2);
+      System.Drawing.Drawing2D.GraphicsPath button3 = ButtonAttributes.DrawRoundedRect(_button3Bounds, 2);
 
       Brush normal_colour3 = Colour.ButtonColour;
       Brush hover_colour3 = Colour.HoverButtonColour;
@@ -370,7 +370,7 @@ namespace OasysGH.UI {
       graphics.DrawPath(pen3, button3);
 
       // draw button glow
-      System.Drawing.Drawing2D.GraphicsPath overlay3 = ButtonAttributes.RoundedRect(_button3Bounds, 2, true);
+      System.Drawing.Drawing2D.GraphicsPath overlay3 = ButtonAttributes.DrawRoundedRect(_button3Bounds, 2, true);
       graphics.FillPath(new SolidBrush(Color.FromArgb(_mouseDown3 ? 0 : _mouseOver3 ? 40 : 60, 255, 255, 255)), overlay3);
 
       // draw button text

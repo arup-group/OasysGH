@@ -5,11 +5,8 @@ namespace OasysGH.UI.Helpers {
   /// Class holding custom UI graphical buttons/boxes
   /// </summary>
   public static class CheckBox {
-
     /// <summary>
     /// Method to draw a check box with GSA-styling
-    ///
-    /// Call this method when overriding Render method
     /// </summary>
     /// <param name="graphics"></param>
     /// <param name="center"></param>
