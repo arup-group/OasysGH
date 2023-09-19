@@ -60,10 +60,12 @@ namespace OasysGH.Helpers {
             continue;
           }
         }
+
         return items;
       } else if (!owner.Params.Input[inputid].Optional) {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
+
       return null;
     }
 
@@ -139,7 +141,7 @@ namespace OasysGH.Helpers {
       var gh_typs = new List<GH_ObjectWrapper>();
       if (DA.GetDataList(inputid, gh_typs)) {
         for (int i = 0; i < gh_typs.Count; i++) {
-          GH_UnitNumber unitNumber = null;
+          GH_UnitNumber unitNumber;
           // try cast directly to quantity type
           if (gh_typs[i].Value is GH_UnitNumber) {
             unitNumber = (GH_UnitNumber)gh_typs[i].Value;
@@ -178,10 +180,12 @@ namespace OasysGH.Helpers {
             continue;
           }
         }
+
         return lengths;
       } else if (!isOptional) {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
+
       return null;
     }
 
@@ -193,7 +197,7 @@ namespace OasysGH.Helpers {
     /// <param name="inputid"></param>
     /// <returns></returns>
     public static Ratio RatioInDecimalFractionToDecimalFraction(GH_Component owner, IGH_DataAccess DA, int inputid) {
-      GH_UnitNumber unitNumber = null;
+      GH_UnitNumber unitNumber;
       var gh_typ = new GH_ObjectWrapper();
       if (DA.GetData(inputid, ref gh_typ)) {
         // try cast directly to quantity type
@@ -234,7 +238,7 @@ namespace OasysGH.Helpers {
     /// <param name="inputid"></param>
     /// <returns></returns>
     public static Ratio RatioInDecimalFractionToPercentage(GH_Component owner, IGH_DataAccess DA, int inputid) {
-      GH_UnitNumber unitNumber = null;
+      GH_UnitNumber unitNumber;
       var gh_typ = new GH_ObjectWrapper();
       if (DA.GetData(inputid, ref gh_typ)) {
         // try cast directly to quantity type
@@ -266,6 +270,7 @@ namespace OasysGH.Helpers {
           return new Ratio(100, RatioUnit.Percent);
         }
       }
+
       return new Ratio(100, RatioUnit.Percent);
     }
 
@@ -280,8 +285,8 @@ namespace OasysGH.Helpers {
     /// <param name="isOptional"></param>
     /// <returns></returns>
     public static IQuantity UnitNumber<T>(GH_Component owner, IGH_DataAccess DA, int inputid, T unit, bool isOptional = false) where T : Enum {
-      GH_UnitNumber unitNumber = null;
-      IQuantity zeroReturn = null;
+      GH_UnitNumber unitNumber;
+      IQuantity zeroReturn;
       var gh_typ = new GH_ObjectWrapper();
       if (DA.GetData(inputid, ref gh_typ)) {
         // try cast directly to quantity type
@@ -347,11 +352,11 @@ namespace OasysGH.Helpers {
     public static List<IQuantity> UnitNumberList<T>(GH_Component owner, IGH_DataAccess DA, int inputid, T unit) where T : Enum {
       var items = new List<IQuantity>();
       var gh_typs = new List<GH_ObjectWrapper>();
-      IQuantity zeroReturn = null;
+      IQuantity zeroReturn;
 
       if (DA.GetDataList(inputid, gh_typs)) {
         for (int i = 0; i < gh_typs.Count; i++) {
-          GH_UnitNumber unitNumber = null;
+          GH_UnitNumber unitNumber;
           // try cast directly to quantity type
           if (gh_typs[i].Value is GH_UnitNumber) {
             unitNumber = (GH_UnitNumber)gh_typs[i].Value;
@@ -396,10 +401,12 @@ namespace OasysGH.Helpers {
             items.Add(zeroReturn);
           }
         }
+
         return items;
       } else if (!owner.Params.Input[inputid].Optional) {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
+
       return items;
     }
 
@@ -438,6 +445,7 @@ namespace OasysGH.Helpers {
       } else if (!isOptional) {
         owner.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Input parameter " + owner.Params.Input[inputid].NickName + " failed to collect data!");
       }
+
       return null;
     }
   }

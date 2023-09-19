@@ -9,9 +9,7 @@ namespace OasysGH.Parameters {
       get => true;
       set { }
     }
-
     public virtual bool IsPreviewCapable => false;
-
     protected GH_OasysPersistentParam(GH_InstanceDescription nTag) : base(nTag) {
     }
 

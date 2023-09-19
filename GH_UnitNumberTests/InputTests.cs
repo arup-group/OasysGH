@@ -24,7 +24,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void GenericGooInputFromUnitNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "GenericGooInputFromUnitNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "GenericGooInputFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -34,7 +34,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void GenericGooListInputFromUnitNumbersTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "GenericGooListInputFromUnitNumbersTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "GenericGooListInputFromUnitNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -46,7 +46,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioInputFromNegativeNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioInputFromNegativeNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromNegativeNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -56,7 +56,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioInputFromNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioInputFromNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -66,7 +66,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioInputFromTextRatioTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioInputFromTextRatioTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromTextRatioTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -76,7 +76,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioInputFromTextTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioInputFromTextTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -86,7 +86,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioInputFromUnitNumberRatioTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioInputFromUnitNumberRatioTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromUnitNumberRatioTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -96,7 +96,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioInputFromUnitNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthsOrRatioInputFromUnitNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthsOrRatioInputFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -106,7 +106,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioListInputFromNegativeNumbersTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioListInputFromNegativeNumbersTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromNegativeNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -118,7 +118,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioListInputFromNumbersTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioListInputFromNumbersTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -130,7 +130,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioListInputFromTextRatiosTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioListInputFromTextRatiosTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromTextRatiosTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -142,7 +142,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioListInputFromTextsTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioListInputFromTextsTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromTextsTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -154,7 +154,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioListInputFromUnitNumberRatiosTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthOrRatioListInputFromUnitNumberRatiosTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromUnitNumberRatiosTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -166,7 +166,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void LengthOrRatioListInputFromUnitNumbersTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "LengthsOrRatioListInputFromUnitNumbersTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "LengthsOrRatioListInputFromUnitNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -178,7 +178,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void RatioInDecimalFractionToDecimalFractionFromNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "RatioInDecimalFractionToDecimalFractionFromNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToDecimalFractionFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -188,7 +188,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void RatioInDecimalFractionToDecimalFractionFromTextTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "RatioInDecimalFractionToDecimalFractionFromTextTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToDecimalFractionFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -198,7 +198,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void RatioInDecimalFractionToDecimalFractionFromUnitNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "RatioInDecimalFractionToDecimalFractionFromUnitNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToDecimalFractionFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -208,7 +208,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void RatioInDecimalFractionToPercentageFromNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "RatioInDecimalFractionToPercentageFromNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToPercentageFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -218,7 +218,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void RatioInDecimalFractionToPercentageFromTextTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "RatioInDecimalFractionToPercentageFromTextTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToPercentageFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -228,7 +228,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void RatioInDecimalFractionToPercentageFromUnitNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "RatioInDecimalFractionToPercentageFromUnitNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToPercentageFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -238,7 +238,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void UnitNumberInputFromNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "UnitNumberInputFromNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberInputFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -248,7 +248,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void UnitNumberInputFromTextTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "UnitNumberInputFromTextTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberInputFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -258,7 +258,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void UnitNumberInputFromUnitNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "UnitNumberInputFromUnitNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberInputFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -268,7 +268,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void UnitNumberListInputFromNumbersTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "UnitNumberListInputFromNumbersTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberListInputFromNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -280,7 +280,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void UnitNumberListInputFromTextsTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "UnitNumberListInputFromTextsTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberListInputFromTextsTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -292,7 +292,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void UnitNumberListInputFromUnitNumbersTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "UnitNumberListInputFromUnitNumbersTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberListInputFromUnitNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
       var output1 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -304,7 +304,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void UnitNumberOrDoubleAsRatioToPercentageFromNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "UnitNumberOrDoubleAsRatioToPercentageFromNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberOrDoubleAsRatioToPercentageFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -314,7 +314,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void UnitNumberOrDoubleAsRatioToPercentageFromTextTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "UnitNumberOrDoubleAsRatioToPercentageFromTextTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberOrDoubleAsRatioToPercentageFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -324,7 +324,7 @@ namespace GH_UnitNumberTests.Components.Helpers {
     [Fact]
     public void UnitNumberOrDoubleAsRatioToPercentageFromUnitNumberTest() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "UnitNumberOrDoubleAsRatioToPercentageFromUnitNumberTest");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberOrDoubleAsRatioToPercentageFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];

@@ -5,9 +5,7 @@ using Rhino.Geometry;
 namespace OasysGH.Parameters {
   public abstract class GH_OasysGeometricGoo<T> : GH_GeometricGoo<T>, IGH_PreviewData {
     public override BoundingBox Boundingbox => GetGeometry().GetBoundingBox(true);
-
     public virtual BoundingBox ClippingBox => GetGeometry().GetBoundingBox(false);
-
     public override bool IsValid => GetGeometry() != null && GetGeometry().IsValid;
     public override string IsValidWhyNot {
       get {
@@ -20,9 +18,7 @@ namespace OasysGH.Parameters {
         }
       }
     }
-
     public abstract OasysPluginInfo PluginInfo { get; }
-
     public override string TypeDescription => PluginInfo.ProductName + " " + TypeName + " Parameter";
     public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
 

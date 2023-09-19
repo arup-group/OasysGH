@@ -5,7 +5,7 @@ using Grasshopper.Kernel.Special;
 using Xunit;
 
 namespace GH_UnitNumberTests.Helpers {
-  internal class Helper {
+  internal class DocumentHelper {
 
     public static GH_Document CreateDocument(string path) {
       var io = new GH_DocumentIO();
@@ -31,6 +31,7 @@ namespace GH_UnitNumberTests.Helpers {
           }
         }
       }
+
       return null;
     }
 
@@ -48,6 +49,7 @@ namespace GH_UnitNumberTests.Helpers {
           }
         }
       }
+
       return null;
     }
 
