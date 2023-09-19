@@ -40,7 +40,7 @@ internal sealed class PluginInfo
 {
   private static readonly Lazy<OasysPluginInfo> lazy =
       new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
-        "Oasys Shared Grasshopper", "OasysGH", "0.1.0.0", true, "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
+        "Oasys Shared Grasshopper", "OasysGH", "0.0.9.0", true, "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
         ));
    public static OasysPluginInfo Instance { get { return lazy.Value; } }
    private PluginInfo()
