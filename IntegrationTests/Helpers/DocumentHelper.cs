@@ -5,8 +5,8 @@ using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
 using Xunit;
 
-namespace IntegrationTests {
-  internal class Helper {
+namespace IntegrationTests.Helpers {
+  internal class DocumentHelper {
 
     public static GH_Document CreateDocument(string path) {
       var io = new GH_DocumentIO();
@@ -74,36 +74,44 @@ namespace IntegrationTests {
       if (expected.GetType() == typeof(string)) {
         var valOut = (GH_String)param.VolatileData.get_Branch(0)[0];
         Assert.Equal(expected, valOut.Value);
-      } else if (expected.GetType() == typeof(int)) {
+      }
+      else if (expected.GetType() == typeof(int)) {
         var valOut = (GH_Integer)param.VolatileData.get_Branch(0)[0];
         Assert.Equal(expected, valOut.Value);
-      } else if (expected.GetType() == typeof(double)) {
+      }
+      else if (expected.GetType() == typeof(double)) {
         var valOut = (GH_Number)param.VolatileData.get_Branch(0)[0];
         Assert.Equal((double)expected, valOut.Value, tolerance);
-      } else if (expected.GetType() == typeof(bool)) {
+      }
+      else if (expected.GetType() == typeof(bool)) {
         var valOut = (GH_Boolean)param.VolatileData.get_Branch(0)[0];
         Assert.Equal(expected, valOut.Value);
-      } else if (expected.GetType() == typeof(bool[])) {
+      }
+      else if (expected.GetType() == typeof(bool[])) {
         for (int i = 0; i < ((bool[])expected).Length; i++) {
           var valOut = (GH_Boolean)param.VolatileData.get_Branch(0)[i];
           Assert.Equal(((bool[])expected)[i], valOut.Value);
         }
-      } else if (expected.GetType() == typeof(string[])) {
+      }
+      else if (expected.GetType() == typeof(string[])) {
         for (int i = 0; i < ((string[])expected).Length; i++) {
           var valOut = (GH_String)param.VolatileData.get_Branch(0)[i];
           Assert.Equal(((string[])expected)[i], valOut.Value);
         }
-      } else if (expected.GetType() == typeof(int[])) {
+      }
+      else if (expected.GetType() == typeof(int[])) {
         for (int i = 0; i < ((int[])expected).Length; i++) {
           var valOut = (GH_Integer)param.VolatileData.get_Branch(0)[i];
           Assert.Equal(((int[])expected)[i], valOut.Value);
         }
-      } else if (expected.GetType() == typeof(double[])) {
+      }
+      else if (expected.GetType() == typeof(double[])) {
         for (int i = 0; i < ((double[])expected).Length; i++) {
           var valOut = (GH_Number)param.VolatileData.get_Branch(0)[i];
           Assert.Equal(((double[])expected)[i], valOut.Value, tolerance);
         }
-      } else {
+      }
+      else {
         Assert.True(false, "Expected type not found!");
       }
     }

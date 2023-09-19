@@ -82,7 +82,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OasysUnits" Version="1.0.0" />
      <PackageReference Include="OasysUnits.Serialization.JsonNet" Version="1.0.0" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

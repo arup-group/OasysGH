@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
+using IntegrationTests.Helpers;
 using Xunit;
 
 namespace IntegrationTests {
@@ -13,7 +14,7 @@ namespace IntegrationTests {
        .Parent.FullName;
       string path = Path.Combine(solutiondir, "ExampleFiles");
 
-      return Helper.CreateDocument(Path.Combine(path, fileName));
+      return DocumentHelper.CreateDocument(Path.Combine(path, fileName));
     }
 
     [Theory]
@@ -39,7 +40,7 @@ namespace IntegrationTests {
     [InlineData("Trapezoid", "STD TR(cm) 500 100 10")]
     [InlineData("T Section", "STD T(cm) 500 100 10 20")]
     public void AssertOutput(string groupIdentifier, string expectedOutput) {
-      IGH_Param param = Helper.FindParameter(Document(), groupIdentifier);
+      IGH_Param param = DocumentHelper.FindParameter(Document(), groupIdentifier);
       var output = (GH_String)param.VolatileData.get_Branch(0)[0];
       Assert.Equal(expectedOutput, output.Value);
     }
