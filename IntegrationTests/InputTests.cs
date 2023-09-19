@@ -342,7 +342,7 @@ namespace IntegrationTests {
       TestNoRuntimeMessagesInDocument(Document(), GH_RuntimeMessageLevel.Error, "Error");
     }
 
-    public static void TestNoRuntimeMessagesInDocument(
+    private static void TestNoRuntimeMessagesInDocument(
     GH_Document doc, GH_RuntimeMessageLevel runtimeMessageLevel,
     string exceptComponentNamed = "") {
       foreach (IGH_DocumentObject obj in doc.Objects) {
