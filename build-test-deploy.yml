@@ -49,21 +49,24 @@ steps:
     codeCoverageTool: 'cobertura'
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/unitnumber/**/coverage.cobertura.xml'
     pathToSources: '$(System.DefaultWorkingDirectory)'
-  displayName: 'Upload UnitNumber coverage to Azure'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  displayName: Create Azure UnitNumber CodeCoverage
 
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'cobertura'
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/oasysgh/**/coverage.cobertura.xml'
     pathToSources: '$(System.DefaultWorkingDirectory)' 
-  displayName: 'Upload OasysGH coverage to Azure'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  displayName: Create Azure OasysGH CodeCoverage
 
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'cobertura'
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/results/integration/**/coverage.cobertura.xml'
     pathToSources: '$(System.DefaultWorkingDirectory)' 
-  displayName: 'Upload Integration Test coverage to Azure'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  displayName: Create Azure IntegrationTests CodeCoverage
 
 - powershell: |
     if (200 -ne (Invoke-WebRequest -Uri https://codecov.io/validate -Body (Get-Content -Raw -LiteralPath .\codecov.yml) -Method post | Select-Object StatusCode).StatusCode) { 
@@ -99,14 +102,17 @@ steps:
   failOnStderr: true
 
 - publish: $(System.DefaultWorkingDirectory)\results\coverage_unitnumber.xml
+  displayName: Publish UnitNumberTests xml to Azure
   artifact: UnitNumberTestsCoverage
   continueOnError: true
 
 - publish: $(System.DefaultWorkingDirectory)\results\coverage_oasysgh.xml
+  displayName: Publish OasysGHTests xml to Azure
   artifact: OasysGHTestsCoverage
   continueOnError: true
 
 - publish: $(System.DefaultWorkingDirectory)\results\coverage_integration.xml
+  displayName: Publish IntegrationTests xml to Azure
   artifact: IntegrationTestsCoverage
   continueOnError: true
 
