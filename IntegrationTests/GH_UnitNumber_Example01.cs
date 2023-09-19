@@ -12,7 +12,7 @@ namespace IntegrationTests {
   public class Example01Test {
     private static GH_Document Document => document ?? (document = OpenDocument());
     private static GH_Document document = null;
-    public static GH_Document OpenDocument() {
+    private static GH_Document OpenDocument() {
       string fileName = MethodBase.GetCurrentMethod().DeclaringType.ToString().Replace(".", "_") + ".gh";
       fileName = fileName.Replace("IntegrationTests", "GH_UnitNumber").Replace("Test", string.Empty);
 
