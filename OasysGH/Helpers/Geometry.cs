@@ -11,10 +11,6 @@ using Rhino.Geometry;
 namespace OasysGH.Helpers {
   public static class Geometry {
     public static List<IPoint2d> PointsFromRhinoPolyline(Polyline polyline, LengthUnit lengthUnit, Plane local) {
-      if (polyline.First() != polyline.Last()) {
-        polyline.Add(polyline.First());
-      }
-
       var points = new List<IPoint2d>();
 
       // map points to XY plane so we can create local points from x and y coordinates
