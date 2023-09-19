@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using Grasshopper.GUI.Canvas;
 using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
 using OasysGH.UI;

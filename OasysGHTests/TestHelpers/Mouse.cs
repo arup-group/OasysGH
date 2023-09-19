@@ -42,7 +42,7 @@ namespace OasysGHTests.TestHelpers {
           var ptcanvas = new PointF(i, j);
           var mouse = new GH_CanvasMouseEvent(ptControl, ptcanvas, MouseButtons.Left);
           comp.Attributes.RespondToMouseDown(canvas, mouse);
-          mouse = new GH_CanvasMouseEvent(ptControl, ptcanvas, MouseButtons.None);
+          mouse = new GH_CanvasMouseEvent(ptControl, ptcanvas, MouseButtons.Left);
           comp.Attributes.RespondToMouseUp(canvas, mouse);
         }
       }
