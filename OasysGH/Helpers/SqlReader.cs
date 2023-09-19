@@ -12,7 +12,7 @@ namespace OasysGH.Helpers {
   /// In case of problems loading SQLite the singleton is executed in a separate AppDomain.
   /// </summary>
   public class SqlReader : MarshalByRefObject {
-    public static SqlReader Instance { get { return lazy.Value; } }
+    public static SqlReader Instance => lazy.Value;
     private static readonly Lazy<SqlReader> lazy = new Lazy<SqlReader>(() => Initialize());
 
     public SqlReader() {
