@@ -22,6 +22,7 @@ namespace OasysGHTests.Components {
     [Fact]
     public void RemovedFromDocTest() {
       var comp = new DropDownComponent();
+      comp.Attributes.Selected = true;
       PostHog.RemovedFromDocument(comp);
       Assert.True(true);
     }
