@@ -22,13 +22,6 @@
     <ProjectReference Include="..\OasysGHTests\OasysGHTests.csproj" />
     <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="GsaAPI">
-      <HintPath>..\..\..\..\..\..\Program Files\Oasys\GSA 10.2\GsaAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
   
   <ItemGroup>
     <None Update="xunit.runner.json">

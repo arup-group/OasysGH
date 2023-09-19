@@ -18,13 +18,6 @@ steps:
 - powershell: Remove-Item -Path 'C:\Users\**\AppData\Roaming\McNeel\Rhinoceros\packages' -Recurse
   displayName: 'Delete Rhino plugins'
 
-- powershell: |
-    Get-ChildItem *.msi -Recurse | Remove-Item
-    aws s3 cp s3://oasys-installer-store/GSA/latest . --exclude "*" --include *Arup*.msi --recursive
-    Get-ChildItem *.msi | Rename-Item -NewName gsa.msi
-  displayName: 'Download GSA latest'
-  failOnStderr: true
-
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
