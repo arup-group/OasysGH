@@ -2,6 +2,7 @@
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Types;
+using OasysUnits;
 using Rhino.Geometry;
 
 namespace GH_UnitNumberTests.Helpers {
@@ -36,10 +37,15 @@ namespace GH_UnitNumberTests.Helpers {
       component.Params.Input[index].AddSource(input);
     }
 
-    public static void SetInput(GH_Component component, object generic_input, int index = 0) {
+    public static void SetInput(GH_Component component, object obj, int index = 0) {
       var input = new Param_GenericObject();
       input.CreateAttributes();
-      input.PersistentData.Append(new GH_ObjectWrapper(generic_input));
+      if (typeof(IQuantity).IsAssignableFrom(obj.GetType())) {
+        input.PersistentData.Append(new OasysGH.Parameters.GH_UnitNumber((IQuantity)obj));
+      } else {
+        input.PersistentData.Append(new GH_ObjectWrapper(obj));
+      }
+
       component.Params.Input[index].AddSource(input);
     }
 
