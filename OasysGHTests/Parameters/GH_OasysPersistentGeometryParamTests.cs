@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using System.Windows.Forms;
 using Grasshopper.Kernel;
 using OasysGH.Parameters.Tests;
 using Xunit;

@@ -1,16 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Reflection;
-using System.Windows.Forms;
-using Grasshopper.Kernel.Types;
-using OasysGH.Components.Tests;
 using OasysGH.Parameters;
-using OasysGH.UI;
-using OasysGHTests.TestHelpers;
-using OasysUnits;
-using OasysUnits.Units;
-using Rhino.Geometry;
-using Rhino.NodeInCode;
 using Xunit;
 
 namespace OasysGHTests.Parameters {
@@ -18,7 +8,7 @@ namespace OasysGHTests.Parameters {
   public class ProfileGooTests {
     [Fact]
     public void OasysProfileGooTest() {
-      Type gooType = typeof(OasysGH.Parameters.OasysProfileGoo);
+      Type gooType = typeof(OasysProfileGoo);
 
       object objectGoo = Activator.CreateInstance(gooType, null);
       gooType = objectGoo.GetType();

@@ -11,7 +11,7 @@ namespace OasysGH.Units {
     public static BendingStiffnessUnit BendingStiffnessUnit { get; set; } = BendingStiffnessUnit.KilonewtonSquareMeter;
     public static CoefficientOfThermalExpansionUnit CoefficientOfThermalExpansionUnit {
       get {
-        return UnitsHelper.GetCoefficientOfThermalExpansionUnit(DefaultUnits.TemperatureUnit);
+        return UnitsHelper.GetCoefficientOfThermalExpansionUnit(TemperatureUnit);
       }
     }
 

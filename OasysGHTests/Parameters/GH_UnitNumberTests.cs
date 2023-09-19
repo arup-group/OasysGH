@@ -4,7 +4,6 @@ using Grasshopper.Kernel.Types;
 using OasysGHTests.TestHelpers;
 using OasysUnits;
 using OasysUnits.Units;
-using Rhino.Geometry;
 using Xunit;
 
 namespace OasysGHTests.Parameters {

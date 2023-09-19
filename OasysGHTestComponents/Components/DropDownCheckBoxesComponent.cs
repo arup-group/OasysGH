@@ -6,8 +6,6 @@ using OasysGH.Units.Helpers;
 using OasysUnits.Units;
 using OasysUnits;
 using OasysGH.Units;
-using OasysGH.Components;
-using OasysGH;
 using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
 namespace OasysGH.Components.Tests {

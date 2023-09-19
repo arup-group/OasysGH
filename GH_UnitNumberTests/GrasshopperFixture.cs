@@ -11,11 +11,11 @@ namespace Rhino.Test {
   }
 
   public class GrasshopperFixture : IDisposable {
-    public Rhino.Runtime.InProcess.RhinoCore Core {
+    public Runtime.InProcess.RhinoCore Core {
       get {
         if (null == _core)
           InitializeCore();
-        return _core as Rhino.Runtime.InProcess.RhinoCore;
+        return _core as Runtime.InProcess.RhinoCore;
       }
     }
 
@@ -97,7 +97,7 @@ namespace Rhino.Test {
     //     Dispose(disposing: false);
     // }
     private void InitializeCore() {
-      _core = new Rhino.Runtime.InProcess.RhinoCore();
+      _core = new Runtime.InProcess.RhinoCore();
     }
 
     private void InitializeDocIO() {
@@ -122,7 +122,7 @@ namespace Rhino.Test {
     }
 
     private void InitializeGrasshopperPlugin2() {
-      _gHPlugin = Rhino.RhinoApp.GetPlugInObject("Grasshopper");
+      _gHPlugin = RhinoApp.GetPlugInObject("Grasshopper");
       var ghp = _gHPlugin as Grasshopper.Plugin.GH_RhinoScriptInterface;
       ghp.RunHeadless();
     }

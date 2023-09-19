@@ -1,5 +1,4 @@
-﻿using OasysGH.Units;
-using OasysGH.Units.Helpers;
+﻿using OasysGH.Units.Helpers;
 using OasysUnits;
 using OasysUnits.Units;
 using Xunit;

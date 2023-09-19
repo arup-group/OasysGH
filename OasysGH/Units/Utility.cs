@@ -19,17 +19,17 @@ namespace OasysGH.Units {
       DefaultUnits.AngleUnit = (AngleUnit)Enum.Parse(typeof(AngleUnit),
         Grasshopper.Instances.Settings.GetValue("OasysAngle", string.Empty));
 
-      DefaultUnits.LengthUnitGeometry = (LengthUnit)Enum.Parse(typeof(LengthUnit),
+      LengthUnitGeometry = (LengthUnit)Enum.Parse(typeof(LengthUnit),
       Grasshopper.Instances.Settings.GetValue("OasysLengthUnitGeometry", string.Empty));
-      DefaultUnits.UseRhinoLengthGeometryUnit = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoLengthGeometryUnit", false);
+      UseRhinoLengthGeometryUnit = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoLengthGeometryUnit", false);
 
-      DefaultUnits.Tolerance = new Length(Grasshopper.Instances.Settings.GetValue("OasysTolerance", double.NaN), LengthUnitGeometry);
-      DefaultUnits.UseRhinoTolerance = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoTolerance", false);
+      Tolerance = new Length(Grasshopper.Instances.Settings.GetValue("OasysTolerance", double.NaN), LengthUnitGeometry);
+      UseRhinoTolerance = Grasshopper.Instances.Settings.GetValue("OasysUseRhinoTolerance", false);
 
-      DefaultUnits.LengthUnitSection = (LengthUnit)Enum.Parse(typeof(LengthUnit),
+      LengthUnitSection = (LengthUnit)Enum.Parse(typeof(LengthUnit),
       Grasshopper.Instances.Settings.GetValue("OasysLengthUnitSection", string.Empty));
 
-      DefaultUnits.LengthUnitResult = (LengthUnit)Enum.Parse(typeof(LengthUnit),
+      LengthUnitResult = (LengthUnit)Enum.Parse(typeof(LengthUnit),
       Grasshopper.Instances.Settings.GetValue("OasysLengthUnitResult", string.Empty));
 
       DefaultUnits.ForceUnit = (ForceUnit)Enum.Parse(typeof(ForceUnit),
@@ -38,19 +38,19 @@ namespace OasysGH.Units {
       DefaultUnits.MomentUnit = (MomentUnit)Enum.Parse(typeof(MomentUnit),
       Grasshopper.Instances.Settings.GetValue("OasysMomentUnit", string.Empty));
 
-      DefaultUnits.StressUnitResult = (PressureUnit)Enum.Parse(typeof(PressureUnit),
+      StressUnitResult = (PressureUnit)Enum.Parse(typeof(PressureUnit),
       Grasshopper.Instances.Settings.GetValue("OasysStressUnit", string.Empty));
 
-      DefaultUnits.MaterialStrengthUnit = (PressureUnit)Enum.Parse(typeof(PressureUnit),
+      MaterialStrengthUnit = (PressureUnit)Enum.Parse(typeof(PressureUnit),
       Grasshopper.Instances.Settings.GetValue("OasysMaterialStrengthUnit", string.Empty));
 
-      DefaultUnits.YoungsModulusUnit = (PressureUnit)Enum.Parse(typeof(PressureUnit),
+      YoungsModulusUnit = (PressureUnit)Enum.Parse(typeof(PressureUnit),
       Grasshopper.Instances.Settings.GetValue("OasysYoungsModulusUnit", string.Empty));
 
-      DefaultUnits.MaterialStrainUnit = (StrainUnit)Enum.Parse(typeof(StrainUnit),
+      MaterialStrainUnit = (StrainUnit)Enum.Parse(typeof(StrainUnit),
       Grasshopper.Instances.Settings.GetValue("MaterialStrainUnit", string.Empty));
 
-      DefaultUnits.StrainUnitResult = (StrainUnit)Enum.Parse(typeof(StrainUnit),
+      StrainUnitResult = (StrainUnit)Enum.Parse(typeof(StrainUnit),
       Grasshopper.Instances.Settings.GetValue("StrainUnitResult", string.Empty));
 
       DefaultUnits.AxialStiffnessUnit = (AxialStiffnessUnit)Enum.Parse(typeof(AxialStiffnessUnit),
@@ -68,7 +68,7 @@ namespace OasysGH.Units {
       DefaultUnits.TemperatureUnit = (TemperatureUnit)Enum.Parse(typeof(TemperatureUnit),
       Grasshopper.Instances.Settings.GetValue("OasysTemperatureUnit", string.Empty));
 
-      DefaultUnits.VelocityUnit = (SpeedUnit)Enum.Parse(typeof(SpeedUnit),
+      VelocityUnit = (SpeedUnit)Enum.Parse(typeof(SpeedUnit),
       Grasshopper.Instances.Settings.GetValue("OasysVelocityUnit", string.Empty));
 
       DefaultUnits.AccelerationUnit = (AccelerationUnit)Enum.Parse(typeof(AccelerationUnit),
@@ -80,28 +80,28 @@ namespace OasysGH.Units {
       DefaultUnits.RatioUnit = (RatioUnit)Enum.Parse(typeof(RatioUnit),
       Grasshopper.Instances.Settings.GetValue("OasysRatioUnit", string.Empty));
 
-      DefaultUnits.TimeShortUnit = (DurationUnit)Enum.Parse(typeof(DurationUnit),
+      TimeShortUnit = (DurationUnit)Enum.Parse(typeof(DurationUnit),
       Grasshopper.Instances.Settings.GetValue("OasysTimeShortUnit", string.Empty));
 
-      DefaultUnits.TimeMediumUnit = (DurationUnit)Enum.Parse(typeof(DurationUnit),
+      TimeMediumUnit = (DurationUnit)Enum.Parse(typeof(DurationUnit),
       Grasshopper.Instances.Settings.GetValue("OasysTimeMediumUnit", string.Empty));
 
-      DefaultUnits.TimeLongUnit = (DurationUnit)Enum.Parse(typeof(DurationUnit),
+      TimeLongUnit = (DurationUnit)Enum.Parse(typeof(DurationUnit),
       Grasshopper.Instances.Settings.GetValue("OasysTimeLongUnit", string.Empty));
 
       DefaultUnits.ForcePerLengthUnit = (ForcePerLengthUnit)Enum.Parse(typeof(ForcePerLengthUnit),
       Grasshopper.Instances.Settings.GetValue("OasysForcePerLengthUnit", string.Empty));
 
-      DefaultUnits.ForcePerAreaUnit = (PressureUnit)Enum.Parse(typeof(PressureUnit),
+      ForcePerAreaUnit = (PressureUnit)Enum.Parse(typeof(PressureUnit),
       Grasshopper.Instances.Settings.GetValue("OasysForcePerAreaUnit", string.Empty));
 
-      DefaultUnits.SectionAreaUnit = (AreaUnit)Enum.Parse(typeof(AreaUnit),
+      SectionAreaUnit = (AreaUnit)Enum.Parse(typeof(AreaUnit),
       Grasshopper.Instances.Settings.GetValue("OasysSectionAreaUnit", string.Empty));
 
-      DefaultUnits.SectionVolumeUnit = (VolumeUnit)Enum.Parse(typeof(VolumeUnit),
+      SectionVolumeUnit = (VolumeUnit)Enum.Parse(typeof(VolumeUnit),
       Grasshopper.Instances.Settings.GetValue("OasysSectionVolumeUnit", string.Empty));
 
-      DefaultUnits.SectionAreaMomentOfInertiaUnit = (AreaMomentOfInertiaUnit)Enum.Parse(typeof(AreaMomentOfInertiaUnit),
+      SectionAreaMomentOfInertiaUnit = (AreaMomentOfInertiaUnit)Enum.Parse(typeof(AreaMomentOfInertiaUnit),
       Grasshopper.Instances.Settings.GetValue("OasysSectionAreaMomentOfInertiaUnit", string.Empty));
 
       DefaultUnits.DensityUnit = (DensityUnit)Enum.Parse(typeof(DensityUnit),
@@ -115,36 +115,36 @@ namespace OasysGH.Units {
     internal static void SaveSettings() {
       Grasshopper.Instances.Settings.SetValue("OasysAngle", DefaultUnits.AngleUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysTolerance", DefaultUnits.Tolerance.As(LengthUnitGeometry));
-      Grasshopper.Instances.Settings.SetValue("OasysUseRhinoTolerance", DefaultUnits.UseRhinoTolerance);
+      Grasshopper.Instances.Settings.SetValue("OasysTolerance", Tolerance.As(LengthUnitGeometry));
+      Grasshopper.Instances.Settings.SetValue("OasysUseRhinoTolerance", UseRhinoTolerance);
 
-      Grasshopper.Instances.Settings.SetValue("OasysLengthUnitGeometry", DefaultUnits.LengthUnitGeometry.ToString());
-      Grasshopper.Instances.Settings.SetValue("OasysUseRhinoLengthGeometryUnit", DefaultUnits.UseRhinoLengthGeometryUnit);
+      Grasshopper.Instances.Settings.SetValue("OasysLengthUnitGeometry", LengthUnitGeometry.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysUseRhinoLengthGeometryUnit", UseRhinoLengthGeometryUnit);
 
-      Grasshopper.Instances.Settings.SetValue("OasysLengthUnitSection", DefaultUnits.LengthUnitSection.ToString());
-      Grasshopper.Instances.Settings.SetValue("OasysSectionAreaUnit", DefaultUnits.SectionAreaUnit.ToString());
-      Grasshopper.Instances.Settings.SetValue("OasysSectionVolumeUnit", DefaultUnits.SectionVolumeUnit.ToString());
-      Grasshopper.Instances.Settings.SetValue("OasysSectionAreaMomentOfInertiaUnit", DefaultUnits.SectionAreaMomentOfInertiaUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysLengthUnitSection", LengthUnitSection.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysSectionAreaUnit", SectionAreaUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysSectionVolumeUnit", SectionVolumeUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysSectionAreaMomentOfInertiaUnit", SectionAreaMomentOfInertiaUnit.ToString());
       Grasshopper.Instances.Settings.SetValue("OasysDensityUnit", DefaultUnits.DensityUnit.ToString());
       Grasshopper.Instances.Settings.SetValue("OasysLinearDensityUnit", DefaultUnits.LinearDensityUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysLengthUnitResult", DefaultUnits.LengthUnitResult.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysLengthUnitResult", LengthUnitResult.ToString());
 
       Grasshopper.Instances.Settings.SetValue("OasysForceUnit", DefaultUnits.ForceUnit.ToString());
       Grasshopper.Instances.Settings.SetValue("OasysForcePerLengthUnit", DefaultUnits.ForcePerLengthUnit.ToString());
-      Grasshopper.Instances.Settings.SetValue("OasysForcePerAreaUnit", DefaultUnits.ForcePerAreaUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysForcePerAreaUnit", ForcePerAreaUnit.ToString());
 
       Grasshopper.Instances.Settings.SetValue("OasysMomentUnit", DefaultUnits.MomentUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysStressUnit", DefaultUnits.StressUnitResult.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysStressUnit", StressUnitResult.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysMaterialStrengthUnit", DefaultUnits.MaterialStrengthUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysMaterialStrengthUnit", MaterialStrengthUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysYoungsModulusUnit", DefaultUnits.YoungsModulusUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysYoungsModulusUnit", YoungsModulusUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("MaterialStrainUnit", DefaultUnits.MaterialStrainUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("MaterialStrainUnit", MaterialStrainUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("StrainUnitResult", DefaultUnits.StrainUnitResult.ToString());
+      Grasshopper.Instances.Settings.SetValue("StrainUnitResult", StrainUnitResult.ToString());
 
       Grasshopper.Instances.Settings.SetValue("OasysAxialStiffnessUnit", DefaultUnits.AxialStiffnessUnit.ToString());
 
@@ -156,7 +156,7 @@ namespace OasysGH.Units {
 
       Grasshopper.Instances.Settings.SetValue("OasysTemperatureUnit", DefaultUnits.TemperatureUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysVelocityUnit", DefaultUnits.VelocityUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysVelocityUnit", VelocityUnit.ToString());
 
       Grasshopper.Instances.Settings.SetValue("OasysAccelerationUnit", DefaultUnits.AccelerationUnit.ToString());
 
@@ -164,11 +164,11 @@ namespace OasysGH.Units {
 
       Grasshopper.Instances.Settings.SetValue("OasysRatioUnit", DefaultUnits.RatioUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysTimeShortUnit", DefaultUnits.TimeShortUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysTimeShortUnit", TimeShortUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysTimeMediumUnit", DefaultUnits.TimeMediumUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysTimeMediumUnit", TimeMediumUnit.ToString());
 
-      Grasshopper.Instances.Settings.SetValue("OasysTimeLongUnit", DefaultUnits.TimeLongUnit.ToString());
+      Grasshopper.Instances.Settings.SetValue("OasysTimeLongUnit", TimeLongUnit.ToString());
 
       Grasshopper.Instances.Settings.WritePersistentSettings();
     }

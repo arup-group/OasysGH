@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using GH_IO.Serialization;
-using Grasshopper.Kernel;
-using Grasshopper.Kernel.Types;
+﻿using GH_IO.Serialization;
 using OasysGH.Components;
-using OasysGH.Components.Tests;
-using OasysGH.UI;
-using OasysGHTests.TestHelpers;
 using Xunit;
 
 namespace OasysGHTests.Components {

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace OasysGHTests.TestHelpers {
   internal class Mouse {
     internal static bool TestMouseMove(GH_OasysDropDownComponent comp) {
-      GH_Canvas canvas = TestHelpers.Document.CreateCanvas();
+      GH_Canvas canvas = Document.CreateCanvas();
       canvas.Document.AddObject(comp, true);
       comp.CreateAttributes();
       var attributes = (GH_ComponentAttributes)comp.Attributes;
@@ -29,7 +29,7 @@ namespace OasysGHTests.TestHelpers {
     }
 
     internal static bool TestMouseClick(GH_OasysDropDownComponent comp) {
-      GH_Canvas canvas = TestHelpers.Document.CreateCanvas();
+      GH_Canvas canvas = Document.CreateCanvas();
       canvas.Document.AddObject(comp, true);
       comp.CreateAttributes();
       var attributes = (GH_ComponentAttributes)comp.Attributes;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using Grasshopper;
 using Grasshopper.Kernel;
 using OasysGH;
 

@@ -1,10 +1,4 @@
-﻿using System.Collections.Generic;
-using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using Grasshopper.Kernel;
-using OasysGH.Components;
+﻿using System.Windows.Forms;
 using OasysGH.Components.Tests;
 using OasysGH.UI;
 using OasysGHTests.TestHelpers;

@@ -18,7 +18,7 @@ namespace GH_UnitNumber.Components {
 
     public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.obscure;
     public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
-    protected override System.Drawing.Bitmap Icon => Properties.Resources.ConvertUnitNumber;
+    protected override Bitmap Icon => Properties.Resources.ConvertUnitNumber;
     private bool _comingFromSave = false;
     private OasysGH.Parameters.GH_UnitNumber _convertedUnitNumber;
     private Enum _selectedUnit;
@@ -61,7 +61,7 @@ namespace GH_UnitNumber.Components {
 
     public void CreateTextPanel() {
       // instantiate  new panel
-      var panel = new Grasshopper.Kernel.Special.GH_Panel();
+      var panel = new GH_Panel();
 
       panel.CreateAttributes();
 
