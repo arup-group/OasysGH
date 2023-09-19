@@ -16,9 +16,8 @@ namespace OasysGH.UI {
   /// Class to create custom component UI with multiple dropdowns
   ///
   /// Note that it is the component's responsibility to dynamically update lists, this class is only displaying what it gets.
-  /// Look at gsaDropDownMulti.cs for an example of how to call this method.
   ///
-  /// To use this method override CreateAttributes() in component class and set m_attributes = new DropDownSliderComponentAttributes(...
+  /// To use this class override CreateAttributes() in component class and set m_attributes to an instance of this class.
   /// </summary>
   public class DropDownSliderComponentAttributes : GH_ComponentAttributes {
     private float MinWidth {
@@ -33,7 +32,7 @@ namespace OasysGH.UI {
         float num = Math.Max(Math.Max(sp, bt), 90);
         return num;
       }
-      set { MinWidth = value; }
+      set => MinWidth = value;
     }
 
     private readonly Action<int, int> _action;

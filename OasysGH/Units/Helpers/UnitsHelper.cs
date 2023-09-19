@@ -7,15 +7,9 @@ using OasysUnits.Units;
 
 namespace OasysGH.Units.Helpers {
   public class UnitsHelper {
-    public static int SignificantDigits {
-      get {
-        return BitConverter.GetBytes(
-          decimal.GetBits(
-            (decimal)DefaultUnits.Tolerance.As(DefaultUnits.LengthUnitGeometry))[3])[2];
-      }
-    }
+    public static int SignificantDigits => BitConverter.GetBytes(decimal.GetBits((decimal)DefaultUnits.Tolerance.As(DefaultUnits.LengthUnitGeometry))[3])[2];
 
-    private static BaseUnits sI = OasysUnits.UnitSystem.SI.BaseUnits;
+    private static readonly BaseUnits sI = OasysUnits.UnitSystem.SI.BaseUnits;
 
     public static AreaMomentOfInertiaUnit GetAreaMomentOfInertiaUnit(LengthUnit unit) {
       switch (unit) {

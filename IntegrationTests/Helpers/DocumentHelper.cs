@@ -5,8 +5,8 @@ using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
 using Xunit;
 
-namespace IntegrationTests {
-  internal class Helper {
+namespace IntegrationTests.Helpers {
+  internal class DocumentHelper {
 
     public static GH_Document CreateDocument(string path) {
       var io = new GH_DocumentIO();
@@ -33,14 +33,13 @@ namespace IntegrationTests {
               }
             }
 
-            Assert.True(false,
-              "Unable to find component in group with Nickname " + groupIdentifier);
+            Assert.Fail("Unable to find component in group with Nickname " + groupIdentifier);
             return null;
           }
         }
       }
 
-      Assert.True(false, "Unable to find group with Nickname " + groupIdentifier);
+      Assert.Fail("Unable to find group with Nickname " + groupIdentifier);
       return null;
     }
 
@@ -59,14 +58,13 @@ namespace IntegrationTests {
               }
             }
 
-            Assert.True(false,
-              "Unable to find parameter in group with Nickname " + groupIdentifier);
+            Assert.Fail("Unable to find parameter in group with Nickname " + groupIdentifier);
             return null;
           }
         }
       }
 
-      Assert.True(false, "Unable to find group with Nickname " + groupIdentifier);
+      Assert.Fail("Unable to find group with Nickname " + groupIdentifier);
       return null;
     }
 
@@ -104,7 +102,7 @@ namespace IntegrationTests {
           Assert.Equal(((double[])expected)[i], valOut.Value, tolerance);
         }
       } else {
-        Assert.True(false, "Expected type not found!");
+        Assert.Fail("Expected type not found!");
       }
     }
 

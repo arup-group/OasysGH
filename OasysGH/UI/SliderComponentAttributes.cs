@@ -15,21 +15,19 @@ namespace OasysGH.UI {
   /// <summary>
   /// Class to create custom component UI with a single dropdown menu
   ///
-  /// Look at gsaDropDownSingle.cs for an example of how to call this method.
-  ///
-  /// To use this method override CreateAttributes() in component class and set m_attributes = new SliderComponentAttributes(...
+  /// To use this class override CreateAttributes() in component class and set m_attributes to an instance of this class.
   /// </summary>
   public class SliderComponentAttributes : GH_ComponentAttributes {
     private float MinWidth {
       get {
-        var spacers = new List<string>();
-        spacers.Add(_spacerTxt);
+        var spacers = new List<string> {
+          _spacerTxt
+        };
         float sp = WidthAttributes.MaxTextWidth(spacers, GH_FontServer.Small);
-        var buttons = new List<string>();
         float num = Math.Max(sp, 90);
         return num;
       }
-      set { MinWidth = value; }
+      set => MinWidth = value;
     }
 
     private readonly Action<double, double> _changeMaxMin;
@@ -100,6 +98,7 @@ namespace OasysGH.UI {
           return GH_ObjectResponse.Handled;
         }
       }
+
       return GH_ObjectResponse.Ignore;
     }
 
@@ -114,6 +113,7 @@ namespace OasysGH.UI {
           return GH_ObjectResponse.Capture;
         }
       }
+
       return base.RespondToMouseDown(sender, e);
     }
 
@@ -157,6 +157,7 @@ namespace OasysGH.UI {
           return GH_ObjectResponse.Release;
         }
       }
+
       return base.RespondToMouseUp(sender, e);
     }
 

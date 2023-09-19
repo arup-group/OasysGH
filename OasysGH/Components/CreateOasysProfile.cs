@@ -131,10 +131,8 @@ namespace OasysGH.Components {
     public override bool Read(GH_IReader reader) {
       _mode = (FoldMode)Enum.Parse(typeof(FoldMode), reader.GetString("mode"));
       _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), reader.GetString("lengthUnit"));
-      _inclSS = reader.GetBoolean("inclSS");
       _catalogueIndex = reader.GetInt32("catalogueIndex");
       _typeIndex = reader.GetInt32("typeIndex");
-      _search = reader.GetString("search");
 
       bool flag = base.Read(reader);
       Params.Output[0].Access = GH_ParamAccess.tree;
@@ -815,10 +813,8 @@ namespace OasysGH.Components {
     public override bool Write(GH_IWriter writer) {
       writer.SetString("mode", _mode.ToString());
       writer.SetString("lengthUnit", _lengthUnit.ToString());
-      writer.SetBoolean("inclSS", _inclSS);
       writer.SetInt32("catalogueIndex", _catalogueIndex);
       writer.SetInt32("typeIndex", _typeIndex);
-      writer.SetString("search", _search);
       return base.Write(writer);
     }
 

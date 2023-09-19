@@ -6,7 +6,7 @@ using static OasysGH.Units.DefaultUnits;
 namespace OasysGH.Units {
   public static class Utility {
 
-    public static void SetupUnitsDuringLoad(bool headless = false) {
+    public static void SetupUnitsDuringLoad() {
       bool settingsExist = ReadSettings();
       if (!settingsExist)
         SaveSettings();

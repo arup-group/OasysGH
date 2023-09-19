@@ -5,15 +5,15 @@ namespace OasysGH.Parameters {
     public override bool IsValid => Value != null;
     public override string IsValidWhyNot {
       get {
-        if (IsValid)
+        if (IsValid) {
           return string.Empty;
-        else
+        }
+        else {
           return IsValid.ToString();
+        }
       }
     }
-
     public abstract OasysPluginInfo PluginInfo { get; }
-
     public override string TypeDescription => PluginInfo.ProductName + " " + TypeName + " Parameter";
     public override string TypeName => typeof(T).Name.TrimStart('I').Replace("Gsa", string.Empty).Replace("AdSec", string.Empty);
 

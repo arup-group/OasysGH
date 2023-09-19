@@ -55,6 +55,7 @@ namespace OasysGH.UI {
       foreach (List<bool> row in checks) {
         _columns.Add(row.Count);
       }
+
       if (spacerTexts.Count != _rows || text.Count != _rows) {
         throw new ArgumentException("Input parameters must have the same size!");
       }
@@ -76,6 +77,7 @@ namespace OasysGH.UI {
           }
         }
       }
+
       return base.RespondToMouseDown(sender, e);
     }
 
@@ -135,6 +137,7 @@ namespace OasysGH.UI {
         if (inputwidth < item.Attributes.Bounds.Width)
           inputwidth = item.Attributes.Bounds.Width;
       }
+
       foreach (IGH_Param item2 in Owner.Params.Input) {
         PointF pivot2 = item2.Attributes.Pivot; // original anchor location of input
         RectangleF bounds2 = item2.Attributes.Bounds;

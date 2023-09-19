@@ -11,11 +11,11 @@ using OasysGH.Components;
 using OasysUnits;
 
 namespace GH_UnitNumber.Components {
+  /// <summary>
+  /// Component to convert a <see cref="OasysGH.Parameters.GH_UnitNumber"/>
+  /// </summary>
   public class ConvertUnitNumber : GH_OasysDropDownComponent {
-    // This region handles how the component in displayed on the ribbon
-    // including name, exposure level and icon
     public override Guid ComponentGuid => new Guid("267b3293-f4ac-48ab-ab66-2d194c86aa52");
-
     public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.obscure;
     public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
     protected override Bitmap Icon => Properties.Resources.ConvertUnitNumber;
@@ -24,12 +24,9 @@ namespace GH_UnitNumber.Components {
     private Enum _selectedUnit;
     private Dictionary<string, Enum> _unitDictionary;
 
-    public ConvertUnitNumber() : base("Convert UnitNumber",
-      "ConvertUnit",
-      "Convert a unit number (quantity) into another unit",
-      "Params",
-      "Util") {
-      Hidden = true; // sets the initial state of the component to hidden
+    public ConvertUnitNumber() : base("Convert UnitNumber", "ConvertUnit",
+      "Convert a unit number (quantity) into another unit", "Params", "Util") {
+      Hidden = true;
     }
 
     public override void AppendAdditionalMenuItems(ToolStripDropDown menu) {
@@ -85,7 +82,8 @@ namespace GH_UnitNumber.Components {
 
     public void CreateValueList() {
       string name = _convertedUnitNumber.Value.QuantityInfo.Name + " Units";
-      var values = _unitDictionary.Keys.ToList();
+
+      _ = _unitDictionary.Keys.ToList();
       float x = Attributes.Bounds.X;
       float y = Params.Input[1].Attributes.Bounds.Y;
       var vallist = new GH_ValueList();
@@ -142,8 +140,8 @@ namespace GH_UnitNumber.Components {
 
     protected override void SolveInternal(IGH_DataAccess DA) {
       // get input
-      OasysGH.Parameters.GH_UnitNumber inUnitNumber = null;
-
+      OasysGH.Parameters.GH_UnitNumber inUnitNumber;
+      
       var gh_typ = new GH_ObjectWrapper();
       if (DA.GetData(0, ref gh_typ)) {
         // try cast directly to quantity type

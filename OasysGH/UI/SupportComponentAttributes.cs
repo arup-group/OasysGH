@@ -11,18 +11,14 @@ namespace OasysGH.UI {
   /// <summary>
   /// Class to create custom component UI with three buttons and 6 check box toggles underneath
   ///
-  /// This class is made for the CreateSupport component
+  /// This class has been made made for the CreateSupport component.
   ///
-  /// To use this method override CreateAttributes() in component class and set m_attributes = new SupportComponentAttributes(...
+  /// To use this class override CreateAttributes() in component class and set m_attributes to an instance of this class.
   /// </summary>
   public class SupportComponentAttributes : GH_ComponentAttributes {
     private float MinWidth {
-      get {
-        return 90;
-      }
-      set {
-        MinWidth = value;
-      }
+      get => 90;
+      set => MinWidth = value;
     }
 
     private readonly string _spacerTxt;
@@ -126,6 +122,7 @@ namespace OasysGH.UI {
           comp.ExpireSolution(true);
           return GH_ObjectResponse.Handled;
         }
+
         if (_xTxtBounds.Contains(e.CanvasLocation) | _xBounds.Contains(e.CanvasLocation)) {
           comp.RecordUndoEvent("Toggle X");
           _x = !_x;
@@ -133,6 +130,7 @@ namespace OasysGH.UI {
           comp.ExpireSolution(true);
           return GH_ObjectResponse.Handled;
         }
+
         if (_yTxtBounds.Contains(e.CanvasLocation) | _yBounds.Contains(e.CanvasLocation)) {
           comp.RecordUndoEvent("Toggle Y");
           _y = !_y;
@@ -140,6 +138,7 @@ namespace OasysGH.UI {
           comp.ExpireSolution(true);
           return GH_ObjectResponse.Handled;
         }
+
         if (_zTxtBounds.Contains(e.CanvasLocation) | _zBounds.Contains(e.CanvasLocation)) {
           comp.RecordUndoEvent("Toggle Z");
           _z = !_z;
@@ -147,6 +146,7 @@ namespace OasysGH.UI {
           comp.ExpireSolution(true);
           return GH_ObjectResponse.Handled;
         }
+
         if (_xxTxtBounds.Contains(e.CanvasLocation) | _xxBounds.Contains(e.CanvasLocation)) {
           comp.RecordUndoEvent("Toggle XX");
           _xx = !_xx;
@@ -154,6 +154,7 @@ namespace OasysGH.UI {
           comp.ExpireSolution(true);
           return GH_ObjectResponse.Handled;
         }
+
         if (_yyTxtBounds.Contains(e.CanvasLocation) | _yyBounds.Contains(e.CanvasLocation)) {
           comp.RecordUndoEvent("Toggle YY");
           _yy = !_yy;
@@ -161,6 +162,7 @@ namespace OasysGH.UI {
           comp.ExpireSolution(true);
           return GH_ObjectResponse.Handled;
         }
+
         if (_zzTxtBounds.Contains(e.CanvasLocation) | _zzBounds.Contains(e.CanvasLocation)) {
           comp.RecordUndoEvent("Toggle ZZ");
           _zz = !_zz;
@@ -169,6 +171,7 @@ namespace OasysGH.UI {
           return GH_ObjectResponse.Handled;
         }
       }
+
       return base.RespondToMouseDown(sender, e);
     }
 
@@ -189,6 +192,7 @@ namespace OasysGH.UI {
           Instances.CursorServer.ResetCursor(sender);
           return GH_ObjectResponse.Release;
         }
+
         _mouseOverFree = true;
         _mouseOverPin = false;
         _mouseOverFix = false;
@@ -201,6 +205,7 @@ namespace OasysGH.UI {
           Instances.CursorServer.ResetCursor(sender);
           return GH_ObjectResponse.Release;
         }
+
         _mouseOverPin = true;
         _mouseOverFree = false;
         _mouseOverFix = false;
@@ -208,6 +213,7 @@ namespace OasysGH.UI {
         Owner.OnDisplayExpired(false);
         return GH_ObjectResponse.Capture;
       }
+
       if (_txtFixBounds.Contains(e.CanvasLocation)) {
         if (_x == true & _y == true & _z == true & _xx == true & _yy == true & _zz == true) {
           Instances.CursorServer.ResetCursor(sender);

@@ -28,7 +28,7 @@ namespace IntegrationTests {
       }
     }
     public static string InstallPath = Path.Combine(
-      Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Oasys", "GSA 10.1");
+      Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Oasys", "GSA 10.2");
 
     private object Doc { get; set; }
     private object DocIo { get; set; }
@@ -53,7 +53,7 @@ namespace IntegrationTests {
       LoadRefs();
       InitializeCore();
       // setup headless units
-      Utility.SetupUnitsDuringLoad(true);
+      Utility.SetupUnitsDuringLoad();
     }
 
     // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources

@@ -6,7 +6,7 @@ using OasysUnits;
 
 namespace OasysGH.Parameters {
   /// <summary>
-  /// Goo wrapper class, makes sure OasysUnits and OasysUnits <see cref="IQuantity"/> can be used in Grasshopper.
+  /// Goo wrapper class, makes sure OasysUnits <see cref="IQuantity"/> can be used in Grasshopper.
   /// </summary>
   public class GH_UnitNumber : GH_OasysGoo<IQuantity> {
     public static string Description => "A value with a unit measure. Note that this is not a text but an actual object, you can convert this into other units using the 'ConvertUnitNumber' component.";
@@ -18,7 +18,9 @@ namespace OasysGH.Parameters {
     }
 
     public override bool CastFrom(object source) {
-      if (source == null) { return false; }
+      if (source == null) {
+        return false;
+      }
 
       if (typeof(GH_UnitNumber).IsAssignableFrom(source.GetType())) {
         var num = (GH_UnitNumber)source;
