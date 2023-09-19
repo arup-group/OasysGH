@@ -98,6 +98,7 @@ namespace OasysGH.Helpers {
           // example (IPE100): 0.1 --  0.055 -- 0.0041 -- 0.0057 -- 0.007
           data.Add(sqlData);
         }
+
         string[] vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
         r.Close();
 
@@ -117,6 +118,7 @@ namespace OasysGH.Helpers {
             string sqlData = Convert.ToString(r["SECT_NAME"]);
             data.Add(sqlData);
           }
+
           vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
           r.Close();
         }
@@ -138,9 +140,11 @@ namespace OasysGH.Helpers {
             // example (CHS457x12.5): 0.457 -- 0.0125
             data.Add(sqlData);
           }
+
           vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
           r.Close();
         }
+
         db.Close();
 
         NumberFormatInfo noComma = CultureInfo.InvariantCulture.NumberFormat;
@@ -149,6 +153,7 @@ namespace OasysGH.Helpers {
           if (val != "")
             values.Add(Convert.ToDouble(val, noComma));
       }
+
       return values;
     }
 
