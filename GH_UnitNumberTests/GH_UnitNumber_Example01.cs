@@ -27,7 +27,7 @@ namespace GH_UnitNumberTests {
     [Fact]
     public void Check1() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "Check1");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "Check1");
       Assert.NotNull(param);
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -37,7 +37,7 @@ namespace GH_UnitNumberTests {
     [Fact]
     public void Check2() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "Check2");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "Check2");
       Assert.NotNull(param);
       param.CollectData();
       var output = (GH_Number)param.VolatileData.get_Branch(0)[0];
@@ -47,7 +47,7 @@ namespace GH_UnitNumberTests {
     [Fact]
     public void Check3() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "Check3");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "Check3");
       Assert.NotNull(param);
       param.CollectData();
       var output = (GH_Number)param.VolatileData.get_Branch(0)[0];
@@ -57,7 +57,7 @@ namespace GH_UnitNumberTests {
     [Fact]
     public void Check4() {
       GH_Document doc = Document();
-      IGH_Param param = Helper.FindParameter(doc, "Check4");
+      IGH_Param param = DocumentHelper.FindParameter(doc, "Check4");
       Assert.NotNull(param);
       param.CollectData();
       var output0 = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
@@ -73,7 +73,7 @@ namespace GH_UnitNumberTests {
 
     [Fact]
     public void NoRuntimeErrorsTest() {
-      Helper.TestNoRuntimeMessagesInDocument(Document(), GH_RuntimeMessageLevel.Error);
+      DocumentHelper.TestNoRuntimeMessagesInDocument(Document(), GH_RuntimeMessageLevel.Error);
     }
   }
 }
