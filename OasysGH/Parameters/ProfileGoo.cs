@@ -8,18 +8,12 @@ namespace OasysGH.Parameters {
     public static string NickName => "Pf";
     public override OasysPluginInfo PluginInfo => OasysGH.PluginInfo.Instance;
 
-    public OasysProfileGoo() : base() {
-    }
+    public OasysProfileGoo() : base() { }
 
-    public OasysProfileGoo(IProfile item) : base(item) {
-    }
+    public OasysProfileGoo(IProfile item) : base(item) { }
 
-    public override IGH_Goo Duplicate() {
-      return new OasysProfileGoo(Value);
-    }
+    public override IGH_Goo Duplicate() => new OasysProfileGoo(Value);
 
-    public override string ToString() {
-      return Value.ToString();
-    }
+    public override string ToString() => Value.ToString();
   }
 }

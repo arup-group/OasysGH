@@ -48,7 +48,7 @@ namespace OasysGHTests.Parameters {
     }
 
     [Fact]
-    public void GH_OasysGooTest() {
+    public void GH_UnitNumberTest() {
       Type gooType = typeof(OasysGH.Parameters.GH_UnitNumber);
       object value = new Length(1, LengthUnit.Meter);
       object[] parameters = {
