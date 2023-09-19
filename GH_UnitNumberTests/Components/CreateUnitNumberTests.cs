@@ -16,41 +16,46 @@ using Xunit;
 namespace GH_UnitNumberTests.Components {
   [Collection("GrasshopperFixture collection")]
   public class CreateUnitNumberTests {
-
     [Fact]
-    public void AppendAdditionalMenuItemsTest() {
+    public void ChangeDropdownTest() {
       var comp = new CreateUnitNumber();
       comp.CreateAttributes();
-      ChangeDropDownTest(comp);
+      Dropdown.ChangeDropDownDeserializeTest(comp);
     }
 
-    internal static void ChangeDropDownTest(
-      GH_OasysDropDownComponent comp) {
-      Assert.True(comp._isInitialised);
-      Assert.Equal(comp._dropDownItems.Count, comp._spacerDescriptions.Count);
-
-      Assert.Equal(comp._dropDownItems.Count, comp._selectedItems.Count);
-
-      for (int i = 0; i < comp._dropDownItems.Count; i++) {
-        comp.SetSelected(i, 0);
-
-        for (int j = 0; j < comp._dropDownItems[i].Count; j++) {
-          comp.SetSelected(i, j);
-          TestDeserialize(comp);
-          Assert.Equal(comp._selectedItems[i], comp._dropDownItems[i][j]);
-        }
-      }
-    }
-
-    internal static void TestDeserialize(GH_OasysComponent comp) {
-      var write = new GH_Archive();
-      Assert.True(write.AppendObject(comp, "Component"));
-      string xml = write.Serialize_Xml();
-
-      var read = new GH_Archive();
-      Assert.True(read.Deserialize_Xml(xml));
-
-      read.ExtractObject(comp, "Component");
+    [Theory]
+    [InlineData(0, "rad")]
+    [InlineData(1, "m")]
+    [InlineData(2, "cm²")]
+    [InlineData(3, "cm³")]
+    [InlineData(4, "cm⁴")]
+    [InlineData(5, "kN")]
+    [InlineData(6, "kN/m")]
+    [InlineData(7, "kN/m²")]
+    [InlineData(8, "kN·m")]
+    [InlineData(9, "MPa")]
+    [InlineData(10, "ε")]
+    [InlineData(11, "kN")]
+    [InlineData(12, "kN·m²")]
+    [InlineData(13, "m⁻¹")]
+    [InlineData(14, "t")]
+    [InlineData(15, "kg/m³")]
+    [InlineData(16, "kg/m")]
+    [InlineData(17, "m³/m")]
+    [InlineData(18, "°C")]
+    [InlineData(19, "m/s")]
+    [InlineData(20, "m/s²")]
+    [InlineData(21, "MJ")]
+    [InlineData(22, "")]
+    [InlineData(23, "m")]
+    [InlineData(24, "cm³")]
+    public void CreateFromSelectedTest(int selectedItem, string abbreviation) {
+      var comp = new CreateUnitNumber();
+      comp.CreateAttributes();
+      comp.SetSelected(0, selectedItem);
+      ComponentTestHelper.SetInput(comp, "1.5");
+      var output = (OasysGH.Parameters.GH_UnitNumber)ComponentTestHelper.GetOutput(comp);
+      Assert.Equal($"1.5{abbreviation}", output.ToString());
     }
   }
 }

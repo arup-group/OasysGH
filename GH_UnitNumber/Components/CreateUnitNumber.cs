@@ -225,7 +225,6 @@ namespace GH_UnitNumber.Components {
           case EngineeringUnits.ForcePerArea:
             _quantity = new Pressure(_value, (PressureUnit)_selectedMeasure);
             break;
-            ;
 
           case EngineeringUnits.Moment:
             _quantity = new Moment(_value, (MomentUnit)_selectedMeasure);
@@ -281,6 +280,18 @@ namespace GH_UnitNumber.Components {
 
           case EngineeringUnits.Time:
             _quantity = new Duration(_value, (DurationUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.LinearDensity:
+            _quantity = new LinearDensity(_value, DefaultUnits.LinearDensityUnit);
+            break;
+
+          case EngineeringUnits.VolumePerLength:
+            _quantity = new VolumePerLength(_value, DefaultUnits.VolumePerLengthUnit);
+            break;
+
+          case EngineeringUnits.SectionModulus:
+            _quantity = new SectionModulus(_value, DefaultUnits.SectionModulusUnit);
             break;
 
           default:
