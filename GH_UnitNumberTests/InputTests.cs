@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using GH_UnitNumberTests.Helpers;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Special;
 using OasysUnits;
 using OasysUnits.Units;
 using Xunit;
@@ -329,6 +330,44 @@ namespace GH_UnitNumberTests.Components.Helpers {
       param.CollectData();
       var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
       Assert.Equal(new Ratio(2.5, RatioUnit.DecimalFraction), output.Value);
+    }
+
+    [Fact]
+    public void TestWarnings() {
+      TestNoRuntimeMessagesInDocument(Document(), GH_RuntimeMessageLevel.Warning, "Warning");
+    }
+
+    [Fact]
+    public void TestErrors() {
+      TestNoRuntimeMessagesInDocument(Document(), GH_RuntimeMessageLevel.Error, "Error");
+    }
+
+    public static void TestNoRuntimeMessagesInDocument(
+    GH_Document doc, GH_RuntimeMessageLevel runtimeMessageLevel,
+    string exceptComponentNamed = "") {
+      foreach (IGH_DocumentObject obj in doc.Objects) {
+        if (obj is GH_Component comp) {
+          comp.CollectData();
+          comp.Params.Output[0].CollectData();
+          comp.Params.Output[0].VolatileData.get_Branch(0);
+
+          bool skip = false;
+          foreach (IGH_DocumentObject grp in doc.Objects) {
+            if (grp is GH_Group group) {
+              if (group.NickName == exceptComponentNamed) {
+                if (comp.InstanceGuid == group.ObjectIDs[0]) {
+                  skip = true;
+                  break;
+                }
+              }
+            }
+          }
+
+          if (comp.Name != exceptComponentNamed && !skip) {
+            Assert.Empty(comp.RuntimeMessages(runtimeMessageLevel));
+          }
+        }
+      }
     }
   }
 }
