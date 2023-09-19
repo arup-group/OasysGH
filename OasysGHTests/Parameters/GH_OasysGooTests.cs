@@ -27,6 +27,8 @@ namespace OasysGHTests.Parameters {
       Assert.Null(goo.Value);
       Assert.True(goo.CastFrom(new GH_Boolean(true)));
       Assert.True(goo.Value.Value);
+      Mesh m = null;
+      Assert.False(goo.CastFrom(m));
     }
 
     [Fact]

@@ -29,6 +29,8 @@ namespace OasysGHTests.Parameters {
       Assert.True(goo.CastFrom(new Length(1, LengthUnit.Meter)));
       Assert.True(goo.IsValid);
       Assert.Equal(1, goo.Value.Value);
+      var otherGoo = new OasysGH.Parameters.GH_UnitNumber(new Length(1, LengthUnit.Meter));
+      Assert.True(goo.CastFrom(otherGoo));
     }
 
     [Fact]
@@ -40,6 +42,9 @@ namespace OasysGHTests.Parameters {
       Assert.True(goo.CastTo(ref ghUnitNumber));
       Assert.True(goo.IsValid);
       Assert.Equal(1, goo.Value.Value);
+      var ghNumber = new GH_Number();
+      Assert.True(goo.CastTo(ref ghNumber));
+      Assert.Equal(1, ghNumber.Value);
     }
 
     [Fact]

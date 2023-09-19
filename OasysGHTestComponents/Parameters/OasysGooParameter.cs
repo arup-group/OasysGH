@@ -11,6 +11,8 @@ namespace OasysGH.Parameters.Tests {
     public override string TypeName => SourceCount == 0 ? OasysGoo.Name : base.TypeName;
 
     public OasysGooParameter() : base(new GH_InstanceDescription(OasysGoo.Name,
-      OasysGoo.NickName, OasysGoo.Description + " parameter", "OasysGH", "Test")) { }
+      OasysGoo.NickName, OasysGoo.Description + " parameter", "OasysGH", "Test")) {
+      Hidden = true;
+    }
   }
 }
