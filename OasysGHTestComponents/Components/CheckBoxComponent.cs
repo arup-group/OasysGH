@@ -59,7 +59,7 @@ namespace OasysGH.Components.Tests {
       pManager.AddBooleanParameter("ZZ", "ZZ", "ZZ", GH_ParamAccess.item);
     }
 
-    protected override void SolveInstance(IGH_DataAccess da) {
+    protected override void SolveInternal(IGH_DataAccess da) {
       da.SetData(0, _x);
       da.SetData(1, _y);
       da.SetData(2, _z);
