@@ -12,7 +12,6 @@ namespace OasysGH.UI {
   public class CheckBoxComponentAttributes : GH_ComponentAttributes {
     public float MinWidth {
       get => 90;
-      set => MinWidth = value;
     }
 
     public int H0 = 10;
