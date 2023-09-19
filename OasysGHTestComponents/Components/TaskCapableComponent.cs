@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Grasshopper.Kernel;
-using OasysGH.Units.Helpers;
-using OasysUnits.Units;
-using OasysUnits;
-using OasysGH.Units;
 using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
