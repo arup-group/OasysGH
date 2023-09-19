@@ -40,7 +40,7 @@ namespace IntegrationTests {
     [InlineData("Trapezoid", "STD TR(cm) 500 100 10")]
     [InlineData("T Section", "STD T(cm) 500 100 10 20")]
     [InlineData("IPE100", "CAT BSI-IPE IPE100")]
-    [InlineData("HE200AA", "CAT HE HE200.AA")]
+    [InlineData("HE200AA", "CAT BSI-HE HE200AA")]
     public void AssertOutput(string groupIdentifier, string expectedOutput) {
       IGH_Param param = DocumentHelper.FindParameter(Document(), groupIdentifier);
       var output = (GH_String)param.VolatileData.get_Branch(0)[0];
