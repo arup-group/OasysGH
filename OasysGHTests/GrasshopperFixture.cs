@@ -53,7 +53,7 @@ namespace OasysGHTests {
       LoadRefs();
       InitializeCore();
       // setup headless units
-      Utility.SetupUnitsDuringLoad(true);
+      Utility.SetupUnitsDuringLoad();
     }
 
     // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources

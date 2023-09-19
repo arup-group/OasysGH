@@ -11,8 +11,9 @@ namespace OasysGH.Units.UI.MainMenu {
     internal static void OnStartup(GH_Canvas canvas) {
       if (menuLoaded)
         return;
-      oasysMenu = new ToolStripMenuItem("Oasys");
-      oasysMenu.Name = "Oasys";
+      oasysMenu = new ToolStripMenuItem("Oasys") {
+        Name = "Oasys"
+      };
 
       PopulateSub(oasysMenu);
 
@@ -32,6 +33,7 @@ namespace OasysGH.Units.UI.MainMenu {
           PopulateSub(oasysMenu);
         }
       }
+
       menuLoaded = true;
       Grasshopper.Instances.CanvasCreated -= OnStartup;
     }

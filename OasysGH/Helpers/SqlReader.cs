@@ -34,12 +34,13 @@ namespace OasysGH.Helpers {
         string exeAssembly = Assembly.GetCallingAssembly().FullName;
 
         // Construct and initialize settings for a second AppDomain.
-        var ads = new AppDomainSetup();
-        ads.ApplicationBase = Path.GetDirectoryName(codeBasePath);
-        ads.PrivateBinPath = @"x64";
-        ads.DisallowBindingRedirects = false;
-        ads.DisallowCodeDownload = true;
-        ads.ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+        var ads = new AppDomainSetup {
+          ApplicationBase = Path.GetDirectoryName(codeBasePath),
+          PrivateBinPath = @"x64",
+          DisallowBindingRedirects = false,
+          DisallowCodeDownload = true,
+          ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile
+        };
 
         // Create the second AppDomain.
         var ad = AppDomain.CreateDomain("SQLite AppDomain", null, ads);
@@ -181,8 +182,10 @@ namespace OasysGH.Helpers {
           catNames.Add(sqlData.Split(new string[] { " -- " }, StringSplitOptions.None)[0]);
           catNumber.Add(int.Parse(sqlData.Split(new string[] { " -- " }, StringSplitOptions.None)[1]));
         }
+
         db.Close();
       }
+
       catNames.Insert(0, "All");
       catNumber.Insert(0, -1);
       return new Tuple<List<string>, List<int>>(catNames, catNumber);
@@ -199,7 +202,7 @@ namespace OasysGH.Helpers {
       // Create empty list to work on:
       var sections = new List<string>();
 
-      var types = new List<int>();
+      List<int> types;
       if (type_numbers[0] == -1) {
         Tuple<List<string>, List<int>> typeData = GetTypesDataFromSQLite(-1, filePath, inclSuperseeded);
         types = typeData.Item2;
@@ -236,6 +239,7 @@ namespace OasysGH.Helpers {
               sections.Add(profile);
             }
           }
+
           db.Close();
         }
       }
@@ -293,9 +297,11 @@ namespace OasysGH.Helpers {
             typeNames.Add(sqlData.Split(new string[] { " -- " }, StringSplitOptions.None)[0]);
             typeNumber.Add(int.Parse(sqlData.Split(new string[] { " -- " }, StringSplitOptions.None)[1]));
           }
+
           db.Close();
         }
       }
+
       typeNames.Insert(0, "All");
       typeNumber.Insert(0, -1);
       return new Tuple<List<string>, List<int>>(typeNames, typeNumber);
