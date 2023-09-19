@@ -4,13 +4,14 @@ using Grasshopper.Kernel;
 using OasysGH;
 using OasysGH.Components;
 using OasysUnits.Units;
+using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
-namespace GH_UnitNumber.Components {
+namespace OasysGHTestComponents.Components {
   [ExcludeFromCodeCoverage]
   public class TestInputComponent : GH_OasysComponent {
     public override Guid ComponentGuid => new Guid("0dec5da5-93ed-4d3e-b3c0-9dc7727327ad");
     public override GH_Exposure Exposure => GH_Exposure.hidden;
-    public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
+    public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
 
     public TestInputComponent() : base("Test Component", "Test",
       "A component to test unitsnumber inputs", "Test", "Test") {

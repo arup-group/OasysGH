@@ -11,7 +11,6 @@ namespace GH_UnitNumberTests.Components {
     [Theory]
     [InlineData(typeof(ConvertUnitNumber), 65664)]
     [InlineData(typeof(CreateUnitNumber), 65664)]
-    [InlineData(typeof(TestInputComponent), -1)]
     public void GH_OasysComponentTest(Type t, int expectedExposure) {
       var comp = (GH_OasysComponent)Activator.CreateInstance(t);
       Assert.NotNull(comp.Icon_24x24);
