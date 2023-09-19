@@ -22,6 +22,18 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
+    public void CanInsertRemoveParamsTest() {
+      IGH_VariableParameterComponent comp = new DropDownComponent();
+      Assert.False(comp.CanInsertParameter(GH_ParameterSide.Input, 0));
+      Assert.False(comp.CanInsertParameter(GH_ParameterSide.Output, 0));
+      Assert.False(comp.CanRemoveParameter(GH_ParameterSide.Input, 0));
+      Assert.False(comp.CanRemoveParameter(GH_ParameterSide.Output, 0));
+      Assert.Null(comp.CreateParameter(GH_ParameterSide.Input, 0));
+      Assert.False(comp.DestroyParameter(GH_ParameterSide.Input, 0));
+      Assert.False(comp.DestroyParameter(GH_ParameterSide.Output, 0));
+    }
+
+    [Fact]
     public void TestAttributes() {
       var comp = new DropDownComponent();
       Assert.True(Mouse.TestMouseMove(comp));
@@ -29,7 +41,6 @@ namespace OasysGHTests.Components {
       var attributes = (DropDownComponentAttributes)Document.Attributes(comp);
       attributes.CustomRender(new PictureBox().CreateGraphics());
     }
-
 
     internal static void ChangeDropDownTest(
       GH_OasysDropDownComponent comp, bool ignoreSpacerDescriptionsCount = false) {
