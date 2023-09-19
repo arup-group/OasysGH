@@ -1,12 +1,12 @@
 ﻿using System.IO;
-using GH_UnitNumberTests.Helpers;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
+using IntegrationTests.Helpers;
 using OasysUnits;
 using OasysUnits.Units;
 using Xunit;
 
-namespace GH_UnitNumberTests.Components.Helpers {
+namespace IntegrationTests {
   [Collection("GrasshopperFixture collection")]
   public class InputTests {
 
