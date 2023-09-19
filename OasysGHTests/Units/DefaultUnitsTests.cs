@@ -7,6 +7,22 @@ namespace OasysGHTests.Units {
   [Collection("GrasshopperFixture collection")]
   public class DefaultUnitsTests {
     [Fact]
+    public static void GetRhinoTolerance() {
+      DefaultUnits.UseRhinoTolerance = true;
+      Assert.Equal(
+        new Length(1, LengthUnit.Centimeter),
+        DefaultUnits.Tolerance);
+      DefaultUnits.UseRhinoTolerance = false;
+    }
+
+    [Fact]
+    public static void GetRhinoLength() {
+      DefaultUnits.UseRhinoLengthGeometryUnit = true;
+      Assert.Equal(LengthUnit.Meter, DefaultUnits.LengthUnitGeometry);
+      DefaultUnits.UseRhinoLengthGeometryUnit = false;
+    }
+
+    [Fact]
     public static void DefaultUnitsTest() {
       // this test may fail locally if you have overwritten the default units in Grasshopper
 
