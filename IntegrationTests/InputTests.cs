@@ -9,9 +9,8 @@ using Xunit;
 namespace IntegrationTests {
   [Collection("GrasshopperFixture collection")]
   public class InputTests {
-    private static GH_Document Document => document ?? (document = OpenDocument());
-    private static GH_Document document = null;
-    private static GH_Document OpenDocument() {
+
+    public static GH_Document Document() {
       string fileName = "OasysGH_InputHelperTests.gh";
 
       string solutiondir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName;
@@ -25,7 +24,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void GenericGooInputFromUnitNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "GenericGooInputFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -35,7 +34,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void GenericGooListInputFromUnitNumbersTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "GenericGooListInputFromUnitNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -47,7 +46,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioInputFromNegativeNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromNegativeNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -57,7 +56,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioInputFromNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -67,7 +66,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioInputFromTextRatioTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromTextRatioTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -77,7 +76,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioInputFromTextTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -87,7 +86,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioInputFromUnitNumberRatioTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioInputFromUnitNumberRatioTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -97,7 +96,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioInputFromUnitNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthsOrRatioInputFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -107,7 +106,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioListInputFromNegativeNumbersTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromNegativeNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -119,7 +118,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioListInputFromNumbersTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -131,7 +130,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioListInputFromTextRatiosTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromTextRatiosTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -143,7 +142,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioListInputFromTextsTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromTextsTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -155,7 +154,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioListInputFromUnitNumberRatiosTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthOrRatioListInputFromUnitNumberRatiosTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -167,7 +166,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void LengthOrRatioListInputFromUnitNumbersTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "LengthsOrRatioListInputFromUnitNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -179,7 +178,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void RatioInDecimalFractionToDecimalFractionFromNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToDecimalFractionFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -189,7 +188,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void RatioInDecimalFractionToDecimalFractionFromTextTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToDecimalFractionFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -199,7 +198,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void RatioInDecimalFractionToDecimalFractionFromUnitNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToDecimalFractionFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -209,7 +208,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void RatioInDecimalFractionToPercentageFromNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToPercentageFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -219,7 +218,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void RatioInDecimalFractionToPercentageFromTextTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToPercentageFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -229,7 +228,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void RatioInDecimalFractionToPercentageFromUnitNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "RatioInDecimalFractionToPercentageFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -239,7 +238,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void UnitNumberInputFromNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberInputFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -249,7 +248,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void UnitNumberInputFromTextTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberInputFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -259,7 +258,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void UnitNumberInputFromUnitNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberInputFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -269,7 +268,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void UnitNumberListInputFromNumbersTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberListInputFromNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -281,7 +280,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void UnitNumberListInputFromTextsTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberListInputFromTextsTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -293,7 +292,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void UnitNumberListInputFromUnitNumbersTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberListInputFromUnitNumbersTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -305,7 +304,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void UnitNumberOrDoubleAsRatioToPercentageFromNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberOrDoubleAsRatioToPercentageFromNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -315,7 +314,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void UnitNumberOrDoubleAsRatioToPercentageFromTextTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberOrDoubleAsRatioToPercentageFromTextTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -325,7 +324,7 @@ namespace IntegrationTests {
 
     [Fact]
     public void UnitNumberOrDoubleAsRatioToPercentageFromUnitNumberTest() {
-      GH_Document doc = Document;
+      GH_Document doc = Document();
       IGH_Param param = DocumentHelper.FindParameter(doc, "UnitNumberOrDoubleAsRatioToPercentageFromUnitNumberTest");
       Assert.NotNull(param);
       param.CollectData();
@@ -335,15 +334,15 @@ namespace IntegrationTests {
 
     [Fact]
     public void TestWarnings() {
-      TestNoRuntimeMessagesInDocument(Document, GH_RuntimeMessageLevel.Warning, "Warning");
+      TestNoRuntimeMessagesInDocument(Document(), GH_RuntimeMessageLevel.Warning, "Warning");
     }
 
     [Fact]
     public void TestErrors() {
-      TestNoRuntimeMessagesInDocument(Document, GH_RuntimeMessageLevel.Error, "Error");
+      TestNoRuntimeMessagesInDocument(Document(), GH_RuntimeMessageLevel.Error, "Error");
     }
 
-    private static void TestNoRuntimeMessagesInDocument(
+    public static void TestNoRuntimeMessagesInDocument(
     GH_Document doc, GH_RuntimeMessageLevel runtimeMessageLevel,
     string exceptComponentNamed = "") {
       foreach (IGH_DocumentObject obj in doc.Objects) {

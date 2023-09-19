@@ -7,9 +7,7 @@ using Xunit;
 namespace IntegrationTests {
   [Collection("GrasshopperFixture collection")]
   public class CreateOasysProfileTest {
-    private static GH_Document Document => document ?? (document = OpenDocument());
-    private static GH_Document document = null;
-    private static GH_Document OpenDocument() {
+    public static GH_Document Document() {
       string fileName = "CreateOasysProfile.gh";
 
       string solutiondir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent
@@ -44,7 +42,7 @@ namespace IntegrationTests {
     [InlineData("IPE100", "CAT BSI-IPE IPE100")]
     [InlineData("HE200AA", "CAT BSI-HE HE200AA")]
     public void AssertOutput(string groupIdentifier, string expectedOutput) {
-      IGH_Param param = DocumentHelper.FindParameter(Document, groupIdentifier);
+      IGH_Param param = DocumentHelper.FindParameter(Document(), groupIdentifier);
       var output = (GH_String)param.VolatileData.get_Branch(0)[0];
       Assert.Equal(expectedOutput, output.Value);
     }
@@ -53,7 +51,7 @@ namespace IntegrationTests {
     [InlineData("Count", 13998)]
     [InlineData("CountSuperseeded", 18572)]
     public void AssertCount(string groupIdentifier, int expectedOutput) {
-      IGH_Param param = DocumentHelper.FindParameter(Document, groupIdentifier);
+      IGH_Param param = DocumentHelper.FindParameter(Document(), groupIdentifier);
       var output = (GH_Integer)param.VolatileData.get_Branch(0)[0];
       Assert.Equal(expectedOutput, output.Value);
     }
