@@ -1,5 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using Grasshopper.Kernel;
+using OasysGH.Components;
 using OasysGH.Components.Tests;
 using OasysGH.UI;
 using OasysGHTests.TestHelpers;
@@ -9,7 +14,7 @@ namespace OasysGHTests.Components {
   [Collection("GrasshopperFixture collection")]
   public class CreateOasysProfileTests {
     [Fact]
-    public static void ChangeDropDownTest() {
+    public void ChangeDropDownTest() {
       var comp = new CreateProfile();
       comp.CreateAttributes();
 
@@ -30,7 +35,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public static void TestAttributes() {
+    public void TestAttributes() {
       var comp = new CreateProfile();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));

@@ -11,7 +11,7 @@ namespace OasysGHTests.Components {
   [Collection("GrasshopperFixture collection")]
   public class DropDownCheckBoxesComponentTests {
     [Fact]
-    public static void CheckBoxTest() {
+    public void CheckBoxTest() {
       var comp = new DropDownCheckBoxesComponent();
       comp.CreateAttributes();
       comp.ExpireSolution(true);
@@ -27,28 +27,14 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public static void ChangeDropDownTest() {
+    public void ChangeDropDownTest() {
       var comp = new DropDownCheckBoxesComponent();
       comp.CreateAttributes();
-
-      Assert.True(comp._isInitialised);
-      Assert.Equal(2, comp._spacerDescriptions.Count);
-      Assert.Equal(comp._dropDownItems.Count, comp._selectedItems.Count);
-
-      for (int i = 0; i < comp._dropDownItems.Count; i++) {
-        comp.SetSelected(i, 0);
-
-        for (int j = 0; j < comp._dropDownItems[i].Count; j++) {
-          comp.SetSelected(i, j);
-          comp.ExpireSolution(true);
-          comp.Params.Output[0].CollectData();
-          Assert.Equal(comp._selectedItems[i], comp._dropDownItems[i][j]);
-        }
-      }
+      DropDownComponentTests.ChangeDropDownTest(comp, true);
     }
 
     [Fact]
-    public static void TestAttributes() {
+    public void TestAttributes() {
       var comp = new DropDownCheckBoxesComponent();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));

@@ -10,7 +10,7 @@ namespace OasysGHTests.Components {
   [Collection("GrasshopperFixture collection")]
   public class SliderComponentTests {
     [Fact]
-    public static void ChangeSlider() {
+    public void ChangeSlider() {
       var comp = new SliderComponent();
       comp.CreateAttributes();
       comp.ExpireSolution(true);
@@ -43,7 +43,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public static void TestAttributes() {
+    public void TestAttributes() {
       var comp = new SliderComponent();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));

@@ -14,7 +14,7 @@ namespace OasysGHTests.Components {
   [Collection("GrasshopperFixture collection")]
   public class ButtonComponentTests {
     [Fact]
-    public static void ClickButtonTest() {
+    public void ClickButtonTest() {
       var comp = new ButtonComponent();
       comp.CreateAttributes();
       comp.ExpireSolution(true);
@@ -31,7 +31,7 @@ namespace OasysGHTests.Components {
 
 
     [Fact]
-    public static void TestAttributes() {
+    public void TestAttributes() {
       var comp = new ButtonComponent();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));

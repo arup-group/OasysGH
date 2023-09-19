@@ -18,6 +18,7 @@ namespace OasysGHTests.Parameters {
       goo = new OasysGoo(new GH_Boolean(true));
       Assert.True(goo.IsValid);
       Assert.True(goo.Value.Value);
+      Assert.Equal(string.Empty, goo.IsValidWhyNot);
     }
 
     [Fact]

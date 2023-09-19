@@ -1,10 +1,16 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Reflection;
+using System.Windows.Forms;
 using Grasshopper.Kernel.Types;
+using OasysGH.Components.Tests;
+using OasysGH.Parameters;
+using OasysGH.UI;
 using OasysGHTests.TestHelpers;
 using OasysUnits;
 using OasysUnits.Units;
 using Rhino.Geometry;
+using Rhino.NodeInCode;
 using Xunit;
 
 namespace OasysGHTests.Parameters {
