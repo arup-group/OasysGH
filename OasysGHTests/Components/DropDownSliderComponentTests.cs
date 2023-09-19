@@ -46,7 +46,7 @@ namespace OasysGHTests.Components {
     public void ChangeDropDownTest() {
       var comp = new DropDownSliderComponent();
       comp.CreateAttributes();
-      DropDownComponentTests.ChangeDropDownTest(comp, true);
+      DeserializeTests.ChangeDropDownTest(comp, true);
     }
 
     [Fact]
