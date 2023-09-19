@@ -12,9 +12,6 @@ variables:
 pool: 'rhino-compute'
 
 steps:
-- powershell: Remove-Item -Path C:\Users\**\AppData\Roaming\Grasshopper\Libraries\*.ghlink
-  displayName: 'Delete orphan .ghlink files'
-
 - powershell: Remove-Item -Path 'C:\Users\**\AppData\Roaming\McNeel\Rhinoceros\packages' -Recurse
   displayName: 'Delete Rhino plugins'
 
@@ -191,3 +188,7 @@ steps:
     addChangeLog: false
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
   displayName: 'Publishing assets to Github'
+
+- powershell: Remove-Item -Path C:\Users\**\AppData\Roaming\Grasshopper\Libraries\*.ghlink
+  displayName: 'Delete orphan .ghlink files'
+  condition: always()
