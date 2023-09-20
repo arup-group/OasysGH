@@ -14,8 +14,10 @@ namespace OasysGHTests.Components {
       doc.AddObject(comp, true);
       Assert.Single(doc.Objects);
 
-      doc.Objects.Remove(comp);
+      doc.RemoveObject(comp, true);
       Assert.Empty(doc.Objects);
+
+      doc.Dispose();
     }
   }
 }
