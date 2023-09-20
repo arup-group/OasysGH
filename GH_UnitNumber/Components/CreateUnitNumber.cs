@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using Grasshopper.Kernel;
 using OasysGH;
@@ -11,27 +12,21 @@ using OasysUnits.Units;
 
 namespace GH_UnitNumber.Components {
   /// <summary>
-  /// Component to create a new UnitNumber
+  /// Component to create a new <see cref="OasysGH.Parameters.GH_UnitNumber"/>
   /// </summary>
   public class CreateUnitNumber : GH_OasysDropDownComponent {
-    // This region handles how the component in displayed on the ribbon including name, exposure level and icon
     public override Guid ComponentGuid => new Guid("a6d79db6-844f-4228-b38f-9223762185fb");
-
     public override GH_Exposure Exposure => GH_Exposure.septenary | GH_Exposure.obscure;
     public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
-    protected override System.Drawing.Bitmap Icon => Properties.Resources.CreateUnitNumber;
+    protected override Bitmap Icon => Properties.Resources.CreateUnitNumber;
     private Dictionary<string, Enum> _measureDictionary;
     private IQuantity _quantity;
     private Enum _selectedMeasure;
-    private double _val;
+    private double _value;
 
-    public CreateUnitNumber() : base(
-      "Create UnitNumber",
-      "CreateUnit",
-      "Create a unit number (quantity) from value, unit and measure",
-      "Params",
-      "Util") {
-      Hidden = true; // sets the initial state of the component to hidden
+    public CreateUnitNumber() : base("Create UnitNumber", "CreateUnit",
+      "Create a unit number (quantity) from value, unit and measure", "Params", "Util") {
+      Hidden = true;
     }
 
     public override void SetSelected(int i, int j) {
@@ -48,12 +43,13 @@ namespace GH_UnitNumber.Components {
         _selectedMeasure = _measureDictionary[_selectedItems.Last()];
         UpdateUnitMeasureAndAbbreviation();
       }
+
       base.UpdateUI();
     }
 
     public override void VariableParameterMaintenance() {
       var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
-      string unitAbbreviation = "";
+      string unitAbbreviation;
       switch (unit) {
         case EngineeringUnits.Angle:
           unitAbbreviation = Angle.GetAbbreviation((AngleUnit)_selectedMeasure);
@@ -182,97 +178,97 @@ namespace GH_UnitNumber.Components {
     }
 
     protected override void SolveInternal(IGH_DataAccess DA) {
-      if (DA.GetData(0, ref _val)) {
+      if (DA.GetData(0, ref _value)) {
         var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
 
         switch (unit) {
           case EngineeringUnits.Angle:
-            _quantity = new Angle(_val, (AngleUnit)_selectedMeasure);
+            _quantity = new Angle(_value, (AngleUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Length:
-            _quantity = new Length(_val, (LengthUnit)_selectedMeasure);
+            _quantity = new Length(_value, (LengthUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Area:
-            _quantity = new Area(_val, (AreaUnit)_selectedMeasure);
+            _quantity = new Area(_value, (AreaUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Volume:
-            _quantity = new Volume(_val, (VolumeUnit)_selectedMeasure);
+            _quantity = new Volume(_value, (VolumeUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.AreaMomentOfInertia:
-            _quantity = new AreaMomentOfInertia(_val, (AreaMomentOfInertiaUnit)_selectedMeasure);
+            _quantity = new AreaMomentOfInertia(_value, (AreaMomentOfInertiaUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Force:
-            _quantity = new Force(_val, (ForceUnit)_selectedMeasure);
+            _quantity = new Force(_value, (ForceUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.ForcePerLength:
-            _quantity = new ForcePerLength(_val, (ForcePerLengthUnit)_selectedMeasure);
+            _quantity = new ForcePerLength(_value, (ForcePerLengthUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.ForcePerArea:
-            _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
+            _quantity = new Pressure(_value, (PressureUnit)_selectedMeasure);
             break;
             ;
 
           case EngineeringUnits.Moment:
-            _quantity = new Moment(_val, (MomentUnit)_selectedMeasure);
+            _quantity = new Moment(_value, (MomentUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Stress:
-            _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
+            _quantity = new Pressure(_value, (PressureUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Strain:
-            _quantity = new Strain(_val, (StrainUnit)_selectedMeasure);
+            _quantity = new Strain(_value, (StrainUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.AxialStiffness:
-            _quantity = new AxialStiffness(_val, (AxialStiffnessUnit)_selectedMeasure);
+            _quantity = new AxialStiffness(_value, (AxialStiffnessUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.BendingStiffness:
-            _quantity = new BendingStiffness(_val, (BendingStiffnessUnit)_selectedMeasure);
+            _quantity = new BendingStiffness(_value, (BendingStiffnessUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Curvature:
-            _quantity = new Curvature(_val, (CurvatureUnit)_selectedMeasure);
+            _quantity = new Curvature(_value, (CurvatureUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Mass:
-            _quantity = new Mass(_val, (MassUnit)_selectedMeasure);
+            _quantity = new Mass(_value, (MassUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Density:
-            _quantity = new Density(_val, (DensityUnit)_selectedMeasure);
+            _quantity = new Density(_value, (DensityUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Temperature:
-            _quantity = new Temperature(_val, (TemperatureUnit)_selectedMeasure);
+            _quantity = new Temperature(_value, (TemperatureUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Velocity:
-            _quantity = new Speed(_val, (SpeedUnit)_selectedMeasure);
+            _quantity = new Speed(_value, (SpeedUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Acceleration:
-            _quantity = new Acceleration(_val, (AccelerationUnit)_selectedMeasure);
+            _quantity = new Acceleration(_value, (AccelerationUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Energy:
-            _quantity = new Energy(_val, (EnergyUnit)_selectedMeasure);
+            _quantity = new Energy(_value, (EnergyUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Ratio:
-            _quantity = new Ratio(_val, (RatioUnit)_selectedMeasure);
+            _quantity = new Ratio(_value, (RatioUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.Time:
-            _quantity = new Duration(_val, (DurationUnit)_selectedMeasure);
+            _quantity = new Duration(_value, (DurationUnit)_selectedMeasure);
             break;
 
           default:
@@ -304,92 +300,92 @@ namespace GH_UnitNumber.Components {
     private void UpdateQuantityUnitTypeFromUnitString(EngineeringUnits unit) {
       switch (unit) {
         case EngineeringUnits.Angle:
-          _quantity = new Angle(_val, DefaultUnits.AngleUnit);
+          _quantity = new Angle(_value, DefaultUnits.AngleUnit);
           break;
 
         case EngineeringUnits.Length:
-          _quantity = new Length(_val, DefaultUnits.LengthUnitGeometry);
+          _quantity = new Length(_value, DefaultUnits.LengthUnitGeometry);
           break;
 
         case EngineeringUnits.Area:
-          _quantity = new Area(_val, DefaultUnits.SectionAreaUnit);
+          _quantity = new Area(_value, DefaultUnits.SectionAreaUnit);
           break;
 
         case EngineeringUnits.Volume:
-          _quantity = new Volume(_val, DefaultUnits.SectionVolumeUnit);
+          _quantity = new Volume(_value, DefaultUnits.SectionVolumeUnit);
           break;
 
         case EngineeringUnits.AreaMomentOfInertia:
-          _quantity = new AreaMomentOfInertia(_val, DefaultUnits.SectionAreaMomentOfInertiaUnit);
+          _quantity = new AreaMomentOfInertia(_value, DefaultUnits.SectionAreaMomentOfInertiaUnit);
           break;
 
         case EngineeringUnits.Force:
-          _quantity = new Force(_val, DefaultUnits.ForceUnit);
+          _quantity = new Force(_value, DefaultUnits.ForceUnit);
           break;
 
         case EngineeringUnits.ForcePerLength:
-          _quantity = new ForcePerLength(_val, DefaultUnits.ForcePerLengthUnit);
+          _quantity = new ForcePerLength(_value, DefaultUnits.ForcePerLengthUnit);
           break;
 
         case EngineeringUnits.ForcePerArea:
-          _quantity = new Pressure(_val, DefaultUnits.ForcePerAreaUnit);
+          _quantity = new Pressure(_value, DefaultUnits.ForcePerAreaUnit);
           break;
           ;
 
         case EngineeringUnits.Moment:
-          _quantity = new Moment(_val, DefaultUnits.MomentUnit);
+          _quantity = new Moment(_value, DefaultUnits.MomentUnit);
           break;
 
         case EngineeringUnits.Stress:
-          _quantity = new Pressure(_val, DefaultUnits.StressUnitResult);
+          _quantity = new Pressure(_value, DefaultUnits.StressUnitResult);
           break;
 
         case EngineeringUnits.Strain:
-          _quantity = new Strain(_val, DefaultUnits.StrainUnitResult);
+          _quantity = new Strain(_value, DefaultUnits.StrainUnitResult);
           break;
 
         case EngineeringUnits.AxialStiffness:
-          _quantity = new AxialStiffness(_val, DefaultUnits.AxialStiffnessUnit);
+          _quantity = new AxialStiffness(_value, DefaultUnits.AxialStiffnessUnit);
           break;
 
         case EngineeringUnits.BendingStiffness:
-          _quantity = new BendingStiffness(_val, DefaultUnits.BendingStiffnessUnit);
+          _quantity = new BendingStiffness(_value, DefaultUnits.BendingStiffnessUnit);
           break;
 
         case EngineeringUnits.Curvature:
-          _quantity = new Curvature(_val, DefaultUnits.CurvatureUnit);
+          _quantity = new Curvature(_value, DefaultUnits.CurvatureUnit);
           break;
 
         case EngineeringUnits.Mass:
-          _quantity = new Mass(_val, DefaultUnits.MassUnit);
+          _quantity = new Mass(_value, DefaultUnits.MassUnit);
           break;
 
         case EngineeringUnits.Density:
-          _quantity = new Density(_val, DefaultUnits.DensityUnit);
+          _quantity = new Density(_value, DefaultUnits.DensityUnit);
           break;
 
         case EngineeringUnits.Temperature:
-          _quantity = new Temperature(_val, DefaultUnits.TemperatureUnit);
+          _quantity = new Temperature(_value, DefaultUnits.TemperatureUnit);
           break;
 
         case EngineeringUnits.Velocity:
-          _quantity = new Speed(_val, DefaultUnits.VelocityUnit);
+          _quantity = new Speed(_value, DefaultUnits.VelocityUnit);
           break;
 
         case EngineeringUnits.Acceleration:
-          _quantity = new Acceleration(_val, DefaultUnits.AccelerationUnit);
+          _quantity = new Acceleration(_value, DefaultUnits.AccelerationUnit);
           break;
 
         case EngineeringUnits.Energy:
-          _quantity = new Energy(_val, DefaultUnits.EnergyUnit);
+          _quantity = new Energy(_value, DefaultUnits.EnergyUnit);
           break;
 
         case EngineeringUnits.Ratio:
-          _quantity = new Ratio(_val, DefaultUnits.RatioUnit);
+          _quantity = new Ratio(_value, DefaultUnits.RatioUnit);
           break;
 
         case EngineeringUnits.Time:
-          _quantity = new Duration(_val, DefaultUnits.TimeMediumUnit);
+          _quantity = new Duration(_value, DefaultUnits.TimeMediumUnit);
           break;
 
         default:
@@ -403,92 +399,92 @@ namespace GH_UnitNumber.Components {
 
       switch (unit) {
         case EngineeringUnits.Angle:
-          _quantity = new Angle(_val, (AngleUnit)_selectedMeasure);
+          _quantity = new Angle(_value, (AngleUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Length:
-          _quantity = new Length(_val, (LengthUnit)_selectedMeasure);
+          _quantity = new Length(_value, (LengthUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Area:
-          _quantity = new Area(_val, (AreaUnit)_selectedMeasure);
+          _quantity = new Area(_value, (AreaUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Volume:
-          _quantity = new Volume(_val, (VolumeUnit)_selectedMeasure);
+          _quantity = new Volume(_value, (VolumeUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.AreaMomentOfInertia:
-          _quantity = new AreaMomentOfInertia(_val, (AreaMomentOfInertiaUnit)_selectedMeasure);
+          _quantity = new AreaMomentOfInertia(_value, (AreaMomentOfInertiaUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Force:
-          _quantity = new Force(_val, (ForceUnit)_selectedMeasure);
+          _quantity = new Force(_value, (ForceUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.ForcePerLength:
-          _quantity = new ForcePerLength(_val, (ForcePerLengthUnit)_selectedMeasure);
+          _quantity = new ForcePerLength(_value, (ForcePerLengthUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.ForcePerArea:
-          _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
+          _quantity = new Pressure(_value, (PressureUnit)_selectedMeasure);
           break;
           ;
 
         case EngineeringUnits.Moment:
-          _quantity = new Moment(_val, (MomentUnit)_selectedMeasure);
+          _quantity = new Moment(_value, (MomentUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Stress:
-          _quantity = new Pressure(_val, (PressureUnit)_selectedMeasure);
+          _quantity = new Pressure(_value, (PressureUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Strain:
-          _quantity = new Strain(_val, (StrainUnit)_selectedMeasure);
+          _quantity = new Strain(_value, (StrainUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.AxialStiffness:
-          _quantity = new AxialStiffness(_val, (AxialStiffnessUnit)_selectedMeasure);
+          _quantity = new AxialStiffness(_value, (AxialStiffnessUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.BendingStiffness:
-          _quantity = new BendingStiffness(_val, (BendingStiffnessUnit)_selectedMeasure);
+          _quantity = new BendingStiffness(_value, (BendingStiffnessUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Curvature:
-          _quantity = new Curvature(_val, (CurvatureUnit)_selectedMeasure);
+          _quantity = new Curvature(_value, (CurvatureUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Mass:
-          _quantity = new Mass(_val, (MassUnit)_selectedMeasure);
+          _quantity = new Mass(_value, (MassUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Density:
-          _quantity = new Density(_val, (DensityUnit)_selectedMeasure);
+          _quantity = new Density(_value, (DensityUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Temperature:
-          _quantity = new Temperature(_val, (TemperatureUnit)_selectedMeasure);
+          _quantity = new Temperature(_value, (TemperatureUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Velocity:
-          _quantity = new Speed(_val, (SpeedUnit)_selectedMeasure);
+          _quantity = new Speed(_value, (SpeedUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Acceleration:
-          _quantity = new Acceleration(_val, (AccelerationUnit)_selectedMeasure);
+          _quantity = new Acceleration(_value, (AccelerationUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Energy:
-          _quantity = new Energy(_val, (EnergyUnit)_selectedMeasure);
+          _quantity = new Energy(_value, (EnergyUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Ratio:
-          _quantity = new Ratio(_val, (RatioUnit)_selectedMeasure);
+          _quantity = new Ratio(_value, (RatioUnit)_selectedMeasure);
           break;
 
         case EngineeringUnits.Time:
-          _quantity = new Duration(_val, (DurationUnit)_selectedMeasure);
+          _quantity = new Duration(_value, (DurationUnit)_selectedMeasure);
           break;
 
         default:

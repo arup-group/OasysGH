@@ -12,7 +12,7 @@ namespace OasysGH.Helpers {
   /// In case of problems loading SQLite the singleton is executed in a separate AppDomain.
   /// </summary>
   public class SqlReader : MarshalByRefObject {
-    public static SqlReader Instance { get { return lazy.Value; } }
+    public static SqlReader Instance => lazy.Value;
     private static readonly Lazy<SqlReader> lazy = new Lazy<SqlReader>(() => Initialize());
 
     public SqlReader() {
@@ -33,20 +33,11 @@ namespace OasysGH.Helpers {
         // Get the full name of the EXE assembly.
         string exeAssembly = Assembly.GetCallingAssembly().FullName;
 
-        // Construct and initialize settings for a second AppDomain.
-        var ads = new AppDomainSetup();
-        ads.ApplicationBase = Path.GetDirectoryName(codeBasePath);
-        ads.PrivateBinPath = @"x64";
-        ads.DisallowBindingRedirects = false;
-        ads.DisallowCodeDownload = true;
-        ads.ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
-
-        // Create the second AppDomain.
-        var ad = AppDomain.CreateDomain("SQLite AppDomain", null, ads);
+        AppDomain appDomain = CreateSecondAppDomain(codeBasePath);
 
         // Create an instance of MarshalbyRefType in the second AppDomain.
         // A proxy to the object is returned.
-        var reader = (SqlReader)ad.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
+        var reader = (SqlReader)appDomain.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
         return reader;
       }
     }
@@ -97,6 +88,7 @@ namespace OasysGH.Helpers {
           // example (IPE100): 0.1 --  0.055 -- 0.0041 -- 0.0057 -- 0.007
           data.Add(sqlData);
         }
+
         string[] vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
         r.Close();
 
@@ -116,6 +108,7 @@ namespace OasysGH.Helpers {
             string sqlData = Convert.ToString(r["SECT_NAME"]);
             data.Add(sqlData);
           }
+
           vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
           r.Close();
         }
@@ -137,9 +130,11 @@ namespace OasysGH.Helpers {
             // example (CHS457x12.5): 0.457 -- 0.0125
             data.Add(sqlData);
           }
+
           vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
           r.Close();
         }
+
         db.Close();
 
         NumberFormatInfo noComma = CultureInfo.InvariantCulture.NumberFormat;
@@ -148,6 +143,7 @@ namespace OasysGH.Helpers {
           if (val != "")
             values.Add(Convert.ToDouble(val, noComma));
       }
+
       return values;
     }
 
@@ -181,8 +177,10 @@ namespace OasysGH.Helpers {
           catNames.Add(sqlData.Split(new string[] { " -- " }, StringSplitOptions.None)[0]);
           catNumber.Add(int.Parse(sqlData.Split(new string[] { " -- " }, StringSplitOptions.None)[1]));
         }
+
         db.Close();
       }
+
       catNames.Insert(0, "All");
       catNumber.Insert(0, -1);
       return new Tuple<List<string>, List<int>>(catNames, catNumber);
@@ -199,7 +197,7 @@ namespace OasysGH.Helpers {
       // Create empty list to work on:
       var sections = new List<string>();
 
-      var types = new List<int>();
+      List<int> types;
       if (type_numbers[0] == -1) {
         Tuple<List<string>, List<int>> typeData = GetTypesDataFromSQLite(-1, filePath, inclSuperseeded);
         types = typeData.Item2;
@@ -236,6 +234,7 @@ namespace OasysGH.Helpers {
               sections.Add(profile);
             }
           }
+
           db.Close();
         }
       }
@@ -293,9 +292,11 @@ namespace OasysGH.Helpers {
             typeNames.Add(sqlData.Split(new string[] { " -- " }, StringSplitOptions.None)[0]);
             typeNumber.Add(int.Parse(sqlData.Split(new string[] { " -- " }, StringSplitOptions.None)[1]));
           }
+
           db.Close();
         }
       }
+
       typeNames.Insert(0, "All");
       typeNumber.Insert(0, -1);
       return new Tuple<List<string>, List<int>>(typeNames, typeNumber);
@@ -304,6 +305,22 @@ namespace OasysGH.Helpers {
     public override object InitializeLifetimeService() {
       // disable the leasing and then the object is only reclaimed when the AppDomain is unloaded
       return null;
+    }
+
+    internal static AppDomain CreateSecondAppDomain(string codeBasePath) {
+      // Construct and initialize settings for a second AppDomain.
+      var ads = new AppDomainSetup {
+        ApplicationBase = Path.GetDirectoryName(codeBasePath),
+        PrivateBinPath = @"x64",
+        DisallowBindingRedirects = false,
+        DisallowCodeDownload = true,
+        ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile
+      };
+
+      // Create the second AppDomain.
+      var appDomain = AppDomain.CreateDomain("SQLite AppDomain", null, ads);
+
+      return appDomain;
     }
   }
 }
