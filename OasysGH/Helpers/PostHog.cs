@@ -10,25 +10,25 @@ using OasysGH.Components;
 
 namespace OasysGH.Helpers {
   public class PostHog {
-    // do not change this class!
     private class PhContainer {
-      // for PostHog to work this member needs to be lower case and public!
-      public Dictionary<string, object> properties { get; set; }
+      // for PostHog to work these json properties need to be lower case!
+      [JsonProperty("properties")]
+      private Dictionary<string, object> _properties { get; set; }
 
       [JsonProperty("api_key")]
-      string api_key { get; set; }
+      private string _apiKey { get; set; }
 
       [JsonProperty("event")]
-      string ph_event { get; set; }
+      private string _event { get; set; }
 
       [JsonProperty("timestamp")]
-      DateTime ph_timestamp { get; set; }
+      private DateTime _timestamp { get; set; }
 
       public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties) {
-        ph_event = eventName;
-        this.properties = properties;
-        ph_timestamp = DateTime.UtcNow;
-        api_key = pluginInfo.PostHogApiKey;
+        _event = eventName;
+        _properties = properties;
+        _timestamp = DateTime.UtcNow;
+        _apiKey = pluginInfo.PostHogApiKey;
       }
     }
 
