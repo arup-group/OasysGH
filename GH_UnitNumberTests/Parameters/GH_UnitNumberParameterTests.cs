@@ -35,11 +35,13 @@ namespace GH_UnitNumberTests.Parameters {
       param.AppendAdditionalMenuItems(form);
       Assert.Equal(13, form.Items.Count);
 
+
       var path = new GH_Path(0);
       var l = new Length(5, OasysUnits.Units.LengthUnit.Meter);
       var unitnumber = new OasysGH.Parameters.GH_UnitNumber(l);
       param.AddVolatileData(path, 0, unitnumber);
       Assert.Equal("One locally defined value…\r\n5m", param.InstanceDescription);
+
     }
 
     [Fact]
@@ -81,6 +83,17 @@ namespace GH_UnitNumberTests.Parameters {
 
     [Fact]
     public void PreferredCastFromObjectWrappeStringTest() {
+      var param = new GH_UnitNumberParameter();
+      var path = new GH_Path(0);
+      string l = "5 m";
+      var wrapper = new GH_ObjectWrapper(l);
+      param.AddVolatileData(path, 0, wrapper);
+      var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
+      Assert.Equal(5, output.Value.Value);
+    }
+
+    [Fact]
+    public void PreferredCastFromObjectWrappeStringAlternativeTypesTest() {
       var param = new GH_UnitNumberParameter();
       var path = new GH_Path(0);
       string l = "5 yr";
