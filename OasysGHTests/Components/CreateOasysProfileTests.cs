@@ -56,12 +56,6 @@ namespace OasysGHTests.Components {
           comp.Params.Output[0].CollectData();
           Assert.Equal(comp._selectedItems[2], comp._dropDownItems[2][j]);
 
-          // if selected section type does not contain any profiles then check warning and continue
-          if (comp._dropDownItems.Count < 4) {
-            Assert.Single(comp.RuntimeMessages(Grasshopper.Kernel.GH_RuntimeMessageLevel.Warning));
-            continue;
-          }
-
           for (int k = 1; k < comp._dropDownItems[3].Count; k++) {
             comp.SetSelected(3, k);
             comp.ExpireSolution(true);

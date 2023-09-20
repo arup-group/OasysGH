@@ -235,11 +235,6 @@ namespace OasysGH.Components {
 
           // section list with selected types (only types in selected type)
           _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
-          if (_sectionList.Count < 2) {
-            AddRuntimeMessage(GH_RuntimeMessageLevel.Warning,
-              "Selected section type contains no profile. Try include superseeded.");
-            return;
-          }
 
           // update selected section to be all
           _selectedItems[3] = _sectionList[0];
