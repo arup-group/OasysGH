@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
+using Eto.Forms;
 using GH_UnitNumber;
 using GH_UnitNumber.Components;
 using GH_UnitNumber.Properties;
@@ -26,13 +27,19 @@ namespace GH_UnitNumberTests.Parameters {
     public void GH_UnitNumberParameterTest() {
       var param = new GH_UnitNumberParameter();
       param.CreateAttributes();
-      var path = new GH_Path(0);
-      var l = new Length(5, OasysUnits.Units.LengthUnit.Meter);
-      param.AddVolatileData(path, 0, l);
-      var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
-      Assert.Equal(5, output.Value.Value);
+      
       Assert.True(param.Hidden);
       Assert.False(param.IsPreviewCapable);
+
+      var form = new ContextMenuStrip();
+      param.AppendAdditionalMenuItems(form);
+      Assert.Equal(13, form.Items.Count);
+
+      var path = new GH_Path(0);
+      var l = new Length(5, OasysUnits.Units.LengthUnit.Meter);
+      var unitnumber = new OasysGH.Parameters.GH_UnitNumber(l);
+      param.AddVolatileData(path, 0, unitnumber);
+      Assert.Equal("One locally defined value…\r\n5m", param.InstanceDescription);
     }
 
     [Fact]
@@ -49,6 +56,38 @@ namespace GH_UnitNumberTests.Parameters {
         BindingFlags.NonPublic | BindingFlags.Instance);
       var icon = (Bitmap)pInfo.GetValue(param, null);
       Assert.Equal(iconExpected.RawFormat.Guid, icon.RawFormat.Guid);
+    }
+
+    [Fact]
+    public void PreferredCastFromQuantityTest() {
+      var param = new GH_UnitNumberParameter();
+      var path = new GH_Path(0);
+      var l = new Length(5, OasysUnits.Units.LengthUnit.Meter);
+      param.AddVolatileData(path, 0, l);
+      var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
+      Assert.Equal(5, output.Value.Value);
+    }
+
+    [Fact]
+    public void PreferredCastFromObjectWrapperQuantityTest() {
+      var param = new GH_UnitNumberParameter();
+      var path = new GH_Path(0);
+      var l = new Length(5, OasysUnits.Units.LengthUnit.Meter);
+      var wrapper = new GH_ObjectWrapper(l);
+      param.AddVolatileData(path, 0, wrapper);
+      var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
+      Assert.Equal(5, output.Value.Value);
+    }
+
+    [Fact]
+    public void PreferredCastFromObjectWrappeStringTest() {
+      var param = new GH_UnitNumberParameter();
+      var path = new GH_Path(0);
+      string l = "5 yr";
+      var wrapper = new GH_ObjectWrapper(l);
+      param.AddVolatileData(path, 0, wrapper);
+      var output = (OasysGH.Parameters.GH_UnitNumber)param.VolatileData.get_Branch(0)[0];
+      Assert.Equal(5, output.Value.Value);
     }
   }
 }
