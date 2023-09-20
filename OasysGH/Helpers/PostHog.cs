@@ -11,26 +11,26 @@ using OasysGH.Components;
 namespace OasysGH.Helpers {
   public class PostHog {
     private class PhContainer {
-      public Dictionary<string, object> Properties { get; set; }
       [JsonProperty("api_key")]
-      private string api_key { get; set; }
+      string api_key { get; set; }
 
       [JsonProperty("event")]
-      private string ph_event { get; set; }
+      string ph_event { get; set; }
 
       [JsonProperty("timestamp")]
-      private DateTime ph_timestamp { get; set; }
+      DateTime ph_timestamp { get; set; }
+      public Dictionary<string, object> properties { get; set; }
 
       public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties) {
-        ph_event = eventName;
-        Properties = properties;
-        ph_timestamp = DateTime.UtcNow;
-        api_key = pluginInfo.PostHogApiKey;
+        this.ph_event = eventName;
+        this.properties = properties;
+        this.ph_timestamp = DateTime.UtcNow;
+        this.api_key = pluginInfo.PostHogApiKey;
       }
     }
 
-    internal static User currentUser = new User();
-    private static HttpClient phClient = new HttpClient();
+    internal static User CurrentUser = new User();
+    private static HttpClient _phClient = new HttpClient();
 
     public static void AddedToDocument(GH_OasysComponent component) {
       AddedToDocument(component, component.PluginInfo);
@@ -38,8 +38,8 @@ namespace OasysGH.Helpers {
 
     public static void AddedToDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       string eventName = "AddedToDocument";
-      var properties = new Dictionary<string, object>()
-       {
+      Dictionary<string, object> properties = new Dictionary<string, object>()
+      {
         { "componentName", component.Name },
       };
       _ = SendToPostHog(pluginInfo, eventName, properties);
@@ -47,7 +47,7 @@ namespace OasysGH.Helpers {
 
     public static void ModelIO(OasysPluginInfo pluginInfo, string interactionType, int size = 0) {
       string eventName = "ModelIO";
-      var properties = new Dictionary<string, object>()
+      Dictionary<string, object> properties = new Dictionary<string, object>()
       {
         { "interactionType", interactionType },
         { "size", size },
@@ -58,7 +58,7 @@ namespace OasysGH.Helpers {
     public static void PluginLoaded(OasysPluginInfo pluginInfo, string error = "") {
       string eventName = "PluginLoaded";
 
-      var properties = new Dictionary<string, object>()
+      Dictionary<string, object> properties = new Dictionary<string, object>()
       {
         { "rhinoVersion", Rhino.RhinoApp.Version.ToString().Split('.')
                           + "." + Rhino.RhinoApp.Version.ToString().Split('.')[1] },
@@ -76,7 +76,7 @@ namespace OasysGH.Helpers {
     public static void RemovedFromDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       if (component.Attributes.Selected) {
         string eventName = "RemovedFromDocument";
-        var properties = new Dictionary<string, object>()
+        Dictionary<string, object> properties = new Dictionary<string, object>()
         {
           { "componentName", component.Name },
           { "runCount", component.RunCount },
@@ -87,9 +87,9 @@ namespace OasysGH.Helpers {
 
     public static async Task<HttpResponseMessage> SendToPostHog(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> additionalProperties = null) {
       // posthog ADS plugin requires a user object
-      User user = currentUser;
+      User user = CurrentUser;
 
-      var properties = new Dictionary<string, object>() {
+      Dictionary<string, object> properties = new Dictionary<string, object>() {
         { "distinct_id", user.userName },
         { "user", user },
         { "pluginName", pluginInfo.PluginName },
@@ -103,9 +103,9 @@ namespace OasysGH.Helpers {
       }
 
       var container = new PhContainer(pluginInfo, eventName, properties);
-      string body = JsonConvert.SerializeObject(container);
+      var body = JsonConvert.SerializeObject(container);
       var content = new StringContent(body, Encoding.UTF8, "application/json");
-      HttpResponseMessage response = await phClient.PostAsync("https://posthog.insights.arup.com/capture/", content);
+      var response = await _phClient.PostAsync("https://posthog.insights.arup.com/capture/", content);
       return response;
     }
   }
