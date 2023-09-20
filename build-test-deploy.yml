@@ -130,7 +130,7 @@ steps:
         $tag = [array]@($exeName,$majorVersion,$minorVersion,$spVersion,$buildNumber)
         $tagNumbersOnly = [array]@($majorVersion,$minorVersion,$spVersion,$buildNumber)
 
-        $dotSeparatedTag = $majorVersion + "." + $minorVersion + "." + $spVersion + "-beta"
+        $dotSeparatedTag = $majorVersion + "." + $minorVersion + "." + $spVersion
         $underscoreSeparatedTag = $majorVersion + "_" + $minorVersion + "_" + $spVersion + "_" + $buildNumber
         $tagNumbersOnlyUnderscore = $majorVersion + "_" + $minorVersion + "_" + $spVersion + "_" + $buildNumber
         $tagNumbersOnlydot = $majorVersion + "." + $minorVersion + "." + $spVersion + "." + $buildNumber
