@@ -7,7 +7,7 @@ using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 namespace OasysGH.Components.Tests {
   public class CheckBoxComponent : GH_OasysDropDownComponent {
     public override Guid ComponentGuid => new Guid("f58b0461-4f16-4051-bc00-1ac45d4d8b46");
-    public override GH_Exposure Exposure => GH_Exposure.hidden;
+    public override GH_Exposure Exposure => GH_Exposure.primary;
     public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
     private bool _x;
     private bool _xx;

@@ -10,7 +10,7 @@ using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 namespace OasysGH.Components.Tests {
   public class DropDownComponent : GH_OasysDropDownComponent {
     public override Guid ComponentGuid => new Guid("ba11e0f6-8a6c-4540-8882-5589c1169951");
-    public override GH_Exposure Exposure => GH_Exposure.hidden;
+    public override GH_Exposure Exposure => GH_Exposure.primary;
     public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
     private LengthUnit _lengthUnit = DefaultUnits.LengthUnitGeometry;
 

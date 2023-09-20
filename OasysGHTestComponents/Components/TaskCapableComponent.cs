@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace OasysGH.Components.Tests {
   public class TaskCapableComponent : GH_OasysTaskCapableComponent<TaskCapableComponent.SolveResults> {
     public override Guid ComponentGuid => new Guid("78c36d29-358f-4232-8c6e-1d16a7129a7b");
-    public override GH_Exposure Exposure => GH_Exposure.hidden;
+    public override GH_Exposure Exposure => GH_Exposure.primary;
     public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
 
     public class SolveResults {
