@@ -10,21 +10,23 @@ using OasysGH.Components;
 
 namespace OasysGH.Helpers {
   public class PostHog {
+    // do not change this class!
     private class PhContainer {
-      public Dictionary<string, object> Properties { get; set; }
+      // for PostHog to work this member needs to be lower case and public!
+      public Dictionary<string, object> properties { get; set; }
 
       [JsonProperty("api_key")]
-      private string api_key { get; set; }
+      string api_key { get; set; }
 
       [JsonProperty("event")]
-      private string ph_event { get; set; }
+      string ph_event { get; set; }
 
       [JsonProperty("timestamp")]
-      private DateTime ph_timestamp { get; set; }
+      DateTime ph_timestamp { get; set; }
 
       public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties) {
         ph_event = eventName;
-        Properties = properties;
+        this.properties = properties;
         ph_timestamp = DateTime.UtcNow;
         api_key = pluginInfo.PostHogApiKey;
       }
@@ -40,7 +42,7 @@ namespace OasysGH.Helpers {
     public static void AddedToDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       string eventName = "AddedToDocument";
       var properties = new Dictionary<string, object>()
-       {
+      {
         { "componentName", component.Name },
       };
       _ = SendToPostHog(pluginInfo, eventName, properties);
@@ -49,7 +51,7 @@ namespace OasysGH.Helpers {
     public static void ModelIO(OasysPluginInfo pluginInfo, string interactionType, int size = 0) {
       string eventName = "ModelIO";
       var properties = new Dictionary<string, object>()
-      {
+       {
         { "interactionType", interactionType },
         { "size", size },
       };
@@ -60,7 +62,7 @@ namespace OasysGH.Helpers {
       string eventName = "PluginLoaded";
 
       var properties = new Dictionary<string, object>()
-      {
+           {
         { "rhinoVersion", Rhino.RhinoApp.Version.ToString().Split('.')
                           + "." + Rhino.RhinoApp.Version.ToString().Split('.')[1] },
         { "rhinoMajorVersion", Rhino.RhinoApp.ExeVersion },
@@ -78,7 +80,7 @@ namespace OasysGH.Helpers {
       if (component.Attributes.Selected) {
         string eventName = "RemovedFromDocument";
         var properties = new Dictionary<string, object>()
-        {
+         {
           { "componentName", component.Name },
           { "runCount", component.RunCount },
         };
