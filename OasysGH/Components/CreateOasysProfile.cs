@@ -10,6 +10,7 @@ using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Types;
 using Oasys.Taxonomy.Geometry;
 using Oasys.Taxonomy.Profiles;
+using OasysGH.Components.Utility;
 using OasysGH.Helpers;
 using OasysGH.Parameters;
 using OasysGH.Units;
@@ -121,7 +122,7 @@ namespace OasysGH.Components {
     private Type _type = typeof(IRectangleProfile);
 
     protected CreateOasysProfile(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory) {
-      InputParameterCacheManager = new InputParameterCacheManager(new OasysUnitsParameterExpirationManager());
+      InputParameterCacheManager = new InputParameterCacheManager(new DuplicateExpirationManager());
 
       Tuple<List<string>, List<int>> catalogueData = SqlReader.Instance.GetCataloguesDataFromSQLite(DataSource);
       _catalogueNames = catalogueData.Item1;
@@ -938,9 +939,7 @@ namespace OasysGH.Components {
 
     protected override void SolveInternal(IGH_DataAccess da) {
       ClearRuntimeMessages();
-
-      var data = new Dictionary<int, IGH_Goo>();
-
+      
       for (int i = 0; i < Params.Input.Count; i++)
         Params.Input[i].ClearRuntimeMessages();
 

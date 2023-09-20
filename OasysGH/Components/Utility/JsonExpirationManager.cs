@@ -5,8 +5,8 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using Newtonsoft.Json;
 
-namespace OasysGH.Components {
-  public class ParameterExpirationManager : IParameterExpirationManager {
+namespace OasysGH.Components.Utility {
+  public class JsonExpirationManager : IParameterExpirationManager {
     public JsonConverter Converter { get; set; } = null;
     public int ParamCount { get; private set; } = 0;
     private Dictionary<int, List<string>> _existingParamsSerialized = new Dictionary<int, List<string>>();
@@ -16,11 +16,11 @@ namespace OasysGH.Components {
     private Dictionary<int, int> _lastRunCount = new Dictionary<int, int>();
     private Dictionary<int, int> _runCount = new Dictionary<int, int>();
 
-    public ParameterExpirationManager() {
+    public JsonExpirationManager() {
       UpdateParamIndex(1);
     }
 
-    public ParameterExpirationManager(int maxParamIndex, JsonConverter converter) {
+    public JsonExpirationManager(int maxParamIndex, JsonConverter converter) {
       Converter = converter;
       UpdateParamIndex(1);
     }
@@ -30,7 +30,8 @@ namespace OasysGH.Components {
 
       if (runCount == 1) {
         Reset(paramIndex);
-      } else if (_paramIsExpired[paramIndex]) {
+      }
+      else if (_paramIsExpired[paramIndex]) {
         return;
       }
 
@@ -46,7 +47,8 @@ namespace OasysGH.Components {
 
       if (runCount == 1) {
         Reset(paramIndex);
-      } else if (_paramIsExpired[paramIndex]) {
+      }
+      else if (_paramIsExpired[paramIndex]) {
         return;
       }
 
@@ -62,7 +64,8 @@ namespace OasysGH.Components {
 
       if (runCount == 1) {
         Reset(paramIndex);
-      } else if (_paramIsExpired[paramIndex]) {
+      }
+      else if (_paramIsExpired[paramIndex]) {
         return;
       }
 
@@ -78,7 +81,8 @@ namespace OasysGH.Components {
 
       if (runCount == 1) {
         Reset(paramIndex);
-      } else if (_paramIsExpired[paramIndex]) {
+      }
+      else if (_paramIsExpired[paramIndex]) {
         return;
       }
 
@@ -95,7 +99,8 @@ namespace OasysGH.Components {
         List<T> data = dataTree.Branch(path);
         if (data.Count == 0) {
           _paramIsExpired[paramIndex] = ParamChanged(null, paramIndex);
-        } else {
+        }
+        else {
           _paramIsExpired[paramIndex] = ParamChanged(data, paramIndex);
         }
       }
@@ -107,6 +112,7 @@ namespace OasysGH.Components {
           return true;
         }
       }
+
       return false;
     }
 
@@ -117,9 +123,11 @@ namespace OasysGH.Components {
 
       if (_runCount[paramIndex] != _lastRunCount[paramIndex]) {
         return true;
-      } else if (_index[paramIndex] != _lastIndex[paramIndex]) {
+      }
+      else if (_index[paramIndex] != _lastIndex[paramIndex]) {
         return true;
-      } else if (_paramIsExpired[paramIndex]) {
+      }
+      else if (_paramIsExpired[paramIndex]) {
         return true;
       }
 
@@ -155,7 +163,8 @@ namespace OasysGH.Components {
       string serialized;
       try {
         serialized = JsonConvert.SerializeObject(obj, Converter);
-      } catch (Exception) {
+      }
+      catch (Exception) {
         serialized = obj.GetHashCode().ToString();
       }
 
@@ -165,7 +174,8 @@ namespace OasysGH.Components {
         // add an entry and expire param
         _existingParamsSerialized[paramIndex].Add(serialized);
         expired = true;
-      } else if (_existingParamsSerialized[paramIndex][_index[paramIndex]] != serialized) {
+      }
+      else if (_existingParamsSerialized[paramIndex][_index[paramIndex]] != serialized) {
         _existingParamsSerialized[paramIndex][_index[paramIndex]] = serialized;
         expired = true;
       }

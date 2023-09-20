@@ -40,7 +40,7 @@ namespace OasysGH.Helpers {
     public static void AddedToDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       string eventName = "AddedToDocument";
       var properties = new Dictionary<string, object>()
-       {
+      {
         { "componentName", component.Name },
       };
       _ = SendToPostHog(pluginInfo, eventName, properties);

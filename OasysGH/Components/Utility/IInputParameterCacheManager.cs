@@ -3,7 +3,7 @@ using Grasshopper;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 
-namespace OasysGH.Components {
+namespace OasysGH.Components.Utility {
   public interface IInputParameterCacheManager {
     bool RunOnce { get; }
 

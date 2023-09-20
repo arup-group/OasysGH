@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Grasshopper;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
-namespace OasysGH.Components {
+namespace OasysGH.Components.Utility {
   public class InputParameterCacheManager : IInputParameterCacheManager {
     public IParameterExpirationManager EpirationManager { get; set; }
     public bool RunOnce { get; private set; }
@@ -37,10 +36,7 @@ namespace OasysGH.Components {
       for (int index = 0; index < input.Count; index++) {
         IGH_Structure structure = input[index].VolatileData;
 
-        // this does not always work!
         var tree = new DataTree<IGH_Goo>();
-        //tree.MergeStructure(structure, null);
-
         int num = structure.PathCount - 1;
         for (int i = 0; i <= num; i++) {
           IList list = structure.get_Branch(i);
@@ -48,34 +44,18 @@ namespace OasysGH.Components {
           int num2 = list.Count - 1;
           for (int j = 0; j <= num2; j++) {
             if (list[j] == null) {
-              list2.Add(default(IGH_Goo));
+              list2.Add(default);
               continue;
             }
 
-            //object target = null;
-            //if (hint != null) {
-            //  hint.Cast(RuntimeHelpers.GetObjectValue(list[j]), out target);
-            //  if (target != null && target is T) {
-            //    list2.Add((T)target);
-            //  }
-            //} else {
-            //var target2 = default(IGH_Goo);
-            //if (((IGH_Goo)list[j]).CastTo<IGH_Goo>(out target2)) {
-            //  list2.Add(target2);
-            //} else if (list[j] is IGH_Goo) {
-            //  list2.Add((IGH_Goo)list[j]);
-            //} else {
-            //  list2.Add(default(IGH_Goo));
-            //}
-            //}
-
             list2.Add((IGH_Goo)list[j]);
-            tree.AddRange(list2, structure.get_Path(i));
           }
+          tree.AddRange(list2, structure.get_Path(i));
         }
 
         EpirationManager.AddTree(index, tree, 1);
       }
+
       RunOnce = true;
     }
 

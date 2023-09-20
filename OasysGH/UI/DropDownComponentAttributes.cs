@@ -104,7 +104,7 @@ namespace OasysGH.UI {
         if (_unfolded[i]) {
           if (e.Button == MouseButtons.Left) {
             RectangleF rec = _scrollBar;
-                var comp = Owner as GH_Component;
+            var comp = Owner as GH_Component;
             if (rec.Contains(e.CanvasLocation)) {
               _dragMouseStartY = e.CanvasLocation.Y;
               _drag = true;
@@ -123,7 +123,7 @@ namespace OasysGH.UI {
         var comp = Owner as GH_Component;
 
         _deltaY = e.CanvasLocation.Y - _dragMouseStartY;
-        
+
         comp.ExpireSolution(true);
         return GH_ObjectResponse.Ignore;
       }
