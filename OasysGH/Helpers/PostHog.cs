@@ -12,23 +12,23 @@ namespace OasysGH.Helpers {
   public class PostHog {
     private class PhContainer {
       // for PostHog to work these json properties need to be lower case!
-      [JsonProperty("properties")]
-      private Dictionary<string, object> _properties;
-
       [JsonProperty("api_key")]
       private string _apiKey;
 
       [JsonProperty("event")]
       private string _event;
 
+      [JsonProperty("properties")]
+      private Dictionary<string, object> _properties;
+
       [JsonProperty("timestamp")]
       private DateTime _timestamp;
 
-      public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties) {
+      public PhContainer(string apiKey, string eventName, Dictionary<string, object> properties) {
+        _apiKey = apiKey;
         _event = eventName;
         _properties = properties;
         _timestamp = DateTime.UtcNow;
-        _apiKey = pluginInfo.PostHogApiKey;
       }
     }
 
@@ -102,7 +102,7 @@ namespace OasysGH.Helpers {
         }
       }
 
-      var container = new PhContainer(pluginInfo, eventName, properties);
+      var container = new PhContainer(pluginInfo.PostHogApiKey, eventName, properties);
       string body = JsonConvert.SerializeObject(container);
       var content = new StringContent(body, Encoding.UTF8, "application/json");
       HttpResponseMessage response = await phClient.PostAsync("https://posthog.insights.arup.com/capture/", content);
