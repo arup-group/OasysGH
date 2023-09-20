@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Oasys.Taxonomy.IGeometry">
+      <HintPath>..\lib\Oasys.Taxonomy.IGeometry.dll</HintPath>
+    </Reference>
     <Reference Include="Oasys.Taxonomy.IProfiles">
       <HintPath>..\lib\Oasys.Taxonomy.IProfiles.dll</HintPath>
     </Reference>
