@@ -203,6 +203,12 @@ namespace OasysGH.Components {
           // update section list from new types (all new types in catalogue)
           var types = _typeNumbers.ToList();
           types.RemoveAt(0); // remove -1 from beginning of list
+          if (types.Count == 0) {
+            AddRuntimeMessage(GH_RuntimeMessageLevel.Warning,
+              "Selected catalogue contains no sections. Try include superseeded.");
+            return;
+          }
+
           _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
 
           // update selections to display first item in new list
@@ -229,6 +235,11 @@ namespace OasysGH.Components {
 
           // section list with selected types (only types in selected type)
           _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
+          if (_sectionList.Count < 2) {
+            AddRuntimeMessage(GH_RuntimeMessageLevel.Warning,
+              "Selected section type contains no profile. Try include superseeded.");
+            return;
+          }
 
           // update selected section to be all
           _selectedItems[3] = _sectionList[0];
