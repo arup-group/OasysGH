@@ -32,7 +32,6 @@ namespace OasysGH.UI {
         int num = Math.Max(Math.Max(sp, bt), 90);
         return Math.Min(num, 170);
       }
-      set => MinWidth = value;
     }
 
     private readonly Action<int, int> _action;

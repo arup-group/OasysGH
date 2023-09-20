@@ -52,8 +52,5 @@ namespace GH_UnitNumber {
           GH_UnitNumberInfo.isBeta,
           "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
           ));
-
-    private GH_UnitNumberPluginInfo() {
-    }
   }
 }

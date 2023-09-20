@@ -18,7 +18,7 @@ namespace OasysGH.Helpers {
       var points = new List<IPoint2d>();
 
       // map points to XY plane so we can create local points from x and y coordinates
-      var xform = Rhino.Geometry.Transform.PlaneToPlane(local, Plane.WorldXY);
+      var xform = Transform.PlaneToPlane(local, Plane.WorldXY);
 
       for (int i = 0; i < polyline.Count - 1; i++)
       // -1 on count because the profile is always closed and thus doesn´t

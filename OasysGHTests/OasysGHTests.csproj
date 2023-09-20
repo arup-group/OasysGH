@@ -25,6 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Oasys.Taxonomy.IGeometry">
+      <HintPath>..\lib\Oasys.Taxonomy.IGeometry.dll</HintPath>
+    </Reference>
+    <Reference Include="Oasys.Taxonomy.IProfiles">
+      <HintPath>..\lib\Oasys.Taxonomy.IProfiles.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Yak.Core">
       <HintPath>..\..\..\..\..\..\Program Files\Rhino 7\System\Yak.Core.dll</HintPath>

@@ -18,7 +18,7 @@ namespace OasysGHTests.TestHelpers {
     }
 
     public static IGH_Attributes Attributes(GH_OasysDropDownComponent comp) {
-      GH_Canvas canvas = Document.CreateCanvas();
+      GH_Canvas canvas = CreateCanvas();
       canvas.Document.AddObject(comp, true);
       comp.CreateAttributes();
       comp.Attributes.PerformLayout();

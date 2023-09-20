@@ -35,14 +35,8 @@ namespace OasysGH.Parameters {
     }
 
     public override bool CastTo<Q>(ref Q target) {
-      if (typeof(Q).IsAssignableFrom(typeof(T))) {
-        if (Value == null) {
-          target = default;
-        }
-        else {
-          target = (Q)(object)Value;
-        }
-
+      if (typeof(Q).IsAssignableFrom(typeof(T)) && (Value != null)) {
+        target = (Q)(object)Value;
         return true;
       }
 
@@ -53,8 +47,7 @@ namespace OasysGH.Parameters {
     public override string ToString() {
       if (Value == null) {
         return "Null";
-      }
-      else {
+      } else {
         return PluginInfo.ProductName + " " + TypeName + " (" + Value.ToString() + ")";
       }
     }

@@ -203,6 +203,12 @@ namespace OasysGH.Components {
           // update section list from new types (all new types in catalogue)
           var types = _typeNumbers.ToList();
           types.RemoveAt(0); // remove -1 from beginning of list
+          if (types.Count == 0) {
+            AddRuntimeMessage(GH_RuntimeMessageLevel.Warning,
+              "Selected catalogue contains no sections. Try include superseeded.");
+            return;
+          }
+
           _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
 
           // update selections to display first item in new list

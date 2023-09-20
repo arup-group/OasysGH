@@ -42,18 +42,13 @@ namespace OasysGH.Parameters {
     }
 
     public override bool CastTo<Q>(ref Q target) {
-      if (typeof(Q).IsAssignableFrom(typeof(GH_UnitNumber))) {
+      if (typeof(Q).IsAssignableFrom(typeof(GH_UnitNumber)) && Value != null) {
         target = (Q)(object)new GH_UnitNumber(Value);
         return true;
       }
 
-      if (typeof(Q).IsAssignableFrom(typeof(GH_Number))) {
-        if (Value == null) {
-          target = default;
-        } else {
-          target = (Q)(object)new GH_Number(Value.Value);
-        }
-
+      if (typeof(Q).IsAssignableFrom(typeof(GH_Number)) && Value != null) {
+        target = (Q)(object)new GH_Number(Value.Value);
         return true;
       }
 

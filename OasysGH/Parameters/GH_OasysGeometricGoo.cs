@@ -11,8 +11,7 @@ namespace OasysGH.Parameters {
       get {
         if (IsValid) {
           return string.Empty;
-        }
-        else {
+        } else {
           GetGeometry().IsValidWithLog(out string whyNot);
           return whyNot;
         }
@@ -40,14 +39,8 @@ namespace OasysGH.Parameters {
     }
 
     public override bool CastTo<Q>(ref Q target) {
-      if (typeof(Q).IsAssignableFrom(typeof(T))) {
-        if (Value == null) {
-          target = default;
-        }
-        else {
-          target = (Q)(object)Value;
-        }
-
+      if (typeof(Q).IsAssignableFrom(typeof(T)) && Value != null) {
+        target = (Q)(object)Value;
         return true;
       }
 

@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
 using OasysGH.UI;
@@ -10,7 +9,7 @@ namespace OasysGHTests.Components {
   [Collection("GrasshopperFixture collection")]
   public class ThreeButtonComponentTests {
     [Fact]
-    public static void ClickFirstButtonTest() {
+    public void ClickFirstButtonTest() {
       var comp = new ThreeButtonComponent();
       comp.CreateAttributes();
       comp.ExpireSolution(true);
@@ -26,7 +25,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public static void ClickSecondButtonTest() {
+    public void ClickSecondButtonTest() {
       var comp = new ThreeButtonComponent();
       comp.CreateAttributes();
       comp.ExpireSolution(true);
@@ -42,7 +41,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public static void ClickThirdButtonTest() {
+    public void ClickThirdButtonTest() {
       var comp = new ThreeButtonComponent();
       comp.CreateAttributes();
       comp.ExpireSolution(true);
@@ -58,7 +57,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public static void TestAttributes() {
+    public void TestAttributes() {
       var comp = new ThreeButtonComponent();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
@@ -14,6 +13,8 @@ namespace OasysGHTests.Parameters {
       var param = new OasysGooParameter();
       Assert.NotNull(param.Icon_24x24);
       Assert.Equal(GH_Exposure.hidden, param.Exposure);
+      Assert.True(param.Hidden);
+      Assert.False(param.IsPreviewCapable);
       Assert.NotEqual(new Guid(), param.ComponentGuid);
       Assert.NotNull(param.InstanceDescription);
       Assert.NotNull(param.TypeName);

@@ -31,7 +31,6 @@ namespace OasysGH.UI {
         float num = Math.Max(Math.Max(sp, bt), 90);
         return num;
       }
-      set => MinWidth = value;
     }
 
     private readonly Action _action;
@@ -92,7 +91,6 @@ namespace OasysGH.UI {
             _mouseOver = false;
             Owner.OnDisplayExpired(false);
             _action();
-            //                        Owner.ExpireSolution(true);
             return GH_ObjectResponse.Release;
           }
         }

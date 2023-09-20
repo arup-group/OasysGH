@@ -6,14 +6,12 @@ using OasysGH.Units.Helpers;
 using OasysUnits.Units;
 using OasysUnits;
 using OasysGH.Units;
-using OasysGH.Components;
-using OasysGH;
 using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
 namespace OasysGH.Components.Tests {
   public class DropDownSliderComponent : GH_OasysDropDownComponent {
     public override Guid ComponentGuid => new Guid("dbcce9f9-2028-42ed-b392-73cba819218a");
-    public override GH_Exposure Exposure => GH_Exposure.hidden;
+    public override GH_Exposure Exposure => GH_Exposure.primary;
     public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
     private LengthUnit _lengthUnit = DefaultUnits.LengthUnitGeometry;
     private double _value = 500;

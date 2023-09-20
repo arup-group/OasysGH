@@ -27,7 +27,6 @@ namespace OasysGH.UI {
         float num = Math.Max(sp, 90);
         return num;
       }
-      set => MinWidth = value;
     }
 
     private readonly Action<double, double> _changeMaxMin;
@@ -91,7 +90,7 @@ namespace OasysGH.UI {
           _maxValue = (double)hiddenSlider.Slider.Maximum;
           _minValue = (double)hiddenSlider.Slider.Minimum;
           _currentValue = (double)hiddenSlider.Slider.Value;
-          _noDigits = hiddenSlider.Slider.Type == Grasshopper.GUI.Base.GH_SliderAccuracy.Integer ? 0 : hiddenSlider.Slider.DecimalPlaces;
+          _noDigits = hiddenSlider.Slider.Type == GH_SliderAccuracy.Integer ? 0 : hiddenSlider.Slider.DecimalPlaces;
           _changeMaxMin(_maxValue, _minValue);
           Owner.OnDisplayExpired(false);
           Owner.ExpireSolution(true);

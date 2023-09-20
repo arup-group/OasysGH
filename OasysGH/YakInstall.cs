@@ -33,14 +33,19 @@ namespace OasysGH {
 
           // OasysGH and GH_UnitNumber share the same version number!
           System.Version version = Assembly.GetExecutingAssembly().GetName().Version;
+          bool isBeta = false;
           if (version == null) {
             var latestVersion = new System.Version(versions[0].Number.Replace("-beta", string.Empty));
-            if (versions[0].Number.Contains("-beta"))
+            if (versions[0].Number.Contains("-beta")) {
               latestVersion = new System.Version(latestVersion.Major, latestVersion.Minor, latestVersion.Build, latestVersion.Revision + 1);
+              isBeta = true;
+            }
+
             version = latestVersion;
           }
 
-          string versionNumber = version.Major + "." + version.Minor + "." + version.Build + "-beta";
+          string versionNumber = version.Major + "." + version.Minor + "." + version.Build +
+            (isBeta ? "-beta" : string.Empty);
 
           // don´t install a newer version than the version of OasysGH calling this
           if (version > installedVersion) {

@@ -1,14 +1,12 @@
 ﻿using System;
 using Grasshopper.Kernel;
 using OasysGH.UI;
-using OasysGH.Components;
-using OasysGH;
 using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
 namespace OasysGH.Components.Tests {
   public class SliderComponent : GH_OasysDropDownComponent {
     public override Guid ComponentGuid => new Guid("3d185ae4-3013-425c-bfe0-029cf8b46d29");
-    public override GH_Exposure Exposure => GH_Exposure.hidden;
+    public override GH_Exposure Exposure => GH_Exposure.primary;
     public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
     private double _value = 500;
     private double _maxValue = 1000;
