@@ -13,16 +13,16 @@ namespace OasysGH.Helpers {
     private class PhContainer {
       // for PostHog to work these json properties need to be lower case!
       [JsonProperty("properties")]
-      private Dictionary<string, object> _properties { get; set; }
+      private Dictionary<string, object> _properties;
 
       [JsonProperty("api_key")]
-      private string _apiKey { get; set; }
+      private string _apiKey;
 
       [JsonProperty("event")]
-      private string _event { get; set; }
+      private string _event;
 
       [JsonProperty("timestamp")]
-      private DateTime _timestamp { get; set; }
+      private DateTime _timestamp;
 
       public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties) {
         _event = eventName;
