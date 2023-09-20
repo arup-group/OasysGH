@@ -12,6 +12,7 @@ namespace OasysGH.Helpers {
   public class PostHog {
     private class PhContainer {
       public Dictionary<string, object> Properties { get; set; }
+
       [JsonProperty("api_key")]
       private string api_key { get; set; }
 
@@ -90,7 +91,7 @@ namespace OasysGH.Helpers {
       User user = currentUser;
 
       var properties = new Dictionary<string, object>() {
-        { "distinct_id", user.userName },
+        { "distinct_id", user.UserName },
         { "user", user },
         { "pluginName", pluginInfo.PluginName },
         { "version", pluginInfo.Version },
@@ -111,28 +112,29 @@ namespace OasysGH.Helpers {
   }
 
   internal class User {
-    public string email { get; set; }
-    public string userName { get; set; }
+    public string Email { get; set; }
+    public string UserName { get; set; }
 
     internal User() {
-      userName = Environment.UserName.ToLower();
+      UserName = Environment.UserName.ToLower();
       try {
         var task = Task.Run(() => UserPrincipal.Current.EmailAddress);
         if (task.Wait(TimeSpan.FromSeconds(2))) {
           if (task.Result.EndsWith("arup.com"))
-            email = task.Result;
+            Email = task.Result;
           else {
-            email = task.Result.GetHashCode().ToString();
-            userName = userName.GetHashCode().ToString();
+            Email = task.Result.GetHashCode().ToString();
+            UserName = UserName.GetHashCode().ToString();
           }
+
           return;
         }
       } catch (Exception) { }
 
       if (Environment.UserDomainName.ToLower() == "global")
-        email = userName + "@arup.com";
+        Email = UserName + "@arup.com";
       else
-        userName = userName.GetHashCode().ToString();
+        UserName = UserName.GetHashCode().ToString();
     }
   }
 }

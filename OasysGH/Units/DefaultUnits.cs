@@ -9,12 +9,7 @@ namespace OasysGH.Units {
     public static AngleUnit AngleUnit { get; set; } = AngleUnit.Radian;
     public static AxialStiffnessUnit AxialStiffnessUnit { get; set; } = AxialStiffnessUnit.Kilonewton;
     public static BendingStiffnessUnit BendingStiffnessUnit { get; set; } = BendingStiffnessUnit.KilonewtonSquareMeter;
-    public static CoefficientOfThermalExpansionUnit CoefficientOfThermalExpansionUnit {
-      get {
-        return UnitsHelper.GetCoefficientOfThermalExpansionUnit(DefaultUnits.TemperatureUnit);
-      }
-    }
-
+    public static CoefficientOfThermalExpansionUnit CoefficientOfThermalExpansionUnit => UnitsHelper.GetCoefficientOfThermalExpansionUnit(DefaultUnits.TemperatureUnit);
     public static CurvatureUnit CurvatureUnit { get; set; } = CurvatureUnit.PerMeter;
     public static DensityUnit DensityUnit { get; set; } = DensityUnit.KilogramPerCubicMeter;
     public static EnergyUnit EnergyUnit { get; set; } = EnergyUnit.Megajoule;
@@ -33,7 +28,6 @@ namespace OasysGH.Units {
         lengthGeometry = value;
       }
     }
-
     public static LengthUnit LengthUnitSection { get; set; } = LengthUnit.Centimeter;
     public static LinearDensityUnit LinearDensityUnit { get; set; } = LinearDensityUnit.KilogramPerMeter;
     public static MassUnit MassUnit { get; set; } = MassUnit.Tonne;
@@ -58,9 +52,7 @@ namespace OasysGH.Units {
         else
           return tolerance;
       }
-      set {
-        tolerance = value;
-      }
+      set => tolerance = value;
     }
 
     public static bool UseRhinoLengthGeometryUnit { get; set; } = false;

@@ -1,7 +1,6 @@
 ﻿using OasysUnits.Units;
 
 namespace OasysGH.Units {
-  // that should be called something else
   internal class UnitSystem {
     internal AccelerationUnit AccelerationUnit { get; }
     internal AxialStiffnessUnit AxialStiffnessUnit { get; }

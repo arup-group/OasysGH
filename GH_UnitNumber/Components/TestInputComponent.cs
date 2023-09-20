@@ -10,12 +10,8 @@ namespace GH_UnitNumber.Components {
     public override GH_Exposure Exposure => GH_Exposure.hidden;
     public override OasysPluginInfo PluginInfo => GH_UnitNumberPluginInfo.Instance;
 
-    public TestInputComponent() : base(
-      "Test Component",
-      "Test",
-      "A component to test unitsnumber inputs",
-      "Test",
-      "Test") {
+    public TestInputComponent() : base("Test Component", "Test",
+      "A component to test unitsnumber inputs", "Test", "Test") {
     }
 
     protected override void RegisterInputParams(GH_InputParamManager pManager) {
@@ -41,6 +37,7 @@ namespace GH_UnitNumber.Components {
       if (Params.Input[0].SourceCount > 0) {
         da.SetData(0, OasysGH.Helpers.Input.UnitNumber(this, da, 0, MomentUnit.KilonewtonMeter));
       }
+
       if (Params.Input[1].SourceCount > 0) {
         da.SetDataList(1, OasysGH.Helpers.Input.UnitNumberList(this, da, 1, ForceUnit.Kilonewton));
       }
@@ -48,6 +45,7 @@ namespace GH_UnitNumber.Components {
       if (Params.Input[2].SourceCount > 0) {
         da.SetData(0, OasysGH.Helpers.Input.GenericGoo<OasysGH.Parameters.GH_UnitNumber>(this, da, 2));
       }
+
       if (Params.Input[3].SourceCount > 0) {
         da.SetDataList(1, OasysGH.Helpers.Input.GenericGooList<OasysGH.Parameters.GH_UnitNumber>(this, da, 3));
       }
@@ -55,6 +53,7 @@ namespace GH_UnitNumber.Components {
       if (Params.Input[4].SourceCount > 0) {
         da.SetData(0, OasysGH.Helpers.Input.LengthOrRatio(this, da, 4, LengthUnit.Meter));
       }
+
       if (Params.Input[5].SourceCount > 0) {
         da.SetDataList(1, OasysGH.Helpers.Input.LengthsOrRatios(this, da, 5, LengthUnit.Meter));
       }
@@ -62,9 +61,11 @@ namespace GH_UnitNumber.Components {
       if (Params.Input[6].SourceCount > 0) {
         da.SetData(0, OasysGH.Helpers.Input.UnitNumberOrDoubleAsRatioToPercentage(this, da, 6));
       }
+
       if (Params.Input[7].SourceCount > 0) {
         da.SetData(0, OasysGH.Helpers.Input.RatioInDecimalFractionToPercentage(this, da, 7));
       }
+
       if (Params.Input[8].SourceCount > 0) {
         da.SetData(0, OasysGH.Helpers.Input.RatioInDecimalFractionToDecimalFraction(this, da, 8));
       }

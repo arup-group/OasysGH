@@ -8,7 +8,7 @@ using OasysUnits;
 
 namespace GH_UnitNumber {
   /// <summary>
-  /// This class provides a Parameter interface for the CustomGoo type.
+  /// This class provides a Parameter interface for <see cref="GH_UnitNumber"/>.
   /// </summary>
   public class GH_UnitNumberParameter : GH_PersistentParam<OasysGH.Parameters.GH_UnitNumber> {
     public override Guid ComponentGuid => new Guid("007d8fa3-aeb6-492a-b885-4736925f22a8");

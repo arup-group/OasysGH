@@ -5,12 +5,8 @@ using Rhino.Geometry;
 namespace OasysGH.Parameters {
   public abstract class GH_OasysPersistentGeometryParam<T> : GH_OasysPersistentParam<T>, IGH_PreviewObject where T : class, IGH_GeometricGoo {
     public virtual BoundingBox ClippingBox => Preview_ComputeClippingBox();
-
     public override bool Hidden { get; set; }
-
-    public override bool IsPreviewCapable {
-      get { return true; }
-    }
+    public override bool IsPreviewCapable => true;
 
     protected GH_OasysPersistentGeometryParam(GH_InstanceDescription nTag) : base(nTag) {
     }
