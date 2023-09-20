@@ -35,13 +35,11 @@ namespace GH_UnitNumberTests.Parameters {
       param.AppendAdditionalMenuItems(form);
       Assert.Equal(13, form.Items.Count);
 
-
       var path = new GH_Path(0);
       var l = new Length(5, OasysUnits.Units.LengthUnit.Meter);
       var unitnumber = new OasysGH.Parameters.GH_UnitNumber(l);
       param.AddVolatileData(path, 0, unitnumber);
       Assert.Equal("One locally defined value…\r\n5m", param.InstanceDescription);
-
     }
 
     [Fact]
