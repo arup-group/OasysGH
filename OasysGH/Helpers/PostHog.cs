@@ -10,7 +10,11 @@ using OasysGH.Components;
 
 namespace OasysGH.Helpers {
   public class PostHog {
+    // do not change this class!
     private class PhContainer {
+      // for PostHog to work this member needs to be lower case and public!
+      public Dictionary<string, object> properties { get; set; }
+
       [JsonProperty("api_key")]
       string api_key { get; set; }
 
@@ -19,18 +23,17 @@ namespace OasysGH.Helpers {
 
       [JsonProperty("timestamp")]
       DateTime ph_timestamp { get; set; }
-      public Dictionary<string, object> properties { get; set; }
 
       public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties) {
-        this.ph_event = eventName;
+        ph_event = eventName;
         this.properties = properties;
-        this.ph_timestamp = DateTime.UtcNow;
-        this.api_key = pluginInfo.PostHogApiKey;
+        ph_timestamp = DateTime.UtcNow;
+        api_key = pluginInfo.PostHogApiKey;
       }
     }
 
-    internal static User CurrentUser = new User();
-    private static HttpClient _phClient = new HttpClient();
+    internal static User currentUser = new User();
+    private static HttpClient phClient = new HttpClient();
 
     public static void AddedToDocument(GH_OasysComponent component) {
       AddedToDocument(component, component.PluginInfo);
@@ -38,7 +41,7 @@ namespace OasysGH.Helpers {
 
     public static void AddedToDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       string eventName = "AddedToDocument";
-      Dictionary<string, object> properties = new Dictionary<string, object>()
+      var properties = new Dictionary<string, object>()
       {
         { "componentName", component.Name },
       };
@@ -47,8 +50,8 @@ namespace OasysGH.Helpers {
 
     public static void ModelIO(OasysPluginInfo pluginInfo, string interactionType, int size = 0) {
       string eventName = "ModelIO";
-      Dictionary<string, object> properties = new Dictionary<string, object>()
-      {
+      var properties = new Dictionary<string, object>()
+       {
         { "interactionType", interactionType },
         { "size", size },
       };
@@ -58,8 +61,8 @@ namespace OasysGH.Helpers {
     public static void PluginLoaded(OasysPluginInfo pluginInfo, string error = "") {
       string eventName = "PluginLoaded";
 
-      Dictionary<string, object> properties = new Dictionary<string, object>()
-      {
+      var properties = new Dictionary<string, object>()
+           {
         { "rhinoVersion", Rhino.RhinoApp.Version.ToString().Split('.')
                           + "." + Rhino.RhinoApp.Version.ToString().Split('.')[1] },
         { "rhinoMajorVersion", Rhino.RhinoApp.ExeVersion },
@@ -76,8 +79,8 @@ namespace OasysGH.Helpers {
     public static void RemovedFromDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       if (component.Attributes.Selected) {
         string eventName = "RemovedFromDocument";
-        Dictionary<string, object> properties = new Dictionary<string, object>()
-        {
+        var properties = new Dictionary<string, object>()
+         {
           { "componentName", component.Name },
           { "runCount", component.RunCount },
         };
@@ -87,9 +90,9 @@ namespace OasysGH.Helpers {
 
     public static async Task<HttpResponseMessage> SendToPostHog(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> additionalProperties = null) {
       // posthog ADS plugin requires a user object
-      User user = CurrentUser;
+      User user = currentUser;
 
-      Dictionary<string, object> properties = new Dictionary<string, object>() {
+      var properties = new Dictionary<string, object>() {
         { "distinct_id", user.userName },
         { "user", user },
         { "pluginName", pluginInfo.PluginName },
@@ -103,9 +106,9 @@ namespace OasysGH.Helpers {
       }
 
       var container = new PhContainer(pluginInfo, eventName, properties);
-      var body = JsonConvert.SerializeObject(container);
+      string body = JsonConvert.SerializeObject(container);
       var content = new StringContent(body, Encoding.UTF8, "application/json");
-      var response = await _phClient.PostAsync("https://posthog.insights.arup.com/capture/", content);
+      HttpResponseMessage response = await phClient.PostAsync("https://posthog.insights.arup.com/capture/", content);
       return response;
     }
   }
@@ -125,6 +128,7 @@ namespace OasysGH.Helpers {
             email = task.Result.GetHashCode().ToString();
             userName = userName.GetHashCode().ToString();
           }
+
           return;
         }
       } catch (Exception) { }
