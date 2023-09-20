@@ -35,5 +35,14 @@ namespace OasysGHTests.Components {
       var attributes = (DropDownComponentAttributes)Document.Attributes(comp);
       attributes.CustomRender(new PictureBox().CreateGraphics());
     }
+
+    [Fact]
+    public void NoSelectionsTest() {
+      var comp = new DropDownComponent();
+      comp._selectedItems = null;
+      comp._isInitialised = true;
+      comp.CreateAttributes();
+      Assert.NotNull(comp.Attributes);
+    }
   }
 }
