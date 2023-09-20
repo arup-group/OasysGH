@@ -82,9 +82,6 @@ namespace GH_UnitNumber.Components {
 
     public void CreateValueList() {
       string name = _convertedUnitNumber.Value.QuantityInfo.Name + " Units";
-      var values = _unitDictionary.Keys.ToList();
-
-      _ = _unitDictionary.Keys.ToList();
       float x = Attributes.Bounds.X;
       float y = Params.Input[1].Attributes.Bounds.Y;
       var vallist = new GH_ValueList();
@@ -99,6 +96,7 @@ namespace GH_UnitNumber.Components {
         string abbrName = kvp.Key;
         vallist.ListItems.Add(new GH_ValueListItem(fullName, String.Format("\"{0}\"", abbrName)));
       }
+
       vallist.Attributes.Pivot = new PointF(x - vallist.Attributes.Bounds.Width, y);
 
       Grasshopper.Instances.ActiveCanvas.Document.AddObject(vallist, false);
@@ -113,6 +111,7 @@ namespace GH_UnitNumber.Components {
         _selectedItems[i] = _dropDownItems[i][j];
         _dropDownItems[0] = _unitDictionary.Keys.ToList();
       }
+
       base.UpdateUI();
     }
 
