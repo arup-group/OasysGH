@@ -41,8 +41,7 @@ namespace OasysGH.Helpers {
 
     public static void AddedToDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       string eventName = "AddedToDocument";
-      var properties = new Dictionary<string, object>()
-      {
+      var properties = new Dictionary<string, object>() {
         { "componentName", component.Name },
       };
       _ = SendToPostHog(pluginInfo, eventName, properties);
@@ -50,8 +49,7 @@ namespace OasysGH.Helpers {
 
     public static void ModelIO(OasysPluginInfo pluginInfo, string interactionType, int size = 0) {
       string eventName = "ModelIO";
-      var properties = new Dictionary<string, object>()
-       {
+      var properties = new Dictionary<string, object>() {
         { "interactionType", interactionType },
         { "size", size },
       };
@@ -61,8 +59,7 @@ namespace OasysGH.Helpers {
     public static void PluginLoaded(OasysPluginInfo pluginInfo, string error = "") {
       string eventName = "PluginLoaded";
 
-      var properties = new Dictionary<string, object>()
-           {
+      var properties = new Dictionary<string, object>() {
         { "rhinoVersion", Rhino.RhinoApp.Version.ToString().Split('.')
                           + "." + Rhino.RhinoApp.Version.ToString().Split('.')[1] },
         { "rhinoMajorVersion", Rhino.RhinoApp.ExeVersion },
@@ -79,8 +76,7 @@ namespace OasysGH.Helpers {
     public static void RemovedFromDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       if (component.Attributes.Selected) {
         string eventName = "RemovedFromDocument";
-        var properties = new Dictionary<string, object>()
-         {
+        var properties = new Dictionary<string, object>() {
           { "componentName", component.Name },
           { "runCount", component.RunCount },
         };
@@ -101,8 +97,9 @@ namespace OasysGH.Helpers {
       };
 
       if (additionalProperties != null) {
-        foreach (string key in additionalProperties.Keys)
+        foreach (string key in additionalProperties.Keys) {
           properties.Add(key, additionalProperties[key]);
+        }
       }
 
       var container = new PhContainer(pluginInfo, eventName, properties);
@@ -133,10 +130,11 @@ namespace OasysGH.Helpers {
         }
       } catch (Exception) { }
 
-      if (Environment.UserDomainName.ToLower() == "global")
+      if (Environment.UserDomainName.ToLower() == "global") {
         Email = UserName + "@arup.com";
-      else
+      } else {
         UserName = UserName.GetHashCode().ToString();
+      }
     }
   }
 }
