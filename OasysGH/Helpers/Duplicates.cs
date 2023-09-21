@@ -63,6 +63,18 @@ namespace OasysGH.Helpers {
             }
           }
 
+          if(objPropertyValueA == null && objPropertyValueB != null) {
+            return false;
+          }
+
+          if (objPropertyValueA != null && objPropertyValueB == null) {
+            return false;
+          }
+
+          if (objPropertyValueA == null && objPropertyValueB == null) {
+            continue;
+          }
+
           if (typeof(IEnumerable).IsAssignableFrom(propertyTypeA)
             && !typeof(string).IsAssignableFrom(propertyTypeA)) {
             if (typeof(IEnumerable).IsAssignableFrom(propertyTypeB)
@@ -138,6 +150,7 @@ namespace OasysGH.Helpers {
               return false;
             }
           } else if (objPropertyValueA == null || objPropertyValueB == null) {
+            // this can be deleted probably
             if (!objPropertyValueA.Equals(objPropertyValueB)) {
               return false;
             }
