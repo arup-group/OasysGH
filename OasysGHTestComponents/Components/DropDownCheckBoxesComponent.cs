@@ -6,14 +6,12 @@ using OasysGH.Units.Helpers;
 using OasysUnits.Units;
 using OasysUnits;
 using OasysGH.Units;
-using OasysGH.Components;
-using OasysGH;
 using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
 namespace OasysGH.Components.Tests {
   public class DropDownCheckBoxesComponent : GH_OasysDropDownComponent {
     public override Guid ComponentGuid => new Guid("1d8ef8e7-2a17-4fb9-bab1-2527a7bfc7b9");
-    public override GH_Exposure Exposure => GH_Exposure.hidden;
+    public override GH_Exposure Exposure => GH_Exposure.primary;
     public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
     private bool _isChecked = false;
     private LengthUnit _lengthUnit = DefaultUnits.LengthUnitGeometry;

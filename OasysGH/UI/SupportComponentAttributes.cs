@@ -18,7 +18,6 @@ namespace OasysGH.UI {
   public class SupportComponentAttributes : GH_ComponentAttributes {
     private float MinWidth {
       get => 90;
-      set => MinWidth = value;
     }
 
     private readonly string _spacerTxt;

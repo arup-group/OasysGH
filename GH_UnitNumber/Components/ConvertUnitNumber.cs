@@ -56,9 +56,13 @@ namespace GH_UnitNumber.Components {
       Menu_AppendSeparator(menu);
     }
 
-    public void CreateTextPanel() {
+    public void CreateTextPanel(GH_Document doc = null) {
+      if (doc == null) {
+        doc = Grasshopper.Instances.ActiveCanvas.Document;
+      }
+
       // instantiate  new panel
-      var panel = new Grasshopper.Kernel.Special.GH_Panel();
+      var panel = new GH_Panel();
 
       panel.CreateAttributes();
 
@@ -72,7 +76,7 @@ namespace GH_UnitNumber.Components {
       txt = txt.TrimEnd('\n');
       panel.UserText = txt;
 
-      Grasshopper.Instances.ActiveCanvas.Document.AddObject(panel, false);
+      doc.AddObject(panel, false);
 
       panel.Properties.Multiline = false;
       panel.Properties.DrawPaths = false;
@@ -80,7 +84,11 @@ namespace GH_UnitNumber.Components {
       UpdateUI();
     }
 
-    public void CreateValueList() {
+    public void CreateValueList(GH_Document doc = null) {
+      if (doc == null) {
+        doc = Grasshopper.Instances.ActiveCanvas.Document;
+      }
+
       string name = _convertedUnitNumber.Value.QuantityInfo.Name + " Units";
       float x = Attributes.Bounds.X;
       float y = Params.Input[1].Attributes.Bounds.Y;
@@ -99,7 +107,7 @@ namespace GH_UnitNumber.Components {
 
       vallist.Attributes.Pivot = new PointF(x - vallist.Attributes.Bounds.Width, y);
 
-      Grasshopper.Instances.ActiveCanvas.Document.AddObject(vallist, false);
+      doc.AddObject(vallist, false);
       Params.Input[1].RemoveAllSources();
       Params.Input[1].AddSource(vallist);
 

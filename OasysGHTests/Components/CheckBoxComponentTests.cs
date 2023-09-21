@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using Grasshopper.Kernel.Types;
 using OasysGH.Components.Tests;
@@ -20,7 +14,7 @@ namespace OasysGHTests.Components {
     [InlineData(false, false, false, false, false, false)]
     [InlineData(true, false, true, false, true, false)]
     [InlineData(false, true, false, true, false, true)]
-    public static void ChangeCheckBoxesTest(bool x, bool y, bool z, bool xx, bool yy, bool zz) {
+    public void ChangeCheckBoxesTest(bool x, bool y, bool z, bool xx, bool yy, bool zz) {
       var comp = new CheckBoxComponent();
       comp.CreateAttributes();
 
@@ -54,7 +48,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public static void TestAttributes() {
+    public void TestAttributes() {
       var comp = new CheckBoxComponent();
       Assert.True(Mouse.TestMouseMove(comp));
       Assert.True(Mouse.TestMouseClick(comp));

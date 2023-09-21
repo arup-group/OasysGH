@@ -560,7 +560,7 @@ namespace OasysGH.Units.Helpers {
     /// <returns></returns>
     public static Enum Parse(Type unitType, string value) {
       CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
-      return UnitsHelper.Parse(unitType, value, culture);
+      return Parse(unitType, value, culture);
     }
 
     /// <summary>

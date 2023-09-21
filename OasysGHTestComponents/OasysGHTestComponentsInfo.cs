@@ -17,7 +17,7 @@ namespace OasysGHTestComponents {
 
     public override string AuthorContact => "";
 
-    internal sealed class OasysGHTestComponentsPluginInfo {
+    public sealed class OasysGHTestComponentsPluginInfo {
       public static OasysPluginInfo Instance => lazy.Value;
 
       private static readonly Lazy<OasysPluginInfo> lazy =

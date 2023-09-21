@@ -6,7 +6,7 @@ using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 namespace OasysGH.Components.Tests {
   public class ButtonComponent : GH_OasysDropDownComponent {
     public override Guid ComponentGuid => new Guid("c5815cf0-465b-443d-8a62-fa1be6175530");
-    public override GH_Exposure Exposure => GH_Exposure.hidden;
+    public override GH_Exposure Exposure => GH_Exposure.primary;
     public override OasysPluginInfo PluginInfo => OasysGHTestComponentsPluginInfo.Instance;
     private bool _wasClicked = false;
 

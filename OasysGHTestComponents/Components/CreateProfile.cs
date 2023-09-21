@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using Grasshopper.Kernel;
-using OasysGH;
-using OasysGH.Components;
 using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
 namespace OasysGH.Components.Tests {

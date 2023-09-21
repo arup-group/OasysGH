@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using Grasshopper.GUI.Gradient;
 using Rhino.Display;
@@ -8,6 +9,7 @@ namespace OasysGH.UI {
   /// Colour class holding the main colours used in colour scheme.
   /// Make calls to this class to be able to easy update colours.
   /// </summary>
+  [ExcludeFromCodeCoverage]
   public static class Colour {
     public static Brush ActiveBrush {
       get { return new SolidBrush(ActiveColour); }

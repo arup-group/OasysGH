@@ -17,7 +17,6 @@ namespace OasysGHTests.Parameters {
 
       goo = new OasysGeometricGoo(new LineCurve(Line.Unset));
       Assert.False(goo.IsValid);
-      //Assert.NotNull(goo.IsValidWhyNot);
       goo = new OasysGeometricGoo(new LineCurve(
         new Line(new Point3d(0, 0, 0), new Point3d(10, 0, 0))));
       Assert.True(goo.IsValid);
@@ -25,8 +24,20 @@ namespace OasysGHTests.Parameters {
     }
 
     [Fact]
+    public void IsValidWhyNotTest() {
+      var goo = new OasysGeometricGoo(new LineCurve(
+        new Line(new Point3d(0, 0, 0), new Point3d(0, 0, 0))));
+      Assert.Null(goo.IsValidWhyNot);
+      goo = new OasysGeometricGoo(new LineCurve(
+        new Line(new Point3d(0, 0, 0), new Point3d(10, 0, 0))));
+      Assert.Equal(string.Empty, goo.IsValidWhyNot);
+    }
+
+    [Fact]
     public void CastFromTest() {
       var goo = new OasysGeometricGoo(new LineCurve(Line.Unset));
+      Mesh m = null;
+      Assert.False(goo.CastFrom(m));
       Assert.False(goo.CastFrom(true));
       Assert.True(goo.CastFrom(new LineCurve(
         new Line(new Point3d(0, 0, 0), new Point3d(10, 0, 0)))));
@@ -43,6 +54,8 @@ namespace OasysGHTests.Parameters {
       var lineCrv = new LineCurve();
       Assert.True(goo.CastTo(ref lineCrv));
       Assert.Equal(10, lineCrv.GetLength());
+      goo = new OasysGeometricGoo(null);
+      Assert.False(goo.CastTo(ref lineCrv));
     }
 
     [Fact]
@@ -52,6 +65,9 @@ namespace OasysGHTests.Parameters {
       var scale = Transform.Scale(new Point3d(0, 0, 0), 0.5);
       BoundingBox bbox = goo.GetBoundingBox(scale);
       Assert.Equal(5 * 5 * 5, bbox.Volume);
+      goo = new OasysGeometricGoo(null);
+      bbox = goo.GetBoundingBox(scale);
+      Assert.Equal(BoundingBox.Empty, bbox);
     }
 
     [Fact]
@@ -87,7 +103,8 @@ namespace OasysGHTests.Parameters {
       Duplicates.AreEqual(objectGoo, duplicate);
 
       bool hasValue = false;
-      bool hasToString = false;
+      bool hasTypeName = false;
+      bool hasTypeDescription = false;
       bool hasName = false;
       bool hasNickName = false;
       bool hasDescription = false;
@@ -108,8 +125,14 @@ namespace OasysGHTests.Parameters {
 
         if (gooProperty.Name == "TypeName") {
           string typeName = (string)gooProperty.GetValue(objectGoo, null);
-          Assert.StartsWith("OasysGH " + typeName + " (", objectGoo.ToString());
-          hasToString = true;
+          Assert.StartsWith("OasysGH LineCurve", objectGoo.ToString());
+          hasTypeName = true;
+        }
+
+        if (gooProperty.Name == "TypeDescription") {
+          string typeDescription = (string)gooProperty.GetValue(objectGoo, null);
+          Assert.Equal("OasysGH LineCurve Parameter", typeDescription);
+          hasTypeDescription = true;
         }
 
         if (gooProperty.Name == "Name") {
@@ -124,18 +147,17 @@ namespace OasysGHTests.Parameters {
           hasNickName = true;
         }
 
-        if (gooProperty.Name != "Description") {
-          continue;
+        if (gooProperty.Name == "Description") {
+          string description = (string)gooProperty.GetValue(objectGoo, null);
+          Assert.Equal("A LineCurve example", description);
+          Assert.True(description.Length > 7);
+          hasDescription = true;
         }
-
-        string description = (string)gooProperty.GetValue(objectGoo, null);
-        Assert.Equal("A LineCurve example", description);
-        Assert.True(description.Length > 7);
-        hasDescription = true;
       }
 
       Assert.True(hasValue);
-      Assert.True(hasToString);
+      Assert.True(hasTypeName);
+      Assert.True(hasTypeDescription);
       Assert.True(hasName);
       Assert.True(hasNickName);
       Assert.True(hasDescription);

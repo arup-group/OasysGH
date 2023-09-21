@@ -11,22 +11,24 @@ using OasysGH.Components;
 namespace OasysGH.Helpers {
   public class PostHog {
     private class PhContainer {
-      public Dictionary<string, object> Properties { get; set; }
-
+      // for PostHog to work these json properties need to be lower case!
       [JsonProperty("api_key")]
-      private string api_key { get; set; }
+      private string _apiKey;
 
       [JsonProperty("event")]
-      private string ph_event { get; set; }
+      private string _event;
+
+      [JsonProperty("properties")]
+      private Dictionary<string, object> _properties;
 
       [JsonProperty("timestamp")]
-      private DateTime ph_timestamp { get; set; }
+      private DateTime _timestamp;
 
-      public PhContainer(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> properties) {
-        ph_event = eventName;
-        Properties = properties;
-        ph_timestamp = DateTime.UtcNow;
-        api_key = pluginInfo.PostHogApiKey;
+      public PhContainer(string apiKey, string eventName, Dictionary<string, object> properties) {
+        _apiKey = apiKey;
+        _event = eventName;
+        _properties = properties;
+        _timestamp = DateTime.UtcNow;
       }
     }
 
@@ -39,8 +41,7 @@ namespace OasysGH.Helpers {
 
     public static void AddedToDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       string eventName = "AddedToDocument";
-      var properties = new Dictionary<string, object>()
-      {
+      var properties = new Dictionary<string, object>() {
         { "componentName", component.Name },
       };
       _ = SendToPostHog(pluginInfo, eventName, properties);
@@ -48,8 +49,7 @@ namespace OasysGH.Helpers {
 
     public static void ModelIO(OasysPluginInfo pluginInfo, string interactionType, int size = 0) {
       string eventName = "ModelIO";
-      var properties = new Dictionary<string, object>()
-      {
+      var properties = new Dictionary<string, object>() {
         { "interactionType", interactionType },
         { "size", size },
       };
@@ -59,8 +59,7 @@ namespace OasysGH.Helpers {
     public static void PluginLoaded(OasysPluginInfo pluginInfo, string error = "") {
       string eventName = "PluginLoaded";
 
-      var properties = new Dictionary<string, object>()
-      {
+      var properties = new Dictionary<string, object>() {
         { "rhinoVersion", Rhino.RhinoApp.Version.ToString().Split('.')
                           + "." + Rhino.RhinoApp.Version.ToString().Split('.')[1] },
         { "rhinoMajorVersion", Rhino.RhinoApp.ExeVersion },
@@ -77,8 +76,7 @@ namespace OasysGH.Helpers {
     public static void RemovedFromDocument(GH_Component component, OasysPluginInfo pluginInfo) {
       if (component.Attributes.Selected) {
         string eventName = "RemovedFromDocument";
-        var properties = new Dictionary<string, object>()
-        {
+        var properties = new Dictionary<string, object>() {
           { "componentName", component.Name },
           { "runCount", component.RunCount },
         };
@@ -99,11 +97,12 @@ namespace OasysGH.Helpers {
       };
 
       if (additionalProperties != null) {
-        foreach (string key in additionalProperties.Keys)
+        foreach (string key in additionalProperties.Keys) {
           properties.Add(key, additionalProperties[key]);
+        }
       }
 
-      var container = new PhContainer(pluginInfo, eventName, properties);
+      var container = new PhContainer(pluginInfo.PostHogApiKey, eventName, properties);
       string body = JsonConvert.SerializeObject(container);
       var content = new StringContent(body, Encoding.UTF8, "application/json");
       HttpResponseMessage response = await phClient.PostAsync("https://posthog.insights.arup.com/capture/", content);
@@ -131,10 +130,11 @@ namespace OasysGH.Helpers {
         }
       } catch (Exception) { }
 
-      if (Environment.UserDomainName.ToLower() == "global")
+      if (Environment.UserDomainName.ToLower() == "global") {
         Email = UserName + "@arup.com";
-      else
+      } else {
         UserName = UserName.GetHashCode().ToString();
+      }
     }
   }
 }

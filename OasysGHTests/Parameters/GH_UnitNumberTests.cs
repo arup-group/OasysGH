@@ -4,7 +4,6 @@ using Grasshopper.Kernel.Types;
 using OasysGHTests.TestHelpers;
 using OasysUnits;
 using OasysUnits.Units;
-using Rhino.Geometry;
 using Xunit;
 
 namespace OasysGHTests.Parameters {
@@ -29,6 +28,8 @@ namespace OasysGHTests.Parameters {
       Assert.True(goo.CastFrom(new Length(1, LengthUnit.Meter)));
       Assert.True(goo.IsValid);
       Assert.Equal(1, goo.Value.Value);
+      var otherGoo = new OasysGH.Parameters.GH_UnitNumber(new Length(1, LengthUnit.Meter));
+      Assert.True(goo.CastFrom(otherGoo));
     }
 
     [Fact]
@@ -40,10 +41,13 @@ namespace OasysGHTests.Parameters {
       Assert.True(goo.CastTo(ref ghUnitNumber));
       Assert.True(goo.IsValid);
       Assert.Equal(1, goo.Value.Value);
+      var ghNumber = new GH_Number();
+      Assert.True(goo.CastTo(ref ghNumber));
+      Assert.Equal(1, ghNumber.Value);
     }
 
     [Fact]
-    public void GH_OasysGooTest() {
+    public void GH_UnitNumberTest() {
       Type gooType = typeof(OasysGH.Parameters.GH_UnitNumber);
       object value = new Length(1, LengthUnit.Meter);
       object[] parameters = {

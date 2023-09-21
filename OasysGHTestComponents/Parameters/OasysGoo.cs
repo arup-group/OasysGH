@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Grasshopper.Kernel.Types;
+﻿using Grasshopper.Kernel.Types;
 using static OasysGHTestComponents.OasysGHTestComponentsInfo;
 
 namespace OasysGH.Parameters.Tests {

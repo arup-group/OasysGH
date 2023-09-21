@@ -1,19 +1,20 @@
 ﻿using System.IO;
 using System.Reflection;
-using GH_UnitNumberTests.Helpers;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
+using IntegrationTests.Helpers;
 using OasysUnits;
 using OasysUnits.Units;
 using Xunit;
 
-namespace GH_UnitNumberTests {
+namespace IntegrationTests {
   [Collection("GrasshopperFixture collection")]
   public class Example01Test {
-
-    public static GH_Document Document() {
+    private static GH_Document Document => document ?? (document = OpenDocument());
+    private static GH_Document document = null;
+    private static GH_Document OpenDocument() {
       string fileName = MethodBase.GetCurrentMethod().DeclaringType.ToString().Replace(".", "_") + ".gh";
-      fileName = fileName.Replace("Tests", string.Empty).Replace("Test", string.Empty);
+      fileName = fileName.Replace("IntegrationTests", "GH_UnitNumber").Replace("Test", string.Empty);
 
       string solutiondir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName;
       string path = Path.Combine(solutiondir, "ExampleFiles");
@@ -26,7 +27,7 @@ namespace GH_UnitNumberTests {
 
     [Fact]
     public void Check1() {
-      GH_Document doc = Document();
+      GH_Document doc = Document;
       IGH_Param param = DocumentHelper.FindParameter(doc, "Check1");
       Assert.NotNull(param);
       param.CollectData();
@@ -36,7 +37,7 @@ namespace GH_UnitNumberTests {
 
     [Fact]
     public void Check2() {
-      GH_Document doc = Document();
+      GH_Document doc = Document;
       IGH_Param param = DocumentHelper.FindParameter(doc, "Check2");
       Assert.NotNull(param);
       param.CollectData();
@@ -46,7 +47,7 @@ namespace GH_UnitNumberTests {
 
     [Fact]
     public void Check3() {
-      GH_Document doc = Document();
+      GH_Document doc = Document;
       IGH_Param param = DocumentHelper.FindParameter(doc, "Check3");
       Assert.NotNull(param);
       param.CollectData();
@@ -56,7 +57,7 @@ namespace GH_UnitNumberTests {
 
     [Fact]
     public void Check4() {
-      GH_Document doc = Document();
+      GH_Document doc = Document;
       IGH_Param param = DocumentHelper.FindParameter(doc, "Check4");
       Assert.NotNull(param);
       param.CollectData();
@@ -73,7 +74,7 @@ namespace GH_UnitNumberTests {
 
     [Fact]
     public void NoRuntimeErrorsTest() {
-      DocumentHelper.TestNoRuntimeMessagesInDocument(Document(), GH_RuntimeMessageLevel.Error);
+      DocumentHelper.TestNoRuntimeMessagesInDocument(Document, GH_RuntimeMessageLevel.Error);
     }
   }
 }

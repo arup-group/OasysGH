@@ -50,43 +50,49 @@ namespace GH_UnitNumber {
     }
 
     protected override OasysGH.Parameters.GH_UnitNumber PreferredCast(object data) {
-      if (data.GetType() == typeof(OasysGH.Parameters.GH_UnitNumber))
-        return (OasysGH.Parameters.GH_UnitNumber)data;
-      else if (data.GetType() == typeof(GH_ObjectWrapper)) {
-        object val = ((GH_ObjectWrapper)data).Value;
-        if (typeof(IQuantity).IsAssignableFrom(val.GetType()))
-          return new OasysGH.Parameters.GH_UnitNumber((IQuantity)val);
+      switch (data) {
+        case IQuantity quantity:
+          return new OasysGH.Parameters.GH_UnitNumber(quantity);
+
+        case GH_ObjectWrapper gooWrapper:
+          object val = gooWrapper.Value;
+          if (typeof(IQuantity).IsAssignableFrom(val.GetType())) {
+            return new OasysGH.Parameters.GH_UnitNumber((IQuantity)val);
+          }
+
+          break;
       }
 
-      if (GH_Convert.ToString(data, out string txt, GH_Conversion.Both)) {
-        var types = Quantity.Infos.Select(x => x.ValueType).ToList();
+      GH_Convert.ToString(data, out string txt, GH_Conversion.Both);
+      var types = Quantity.Infos.Select(x => x.ValueType).ToList();
 
-        Type axialStiffness = types.Where(t => t.Name == "AxialStiffness").ToList()[0];
-        types.Remove(axialStiffness);
-        Type bendingStiffness = types.Where(t => t.Name == "BendingStiffness").ToList()[0];
-        types.Remove(bendingStiffness);
-        Type duration = types.Where(t => t.Name == "Duration").ToList()[0];
-        Type massFraction = types.Where(t => t.Name == "MassFraction").ToList()[0];
-        types.Remove(duration);
+      /// remove some types that have overlapping abbreviations like "m" for minute and meter
+      Type axialStiffness = types.Where(t => t.Name == "AxialStiffness").ToList()[0];
+      types.Remove(axialStiffness);
+      Type bendingStiffness = types.Where(t => t.Name == "BendingStiffness").ToList()[0];
+      types.Remove(bendingStiffness);
+      Type duration = types.Where(t => t.Name == "Duration").ToList()[0];
+      Type massFraction = types.Where(t => t.Name == "MassFraction").ToList()[0];
+      types.Remove(duration);
 
-        foreach (Type type in types) {
-          if (Quantity.TryParse(type, txt, out IQuantity quantity))
-            return new OasysGH.Parameters.GH_UnitNumber(quantity);
-        }
-
-        var alternativeTypes = new List<Type>();
-        types.Add(axialStiffness);
-        types.Add(bendingStiffness);
-        types.Add(duration);
-        types.Add(massFraction);
-        foreach (Type type in alternativeTypes) {
-          if (Quantity.TryParse(type, txt, out IQuantity quantity))
-            return new OasysGH.Parameters.GH_UnitNumber(quantity);
-        }
-
-        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to cast " + txt + " to any know quantity. Input a string like '15 mm' or '12.4 slug'");
-        return null;
+      foreach (Type type in types) {
+        if (Quantity.TryParse(type, txt, out IQuantity quantity))
+          return new OasysGH.Parameters.GH_UnitNumber(quantity);
       }
+
+      var alternativeTypes = new List<Type> {
+          axialStiffness,
+          bendingStiffness,
+          duration,
+          massFraction
+        };
+      foreach (Type type in alternativeTypes) {
+        if (Quantity.TryParse(type, txt, out IQuantity quantity)) {
+          return new OasysGH.Parameters.GH_UnitNumber(quantity);
+        }
+      }
+
+      AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to cast " + txt + " to any know quantity. Input a string like '15 mm' or '12.4 slug'");
       return base.PreferredCast(data);
     }
 

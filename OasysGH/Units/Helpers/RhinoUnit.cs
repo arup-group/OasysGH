@@ -5,12 +5,17 @@ using Rhino;
 
 namespace OasysGH.Units.Helpers {
   public class RhinoUnit {
-    public static LengthUnit GetRhinoLengthUnit() {
-      if (RhinoDoc.ActiveDoc == null) {
+
+    public static LengthUnit GetRhinoLengthUnit(RhinoDoc doc = null) {
+      if (doc == null) {
+        doc = RhinoDoc.ActiveDoc;
+      }
+
+      if (doc == null) {
         return LengthUnit.Meter;
       }
 
-      return GetRhinoLengthUnit(RhinoDoc.ActiveDoc.ModelUnitSystem);
+      return GetRhinoLengthUnit(doc.ModelUnitSystem);
     }
 
     public static LengthUnit GetRhinoLengthUnit(Rhino.UnitSystem rhinoUnits) {
@@ -39,13 +44,17 @@ namespace OasysGH.Units.Helpers {
       return units[rhinoUnits.GetHashCode()];
     }
 
-    public static Length GetRhinoTolerance() {
-      if (RhinoDoc.ActiveDoc == null) {
+    public static Length GetRhinoTolerance(RhinoDoc doc = null) {
+      if (doc == null) {
+        doc = RhinoDoc.ActiveDoc;
+      }
+
+      if (doc == null) {
         return new Length(0.01, LengthUnit.Meter);
       }
 
       LengthUnit lengthUnit = GetRhinoLengthUnit();
-      double tolerance = RhinoDoc.ActiveDoc.ModelAbsoluteTolerance;
+      double tolerance = doc.ModelAbsoluteTolerance;
       return new Length(tolerance, lengthUnit);
     }
   }
