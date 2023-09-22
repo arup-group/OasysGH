@@ -34,7 +34,9 @@ namespace OasysGH.Versions {
     internal static Version GetOasysGhVersion() {
       string v = OasysGHVersion.Version;
       if (OasysGHVersion.IsBeta) {
+#pragma warning disable CS0162 // Keep this check if we return to publishing beta versions
         v += "-beta";
+#pragma warning restore CS0162 // Unreachable code detected
       }
 
       return CreateVersion(v);
