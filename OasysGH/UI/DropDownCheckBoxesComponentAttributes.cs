@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using Grasshopper;
 using Grasshopper.GUI;
 using Grasshopper.GUI.Canvas;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Attributes;
+using OasysGH.Components;
 using OasysGH.UI.Helpers;
+using CheckBox = OasysGH.UI.Helpers.CheckBox;
 
 namespace OasysGH.UI {
   /// <summary>
@@ -117,16 +120,20 @@ namespace OasysGH.UI {
     // booleans for each check box
 
     public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e) {
+      var comp = Owner as GH_OasysDropDownComponent;
+      comp.Expire = false;
+
       if (e.Button == System.Windows.Forms.MouseButtons.Left) {
         for (int i = 0; i < _dropdownlists.Count; i++) {
           if (_unfolded[i]) {
             if (e.Button == System.Windows.Forms.MouseButtons.Left) {
               RectangleF rec = _scrollBar;
-              var comp = Owner as GH_Component;
               if (rec.Contains(e.CanvasLocation)) {
                 _dragMouseStartY = e.CanvasLocation.Y;
                 _drag = true;
+
                 comp.ExpireSolution(true);
+                comp.Expire = true;
                 return GH_ObjectResponse.Capture;
               }
             }
@@ -134,16 +141,19 @@ namespace OasysGH.UI {
         }
       }
 
+      comp.Expire = true;
       return base.RespondToMouseDown(sender, e);
     }
 
     public override GH_ObjectResponse RespondToMouseMove(GH_Canvas sender, GH_CanvasMouseEvent e) {
-      if (_drag) {
-        var comp = Owner as GH_Component;
+      var comp = Owner as GH_OasysDropDownComponent;
+      comp.Expire = false;
 
+      if (_drag) {
         _deltaY = e.CanvasLocation.Y - _dragMouseStartY;
 
         comp.ExpireSolution(true);
+        comp.Expire = true;
         return GH_ObjectResponse.Ignore;
       }
 
@@ -151,35 +161,48 @@ namespace OasysGH.UI {
         if (_buttonBound[i].Contains(e.CanvasLocation)) {
           _mouseOver = true;
           sender.Cursor = System.Windows.Forms.Cursors.Hand;
+
+          comp.Expire = true;
           return GH_ObjectResponse.Capture;
         }
       }
+
       if (_mouseOver) {
         _mouseOver = false;
         Instances.CursorServer.ResetCursor(sender);
+
+        comp.Expire = true;
         return GH_ObjectResponse.Release;
       }
 
+      comp.Expire = true;
       return base.RespondToMouseMove(sender, e);
     }
 
     public override GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, GH_CanvasMouseEvent e) {
-      if (e.Button == System.Windows.Forms.MouseButtons.Left) {
-        var comp = Owner as GH_Component;
+      var comp = Owner as GH_OasysDropDownComponent;
+      comp.Expire = false;
+
+      if (e.Button == MouseButtons.Left) {
         if (_drag) {
           // if drag was true then we release it here:
           _scrollStartY += _deltaY;
           _deltaY = 0;
           _drag = false;
+
           comp.ExpireSolution(true);
+          comp.Expire = true;
           return GH_ObjectResponse.Release;
         }
+
         for (int i = 0; i < _toggleTexts.Count; i++) {
           if (_toggleBoxBound[i].Contains(e.CanvasLocation) || _toggleTextBound[i].Contains(e.CanvasLocation)) {
             comp.RecordUndoEvent("Toggle bool");
             _toggles[i] = !_toggles[i];
             _toggleAction(_toggles);
+
             comp.ExpireSolution(true);
+            comp.Expire = true;
             return GH_ObjectResponse.Handled;
           }
         }
@@ -194,7 +217,9 @@ namespace OasysGH.UI {
                 continue;
               _unfolded[j] = false;
             }
+
             comp.ExpireSolution(true);
+            comp.Expire = true;
             return GH_ObjectResponse.Handled;
           }
 
@@ -223,23 +248,31 @@ namespace OasysGH.UI {
                     // close the dropdown
                     _unfolded[i] = !_unfolded[i];
 
+                    comp.Expire = true;
+
                     // recalculate component
                     comp.ExpireSolution(true);
                   } else {
                     _unfolded[i] = !_unfolded[i];
                     comp.ExpireSolution(true);
+                    comp.Expire = true;
                   }
+
                   return GH_ObjectResponse.Handled;
                 }
               }
             } else {
               _unfolded[i] = !_unfolded[i];
+
               comp.ExpireSolution(true);
+              comp.Expire = true;
               return GH_ObjectResponse.Handled;
             }
           }
         }
       }
+
+      comp.Expire = true;
       return base.RespondToMouseUp(sender, e);
     }
 

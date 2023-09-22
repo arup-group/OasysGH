@@ -4,6 +4,8 @@ using Grasshopper.Kernel;
 
 namespace OasysGH.Components {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent {
+    public bool Expire = true;
+
     protected internal List<List<string>> _dropDownItems;
     protected internal bool _isInitialised = false;
     protected internal List<string> _selectedItems;
@@ -44,6 +46,12 @@ namespace OasysGH.Components {
     public override bool Write(GH_IWriter writer) {
       Helpers.DeSerialization.WriteDropDownComponents(ref writer, _dropDownItems, _selectedItems, _spacerDescriptions);
       return base.Write(writer);
+    }
+
+    protected override void ExpireDownStreamObjects() {
+      if (Expire) {
+        base.ExpireDownStreamObjects();
+      }
     }
 
     protected sealed override void SolveInstance(IGH_DataAccess da) {
