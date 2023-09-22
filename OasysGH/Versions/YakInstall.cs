@@ -3,15 +3,16 @@ using System.Threading.Tasks;
 using Yak;
 using Version = Yak.Version;
 
-namespace OasysGH {
+namespace OasysGH.Versions {
   internal class YakInstall {
 
     internal static async Task InstallGH_UnitNumberPackageAsync() {
       if (Rhino.RhinoApp.ExeVersion < 7)
         return;
 
-      System.Version oasysGhVersion = GetOasysGhVersion();
+      System.Version oasysGhVersion = Versions.GetOasysGhVersion();
       bool isPrerelease = OasysGHVersion.IsBeta;
+
 
       string name = "UnitNumber";
       YakClient yak = CreateYakClient();
@@ -29,7 +30,7 @@ namespace OasysGH {
         return;
       }
 
-      System.Version installedVersion = CreateVersion(installedPackage.Version);
+      System.Version installedVersion = Versions.CreateVersion(installedPackage.Version);
 
       if (oasysGhVersion > installedVersion) {
         // installed version is outdated, so we install
@@ -54,7 +55,7 @@ namespace OasysGH {
       }
 
       // return the version that matches desired version number
-      return versions.Where(v => CreateVersion(v.Number) == desiredVersion).FirstOrDefault();
+      return versions.Where(v => Versions.CreateVersion(v.Number) == desiredVersion).FirstOrDefault();
     }
 
     private static YakClient CreateYakClient() {
@@ -65,24 +66,6 @@ namespace OasysGH {
           new ProductHeaderValue("OasysAutomation"))) {
         PackageFolder = Rhino.Runtime.HostUtils.AutoInstallPlugInFolder(true) // user
       };
-    }
-
-    private static System.Version CreateVersion(string version) {
-      var v = new System.Version(version.Replace("-beta", string.Empty));
-      if (version.Contains("-beta")) {
-        v = new System.Version(v.Major, v.Minor, v.Build, v.Revision + 1);
-      }
-
-      return v;
-    }
-
-    private static System.Version GetOasysGhVersion() {
-      string v = OasysGHVersion.Version;
-      if (OasysGHVersion.IsBeta) {
-        v += "-beta";
-      }
-
-      return CreateVersion(v);
     }
   }
 }
