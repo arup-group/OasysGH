@@ -4,6 +4,7 @@ using OasysGH.Versions.UI;
 using OasysGH.Versions;
 using OasysGH.Properties;
 using Xunit;
+using OasysGH;
 
 namespace OasysGHTests.Versions {
   [Collection("GrasshopperFixture collection")]
@@ -105,6 +106,23 @@ namespace OasysGHTests.Versions {
       Bitmap expectedIcon = Resources.OasysGHUpdate2;
 
       TestUpdatePluginsBox(box, header, text, expectedIcon);
+    }
+
+    [Theory]
+    [InlineData("0.6.13-beta", 0, 6, 13, 0)]
+    [InlineData("1.0.0", 1, 0, 0, -1)]
+    public void CreateVersionTest(string versionString, int major, int minor, int build, int revision) {
+      Version versionFromString = OasysGH.Versions.Versions.CreateVersion(versionString);
+      Assert.Equal(major, versionFromString.Major);
+      Assert.Equal(minor, versionFromString.Minor);
+      Assert.Equal(build, versionFromString.Build);
+      Assert.Equal(revision, versionFromString.Revision);
+    }
+
+    [Fact]
+    public void GetOasysGhVersion() {
+      Version oasyGhVersion = OasysGH.Versions.Versions.GetOasysGhVersion();
+      Assert.Equal(OasysGHVersion.Version, oasyGhVersion.ToString());
     }
 
     private static void TestUpdatePluginsBox(
