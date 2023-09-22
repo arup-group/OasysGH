@@ -5,7 +5,6 @@ using Version = Yak.Version;
 
 namespace OasysGH.Versions {
   internal class YakInstall {
-
     internal static async Task InstallGH_UnitNumberPackageAsync() {
       if (Rhino.RhinoApp.ExeVersion < 7)
         return;
@@ -39,12 +38,12 @@ namespace OasysGH.Versions {
       }
     }
 
-    private static async Task InstallYakPackageAsync(YakClient yak, string name, Version yakVersion) {
+    internal static async Task InstallYakPackageAsync(YakClient yak, string name, Version yakVersion) {
       string path = await yak.Version.Download(name, yakVersion.Number);
       yak.Install(path);
     }
 
-    private static async Task<Version> GetPackageFromVersion(
+    internal static async Task<Version> GetPackageFromVersion(
       YakClient yak, string name, System.Version desiredVersion, bool isPrerelease = false) {
       Version[] versions = await yak.Version.GetAll(name);
       // get all versions compatible with installed Rhino version
@@ -52,13 +51,15 @@ namespace OasysGH.Versions {
       // remove pre-releases if current dll is not beta
       if (!isPrerelease) {
         versions = versions.Where(v => !v.Prerelease).ToArray();
+      } else {
+        desiredVersion = new System.Version(desiredVersion.Major, desiredVersion.Minor, desiredVersion.Build, 0);
       }
 
       // return the version that matches desired version number
       return versions.Where(v => Versions.CreateVersion(v.Number) == desiredVersion).FirstOrDefault();
     }
 
-    private static YakClient CreateYakClient() {
+    internal static YakClient CreateYakClient() {
       // initialise yak client and set package install folder for this version of rhino
       return new YakClient(
         PackageRepositoryFactory.Create(
