@@ -55,9 +55,7 @@ namespace OasysGH.Components {
     }
 
     protected sealed override void SolveInstance(IGH_DataAccess da) {
-      if (Expire) {
-        SolveInternal(da);
-      }
+      SolveInternal(da);
     }
 
     protected abstract void SolveInternal(IGH_DataAccess da);
