@@ -1,62 +1,88 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Yak;
+using Version = Yak.Version;
 
 namespace OasysGH {
-  internal static class YakInstall {
+  internal class YakInstall {
 
     internal static async Task InstallGH_UnitNumberPackageAsync() {
       if (Rhino.RhinoApp.ExeVersion < 7)
         return;
 
+      System.Version oasysGhVersion = GetOasysGhVersion();
+      bool isPrerelease = OasysGHVersion.IsBeta;
+
+      string name = "UnitNumber";
+      YakClient yak = CreateYakClient();
+      Version yakVersion = await GetPackageFromVersion(yak, name, oasysGhVersion, isPrerelease);
+      if (yakVersion == null) {
+        // no compatible yak version available, nothing to install
+        return;
+      }
+
+      // list all installed yak packages
+      Package installedPackage = yak.List().Where(p => p.Name == name).FirstOrDefault();
+      if (installedPackage == null) {
+        // no package installed, so we install
+        _ = InstallYakPackageAsync(yak, name, yakVersion);
+        return;
+      }
+
+      System.Version installedVersion = CreateVersion(installedPackage.Version);
+
+      if (oasysGhVersion > installedVersion) {
+        // installed version is outdated, so we install
+        _ = InstallYakPackageAsync(yak, name, yakVersion);
+        return;
+      }
+    }
+
+    private static async Task InstallYakPackageAsync(YakClient yak, string name, Version yakVersion) {
+      string path = await yak.Version.Download(name, yakVersion.Number);
+      yak.Install(path);
+    }
+
+    private static async Task<Version> GetPackageFromVersion(
+      YakClient yak, string name, System.Version desiredVersion, bool isPrerelease = false) {
+      Version[] versions = await yak.Version.GetAll(name);
+      // get all versions compatible with installed Rhino version
+      versions = versions.Where(v => v.Distributions.Where(d => d.IsCompatible()).Any()).ToArray();
+      // remove pre-releases if current dll is not beta
+      if (!isPrerelease) {
+        versions = versions.Where(v => !v.Prerelease).ToArray();
+      }
+
+      // return the version that matches desired version number
+      return versions.Where(v => CreateVersion(v.Number) == desiredVersion).FirstOrDefault();
+    }
+
+    private static YakClient CreateYakClient() {
       // initialise yak client and set package install folder for this version of rhino
-      var yak = new YakClient(
+      return new YakClient(
         PackageRepositoryFactory.Create(
           "https://yak.rhino3d.com",
           new ProductHeaderValue("OasysAutomation"))) {
         PackageFolder = Rhino.Runtime.HostUtils.AutoInstallPlugInFolder(true) // user
       };
+    }
 
-      string name = "UnitNumber";
-      Package pack = await yak.Package.Get(name);
-      Version[] versions = await yak.Version.GetAll(name);
-      versions = versions.Where(v => v.Distributions.Where(d => d.IsCompatible()).Any()).ToArray();
-
-      IEnumerable<Package> installed = yak.List(); // list installed packages
-      foreach (Package package in installed) {
-        if (package.Name == pack.Name) {
-          var installedVersion = new System.Version(package.Version.Replace("-beta", string.Empty));
-          if (package.Version.Contains("-beta"))
-            installedVersion = new System.Version(installedVersion.Major, installedVersion.Minor, installedVersion.Build, installedVersion.Revision + 1);
-
-          // OasysGH and GH_UnitNumber share the same version number!
-          System.Version version = Assembly.GetExecutingAssembly().GetName().Version;
-          bool isBeta = false;
-          if (version == null) {
-            var latestVersion = new System.Version(versions[0].Number.Replace("-beta", string.Empty));
-            if (versions[0].Number.Contains("-beta")) {
-              latestVersion = new System.Version(latestVersion.Major, latestVersion.Minor, latestVersion.Build, latestVersion.Revision + 1);
-              isBeta = true;
-            }
-
-            version = latestVersion;
-          }
-
-          string versionNumber = version.Major + "." + version.Minor + "." + version.Build +
-            (isBeta ? "-beta" : string.Empty);
-
-          // don´t install a newer version than the version of OasysGH calling this
-          if (version > installedVersion) {
-            string tmp_path = await yak.Version.Download(name, versionNumber);
-            yak.Install(tmp_path);
-          }
-          return; // latest version already installed
-        }
+    private static System.Version CreateVersion(string version) {
+      var v = new System.Version(version.Replace("-beta", string.Empty));
+      if (version.Contains("-beta")) {
+        v = new System.Version(v.Major, v.Minor, v.Build, v.Revision + 1);
       }
-      string tmp_path2 = await yak.Version.Download(name, versions[0].Number);
-      yak.Install(tmp_path2);
+
+      return v;
+    }
+
+    private static System.Version GetOasysGhVersion() {
+      string v = OasysGHVersion.Version;
+      if (OasysGHVersion.IsBeta) {
+        v += "-beta";
+      }
+
+      return CreateVersion(v);
     }
   }
 }
