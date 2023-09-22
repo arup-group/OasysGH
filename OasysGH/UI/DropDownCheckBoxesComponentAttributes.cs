@@ -255,6 +255,7 @@ namespace OasysGH.UI {
                   } else {
                     _unfolded[i] = !_unfolded[i];
                     comp.ExpireSolution(true);
+                    comp.Expire = true;
                   }
 
                   return GH_ObjectResponse.Handled;
