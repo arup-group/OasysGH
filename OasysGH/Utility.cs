@@ -1,16 +1,17 @@
 ﻿using OasysGH.Units.UI.MainMenu;
+using OasysGH.Versions;
 
 namespace OasysGH {
   public static class Utility {
-    private static object unitsLoaded = false;
+    private static object initialised = false;
 
     public static void InitialiseMainMenuAndDefaultUnits(bool installGH_UnitNumber = true) {
-      lock (unitsLoaded) // lock so that only one plugin will load this
-      {
-        if (!(bool)unitsLoaded) {
+      // lock so that only one plugin will load this
+      lock (initialised) {
+        if (!(bool)initialised) {
           Grasshopper.Instances.CanvasCreated += LoadMainMenu.OnStartup;
           Units.Utility.SetupUnitsDuringLoad();
-          unitsLoaded = true;
+          initialised = true;
           if (installGH_UnitNumber) {
             try {
               // if triggered by Rhino6 this will fail (which is ok):
@@ -19,6 +20,8 @@ namespace OasysGH {
               // do nothing.
             }
           }
+
+          Grasshopper.Instances.CanvasCreated += UpdateDependentPlugins.OnStartup;
         }
       }
     }
