@@ -9,24 +9,20 @@ namespace OasysGH.Versions {
     public static readonly Guid AdSecGuid = new Guid("f815c29a-e1eb-4ca6-9e56-0554777ff9c9");
     public static readonly Guid ComposGuid = new Guid("c3884cdc-ac5b-4151-afc2-93590cef4f8f");
     public static readonly Guid GsaGuid = new Guid("a3b08c32-f7de-4b00-b415-f8b466f05e9f");
+    private static Version oasysGhVersion = null;
 
     internal static Version OasysGhVersion {
       get {
-        if (oasysGhVersion == null) {
-          oasysGhVersion = GetOasysGhVersion();
-        }
-        
+        if (oasysGhVersion == null) oasysGhVersion = GetOasysGhVersion();
+
         return oasysGhVersion;
       }
     }
-    private static Version oasysGhVersion = null;
 
 
     internal static Version CreateVersion(string version) {
       var v = new Version(version.Replace("-beta", string.Empty));
-      if (version.Contains("-beta")) {
-        v = new Version(v.Major, v.Minor, v.Build, v.Revision + 1);
-      }
+      if (version.Contains("-beta")) v = new Version(v.Major, v.Minor, v.Build, v.Revision + 1);
 
       return v;
     }
@@ -44,16 +40,11 @@ namespace OasysGH.Versions {
 
     internal static bool IsPluginOutdated(Guid guid) {
       GH_AssemblyInfo pluginInfo = Instances.ComponentServer.FindAssembly(guid);
-      if (pluginInfo == null) {
-        return false;
-      }
-
-      return IsVersionOutdated(GetOasyGhVersion(pluginInfo.Location));
+      return pluginInfo != null && IsVersionOutdated(GetOasyGhVersion(pluginInfo.Location));
     }
 
-    internal static bool IsVersionOutdated(Version pluginOasysGhVersion) {
-      return pluginOasysGhVersion.CompareTo(OasysGhVersion) < 0;
-    }
+    internal static bool IsVersionOutdated(Version pluginOasysGhVersion) =>
+      pluginOasysGhVersion.CompareTo(OasysGhVersion) < 0;
 
     private static Version GetOasyGhVersion(string path) {
       string file = Path.Combine(Path.GetDirectoryName(path), "OasysGH.dll");
