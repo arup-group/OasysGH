@@ -5,7 +5,7 @@ namespace OasysGH {
   public static class Utility {
     private static object initialised = false;
 
-    public static void InitialiseMainMenuAndDefaultUnits(bool installGH_UnitNumber = true) {
+    public static void InitialiseMainMenuUnitsAndDependentPluginsCheck(bool installGH_UnitNumber = true) {
       // lock so that only one plugin will load this
       lock (initialised) {
         if (!(bool)initialised) {

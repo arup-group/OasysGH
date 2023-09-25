@@ -6,7 +6,7 @@ namespace GH_UnitNumber {
   public class AddReferencePriority : GH_AssemblyPriority {
 
     public override GH_LoadingInstruction PriorityLoad() {
-      Utility.InitialiseMainMenuAndDefaultUnits(false);
+      Utility.InitialiseMainMenuUnitsAndDependentPluginsCheck(false);
       return GH_LoadingInstruction.Proceed;
     }
   }
