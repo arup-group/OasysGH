@@ -13,7 +13,9 @@ namespace OasysGH.Versions {
 
     internal static Version OasysGhVersion {
       get {
-        if (oasysGhVersion == null) oasysGhVersion = GetOasysGhVersion();
+        if (oasysGhVersion == null) {
+          oasysGhVersion = GetOasysGhVersion();
+        }
 
         return oasysGhVersion;
       }
@@ -22,7 +24,9 @@ namespace OasysGH.Versions {
 
     internal static Version CreateVersion(string version) {
       var v = new Version(version.Replace("-beta", string.Empty));
-      if (version.Contains("-beta")) v = new Version(v.Major, v.Minor, v.Build, v.Revision + 1);
+      if (version.Contains("-beta")) {
+        v = new Version(v.Major, v.Minor, v.Build, v.Revision + 1);
+      }
 
       return v;
     }

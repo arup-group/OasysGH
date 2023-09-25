@@ -17,7 +17,7 @@ namespace OasysGH.Versions {
       withoutLast.AddRange(processes.GetRange(0, processes.Count - 1));
 
       Process = @"rhino://package/search?name=oasys";
-      Text = $"Updates are available for { string.Join(", ", withoutLast.Select(n=>n.Name)) }" +
+      Text = $"Updates are available for { string.Join(", ", withoutLast.Select(n => n.Name)) }" +
         $" and {processes.Last().Name}";
       Header = "Update Oasys Plugins";
       Icon = processes.Count switch {
