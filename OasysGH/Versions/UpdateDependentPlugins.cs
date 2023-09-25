@@ -26,25 +26,33 @@ namespace OasysGH.Versions {
       CreatePluginUpdateDialogue(isAdSecOutdated, isComposOutdated, isGsaOutdated).ShowDialog();
     }
 
-    internal static UpdatePluginsBox CreatePluginUpdateDialogue(bool isAdSecOutdated, bool isComposOutdated,
-                                                                bool isGsaOutdated) {
-      var processesToUpdate = new List<UpdateProcessHelper>();
-      if (isAdSecOutdated) processesToUpdate.Add(new AdSecUpdateHelper());
-      if (isComposOutdated) processesToUpdate.Add(new ComposUpdateHelper());
-      if (isGsaOutdated) processesToUpdate.Add(new GsaUpdateHelper());
+    internal static UpdatePluginsBox CreatePluginUpdateDialogue(
+      bool isAdSecOutdated, bool isComposOutdated, bool isGsaOutdated) {
+      var processesToUpdate = new List<UpdatePluginHelper>();
+      if (isAdSecOutdated) {
+        processesToUpdate.Add(UpdatePluginHelper.AdSec());
+      }
+
+      if (isComposOutdated) {
+        processesToUpdate.Add(UpdatePluginHelper.Compos());
+      }
+
+      if (isGsaOutdated) {
+        processesToUpdate.Add(UpdatePluginHelper.Gsa());
+      }
 
       switch (processesToUpdate.Count) {
         case 0:
           return null;
         case 1: {
-          UpdateProcessHelper updateProcessHelper = processesToUpdate.FirstOrDefault();
+          UpdatePluginHelper updateProcessHelper = processesToUpdate.FirstOrDefault();
           string desc = updateProcessHelper?.Text + ".\n\nClick OK to update now.";
 
           return new UpdatePluginsBox(updateProcessHelper?.Header, desc, updateProcessHelper?.Process,
             updateProcessHelper?.Icon);
         }
         default:
-          var multiplePluginsToUpdate = new MultipleVersionsToUpdate(processesToUpdate);
+          var multiplePluginsToUpdate = new UpdatePluginHelper(processesToUpdate);
           string description = multiplePluginsToUpdate.Text + ".\n\nClick OK to update now.";
 
           return new UpdatePluginsBox(multiplePluginsToUpdate.Header, description, multiplePluginsToUpdate.Process,
