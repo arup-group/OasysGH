@@ -24,7 +24,7 @@ namespace OasysGH.Components.Tests {
       pManager.AddIntegerParameter("Length", "L", "The selected length unit", GH_ParamAccess.list);
     }
 
-    protected override void SolveInstance(IGH_DataAccess data) {
+    protected override void SolveInternal(IGH_DataAccess data) {
       bool solve = false;
       if (InPreSolve) {
         data.GetData(0, ref solve);
