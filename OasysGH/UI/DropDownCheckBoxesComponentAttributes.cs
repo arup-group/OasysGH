@@ -120,7 +120,7 @@ namespace OasysGH.UI {
     // booleans for each check box
 
     public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e) {
-      var comp = Owner as GH_OasysDropDownComponent;
+      var comp = Owner as IExpirableComponent;
       comp.Expire = false;
 
       if (e.Button == System.Windows.Forms.MouseButtons.Left) {
@@ -146,7 +146,7 @@ namespace OasysGH.UI {
     }
 
     public override GH_ObjectResponse RespondToMouseMove(GH_Canvas sender, GH_CanvasMouseEvent e) {
-      var comp = Owner as GH_OasysDropDownComponent;
+      var comp = Owner as IExpirableComponent;
       comp.Expire = false;
 
       if (_drag) {
@@ -180,7 +180,7 @@ namespace OasysGH.UI {
     }
 
     public override GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, GH_CanvasMouseEvent e) {
-      var comp = Owner as GH_OasysDropDownComponent;
+      var comp = Owner as IExpirableComponent;
       comp.Expire = false;
 
       if (e.Button == MouseButtons.Left) {
