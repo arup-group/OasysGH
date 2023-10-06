@@ -2,8 +2,8 @@
 using OasysGH.Helpers;
 
 namespace OasysGH.Components {
-  public abstract class GH_OasysTaskCapableComponent<T> : GH_TaskCapableComponent<T> {
-    public bool Expire = true;
+  public abstract class GH_OasysTaskCapableComponent<T> : GH_TaskCapableComponent<T>, IExpirableComponent {
+    public bool Expire { get; set; } = true;
     public abstract OasysPluginInfo PluginInfo { get; }
 
     public GH_OasysTaskCapableComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory) {
