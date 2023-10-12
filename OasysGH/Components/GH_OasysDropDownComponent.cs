@@ -3,9 +3,8 @@ using GH_IO.Serialization;
 using Grasshopper.Kernel;
 
 namespace OasysGH.Components {
-  public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent {
-    public bool Expire = true;
-
+  public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent, IExpirableComponent {
+    public bool Expire { get; set; } = true;
     protected internal List<List<string>> _dropDownItems;
     protected internal bool _isInitialised = false;
     protected internal List<string> _selectedItems;
