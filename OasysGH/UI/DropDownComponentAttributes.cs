@@ -100,7 +100,7 @@ namespace OasysGH.UI {
     // list of bools for unfolded or closed dropdown
 
     public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e) {
-      var comp = Owner as GH_OasysDropDownComponent;
+      var comp = Owner as IExpirableComponent;
       comp.Expire = false;
 
       for (int i = 0; i < _dropdownlists.Count; i++) {
@@ -124,7 +124,7 @@ namespace OasysGH.UI {
     }
 
     public override GH_ObjectResponse RespondToMouseMove(GH_Canvas sender, GH_CanvasMouseEvent e) {
-      var comp = Owner as GH_OasysDropDownComponent;
+      var comp = Owner as IExpirableComponent;
       comp.Expire = false;
 
       if (_drag) {
@@ -158,7 +158,7 @@ namespace OasysGH.UI {
     }
 
     public override GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, GH_CanvasMouseEvent e) {
-      var comp = Owner as GH_OasysDropDownComponent;
+      var comp = Owner as IExpirableComponent;
       comp.Expire = false;
 
       if (e.Button == MouseButtons.Left) {
