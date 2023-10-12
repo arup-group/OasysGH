@@ -29,7 +29,7 @@ namespace OasysGH {
 
     private static readonly Lazy<OasysPluginInfo> lazy =
             new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
-          "Oasys Shared Grasshopper", "OasysGH", OasysGHVersion.Version, OasysGHVersion.IsBeta, "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
+          "Oasys Shared Grasshopper", "OasysGH", OasysGHVersion.Version, OasysGHVersion.IsBeta, "phc_QjmqOoe8GqTMi3u88ynRR3WWvrJA9zAaqcQS1FDVnJD"
           ));
   }
 }
