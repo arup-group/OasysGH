@@ -5,7 +5,7 @@ namespace OasysGH {
     public const bool IsBeta = false;
     // this is the one place to set the version in VS:
     // also update the version manually in OasysGH.csproj
-    public const string Version = "1.0.0";
+    public const string Version = "1.0.1";
   }
 
   public class OasysPluginInfo {
@@ -29,7 +29,7 @@ namespace OasysGH {
 
     private static readonly Lazy<OasysPluginInfo> lazy =
             new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
-          "Oasys Shared Grasshopper", "OasysGH", OasysGHVersion.Version, OasysGHVersion.IsBeta, "phc_alOp3OccDM3D18xJTWDoW44Y1cJvbEScm5LJSX8qnhs"
+          "Oasys Shared Grasshopper", "OasysGH", OasysGHVersion.Version, OasysGHVersion.IsBeta, "phc_QjmqOoe8GqTMi3u88ynRR3WWvrJA9zAaqcQS1FDVnJD"
           ));
   }
 }

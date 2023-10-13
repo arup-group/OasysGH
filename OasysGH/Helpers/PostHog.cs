@@ -105,7 +105,7 @@ namespace OasysGH.Helpers {
       var container = new PhContainer(pluginInfo.PostHogApiKey, eventName, properties);
       string body = JsonConvert.SerializeObject(container);
       var content = new StringContent(body, Encoding.UTF8, "application/json");
-      HttpResponseMessage response = await phClient.PostAsync("https://posthog.insights.arup.com/capture/", content);
+      HttpResponseMessage response = await phClient.PostAsync("https://eu.posthog.com/capture/", content);
       return response;
     }
   }
