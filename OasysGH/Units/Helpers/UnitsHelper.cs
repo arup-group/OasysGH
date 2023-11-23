@@ -126,133 +126,159 @@ namespace OasysGH.Units.Helpers {
       var abbreviations = new List<string>();
       switch (unit) {
         case EngineeringUnits.Angle:
-          foreach (string unitstring in FilteredUnits.FilteredAngleUnits)
+          foreach (string unitstring in FilteredUnits.FilteredAngleUnits) {
             abbreviations.Add(Angle.GetAbbreviation((AngleUnit)Enum.Parse(typeof(AngleUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Length:
-          foreach (string unitstring in FilteredUnits.FilteredLengthUnits)
+          foreach (string unitstring in FilteredUnits.FilteredLengthUnits) {
             abbreviations.Add(Length.GetAbbreviation((LengthUnit)Enum.Parse(typeof(LengthUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Area:
-          foreach (string unitstring in FilteredUnits.FilteredAreaUnits)
+          foreach (string unitstring in FilteredUnits.FilteredAreaUnits) {
             abbreviations.Add(Area.GetAbbreviation((AreaUnit)Enum.Parse(typeof(AreaUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Volume:
-          foreach (string unitstring in FilteredUnits.FilteredVolumeUnits)
+          foreach (string unitstring in FilteredUnits.FilteredVolumeUnits) {
             abbreviations.Add(Volume.GetAbbreviation((VolumeUnit)Enum.Parse(typeof(VolumeUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.VolumePerLength:
-          foreach (string unitstring in FilteredUnits.FilteredVolumePerLengthUnits)
+          foreach (string unitstring in FilteredUnits.FilteredVolumePerLengthUnits) {
             abbreviations.Add(VolumePerLength.GetAbbreviation((VolumePerLengthUnit)Enum.Parse(typeof(VolumePerLengthUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.AreaMomentOfInertia:
-          foreach (string unitstring in FilteredUnits.FilteredAreaMomentOfInertiaUnits)
+          foreach (string unitstring in FilteredUnits.FilteredAreaMomentOfInertiaUnits) {
             abbreviations.Add(AreaMomentOfInertia.GetAbbreviation((AreaMomentOfInertiaUnit)Enum.Parse(typeof(AreaMomentOfInertiaUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Force:
-          foreach (string unitstring in FilteredUnits.FilteredForceUnits)
+          foreach (string unitstring in FilteredUnits.FilteredForceUnits) {
             abbreviations.Add(Force.GetAbbreviation((ForceUnit)Enum.Parse(typeof(ForceUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.ForcePerLength:
-          foreach (string unitstring in FilteredUnits.FilteredForcePerLengthUnits)
+          foreach (string unitstring in FilteredUnits.FilteredForcePerLengthUnits) {
             abbreviations.Add(ForcePerLength.GetAbbreviation((ForcePerLengthUnit)Enum.Parse(typeof(ForcePerLengthUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.RotationalStiffness:
-          foreach (string unitstring in FilteredUnits.FilteredRotationalStiffnessUnits)
+          foreach (string unitstring in FilteredUnits.FilteredRotationalStiffnessUnits) {
             abbreviations.Add(ForcePerLength.GetAbbreviation((ForcePerLengthUnit)Enum.Parse(typeof(ForcePerLengthUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.ForcePerArea:
-          foreach (string unitstring in FilteredUnits.FilteredForcePerAreaUnits)
+          foreach (string unitstring in FilteredUnits.FilteredForcePerAreaUnits) {
             abbreviations.Add(Pressure.GetAbbreviation((PressureUnit)Enum.Parse(typeof(PressureUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Moment:
-          foreach (string unitstring in FilteredUnits.FilteredMomentUnits)
+          foreach (string unitstring in FilteredUnits.FilteredMomentUnits) {
             abbreviations.Add(Moment.GetAbbreviation((MomentUnit)Enum.Parse(typeof(MomentUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Stress:
-          foreach (string unitstring in FilteredUnits.FilteredStressUnits)
+          foreach (string unitstring in FilteredUnits.FilteredStressUnits) {
             abbreviations.Add(Pressure.GetAbbreviation((PressureUnit)Enum.Parse(typeof(PressureUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Strain:
-          foreach (string unitstring in FilteredUnits.FilteredStrainUnits)
+          foreach (string unitstring in FilteredUnits.FilteredStrainUnits) {
             abbreviations.Add(Strain.GetAbbreviation((StrainUnit)Enum.Parse(typeof(StrainUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.AxialStiffness:
-          foreach (string unitstring in FilteredUnits.FilteredAxialStiffnessUnits)
+          foreach (string unitstring in FilteredUnits.FilteredAxialStiffnessUnits) {
             abbreviations.Add(AxialStiffness.GetAbbreviation((AxialStiffnessUnit)Enum.Parse(typeof(AxialStiffnessUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.BendingStiffness:
-          foreach (string unitstring in FilteredUnits.FilteredBendingStiffnessUnits)
+          foreach (string unitstring in FilteredUnits.FilteredBendingStiffnessUnits) {
             abbreviations.Add(BendingStiffness.GetAbbreviation((BendingStiffnessUnit)Enum.Parse(typeof(BendingStiffnessUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Curvature:
-          foreach (string unitstring in FilteredUnits.FilteredCurvatureUnits)
+          foreach (string unitstring in FilteredUnits.FilteredCurvatureUnits) {
             abbreviations.Add(Curvature.GetAbbreviation((CurvatureUnit)Enum.Parse(typeof(CurvatureUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Mass:
-          foreach (string unitstring in FilteredUnits.FilteredMassUnits)
+          foreach (string unitstring in FilteredUnits.FilteredMassUnits) {
             abbreviations.Add(Mass.GetAbbreviation((MassUnit)Enum.Parse(typeof(MassUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Density:
-          foreach (string unitstring in FilteredUnits.FilteredDensityUnits)
+          foreach (string unitstring in FilteredUnits.FilteredDensityUnits) {
             abbreviations.Add(Density.GetAbbreviation((DensityUnit)Enum.Parse(typeof(DensityUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.LinearDensity:
-          foreach (string unitstring in FilteredUnits.FilteredLinearDensityUnits)
+          foreach (string unitstring in FilteredUnits.FilteredLinearDensityUnits) {
             abbreviations.Add(LinearDensity.GetAbbreviation((LinearDensityUnit)Enum.Parse(typeof(LinearDensityUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Temperature:
-          foreach (string unitstring in FilteredUnits.FilteredTemperatureUnits)
+          foreach (string unitstring in FilteredUnits.FilteredTemperatureUnits) {
             abbreviations.Add(Temperature.GetAbbreviation((TemperatureUnit)Enum.Parse(typeof(TemperatureUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Velocity:
-          foreach (string unitstring in FilteredUnits.FilteredVelocityUnits)
+          foreach (string unitstring in FilteredUnits.FilteredVelocityUnits) {
             abbreviations.Add(Speed.GetAbbreviation((SpeedUnit)Enum.Parse(typeof(SpeedUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Acceleration:
-          foreach (string unitstring in FilteredUnits.FilteredAccelerationUnits)
+          foreach (string unitstring in FilteredUnits.FilteredAccelerationUnits) {
             abbreviations.Add(Acceleration.GetAbbreviation((AccelerationUnit)Enum.Parse(typeof(AccelerationUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Energy:
-          foreach (string unitstring in FilteredUnits.FilteredEnergyUnits)
+          foreach (string unitstring in FilteredUnits.FilteredEnergyUnits) {
             abbreviations.Add(Energy.GetAbbreviation((EnergyUnit)Enum.Parse(typeof(EnergyUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Ratio:
-          foreach (string unitstring in FilteredUnits.FilteredRatioUnits)
+          foreach (string unitstring in FilteredUnits.FilteredRatioUnits) {
             abbreviations.Add(Ratio.GetAbbreviation((RatioUnit)Enum.Parse(typeof(RatioUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.Time:
-          foreach (string unitstring in FilteredUnits.FilteredTimeUnits)
+          foreach (string unitstring in FilteredUnits.FilteredTimeUnits) {
             abbreviations.Add(Duration.GetAbbreviation((DurationUnit)Enum.Parse(typeof(DurationUnit), unitstring)));
+          }
           return abbreviations;
 
         case EngineeringUnits.SectionModulus:
-          foreach (string unitstring in FilteredUnits.FilteredSectionModulusUnits)
+          foreach (string unitstring in FilteredUnits.FilteredSectionModulusUnits) {
             abbreviations.Add(SectionModulus.GetAbbreviation((SectionModulusUnit)Enum.Parse(typeof(SectionModulusUnit), unitstring)));
+          }
           return abbreviations;
 
         default:
