@@ -165,6 +165,11 @@ namespace OasysGH.Units.Helpers {
             abbreviations.Add(ForcePerLength.GetAbbreviation((ForcePerLengthUnit)Enum.Parse(typeof(ForcePerLengthUnit), unitstring)));
           return abbreviations;
 
+        case EngineeringUnits.RotationalStiffness:
+          foreach (string unitstring in FilteredUnits.FilteredRotationalStiffnessUnits)
+            abbreviations.Add(ForcePerLength.GetAbbreviation((ForcePerLengthUnit)Enum.Parse(typeof(ForcePerLengthUnit), unitstring)));
+          return abbreviations;
+
         case EngineeringUnits.ForcePerArea:
           foreach (string unitstring in FilteredUnits.FilteredForcePerAreaUnits)
             abbreviations.Add(Pressure.GetAbbreviation((PressureUnit)Enum.Parse(typeof(PressureUnit), unitstring)));
