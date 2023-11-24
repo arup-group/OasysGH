@@ -175,7 +175,7 @@ namespace OasysGH.Units.Helpers {
 
         case EngineeringUnits.RotationalStiffness:
           foreach (string unitstring in FilteredUnits.FilteredRotationalStiffnessUnits) {
-            abbreviations.Add(ForcePerLength.GetAbbreviation((ForcePerLengthUnit)Enum.Parse(typeof(ForcePerLengthUnit), unitstring)));
+            abbreviations.Add(RotationalStiffness.GetAbbreviation((RotationalStiffnessUnit)Enum.Parse(typeof(RotationalStiffnessUnit), unitstring)));
           }
           return abbreviations;
 
