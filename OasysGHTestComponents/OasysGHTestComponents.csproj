@@ -5,7 +5,7 @@
     <Platforms>x64</Platforms>
     <Title>OasysGHTestComponents</Title>
     <Company>Oasys</Company>
-    <Copyright>Copyright © Oasys 2023</Copyright>
+    <Copyright>Copyright © Oasys 2024</Copyright>
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>

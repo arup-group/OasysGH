@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using GH_IO.Serialization;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
@@ -115,6 +116,16 @@ namespace GH_UnitNumber.Components {
       UpdateUI();
     }
 
+    public override bool Read(GH_IReader reader) {
+      IGH_Param param = Params.Output[1];
+      bool flag =  base.Read(reader);
+      if (Params.Output.Count == 1) {
+        Params.RegisterOutputParam(param);
+      }
+      
+      return flag;
+    }
+
     public override void SetSelected(int i, int j) {
       if (_unitDictionary != null) {
         _selectedItems[i] = _dropDownItems[i][j];
@@ -144,12 +155,13 @@ namespace GH_UnitNumber.Components {
 
     protected override void RegisterOutputParams(GH_OutputParamManager pManager) {
       pManager.AddParameter(new GH_UnitNumberParameter());
+      pManager.AddNumberParameter("Number", "N", "Number representing the value of selected unit and measure", GH_ParamAccess.item);
     }
 
     protected override void SolveInternal(IGH_DataAccess DA) {
       // get input
       OasysGH.Parameters.GH_UnitNumber inUnitNumber;
-      
+
       var gh_typ = new GH_ObjectWrapper();
       if (DA.GetData(0, ref gh_typ)) {
         // try cast directly to quantity type
@@ -204,6 +216,7 @@ namespace GH_UnitNumber.Components {
       _convertedUnitNumber = new OasysGH.Parameters.GH_UnitNumber(inUnitNumber.Value.ToUnit(_selectedUnit));
 
       DA.SetData(0, _convertedUnitNumber);
+      DA.SetData(1, _convertedUnitNumber.Value);
     }
 
     protected override void UpdateUIFromSelectedItems() {
