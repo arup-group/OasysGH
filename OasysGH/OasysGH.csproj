@@ -5,16 +5,16 @@
     <Platforms>x64</Platforms>
     <Title>OasysGH</Title>
 	   <Company>Oasys</Company>
-    <Copyright>Copyright © Oasys 2023</Copyright>
+    <Copyright>Copyright © Oasys 2024</Copyright>
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>8.0</LangVersion>
     <Description>OasysGH is a library with shared content for Oasys Grasshopper plugins.</Description>
-    <PackageReleaseNotes>This is a release of OasysGH 1.0.1.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a release of OasysGH 1.0.2.</PackageReleaseNotes>
     <PackageTags>oasys;grasshopper</PackageTags>
   </PropertyGroup>
   <ItemGroup>
