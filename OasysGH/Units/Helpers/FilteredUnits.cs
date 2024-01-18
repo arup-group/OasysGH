@@ -4,34 +4,6 @@ using System.Linq;
 using OasysUnits.Units;
 
 namespace OasysGH.Units.Helpers {
-  public enum EngineeringUnits {
-    Angle,
-    Length,
-    Area,
-    Volume,
-    AreaMomentOfInertia,
-    Force,
-    ForcePerLength,
-    ForcePerArea,
-    Moment,
-    Stress,
-    Strain,
-    AxialStiffness,
-    BendingStiffness,
-    Curvature,
-    Mass,
-    Density,
-    LinearDensity,
-    VolumePerLength,
-    Temperature,
-    Velocity,
-    Acceleration,
-    Energy,
-    Ratio,
-    Time,
-    SectionModulus
-  }
-
   public class FilteredUnits {
     public static List<string> FilteredAccelerationUnits = new List<string>(new[] {
       AccelerationUnit.MillimeterPerSecondSquared.ToString(),
@@ -126,6 +98,24 @@ namespace OasysGH.Units.Helpers {
       ForcePerLengthUnit.PoundForcePerYard.ToString(),
       ForcePerLengthUnit.KilopoundForcePerInch.ToString(),
       ForcePerLengthUnit.KilopoundForcePerFoot.ToString()
+    });
+
+    public static List<string> FilteredRotationalStiffnessUnits = new List<string>(new[] {
+      RotationalStiffnessUnit.NewtonMeterPerDegree.ToString(),
+      RotationalStiffnessUnit.NewtonMeterPerRadian.ToString(),
+      RotationalStiffnessUnit.NewtonMillimeterPerDegree.ToString(),
+      RotationalStiffnessUnit.NewtonMillimeterPerRadian.ToString(),
+      RotationalStiffnessUnit.KilonewtonMeterPerDegree.ToString(),
+      RotationalStiffnessUnit.KilonewtonMeterPerRadian.ToString(),
+      RotationalStiffnessUnit.KilonewtonMillimeterPerDegree.ToString(),
+      RotationalStiffnessUnit.KilonewtonMillimeterPerRadian.ToString(),
+      RotationalStiffnessUnit.MeganewtonMeterPerDegree.ToString(),
+      RotationalStiffnessUnit.MeganewtonMeterPerRadian.ToString(),
+      RotationalStiffnessUnit.MeganewtonMillimeterPerDegree.ToString(),
+      RotationalStiffnessUnit.MeganewtonMillimeterPerRadian.ToString(),
+      RotationalStiffnessUnit.PoundForceFeetPerRadian.ToString(),
+      RotationalStiffnessUnit.PoundForceFootPerDegrees.ToString(),
+      RotationalStiffnessUnit.KilopoundForceFootPerDegrees.ToString()
     });
 
     public static List<string> FilteredForceUnits = new List<string>(new[] {

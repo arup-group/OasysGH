@@ -1,0 +1,30 @@
+﻿namespace OasysGH.Units.Helpers {
+  public enum EngineeringUnits {
+    Angle,
+    Length,
+    Area,
+    Volume,
+    SectionModulus,
+    AreaMomentOfInertia,
+    Force,
+    ForcePerLength,
+    ForcePerArea,
+    Moment,
+    Stress,
+    Strain,
+    AxialStiffness,
+    RotationalStiffness,
+    BendingStiffness,
+    Curvature,
+    Mass,
+    Density,
+    LinearDensity,
+    VolumePerLength,
+    Temperature,
+    Velocity,
+    Acceleration,
+    Energy,
+    Ratio,
+    Time
+  }
+}
