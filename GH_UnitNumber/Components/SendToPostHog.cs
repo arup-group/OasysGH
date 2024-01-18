@@ -38,16 +38,16 @@ namespace GH_UnitNumber.Components {
       string eventName = string.Empty;
       da.GetData(1, ref eventName);
 
-      string properties = string.Empty;
-      da.GetData(2, ref properties);
+      string json = string.Empty;
+      da.GetData(2, ref json);
 
       bool enabled = true;
       da.GetData(3, ref enabled);
 
       if (enabled) {
-        IDictionary<string, object> stuff = JsonConvert.DeserializeObject<Dictionary<string, object>>(properties);
+        IDictionary<string, object> properties = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
 
-        _ = PostHog.SendToPostHog(apiKey, GH_UnitNumberPluginInfo.Instance.PluginName, GH_UnitNumberPluginInfo.Instance.Version, GH_UnitNumberPluginInfo.Instance.IsBeta, eventName, stuff);
+        _ = PostHog.SendToPostHog(apiKey, GH_UnitNumberPluginInfo.Instance.PluginName, GH_UnitNumberPluginInfo.Instance.Version, GH_UnitNumberPluginInfo.Instance.IsBeta, eventName, properties);
       }
     }
   }
