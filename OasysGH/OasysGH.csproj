@@ -5,7 +5,7 @@
     <Platforms>x64</Platforms>
     <Title>OasysGH</Title>
 	   <Company>Oasys</Company>
-    <Copyright>Copyright © Oasys 2023</Copyright>
+    <Copyright>Copyright © Oasys 2024</Copyright>
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -83,7 +83,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OasysUnits" Version="1.0.0" />
      <PackageReference Include="OasysUnits.Serialization.JsonNet" Version="1.0.0" />
-    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.1" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
