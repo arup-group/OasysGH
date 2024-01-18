@@ -23,7 +23,7 @@ namespace GH_UnitNumber.Components {
       pManager.AddTextParameter("API key", "K", "PostHog API key", GH_ParamAccess.item);
       pManager.AddTextParameter("Event name", "E", "PostHog event name", GH_ParamAccess.item);
       pManager.AddTextParameter("Event properties", "P", "[Optional] PostHog event properties as JSON string", GH_ParamAccess.item);
-      pManager.AddBooleanParameter("Enabled", "E", "[Optional] If true, the component will try to send the PostHog event", GH_ParamAccess.item, true);
+      pManager.AddBooleanParameter("Enabled", "On", "[Optional] If true, the component will try to send the PostHog event", GH_ParamAccess.item, true);
       pManager[2].Optional = true;
       pManager[3].Optional = true;
     }
@@ -47,8 +47,7 @@ namespace GH_UnitNumber.Components {
       if (enabled) {
         IDictionary<string, object> stuff = JsonConvert.DeserializeObject<Dictionary<string, object>>(properties);
 
-        System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> foo = PostHog.SendToPostHog(apiKey, GH_UnitNumberPluginInfo.Instance.PluginName, GH_UnitNumberPluginInfo.Instance.Version, GH_UnitNumberPluginInfo.Instance.IsBeta, eventName, stuff);
-        //foo.Wait();
+        _ = PostHog.SendToPostHog(apiKey, GH_UnitNumberPluginInfo.Instance.PluginName, GH_UnitNumberPluginInfo.Instance.Version, GH_UnitNumberPluginInfo.Instance.IsBeta, eventName, stuff);
       }
     }
   }
