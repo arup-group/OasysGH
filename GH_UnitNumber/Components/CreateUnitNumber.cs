@@ -197,7 +197,115 @@ namespace GH_UnitNumber.Components {
       if (DA.GetData(0, ref _value)) {
         var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
 
-        UpdateQuantityUnitTypeFromUnitString(unit);
+        switch (unit) {
+          case EngineeringUnits.Angle:
+            _quantity = new Angle(_value, (AngleUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Length:
+            _quantity = new Length(_value, (LengthUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Area:
+            _quantity = new Area(_value, (AreaUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Volume:
+            _quantity = new Volume(_value, (VolumeUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.AreaMomentOfInertia:
+            _quantity = new AreaMomentOfInertia(_value, (AreaMomentOfInertiaUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Force:
+            _quantity = new Force(_value, (ForceUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.ForcePerLength:
+            _quantity = new ForcePerLength(_value, (ForcePerLengthUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.ForcePerArea:
+            _quantity = new Pressure(_value, (PressureUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Moment:
+            _quantity = new Moment(_value, (MomentUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Stress:
+            _quantity = new Pressure(_value, (PressureUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Strain:
+            _quantity = new Strain(_value, (StrainUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.AxialStiffness:
+            _quantity = new AxialStiffness(_value, (AxialStiffnessUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.BendingStiffness:
+            _quantity = new BendingStiffness(_value, (BendingStiffnessUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Curvature:
+            _quantity = new Curvature(_value, (CurvatureUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Mass:
+            _quantity = new Mass(_value, (MassUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Density:
+            _quantity = new Density(_value, (DensityUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Temperature:
+            _quantity = new Temperature(_value, (TemperatureUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Velocity:
+            _quantity = new Speed(_value, (SpeedUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Acceleration:
+            _quantity = new Acceleration(_value, (AccelerationUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Energy:
+            _quantity = new Energy(_value, (EnergyUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Ratio:
+            _quantity = new Ratio(_value, (RatioUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.Time:
+            _quantity = new Duration(_value, (DurationUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.LinearDensity:
+            _quantity = new LinearDensity(_value, (LinearDensityUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.VolumePerLength:
+            _quantity = new VolumePerLength(_value, (VolumePerLengthUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.SectionModulus:
+            _quantity = new SectionModulus(_value, (SectionModulusUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.RotationalStiffness:
+            _quantity = new RotationalStiffness(_value, (RotationalStiffnessUnit)_selectedMeasure);
+            break;
+
+          default:
+            throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
+        }
+
 
         var unitNumber = new OasysGH.Parameters.GH_UnitNumber(_quantity);
 
