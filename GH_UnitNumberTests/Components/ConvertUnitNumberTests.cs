@@ -1,20 +1,12 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.IO;
+﻿using System.Drawing;
 using System.Reflection;
 using System.Resources;
 using System.Windows.Forms;
-using GH_UnitNumber;
 using GH_UnitNumber.Components;
 using GH_UnitNumber.Properties;
 using GH_UnitNumberTests.Helpers;
-using Grasshopper.Kernel.Parameters;
-using Grasshopper.Kernel.Types;
-using OasysGH.Components;
 using OasysUnits;
 using Rhino.Geometry;
-using Rhino.NodeInCode;
 using Xunit;
 
 namespace GH_UnitNumberTests.Components {
