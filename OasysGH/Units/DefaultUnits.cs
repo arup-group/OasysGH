@@ -16,6 +16,7 @@ namespace OasysGH.Units {
     public static PressureUnit ForcePerAreaUnit { get; set; } = PressureUnit.KilonewtonPerSquareMeter;
     public static ForcePerLengthUnit ForcePerLengthUnit { get; set; } = ForcePerLengthUnit.KilonewtonPerMeter;
     public static ForceUnit ForceUnit { get; set; } = ForceUnit.Kilonewton;
+    public static RotationalStiffnessUnit RotationalStiffnessUnit { get; set; } = RotationalStiffnessUnit.NewtonMeterPerRadian;
     public static LengthUnit LengthUnitGeometry {
       get {
         if (UseRhinoLengthGeometryUnit)

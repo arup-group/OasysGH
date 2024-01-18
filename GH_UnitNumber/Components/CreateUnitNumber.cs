@@ -152,6 +152,10 @@ namespace GH_UnitNumber.Components {
           unitAbbreviation = SectionModulus.GetAbbreviation((SectionModulusUnit)_selectedMeasure);
           break;
 
+        case EngineeringUnits.RotationalStiffness:
+          unitAbbreviation = RotationalStiffness.GetAbbreviation((RotationalStiffnessUnit)_selectedMeasure);
+          break;
+
         default:
           throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
       }
@@ -283,20 +287,25 @@ namespace GH_UnitNumber.Components {
             break;
 
           case EngineeringUnits.LinearDensity:
-            _quantity = new LinearDensity(_value, DefaultUnits.LinearDensityUnit);
+            _quantity = new LinearDensity(_value, (LinearDensityUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.VolumePerLength:
-            _quantity = new VolumePerLength(_value, DefaultUnits.VolumePerLengthUnit);
+            _quantity = new VolumePerLength(_value, (VolumePerLengthUnit)_selectedMeasure);
             break;
 
           case EngineeringUnits.SectionModulus:
-            _quantity = new SectionModulus(_value, DefaultUnits.SectionModulusUnit);
+            _quantity = new SectionModulus(_value, (SectionModulusUnit)_selectedMeasure);
+            break;
+
+          case EngineeringUnits.RotationalStiffness:
+            _quantity = new RotationalStiffness(_value, (RotationalStiffnessUnit)_selectedMeasure);
             break;
 
           default:
             throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
         }
+
 
         var unitNumber = new OasysGH.Parameters.GH_UnitNumber(_quantity);
 
@@ -423,6 +432,10 @@ namespace GH_UnitNumber.Components {
           _quantity = new SectionModulus(_value, DefaultUnits.SectionModulusUnit);
           break;
 
+        case EngineeringUnits.RotationalStiffness:
+          _quantity = new RotationalStiffness(_value, DefaultUnits.RotationalStiffnessUnit);
+          break;
+
         default:
           throw new Exception("Unable to get abbreviations for unit type " + unit.ToString());
       }
@@ -532,6 +545,10 @@ namespace GH_UnitNumber.Components {
 
         case EngineeringUnits.SectionModulus:
           _quantity = new SectionModulus(_value, (SectionModulusUnit)_selectedMeasure);
+          break;
+
+        case EngineeringUnits.RotationalStiffness:
+          _quantity = new RotationalStiffness(_value, (RotationalStiffnessUnit)_selectedMeasure);
           break;
 
         default:
