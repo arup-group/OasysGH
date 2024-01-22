@@ -19,12 +19,12 @@ namespace OasysGH.Helpers {
       private string _event;
 
       [JsonProperty("properties")]
-      private Dictionary<string, object> _properties;
+      private IDictionary<string, object> _properties;
 
       [JsonProperty("timestamp")]
       private DateTime _timestamp;
 
-      public PhContainer(string apiKey, string eventName, Dictionary<string, object> properties) {
+      public PhContainer(string apiKey, string eventName, IDictionary<string, object> properties) {
         _apiKey = apiKey;
         _event = eventName;
         _properties = properties;
@@ -84,16 +84,20 @@ namespace OasysGH.Helpers {
       }
     }
 
-    public static async Task<HttpResponseMessage> SendToPostHog(OasysPluginInfo pluginInfo, string eventName, Dictionary<string, object> additionalProperties = null) {
+    public static async Task<HttpResponseMessage> SendToPostHog(OasysPluginInfo pluginInfo, string eventName, IDictionary<string, object> additionalProperties = null) {
+      return await SendToPostHog(pluginInfo.PostHogApiKey, pluginInfo.PluginName, pluginInfo.Version, pluginInfo.IsBeta, eventName, additionalProperties);
+    }
+
+    public static async Task<HttpResponseMessage> SendToPostHog(string postHogApiKey, string pluginName, string version, bool isBeta, string eventName, IDictionary<string, object> additionalProperties = null) {
       // posthog ADS plugin requires a user object
       User user = currentUser;
 
       var properties = new Dictionary<string, object>() {
         { "distinct_id", user.UserName },
         { "user", user },
-        { "pluginName", pluginInfo.PluginName },
-        { "version", pluginInfo.Version },
-        { "isBeta", pluginInfo.IsBeta },
+        { "pluginName", pluginName },
+        { "version", version },
+        { "isBeta", isBeta },
       };
 
       if (additionalProperties != null) {
@@ -102,7 +106,11 @@ namespace OasysGH.Helpers {
         }
       }
 
-      var container = new PhContainer(pluginInfo.PostHogApiKey, eventName, properties);
+      return await SendToPostHog(postHogApiKey, eventName, properties);
+    }
+
+    public static async Task<HttpResponseMessage> SendToPostHog(string postHogApiKey, string eventName, IDictionary<string, object> properties) {
+      var container = new PhContainer(postHogApiKey, eventName, properties);
       string body = JsonConvert.SerializeObject(container);
       var content = new StringContent(body, Encoding.UTF8, "application/json");
       HttpResponseMessage response = await phClient.PostAsync("https://eu.posthog.com/capture/", content);
