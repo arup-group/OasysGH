@@ -201,8 +201,8 @@ namespace OasysGH.UI {
             _toggles[i] = !_toggles[i];
             _toggleAction(_toggles);
 
-            comp.ExpireSolution(true);
             comp.Expire = true;
+            comp.ExpireSolution(true);
             return GH_ObjectResponse.Handled;
           }
         }
