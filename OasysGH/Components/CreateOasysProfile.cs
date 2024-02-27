@@ -1367,6 +1367,20 @@ namespace OasysGH.Components {
         _typeData = SqlReader.Instance.GetTypesDataFromSQLite(_catalogueIndex, DataSource, _inclSS);
         _typeNames = _typeData.Item1;
         _typeNumbers = _typeData.Item2;
+        // update section list from new types (all new types in catalogue)
+        var types = _typeNumbers.ToList();
+        types.RemoveAt(0); // remove -1 from beginning of list
+        if (types.Count == 0) {
+          AddRuntimeMessage(GH_RuntimeMessageLevel.Warning,
+            "Selected catalogue contains no sections. Try include superseeded.");
+          return;
+        }
+
+        _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
+
+        // update selections to display first item in new list
+        _selectedItems[2] = _typeNames[0];
+        _selectedItems[3] = _sectionList[0];
 
         Mode1Clicked();
 
