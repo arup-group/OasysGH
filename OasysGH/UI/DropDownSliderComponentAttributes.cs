@@ -155,9 +155,9 @@ namespace OasysGH.UI {
           _noDigits = hiddenSlider.Slider.Type == GH_SliderAccuracy.Integer ? 0 : hiddenSlider.Slider.DecimalPlaces;
           _changeMaxMin(_maxValue, _minValue);
           comp.OnDisplayExpired(false);
-          comp.ExpireSolution(true);
 
           comp.Expire = true;
+          comp.ExpireSolution(true);
           return GH_ObjectResponse.Handled;
         }
       }
@@ -219,8 +219,8 @@ namespace OasysGH.UI {
 
         Instances.CursorServer.AttachCursor(sender, "GH_NumericSlider");
 
-        comp.ExpireSolution(true);
         comp.Expire = true;
+        comp.ExpireSolution(true);
         return GH_ObjectResponse.Ignore;
       }
 
@@ -266,8 +266,8 @@ namespace OasysGH.UI {
           _deltaY = 0;
           _dragY = false;
 
-          comp.ExpireSolution(true);
           comp.Expire = true;
+          comp.ExpireSolution(true);
           return GH_ObjectResponse.Release;
         }
 
@@ -277,8 +277,8 @@ namespace OasysGH.UI {
           _deltaX = 0;
           _dragX = false;
 
-          comp.ExpireSolution(true);
           comp.Expire = true;
+          comp.ExpireSolution(true);
           return GH_ObjectResponse.Release;
         }
 
