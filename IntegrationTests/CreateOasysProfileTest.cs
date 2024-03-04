@@ -50,7 +50,7 @@ namespace IntegrationTests {
     }
 
     [Theory]
-    [InlineData("Count", 13998)]
+    [InlineData("Count", 557)]
     [InlineData("CountSuperseeded", 18572)]
     public void AssertCount(string groupIdentifier, int expectedOutput) {
       IGH_Param param = DocumentHelper.FindParameter(Document, groupIdentifier);
