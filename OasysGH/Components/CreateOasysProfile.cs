@@ -107,7 +107,7 @@ namespace OasysGH.Components {
     private string _search = "";
 
     // Sections
-    private List<string> _sectionList;
+    private List<string> _sectionNames;
 
     private Tuple<List<string>, List<int>> _typeData;
 
@@ -119,13 +119,14 @@ namespace OasysGH.Components {
 
     // list of displayed types
     private Type _type = typeof(IRectangleProfile);
+    private int _sectionIndex = 0;
 
     protected CreateOasysProfile(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory) {
       Tuple<List<string>, List<int>> catalogueData = SqlReader.Instance.GetCataloguesDataFromSQLite(DataSource);
       _catalogueNames = catalogueData.Item1;
       _catalogueNumbers = catalogueData.Item2;
       _typeData = SqlReader.Instance.GetTypesDataFromSQLite(-1, DataSource, false);
-      _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(new List<int> { -1 }, DataSource, false);
+      _sectionNames = SqlReader.Instance.GetSectionsDataFromSQLite(new List<int> { -1 }, DataSource, false);
     }
 
     public override bool Read(GH_IReader reader) {
@@ -133,6 +134,7 @@ namespace OasysGH.Components {
       _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), reader.GetString("lengthUnit"));
       _catalogueIndex = reader.GetInt32("catalogueIndex");
       _typeIndex = reader.GetInt32("typeIndex");
+      _sectionIndex = reader.GetInt32("sectionIndex");
 
       bool flag = base.Read(reader);
       Params.Output[0].Access = GH_ParamAccess.tree;
@@ -156,130 +158,60 @@ namespace OasysGH.Components {
         _spacerDescriptions[1] = "Catalogue";
 
         // if FoldMode is not currently catalogue state, then we update all lists
-        if (_mode != FoldMode.Catalogue | updateCat) {
-          // remove any existing selections
-          while (_selectedItems.Count > 1)
-            _selectedItems.RemoveAt(1);
+        UpdateSelectedItemsForNonCatalogue(updateCat);
+        UpdateDropdownItems(_catalogueNames);
 
-          // set catalogue selection to all
-          _catalogueIndex = -1;
-
-          // set types to all
-          _typeIndex = -1;
-          // update typelist with all catalogues
-          UpdateTypeData();
-
-          // update section list to all types
-          _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, DataSource, _inclSS);
-
-          // update displayed selections to all
-          _selectedItems.Add(_catalogueNames[0]);
-          _selectedItems.Add(_typeNames[0]);
-          _selectedItems.Add(_sectionList[0]);
-
-          // call graphics update
-          Mode1Clicked();
-        }
-
-        // update dropdown lists
-        while (_dropDownItems.Count > 1)
-          _dropDownItems.RemoveAt(1);
-
-        // add catalogues (they will always be the same so no need to rerun sql call)
-        _dropDownItems.Add(_catalogueNames);
-
-        // type list
-        // if second list (i.e. catalogue list) is changed, update types list to account for that catalogue
         if (i == 1) {
-          // update catalogue index with the selected catalogue
           _catalogueIndex = _catalogueNumbers[j];
-          _selectedItems[1] = _catalogueNames[j];
 
-          // update typelist with selected input catalogue
-          _typeData = SqlReader.Instance.GetTypesDataFromSQLite(_catalogueIndex, DataSource, _inclSS);
-          _typeNames = _typeData.Item1;
-          _typeNumbers = _typeData.Item2;
-
-          // update section list from new types (all new types in catalogue)
-          var types = _typeNumbers.ToList();
-          types.RemoveAt(0); // remove -1 from beginning of list
-          if (types.Count == 0) {
-            AddRuntimeMessage(GH_RuntimeMessageLevel.Warning,
-              "Selected catalogue contains no sections. Try include superseeded.");
-            return;
-          }
-
-          _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
-
-          // update selections to display first item in new list
-          _selectedItems[2] = _typeNames[0];
-          _selectedItems[3] = _sectionList[0];
+          List<int> types = CreateTypeList();
+          SetSectionNames(types);
+          ChangeSelectedItems(j);
         }
         _dropDownItems.Add(_typeNames);
 
-        // section list
-        // if third list (i.e. types list) is changed, update sections list to account for these section types
         if (i == 2) {
-          // update catalogue index with the selected catalogue
           _typeIndex = _typeNumbers[j];
           _selectedItems[2] = _typeNames[j];
 
-          // create type list
-          List<int> types;
-          if (_typeIndex == -1) // if all
-          {
-            types = _typeNumbers.ToList(); // use current selected list of type numbers
-            types.RemoveAt(0); // remove -1 from beginning of list
-          } else
-            types = new List<int> { _typeIndex }; // create empty list and add the single selected type
+          List<int> types = CreateTypeList();
 
-          // section list with selected types (only types in selected type)
-          _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
+          SetSectionNames(types);
 
-          // update selected section to be all
-          _selectedItems[3] = _sectionList[0];
+          _selectedItems[3] = _sectionNames[0];
         }
-        _dropDownItems.Add(_sectionList);
+        _dropDownItems.Add(_sectionNames);
 
-        // selected profile
-        // if fourth list (i.e. section list) is changed, updated the sections list to only be that single profile
         if (i == 3) {
-          // update displayed selected
-          _selectedItems[3] = _sectionList[j];
+          _sectionIndex = _sectionNames.IndexOf(_sectionNames[j]);
+          _selectedItems[3] = _sectionNames[_sectionIndex];
         }
 
         if (_search == "")
           UpdateProfileDescriptions();
 
         base.UpdateUI();
-      } else {
-        // update spacer description to match none-catalogue dropdowns
-        _spacerDescriptions[1] = "Measure";// = new List<string>(new string[]
+      } else { // non catalogue selection
+        _spacerDescriptions[1] = "Measure";
 
         if (_mode != FoldMode.Other) {
-          // remove all catalogue dropdowns
-          while (_dropDownItems.Count > 1)
-            _dropDownItems.RemoveAt(1);
-
-          // add length measure dropdown list
-          _dropDownItems.Add(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
+          UpdateDropdownItems(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
 
           // set selected length
           _selectedItems[1] = _lengthUnit.ToString();
         }
 
         if (i == 0) {
-          // update profile type if change is made to first dropdown menu
           _type = profileTypes[_selectedItems[0]];
           Mode2Clicked();
         } else {
-          // change unit
           _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), _selectedItems[i]);
 
           base.UpdateUI();
         }
       }
     }
+
 
     public override void VariableParameterMaintenance() {
       if (_mode == FoldMode.Catalogue) {
@@ -821,6 +753,7 @@ namespace OasysGH.Components {
       writer.SetString("lengthUnit", _lengthUnit.ToString());
       writer.SetInt32("catalogueIndex", _catalogueIndex);
       writer.SetInt32("typeIndex", _typeIndex);
+      writer.SetInt32("sectionIndex", _sectionIndex);
       return base.Write(writer);
     }
 
@@ -974,14 +907,14 @@ namespace OasysGH.Components {
       if (da.GetData(1, ref incl)) {
         if (_inclSS != incl) {
           _inclSS = incl;
-          UpdateTypeData();
-          _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, DataSource, _inclSS);
+          SetTypeList();
+          _sectionNames = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, DataSource, _inclSS);
 
           _selectedItems[2] = _typeNames[0];
           _dropDownItems[2] = _typeNames;
 
-          _selectedItems[3] = _sectionList[0];
-          _dropDownItems[3] = _sectionList;
+          _selectedItems[3] = _sectionNames[0];
+          _dropDownItems[3] = _sectionNames;
 
           base.UpdateUI();
         }
@@ -1017,16 +950,16 @@ namespace OasysGH.Components {
             AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No profile found that matches selected profile and search!");
           }
         } else if (_search != "") {
-          for (int k = 0; k < _sectionList.Count; k++) {
-            if (MatchAndAdd(_sectionList[k], _search, ref filteredlist, tryHard)) {
+          for (int k = 0; k < _sectionNames.Count; k++) {
+            if (MatchAndAdd(_sectionNames[k], _search, ref filteredlist, tryHard)) {
             } else if (!_search.Any(char.IsDigit)) {
-              string test = _sectionList[k].ToString();
+              string test = _sectionNames[k].ToString();
               test = Regex.Replace(test, "[0-9]", string.Empty);
               test = test.Replace(".", string.Empty);
               test = test.Replace("-", string.Empty);
               test = test.ToLower();
               if (test.Contains(_search)) {
-                filteredlist.Add(_sectionList[k]);
+                filteredlist.Add(_sectionNames[k]);
               }
             }
           }
@@ -1358,40 +1291,35 @@ namespace OasysGH.Components {
 
     protected override void UpdateUIFromSelectedItems() {
       if (_selectedItems[0] == "Catalogue") {
-        // update spacer description to match catalogue dropdowns
         _spacerDescriptions = new List<string>(new string[]
         {
           "Profile type", "Catalogue", "Type", "Profile"
         });
 
-        _typeData = SqlReader.Instance.GetTypesDataFromSQLite(_catalogueIndex, DataSource, _inclSS);
-        _typeNames = _typeData.Item1;
-        _typeNumbers = _typeData.Item2;
-        // update section list from new types (all new types in catalogue)
-        var types = _typeNumbers.ToList();
-        types.RemoveAt(0); // remove -1 from beginning of list
-        if (types.Count == 0) {
-          AddRuntimeMessage(GH_RuntimeMessageLevel.Warning,
-            "Selected catalogue contains no sections. Try include superseeded.");
-          return;
-        }
+        SetTypeList();
+        List<int> types = CreateTypeList();
+        SetSectionNames(types);
+        CreateSectionList();
+        UpdateDropdownItems(_catalogueNames);
+        UpdateDropdownItems(_typeNames, false);
+        UpdateDropdownItems(_sectionNames, false);
 
-        _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
+        int catIndex = _catalogueNumbers.IndexOf(_catalogueIndex);
+        int typeIndex = _typeNumbers.IndexOf(_typeIndex);
+        ChangeSelectedItems(catIndex, typeIndex, _sectionIndex);
 
-        // update selections to display first item in new list
-        _selectedItems[2] = _typeNames[0];
-        _selectedItems[3] = _sectionList[0];
-
+        UpdateProfileDescriptions();
         Mode1Clicked();
 
-        _profileDescriptions = new List<string>() { "CAT " + _selectedItems[3] };
+
       } else {
-        // update spacer description to match none-catalogue dropdowns
         _spacerDescriptions = new List<string>(new string[]
         {
           "Profile type", "Measure", "Type", "Profile"
         });
+        UpdateDropdownItems(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
 
+        _selectedItems[1] = _lengthUnit.ToString();
         _type = profileTypes[_selectedItems[0]];
         Mode2Clicked();
       }
@@ -1399,9 +1327,7 @@ namespace OasysGH.Components {
       base.UpdateUIFromSelectedItems();
     }
 
-    private static Tuple<List<string>, List<int>> GetTypesDataFromSQLite(int catalogueIndex, string filePath, bool inclSuperseeded) {
-      return SqlReader.Instance.GetTypesDataFromSQLite(catalogueIndex, filePath, inclSuperseeded);
-    }
+    private static Tuple<List<string>, List<int>> GetTypesDataFromSqLite(int catalogueIndex, string filePath, bool inclSuperseeded) => SqlReader.Instance.GetTypesDataFromSQLite(catalogueIndex, filePath, inclSuperseeded);
 
     private static bool MatchAndAdd(string item, string pattern, ref List<string> list, bool tryHard = false) {
       string input = item.ToLower().Replace(".", String.Empty);
@@ -1426,7 +1352,7 @@ namespace OasysGH.Components {
     private void UpdateProfileDescriptions() {
       if (_selectedItems[3] == "All") {
         _profileDescriptions = new List<string>();
-        foreach (string profile in _sectionList) {
+        foreach (string profile in _sectionNames) {
           if (profile == "All")
             continue;
           _profileDescriptions.Add("CAT " + profile);
@@ -1434,11 +1360,86 @@ namespace OasysGH.Components {
       } else
         _profileDescriptions = new List<string>() { "CAT " + _selectedItems[3] };
     }
+    
+    private List<int> CreateTypeList() {
+      List<int> types;
+      if (_typeIndex == -1) // if all
+      {
+        types = _typeNumbers.ToList();
+        types.RemoveAt(0);
+        if (types.Count == 0) {
+          AddRuntimeMessage(GH_RuntimeMessageLevel.Warning,
+            "Selected catalogue contains no types. Try include superseeded.");
+        }
+      } else
+        types = new List<int> { _typeIndex };
 
-    private void UpdateTypeData() {
-      _typeData = GetTypesDataFromSQLite(_catalogueIndex, DataSource, _inclSS);
+      return types;
+    }
+
+    private void CreateSectionList() {
+      List<string> sections;
+      if (_sectionIndex == -1) // if all
+      {
+        sections = _sectionNames.ToList();
+        sections.RemoveAt(0);
+        if (sections.Count == 0) {
+          AddRuntimeMessage(GH_RuntimeMessageLevel.Warning,
+            "Selected catalogue contains no sections. ");
+        }
+
+        _sectionNames = sections;
+      }
+    }
+    
+    private void UpdateSelectedItemsForNonCatalogue(bool updateCat) {
+      if (!(_mode != FoldMode.Catalogue | updateCat)) {
+        return;
+      }
+
+      RemoveSelection();
+
+      _catalogueIndex = -1;
+      _typeIndex = -1;
+      _sectionIndex = 0;
+
+      SetTypeList();
+      SetSectionNames(_typeNumbers);
+      CreateSectionList();
+      ChangeSelectedItems();
+
+      Mode1Clicked();
+    }
+
+    private void SetTypeList() {
+      _typeData = GetTypesDataFromSqLite(_catalogueIndex, DataSource, _inclSS);
       _typeNames = _typeData.Item1;
       _typeNumbers = _typeData.Item2;
+    }
+
+    private void SetSectionNames(List<int> types) =>
+      _sectionNames = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
+
+    private void ChangeSelectedItems(int catIndex = 0, int typeIndex = 0, int sectionIndex = 0) {
+      RemoveSelection();
+
+      _selectedItems.Add(_catalogueNames[catIndex]);
+      _selectedItems.Add(_typeNames[typeIndex]);
+      _selectedItems.Add(_sectionNames[sectionIndex]);
+    }
+
+    private void RemoveSelection() {
+      while (_selectedItems.Count > 1)
+        _selectedItems.RemoveAt(1);
+    }
+
+    private void UpdateDropdownItems(List<string> list, bool remove = true) {
+      if (remove) {
+        while (_dropDownItems.Count > 1)
+          _dropDownItems.RemoveAt(1);
+      }
+
+      _dropDownItems.Add(list);
     }
   }
 }
