@@ -164,7 +164,7 @@ namespace OasysGH.Components {
         if (i == 1) {
           _catalogueIndex = _catalogueNumbers[j];
 
-          List<int> types = CreateTypeList();
+          List<int> types = GetTypeList();
           SetSectionNames(types);
           ChangeSelectedItems(j);
         }
@@ -174,7 +174,7 @@ namespace OasysGH.Components {
           _typeIndex = _typeNumbers[j];
           _selectedItems[2] = _typeNames[j];
 
-          List<int> types = CreateTypeList();
+          List<int> types = GetTypeList();
 
           SetSectionNames(types);
 
@@ -1297,7 +1297,7 @@ namespace OasysGH.Components {
         });
 
         SetTypeList();
-        List<int> types = CreateTypeList();
+        List<int> types = GetTypeList();
         SetSectionNames(types);
         CreateSectionList();
         UpdateDropdownItems(_catalogueNames);
@@ -1361,7 +1361,7 @@ namespace OasysGH.Components {
         _profileDescriptions = new List<string>() { "CAT " + _selectedItems[3] };
     }
     
-    private List<int> CreateTypeList() {
+    private List<int> GetTypeList() {
       List<int> types;
       if (_typeIndex == -1) // if all
       {
