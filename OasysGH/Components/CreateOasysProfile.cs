@@ -163,7 +163,10 @@ namespace OasysGH.Components {
 
         if (i == 1) {
           _catalogueIndex = _catalogueNumbers[j];
+          _typeIndex = -1;
+          _sectionIndex = 0;
 
+          SetTypeList();
           List<int> types = GetTypeList();
           SetSectionNames(types);
           ChangeSelectedItems(j);
@@ -1305,6 +1308,7 @@ namespace OasysGH.Components {
         _typeIndex = oldTypeIndex;
         _sectionIndex = oldSectionIndex;
 
+        SetTypeList();
         List<int> types = GetTypeList();
         SetSectionNames(types);
 
@@ -1408,7 +1412,6 @@ namespace OasysGH.Components {
 
       SetTypeList();
       SetSectionNames(_typeNumbers);
-      CreateSectionList();
       ChangeSelectedItems();
 
       Mode1Clicked();
