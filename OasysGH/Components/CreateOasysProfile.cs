@@ -134,7 +134,7 @@ namespace OasysGH.Components {
       _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), reader.GetString("lengthUnit"));
       _catalogueIndex = reader.GetInt32("catalogueIndex");
       _typeIndex = reader.GetInt32("typeIndex");
-      _sectionIndex = reader.GetInt32("sectionIndex");
+      reader.TryGetInt32("sectionIndex", ref _sectionIndex);
 
       bool flag = base.Read(reader);
       Params.Output[0].Access = GH_ParamAccess.tree;
