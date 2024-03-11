@@ -1295,22 +1295,25 @@ namespace OasysGH.Components {
         {
           "Profile type", "Catalogue", "Type", "Profile"
         });
+        int oldCatIndex = _catalogueIndex;
+        int oldTypeIndex = _typeIndex;
+        int oldSectionIndex = _sectionIndex;
 
-        SetTypeList();
+        UpdateSelectedItemsForNonCatalogue(true);
+        UpdateDropdownItems(_catalogueNames);
+        _catalogueIndex = oldCatIndex;
+        _typeIndex = oldTypeIndex;
+        _sectionIndex = oldSectionIndex;
+
         List<int> types = GetTypeList();
         SetSectionNames(types);
-        CreateSectionList();
-        UpdateDropdownItems(_catalogueNames);
+
         UpdateDropdownItems(_typeNames, false);
         UpdateDropdownItems(_sectionNames, false);
 
-        int catIndex = _catalogueNumbers.IndexOf(_catalogueIndex);
-        int typeIndex = _typeNumbers.IndexOf(_typeIndex);
-        ChangeSelectedItems(catIndex, typeIndex, _sectionIndex);
+        ChangeSelectedItems(_catalogueNumbers.IndexOf(oldCatIndex), _typeNumbers.IndexOf(oldTypeIndex), oldSectionIndex);
 
         UpdateProfileDescriptions();
-        Mode1Clicked();
-
 
       } else {
         _spacerDescriptions = new List<string>(new string[]
@@ -1319,7 +1322,7 @@ namespace OasysGH.Components {
         });
         UpdateDropdownItems(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
 
-        _selectedItems[1] = _lengthUnit.ToString();
+        _selectedItems[1] = Length.GetAbbreviation(_lengthUnit);
         _type = profileTypes[_selectedItems[0]];
         Mode2Clicked();
       }
