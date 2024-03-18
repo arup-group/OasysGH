@@ -763,12 +763,7 @@ namespace OasysGH.Components {
     }
 
     protected internal override void InitialiseDropdowns() {
-      _spacerDescriptions = new List<string>(new string[] {
-        "Profile type",
-        "Measure",
-        "Type",
-        "Profile"
-      });
+      SetSpacerDescriptionForNonCatalogues();
 
       _dropDownItems = new List<List<string>>();
       _selectedItems = new List<string>();
@@ -1296,10 +1291,8 @@ namespace OasysGH.Components {
 
     protected override void UpdateUIFromSelectedItems() {
       if (_selectedItems[0] == "Catalogue") {
-        _spacerDescriptions = new List<string>(new string[]
-        {
-          "Profile type", "Catalogue", "Type", "Profile"
-        });
+        SetSpacerDescriptionForCatalogues();
+
         int oldCatIndex = _catalogueIndex;
         int oldTypeIndex = _typeIndex;
         int oldSectionIndex = _sectionIndex;
@@ -1322,10 +1315,7 @@ namespace OasysGH.Components {
         UpdateProfileDescriptions();
 
       } else {
-        _spacerDescriptions = new List<string>(new string[]
-        {
-          "Profile type", "Measure", "Type", "Profile"
-        });
+        SetSpacerDescriptionForNonCatalogues();
         UpdateDropdownItems(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
 
         _selectedItems[1] = Length.GetAbbreviation(_lengthUnit);
@@ -1335,6 +1325,10 @@ namespace OasysGH.Components {
 
       base.UpdateUIFromSelectedItems();
     }
+
+    private void SetSpacerDescriptionForNonCatalogues() => _spacerDescriptions = new List<string>(new string[] { "Profile type", "Measure", "Type", "Profile" });
+
+    private void SetSpacerDescriptionForCatalogues() => _spacerDescriptions = new List<string>(new string[] { "Profile type", "Catalogue", "Type", "Profile" });
 
     private static Tuple<List<string>, List<int>> GetTypesDataFromSqLite(int catalogueIndex, string filePath, bool inclSuperseeded) => SqlReader.Instance.GetTypesDataFromSQLite(catalogueIndex, filePath, inclSuperseeded);
 
