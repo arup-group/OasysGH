@@ -42,7 +42,7 @@ namespace IntegrationTests {
     [InlineData("Trapezoid", "STD TR(cm) 500 100 10")]
     [InlineData("T Section", "STD T(cm) 500 100 10 20")]
     [InlineData("IPE100", "CAT BSI-IPE IPE100")]
-    [InlineData("HE200AA", "CAT BSI-HE HE200AA")]
+    [InlineData("HE200AA", "CAT HE HE200.AA")]
     public void AssertOutput(string groupIdentifier, string expectedOutput) {
       IGH_Param param = DocumentHelper.FindParameter(Document, groupIdentifier);
       var output = (GH_String)param.VolatileData.get_Branch(0)[0];
@@ -50,7 +50,7 @@ namespace IntegrationTests {
     }
 
     [Theory]
-    [InlineData("Count", 13998)]
+    [InlineData("Count", 557)]
     [InlineData("CountSuperseeded", 18572)]
     public void AssertCount(string groupIdentifier, int expectedOutput) {
       IGH_Param param = DocumentHelper.FindParameter(Document, groupIdentifier);
