@@ -980,10 +980,6 @@ namespace OasysGH.Components {
     }
 
     protected List<IProfile> SolveInstanceForCatalogueProfile(IGH_DataAccess da) {
-
-      //_sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, DataSource, _inclSS);
-
-
       var profiles = new List<IProfile>();
       // get user input filter search string
       bool incl = false;
