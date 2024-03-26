@@ -136,6 +136,18 @@ namespace OasysGH.Components {
 
       bool flag = base.Read(reader);
       Params.Output[0].Access = GH_ParamAccess.tree;
+
+      UpdateTypeData();
+      var types = new List<int> { -1 };
+      if (_typeIndex != -1) {
+        types = new List<int> { _typeIndex };
+      } else if (_catalogueIndex != -1) {
+        types = _typeNumbers.ToList();
+        types.RemoveAt(0);
+      }
+
+      _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
+
       return flag;
     }
 
@@ -968,6 +980,10 @@ namespace OasysGH.Components {
     }
 
     protected List<IProfile> SolveInstanceForCatalogueProfile(IGH_DataAccess da) {
+
+      //_sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, DataSource, _inclSS);
+
+
       var profiles = new List<IProfile>();
       // get user input filter search string
       bool incl = false;
