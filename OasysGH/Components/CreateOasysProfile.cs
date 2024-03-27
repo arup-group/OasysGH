@@ -133,9 +133,13 @@ namespace OasysGH.Components {
       _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), reader.GetString("lengthUnit"));
       _catalogueIndex = reader.GetInt32("catalogueIndex");
       _typeIndex = reader.GetInt32("typeIndex");
+      reader.TryGetBoolean("inclSS", ref _inclSS);
 
       bool flag = base.Read(reader);
       Params.Output[0].Access = GH_ParamAccess.tree;
+
+      UpdateSecionList();
+
       return flag;
     }
 
@@ -821,6 +825,7 @@ namespace OasysGH.Components {
       writer.SetString("lengthUnit", _lengthUnit.ToString());
       writer.SetInt32("catalogueIndex", _catalogueIndex);
       writer.SetInt32("typeIndex", _typeIndex);
+      writer.SetBoolean("inclSS", _inclSS);
       return base.Write(writer);
     }
 
@@ -974,13 +979,13 @@ namespace OasysGH.Components {
       if (da.GetData(1, ref incl)) {
         if (_inclSS != incl) {
           _inclSS = incl;
-          UpdateTypeData();
-          _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, DataSource, _inclSS);
+          _typeIndex = -1;
+          UpdateSecionList();
 
-          _selectedItems[2] = _typeNames[0];
+          _selectedItems[2] = "All";
           _dropDownItems[2] = _typeNames;
 
-          _selectedItems[3] = _sectionList[0];
+          _selectedItems[3] = "All";
           _dropDownItems[3] = _sectionList;
 
           base.UpdateUI();
@@ -1420,6 +1425,20 @@ namespace OasysGH.Components {
       } else
         _profileDescriptions = new List<string>() { "CAT " + _selectedItems[3] };
     }
+
+    private void UpdateSecionList() {
+      UpdateTypeData();
+      var types = new List<int> { -1 };
+      if (_typeIndex != -1) {
+        types = new List<int> { _typeIndex };
+      } else if (_catalogueIndex != -1) {
+        types = _typeNumbers.ToList();
+        types.RemoveAt(0);
+      }
+
+      _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
+    }
+
 
     private void UpdateTypeData() {
       _typeData = GetTypesDataFromSQLite(_catalogueIndex, DataSource, _inclSS);
