@@ -48,7 +48,7 @@ namespace OasysGH.Parameters {
       }
 
       if (typeof(Q).IsAssignableFrom(typeof(GH_Number)) && Value != null) {
-        target = (Q)(object)new GH_Number(Value.Value);
+        target = (Q)(object)new GH_Number((double)Value.Value);
         return true;
       }
 

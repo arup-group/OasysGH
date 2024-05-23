@@ -20,7 +20,7 @@ namespace OasysGH.Units.Helpers {
 
     public static LengthUnit GetRhinoLengthUnit(Rhino.UnitSystem rhinoUnits) {
       var units = new List<LengthUnit>(new LengthUnit[] {
-        LengthUnit.Undefined,
+        //LengthUnit.Undefined,
         LengthUnit.Micrometer,
         LengthUnit.Millimeter,
         LengthUnit.Centimeter,
@@ -31,14 +31,14 @@ namespace OasysGH.Units.Helpers {
         LengthUnit.Inch,
         LengthUnit.Foot,
         LengthUnit.Mile,
-        LengthUnit.Undefined,
-        LengthUnit.Undefined,
+        //LengthUnit.Undefined,
+        //LengthUnit.Undefined,
         LengthUnit.Nanometer,
         LengthUnit.Decimeter,
-        LengthUnit.Undefined,
+        //LengthUnit.Undefined,
         LengthUnit.Hectometer,
-        LengthUnit.Undefined,
-        LengthUnit.Undefined,
+        //LengthUnit.Undefined,
+        //LengthUnit.Undefined,
         LengthUnit.Yard
       });
       return units[rhinoUnits.GetHashCode()];
