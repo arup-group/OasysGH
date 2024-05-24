@@ -18,9 +18,6 @@
     <PackageTags>oasys;grasshopper</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Oasys.Interop">
-      <HintPath>..\lib\Oasys.Interop.dll</HintPath>
-    </Reference>
     <Reference Include="Oasys.Taxonomy.IGeometry">
       <HintPath>..\lib\Oasys.Taxonomy.IGeometry.dll</HintPath>
     </Reference>
