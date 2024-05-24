@@ -19,28 +19,22 @@ namespace OasysGH.Units.Helpers {
     }
 
     public static LengthUnit GetRhinoLengthUnit(Rhino.UnitSystem rhinoUnits) {
-      var units = new List<LengthUnit>(new LengthUnit[] {
-        //LengthUnit.Undefined,
-        LengthUnit.Micrometer,
-        LengthUnit.Millimeter,
-        LengthUnit.Centimeter,
-        LengthUnit.Meter,
-        LengthUnit.Kilometer,
-        LengthUnit.Microinch,
-        LengthUnit.Mil,
-        LengthUnit.Inch,
-        LengthUnit.Foot,
-        LengthUnit.Mile,
-        //LengthUnit.Undefined,
-        //LengthUnit.Undefined,
-        LengthUnit.Nanometer,
-        LengthUnit.Decimeter,
-        //LengthUnit.Undefined,
-        LengthUnit.Hectometer,
-        //LengthUnit.Undefined,
-        //LengthUnit.Undefined,
-        LengthUnit.Yard
-      });
+      var units = new Dictionary<int, LengthUnit>() {
+        { 1, LengthUnit.Micrometer },
+        { 2, LengthUnit.Millimeter },
+        { 3, LengthUnit.Centimeter },
+        { 4, LengthUnit.Meter },
+        { 5, LengthUnit.Kilometer },
+        { 6, LengthUnit.Microinch },
+        { 7, LengthUnit.Mil },
+        { 8, LengthUnit.Inch },
+        { 9, LengthUnit.Foot },
+        { 10, LengthUnit.Mile },
+        { 13, LengthUnit.Nanometer },
+        { 14, LengthUnit.Decimeter },
+        { 16, LengthUnit.Hectometer },
+        { 19, LengthUnit.Yard }
+      };
       return units[rhinoUnits.GetHashCode()];
     }
 
