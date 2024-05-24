@@ -143,7 +143,7 @@ namespace OasysGHTests.Units {
       Assert.False(DefaultUnits.UseRhinoTolerance);
 
       Assert.Equal(
-        new Length(1, LengthUnit.Centimeter),
+        new Length(0.01, LengthUnit.Meter),
         DefaultUnits.Tolerance);
 
       Assert.Equal(
