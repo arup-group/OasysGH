@@ -37,7 +37,7 @@ namespace OasysGH.Units.Helpers {
 
     public static List<string> FilteredAxialStiffnessUnits = new List<string>(Enum.GetNames(typeof(AxialStiffnessUnit)).Skip(1).ToList());
 
-    public static List<string> FilteredBendingStiffnessUnits = new List<string>(Enum.GetNames(typeof(BendingStiffnessUnit)).Skip(1).ToList());
+    public static List<string> FilteredBendingStiffnessUnits = new List<string>(Enum.GetNames(typeof(BendingStiffnessUnit)).ToList());
 
     public static List<string> FilteredCurvatureUnits = new List<string>(Enum.GetNames(typeof(CurvatureUnit)).Skip(1).ToList());
 
