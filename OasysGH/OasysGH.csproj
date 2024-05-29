@@ -47,10 +47,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\lib\Oasys.Interop.dll">
-      <Pack>true</Pack>
-      <PackagePath>lib\$(TargetFramework)</PackagePath>
-    </Content>
     <Content Include="..\lib\Oasys.Taxonomy.IGeometry.dll">
       <Pack>true</Pack>
       <PackagePath>lib\$(TargetFramework)</PackagePath>
