@@ -23,7 +23,7 @@ namespace OasysGHTests.Units.Helpers {
       string areaAbbreviation = Area.GetAbbreviation(AreaUnit.SquareDecimeter, culture);
       string axialStiffnessAbbreviation = AxialStiffness.GetAbbreviation(AxialStiffnessUnit.Newton, culture);
       string bendingStiffnessAbbreviation = BendingStiffness.GetAbbreviation(BendingStiffnessUnit.NewtonSquareMeter, culture);
-      string coefficientOfThermalExpansionAbbreviation = CoefficientOfThermalExpansion.GetAbbreviation(CoefficientOfThermalExpansionUnit.InverseDegreeCelsius, culture);
+      string coefficientOfThermalExpansionAbbreviation = CoefficientOfThermalExpansion.GetAbbreviation(CoefficientOfThermalExpansionUnit.PerDegreeCelsius, culture);
       string curvatureAbbreviation = Curvature.GetAbbreviation(CurvatureUnit.PerMillimeter, culture);
       string densityAbbreviation = Density.GetAbbreviation(DensityUnit.KilogramPerCubicMeter, culture);
       string durationAbbreviation = Duration.GetAbbreviation(DurationUnit.Second, culture);
@@ -68,7 +68,7 @@ namespace OasysGHTests.Units.Helpers {
       var temperatureUnit = (TemperatureUnit)UnitsHelper.Parse(typeof(TemperatureUnit), temperatureAbbreviation, culture);
       var volumePerLengthUnit = (VolumePerLengthUnit)UnitsHelper.Parse(typeof(VolumePerLengthUnit), volumePerLengthAbbreviation, culture);
       var volumeUnit = (VolumeUnit)UnitsHelper.Parse(typeof(VolumeUnit), volumeAbbreviation, culture);
-      var sectionModulusUnit = (SectionModulusUnit)UnitsHelper.Parse(typeof(SectionModulus), sectionModulusAbbreviation, culture);
+      var sectionModulusUnit = (SectionModulusUnit)UnitsHelper.Parse(typeof(SectionModulusUnit), sectionModulusAbbreviation, culture);
 
       // Assert
       Assert.Equal(AccelerationUnit.InchPerSecondSquared, accelerationUnit);
@@ -77,7 +77,7 @@ namespace OasysGHTests.Units.Helpers {
       Assert.Equal(AreaUnit.SquareDecimeter, areaUnit);
       Assert.Equal(AxialStiffnessUnit.Newton, axialStiffnessUnit);
       Assert.Equal(BendingStiffnessUnit.NewtonSquareMeter, bendingStiffnessUnit);
-      Assert.Equal(CoefficientOfThermalExpansionUnit.InverseDegreeCelsius, coefficientOfThermalExpansionUnit);
+      Assert.Equal(CoefficientOfThermalExpansionUnit.PerDegreeCelsius, coefficientOfThermalExpansionUnit);
       Assert.Equal(CurvatureUnit.PerMillimeter, curvatureUnit);
       Assert.Equal(DensityUnit.KilogramPerCubicMeter, densityUnit);
       Assert.Equal(DurationUnit.Second, durationUnit);
