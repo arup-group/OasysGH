@@ -67,9 +67,9 @@ namespace OasysGHTests.Units.Helpers {
     }
 
     [Theory]
-    [InlineData(CoefficientOfThermalExpansionUnit.InverseKelvin, TemperatureUnit.Kelvin)]
-    [InlineData(CoefficientOfThermalExpansionUnit.InverseDegreeFahrenheit, TemperatureUnit.DegreeFahrenheit)]
-    [InlineData(CoefficientOfThermalExpansionUnit.InverseDegreeCelsius, TemperatureUnit.DegreeCelsius)]
+    [InlineData(CoefficientOfThermalExpansionUnit.PerKelvin, TemperatureUnit.Kelvin)]
+    [InlineData(CoefficientOfThermalExpansionUnit.PerDegreeFahrenheit, TemperatureUnit.DegreeFahrenheit)]
+    [InlineData(CoefficientOfThermalExpansionUnit.PerDegreeCelsius, TemperatureUnit.DegreeCelsius)]
     public void GetCoefficientOfThermalExpansionUnitTest(CoefficientOfThermalExpansionUnit expected, TemperatureUnit temperatureUnit) {
       // Act
       CoefficientOfThermalExpansionUnit unit = UnitsHelper.GetCoefficientOfThermalExpansionUnit(temperatureUnit);

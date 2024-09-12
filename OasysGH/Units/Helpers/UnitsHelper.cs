@@ -105,14 +105,14 @@ namespace OasysGH.Units.Helpers {
     public static CoefficientOfThermalExpansionUnit GetCoefficientOfThermalExpansionUnit(TemperatureUnit temperatureUnit) {
       switch (temperatureUnit) {
         case TemperatureUnit.Kelvin:
-          return CoefficientOfThermalExpansionUnit.InverseKelvin;
+          return CoefficientOfThermalExpansionUnit.PerKelvin;
 
         case TemperatureUnit.DegreeFahrenheit:
-          return CoefficientOfThermalExpansionUnit.InverseDegreeFahrenheit;
+          return CoefficientOfThermalExpansionUnit.PerDegreeFahrenheit;
 
         case TemperatureUnit.DegreeCelsius:
         default:
-          return CoefficientOfThermalExpansionUnit.InverseDegreeCelsius;
+          return CoefficientOfThermalExpansionUnit.PerDegreeCelsius;
       }
     }
 

@@ -35,11 +35,11 @@ namespace OasysGH.Units.Helpers {
       AreaUnit.SquareFoot.ToString()
     });
 
-    public static List<string> FilteredAxialStiffnessUnits = new List<string>(Enum.GetNames(typeof(AxialStiffnessUnit)).Skip(1).ToList());
+    public static List<string> FilteredAxialStiffnessUnits = new List<string>(Enum.GetNames(typeof(AxialStiffnessUnit)).ToList());
 
     public static List<string> FilteredBendingStiffnessUnits = new List<string>(Enum.GetNames(typeof(BendingStiffnessUnit)).ToList());
 
-    public static List<string> FilteredCurvatureUnits = new List<string>(Enum.GetNames(typeof(CurvatureUnit)).Skip(1).ToList());
+    public static List<string> FilteredCurvatureUnits = new List<string>(Enum.GetNames(typeof(CurvatureUnit)).ToList());
 
     public static List<string> FilteredDensityUnits = new List<string>(new[] {
       DensityUnit.GramPerCubicMillimeter.ToString(),
@@ -156,9 +156,9 @@ namespace OasysGH.Units.Helpers {
       MassUnit.Slug.ToString()
     });
 
-    public static List<string> FilteredMomentUnits = new List<string>(Enum.GetNames(typeof(MomentUnit)).Skip(1).ToList());
+    public static List<string> FilteredMomentUnits = new List<string>(Enum.GetNames(typeof(MomentUnit)).ToList());
 
-    public static List<string> FilteredRatioUnits = new List<string>(Enum.GetNames(typeof(RatioUnit)).Skip(1).ToList());
+    public static List<string> FilteredRatioUnits = new List<string>(Enum.GetNames(typeof(RatioUnit)).ToList());
 
     public static List<string> FilteredSectionModulusUnits = new List<string>(new[] {
       SectionModulusUnit.CubicMillimeter.ToString(),
@@ -167,7 +167,7 @@ namespace OasysGH.Units.Helpers {
       SectionModulusUnit.CubicInch.ToString(),
       SectionModulusUnit.CubicFoot.ToString()
     });
-    public static List<string> FilteredStrainUnits = new List<string>(Enum.GetNames(typeof(StrainUnit)).Skip(1).ToList());
+    public static List<string> FilteredStrainUnits = new List<string>(Enum.GetNames(typeof(StrainUnit)).ToList());
 
     public static List<string> FilteredStressUnits = new List<string>(new[] {
       PressureUnit.Pascal.ToString(),
