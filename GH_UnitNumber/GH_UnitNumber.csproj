@@ -16,6 +16,8 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\OasysGH.snk</AssemblyOriginatorKeyFile>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
@@ -41,6 +43,7 @@
     <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="4.6.0"/>
     <PackageReference Include="Grasshopper" Version="6.27.20176.5001" IncludeAssets="compile;build">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
