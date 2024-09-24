@@ -602,8 +602,7 @@ namespace OasysGH.Units.Helpers {
     /// <param name="currentUICulture"></param>
     /// <returns></returns>
     public static Enum Parse(Type unitType, string value, CultureInfo currentUICulture) {
-      if (UnitParser.Default.TryParse(value, unitType, out Enum unit))
-        return unit;
+      if (OasysUnitsSetup.Default.UnitParser.TryParse(value, unitType, out Enum unit))        return unit;
       try {
         return (Enum)Enum.Parse(unitType, value, true);
       } catch (ArgumentException) {
