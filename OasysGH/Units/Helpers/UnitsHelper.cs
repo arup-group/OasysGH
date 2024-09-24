@@ -58,7 +58,8 @@ namespace OasysGH.Units.Helpers {
     public static AxialStiffnessUnit GetAxialStiffnessUnit(ForceUnit forceUnit) {
       try {
         return AxialStiffness.ParseUnit(Force.GetAbbreviation(forceUnit));
-      } catch (Exception) {
+      }
+      catch (Exception) {
         throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " to Axial Stiffness");
       }
     }
@@ -606,7 +607,8 @@ namespace OasysGH.Units.Helpers {
         return unit;
       try {
         return (Enum)Enum.Parse(unitType, value, true);
-      } catch (ArgumentException) {
+      }
+      catch (ArgumentException) {
         // try to use current culture to parse unit abbreviation
         switch (unitType) {
           case Type _ when unitType == typeof(AccelerationUnit):
