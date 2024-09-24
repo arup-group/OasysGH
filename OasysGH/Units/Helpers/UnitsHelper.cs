@@ -7,7 +7,8 @@ using OasysUnits.Units;
 
 namespace OasysGH.Units.Helpers {
   public class UnitsHelper {
-    public static int SignificantDigits => BitConverter.GetBytes(decimal.GetBits((decimal)DefaultUnits.Tolerance.As(DefaultUnits.LengthUnitGeometry))[3])[2];
+    public static int SignificantDigits =>
+      BitConverter.GetBytes(decimal.GetBits((decimal)DefaultUnits.Tolerance.As(DefaultUnits.LengthUnitGeometry))[3])[2];
 
     private static readonly BaseUnits sI = OasysUnits.UnitSystem.SI.BaseUnits;
 
@@ -49,8 +50,10 @@ namespace OasysGH.Units.Helpers {
         case LengthUnit.Inch:
           return AreaUnit.SquareInch;
       }
+
       // fallback:
-      var baseUnits = new BaseUnits(unit, sI.Mass, sI.Time, sI.Current, sI.Temperature, sI.Amount, sI.LuminousIntensity);
+      var baseUnits = new BaseUnits(unit, sI.Mass, sI.Time, sI.Current, sI.Temperature, sI.Amount,
+        sI.LuminousIntensity);
       var unitSystem = new OasysUnits.UnitSystem(baseUnits);
       return new Area(1, unitSystem).Unit;
     }
@@ -58,7 +61,8 @@ namespace OasysGH.Units.Helpers {
     public static AxialStiffnessUnit GetAxialStiffnessUnit(ForceUnit forceUnit) {
       try {
         return AxialStiffness.ParseUnit(Force.GetAbbreviation(forceUnit));
-      } catch (Exception) {
+      }
+      catch (Exception) {
         throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " to Axial Stiffness");
       }
     }
@@ -99,10 +103,12 @@ namespace OasysGH.Units.Helpers {
           break;
       }
 
-      throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to BendingStiffness");
+      throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " combined with " +
+                                    lengthUnit.ToString() + " to BendingStiffness");
     }
 
-    public static CoefficientOfThermalExpansionUnit GetCoefficientOfThermalExpansionUnit(TemperatureUnit temperatureUnit) {
+    public static CoefficientOfThermalExpansionUnit GetCoefficientOfThermalExpansionUnit(
+      TemperatureUnit temperatureUnit) {
       switch (temperatureUnit) {
         case TemperatureUnit.Kelvin:
           return CoefficientOfThermalExpansionUnit.PerKelvin;
@@ -129,156 +135,196 @@ namespace OasysGH.Units.Helpers {
           foreach (string unitstring in FilteredUnits.FilteredAngleUnits) {
             abbreviations.Add(Angle.GetAbbreviation((AngleUnit)Enum.Parse(typeof(AngleUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Length:
           foreach (string unitstring in FilteredUnits.FilteredLengthUnits) {
             abbreviations.Add(Length.GetAbbreviation((LengthUnit)Enum.Parse(typeof(LengthUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Area:
           foreach (string unitstring in FilteredUnits.FilteredAreaUnits) {
             abbreviations.Add(Area.GetAbbreviation((AreaUnit)Enum.Parse(typeof(AreaUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Volume:
           foreach (string unitstring in FilteredUnits.FilteredVolumeUnits) {
             abbreviations.Add(Volume.GetAbbreviation((VolumeUnit)Enum.Parse(typeof(VolumeUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.VolumePerLength:
           foreach (string unitstring in FilteredUnits.FilteredVolumePerLengthUnits) {
-            abbreviations.Add(VolumePerLength.GetAbbreviation((VolumePerLengthUnit)Enum.Parse(typeof(VolumePerLengthUnit), unitstring)));
+            abbreviations.Add(
+              VolumePerLength.GetAbbreviation((VolumePerLengthUnit)Enum.Parse(typeof(VolumePerLengthUnit),
+                unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.AreaMomentOfInertia:
           foreach (string unitstring in FilteredUnits.FilteredAreaMomentOfInertiaUnits) {
-            abbreviations.Add(AreaMomentOfInertia.GetAbbreviation((AreaMomentOfInertiaUnit)Enum.Parse(typeof(AreaMomentOfInertiaUnit), unitstring)));
+            abbreviations.Add(
+              AreaMomentOfInertia.GetAbbreviation(
+                (AreaMomentOfInertiaUnit)Enum.Parse(typeof(AreaMomentOfInertiaUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Force:
           foreach (string unitstring in FilteredUnits.FilteredForceUnits) {
             abbreviations.Add(Force.GetAbbreviation((ForceUnit)Enum.Parse(typeof(ForceUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.ForcePerLength:
           foreach (string unitstring in FilteredUnits.FilteredForcePerLengthUnits) {
-            abbreviations.Add(ForcePerLength.GetAbbreviation((ForcePerLengthUnit)Enum.Parse(typeof(ForcePerLengthUnit), unitstring)));
+            abbreviations.Add(
+              ForcePerLength.GetAbbreviation((ForcePerLengthUnit)Enum.Parse(typeof(ForcePerLengthUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.RotationalStiffness:
           foreach (string unitstring in FilteredUnits.FilteredRotationalStiffnessUnits) {
-            abbreviations.Add(RotationalStiffness.GetAbbreviation((RotationalStiffnessUnit)Enum.Parse(typeof(RotationalStiffnessUnit), unitstring)));
+            abbreviations.Add(
+              RotationalStiffness.GetAbbreviation(
+                (RotationalStiffnessUnit)Enum.Parse(typeof(RotationalStiffnessUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.ForcePerArea:
           foreach (string unitstring in FilteredUnits.FilteredForcePerAreaUnits) {
             abbreviations.Add(Pressure.GetAbbreviation((PressureUnit)Enum.Parse(typeof(PressureUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Moment:
           foreach (string unitstring in FilteredUnits.FilteredMomentUnits) {
             abbreviations.Add(Moment.GetAbbreviation((MomentUnit)Enum.Parse(typeof(MomentUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Stress:
           foreach (string unitstring in FilteredUnits.FilteredStressUnits) {
             abbreviations.Add(Pressure.GetAbbreviation((PressureUnit)Enum.Parse(typeof(PressureUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Strain:
           foreach (string unitstring in FilteredUnits.FilteredStrainUnits) {
             abbreviations.Add(Strain.GetAbbreviation((StrainUnit)Enum.Parse(typeof(StrainUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.AxialStiffness:
           foreach (string unitstring in FilteredUnits.FilteredAxialStiffnessUnits) {
-            abbreviations.Add(AxialStiffness.GetAbbreviation((AxialStiffnessUnit)Enum.Parse(typeof(AxialStiffnessUnit), unitstring)));
+            abbreviations.Add(
+              AxialStiffness.GetAbbreviation((AxialStiffnessUnit)Enum.Parse(typeof(AxialStiffnessUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.BendingStiffness:
           foreach (string unitstring in FilteredUnits.FilteredBendingStiffnessUnits) {
-            abbreviations.Add(BendingStiffness.GetAbbreviation((BendingStiffnessUnit)Enum.Parse(typeof(BendingStiffnessUnit), unitstring)));
+            abbreviations.Add(
+              BendingStiffness.GetAbbreviation((BendingStiffnessUnit)Enum.Parse(typeof(BendingStiffnessUnit),
+                unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Curvature:
           foreach (string unitstring in FilteredUnits.FilteredCurvatureUnits) {
             abbreviations.Add(Curvature.GetAbbreviation((CurvatureUnit)Enum.Parse(typeof(CurvatureUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Mass:
           foreach (string unitstring in FilteredUnits.FilteredMassUnits) {
             abbreviations.Add(Mass.GetAbbreviation((MassUnit)Enum.Parse(typeof(MassUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Density:
           foreach (string unitstring in FilteredUnits.FilteredDensityUnits) {
             abbreviations.Add(Density.GetAbbreviation((DensityUnit)Enum.Parse(typeof(DensityUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.LinearDensity:
           foreach (string unitstring in FilteredUnits.FilteredLinearDensityUnits) {
-            abbreviations.Add(LinearDensity.GetAbbreviation((LinearDensityUnit)Enum.Parse(typeof(LinearDensityUnit), unitstring)));
+            abbreviations.Add(
+              LinearDensity.GetAbbreviation((LinearDensityUnit)Enum.Parse(typeof(LinearDensityUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Temperature:
           foreach (string unitstring in FilteredUnits.FilteredTemperatureUnits) {
-            abbreviations.Add(Temperature.GetAbbreviation((TemperatureUnit)Enum.Parse(typeof(TemperatureUnit), unitstring)));
+            abbreviations.Add(
+              Temperature.GetAbbreviation((TemperatureUnit)Enum.Parse(typeof(TemperatureUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Velocity:
           foreach (string unitstring in FilteredUnits.FilteredVelocityUnits) {
             abbreviations.Add(Speed.GetAbbreviation((SpeedUnit)Enum.Parse(typeof(SpeedUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Acceleration:
           foreach (string unitstring in FilteredUnits.FilteredAccelerationUnits) {
-            abbreviations.Add(Acceleration.GetAbbreviation((AccelerationUnit)Enum.Parse(typeof(AccelerationUnit), unitstring)));
+            abbreviations.Add(
+              Acceleration.GetAbbreviation((AccelerationUnit)Enum.Parse(typeof(AccelerationUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Energy:
           foreach (string unitstring in FilteredUnits.FilteredEnergyUnits) {
             abbreviations.Add(Energy.GetAbbreviation((EnergyUnit)Enum.Parse(typeof(EnergyUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Ratio:
           foreach (string unitstring in FilteredUnits.FilteredRatioUnits) {
             abbreviations.Add(Ratio.GetAbbreviation((RatioUnit)Enum.Parse(typeof(RatioUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.Time:
           foreach (string unitstring in FilteredUnits.FilteredTimeUnits) {
             abbreviations.Add(Duration.GetAbbreviation((DurationUnit)Enum.Parse(typeof(DurationUnit), unitstring)));
           }
+
           return abbreviations;
 
         case EngineeringUnits.SectionModulus:
           foreach (string unitstring in FilteredUnits.FilteredSectionModulusUnits) {
-            abbreviations.Add(SectionModulus.GetAbbreviation((SectionModulusUnit)Enum.Parse(typeof(SectionModulusUnit), unitstring)));
+            abbreviations.Add(
+              SectionModulus.GetAbbreviation((SectionModulusUnit)Enum.Parse(typeof(SectionModulusUnit), unitstring)));
           }
+
           return abbreviations;
 
         default:
@@ -347,7 +393,8 @@ namespace OasysGH.Units.Helpers {
           break;
       }
 
-      throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to force per area");
+      throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " combined with " +
+                                    lengthUnit.ToString() + " to force per area");
     }
 
     public static ForcePerLengthUnit GetForcePerLengthUnit(ForceUnit forceUnit, LengthUnit lengthUnit) {
@@ -417,7 +464,8 @@ namespace OasysGH.Units.Helpers {
           break;
       }
 
-      throw new OasysUnitsException("Unable to convert " + forceUnit + " x " + lengthUnit + " to a known type of VolumePerLengthUnit");
+      throw new OasysUnitsException("Unable to convert " + forceUnit + " x " + lengthUnit +
+                                    " to a known type of VolumePerLengthUnit");
     }
 
     public static LinearDensityUnit GetLinearDensityUnit(MassUnit massUnit, LengthUnit lengthUnit) {
@@ -448,7 +496,8 @@ namespace OasysGH.Units.Helpers {
           break;
       }
 
-      throw new OasysUnitsException("Unable to convert " + massUnit.ToString() + " combined with " + lengthUnit.ToString() + " to Linear Density");
+      throw new OasysUnitsException("Unable to convert " + massUnit.ToString() + " combined with " +
+                                    lengthUnit.ToString() + " to Linear Density");
     }
 
     public static MomentUnit GetMomentUnit(ForceUnit forceUnit, LengthUnit lengthUnit) {
@@ -518,7 +567,8 @@ namespace OasysGH.Units.Helpers {
           break;
       }
 
-      throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " combined with " + lengthUnit.ToString() + " to moment");
+      throw new OasysUnitsException("Unable to convert " + forceUnit.ToString() + " combined with " +
+                                    lengthUnit.ToString() + " to moment");
     }
 
     public static SectionModulusUnit GetSectionModulusUnit(LengthUnit unit) {
@@ -538,8 +588,10 @@ namespace OasysGH.Units.Helpers {
         case LengthUnit.Inch:
           return SectionModulusUnit.CubicInch;
       }
+
       // fallback:
-      var baseUnits = new BaseUnits(unit, sI.Mass, sI.Time, sI.Current, sI.Temperature, sI.Amount, sI.LuminousIntensity);
+      var baseUnits = new BaseUnits(unit, sI.Mass, sI.Time, sI.Current, sI.Temperature, sI.Amount,
+        sI.LuminousIntensity);
       var unitSystem = new OasysUnits.UnitSystem(baseUnits);
       return new SectionModulus(1, unitSystem).Unit;
     }
@@ -577,8 +629,10 @@ namespace OasysGH.Units.Helpers {
         case LengthUnit.Inch:
           return VolumeUnit.CubicInch;
       }
+
       // fallback:
-      var baseUnits = new BaseUnits(unit, sI.Mass, sI.Time, sI.Current, sI.Temperature, sI.Amount, sI.LuminousIntensity);
+      var baseUnits = new BaseUnits(unit, sI.Mass, sI.Time, sI.Current, sI.Temperature, sI.Amount,
+        sI.LuminousIntensity);
       var unitSystem = new OasysUnits.UnitSystem(baseUnits);
       return new Volume(1, unitSystem).Unit;
     }
@@ -599,90 +653,90 @@ namespace OasysGH.Units.Helpers {
     /// </summary>
     /// <param name="unitType"></param>
     /// <param name="value"></param>
-    /// <param name="currentUICulture"></param>
+    /// <param name="currentUiCulture"></param>
     /// <returns></returns>
-    public static Enum Parse(Type unitType, string value, CultureInfo currentUICulture) {
-      if (OasysUnitsSetup.Default.UnitParser.TryParse(value, unitType, out Enum unit))
-        return unit;
+    public static Enum Parse(Type unitType, string value, CultureInfo currentUiCulture) {
+      if (OasysUnitsSetup.Default.UnitParser.TryParse(value, unitType, out Enum unit)) return unit;
       try {
         return (Enum)Enum.Parse(unitType, value, true);
-      } catch (ArgumentException) {
+      }
+      catch (ArgumentException) {
         // try to use current culture to parse unit abbreviation
         switch (unitType) {
           case Type _ when unitType == typeof(AccelerationUnit):
-            return Acceleration.ParseUnit(value, currentUICulture);
+            return Acceleration.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(AngleUnit):
-            return Angle.ParseUnit(value, currentUICulture);
+            return Angle.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(AreaMomentOfInertiaUnit):
-            return AreaMomentOfInertia.ParseUnit(value, currentUICulture);
+            return AreaMomentOfInertia.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(AreaUnit):
-            return Area.ParseUnit(value, currentUICulture);
+            return Area.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(AxialStiffnessUnit):
-            return AxialStiffness.ParseUnit(value, currentUICulture);
+            return AxialStiffness.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(BendingStiffnessUnit):
-            return BendingStiffness.ParseUnit(value, currentUICulture);
+            return BendingStiffness.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(CoefficientOfThermalExpansionUnit):
-            return CoefficientOfThermalExpansion.ParseUnit(value, currentUICulture);
+            return CoefficientOfThermalExpansion.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(CurvatureUnit):
-            return Curvature.ParseUnit(value, currentUICulture);
+            return Curvature.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(DensityUnit):
-            return Density.ParseUnit(value, currentUICulture);
+            return Density.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(DurationUnit):
-            return Duration.ParseUnit(value, currentUICulture);
+            return Duration.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(EnergyUnit):
-            return Energy.ParseUnit(value, currentUICulture);
+            return Energy.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(ForcePerLengthUnit):
-            return ForcePerLength.ParseUnit(value, currentUICulture);
+            return ForcePerLength.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(ForceUnit):
-            return Force.ParseUnit(value, currentUICulture);
+            return Force.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(MassUnit):
-            return Mass.ParseUnit(value, currentUICulture);
+            return Mass.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(MomentUnit):
-            return Moment.ParseUnit(value, currentUICulture);
+            return Moment.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(LengthUnit):
-            return Length.ParseUnit(value, currentUICulture);
+            return Length.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(LinearDensityUnit):
-            return LinearDensity.ParseUnit(value, currentUICulture);
+            return LinearDensity.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(PressureUnit):
-            return Pressure.ParseUnit(value, currentUICulture);
+            return Pressure.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(RatioUnit):
-            return Ratio.ParseUnit(value, currentUICulture);
+            return Ratio.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(SpeedUnit):
-            return Speed.ParseUnit(value, currentUICulture);
+            return Speed.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(StrainUnit):
-            return Strain.ParseUnit(value, currentUICulture);
+            return Strain.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(TemperatureUnit):
-            return Temperature.ParseUnit(value, currentUICulture);
+            return Temperature.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(VolumePerLengthUnit):
-            return VolumePerLength.ParseUnit(value, currentUICulture);
+            return VolumePerLength.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(VolumeUnit):
-            return Volume.ParseUnit(value, currentUICulture);
+            return Volume.ParseUnit(value, currentUiCulture);
 
           case Type _ when unitType == typeof(SectionModulus):
-            return SectionModulus.ParseUnit(value, currentUICulture);
+            return SectionModulus.ParseUnit(value, currentUiCulture);
 
           default:
             throw new ArgumentException();
