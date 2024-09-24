@@ -2,7 +2,7 @@
 
 using OasysUnits.Units;
 
-#if RELEASEFORTESTING || DEBUG
+#if DEBUG
 [assembly: InternalsVisibleTo("GH_UnitNumberTests")]
 [assembly: InternalsVisibleTo("OasysGHTests")]
 #endif

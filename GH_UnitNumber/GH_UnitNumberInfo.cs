@@ -5,7 +5,7 @@ using Grasshopper.Kernel;
 
 using OasysGH;
 
-#if RELEASEFORTESTING || DEBUG
+#if DEBUG
 [assembly: InternalsVisibleToAttribute("GH_UnitNumberTests")]
 #endif
 

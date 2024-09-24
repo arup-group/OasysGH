@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using GH_IO.Serialization;
 using Grasshopper.Kernel;
 
-#if RELEASEFORTESTING || DEBUG
+#if DEBUG
 [assembly: InternalsVisibleToAttribute("GH_UnitNumberTests")]
 #endif
 namespace OasysGH.Components {

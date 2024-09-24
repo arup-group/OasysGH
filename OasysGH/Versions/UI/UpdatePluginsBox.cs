@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
-#if RELEASEFORTESTING || DEBUG
+#if DEBUG
 [assembly: InternalsVisibleTo("GH_UnitNumberTests")]
 #endif
 namespace OasysGH.Versions.UI {
