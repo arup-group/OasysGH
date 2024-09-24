@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
-    <Platforms>x64</Platforms>
+    <Platforms>x64;AnyCPU</Platforms>
     <Title>OasysGHTestComponents</Title>
     <Company>Oasys</Company>
     <Copyright>Copyright © Oasys 2024</Copyright>
@@ -13,13 +13,19 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <BaseOutputPath>bin\</BaseOutputPath>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
-    <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\OasysGH.snk</AssemblyOriginatorKeyFile>
+    <Configurations>Debug;Release;ReleaseForTesting</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
     <StartArguments></StartArguments>
     <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseForTesting|x64' ">
+    <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'ReleaseForTesting' ">
+    <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\OasysGH\OasysGH.csproj" />

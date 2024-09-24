@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 using GH_IO.Serialization;
 using Grasshopper.Kernel;
 
+#if RELEASEFORTESTING || DEBUG
+[assembly: InternalsVisibleToAttribute("GH_UnitNumberTests")]
+#endif
 namespace OasysGH.Components {
   public abstract class GH_OasysDropDownComponent : GH_OasysComponent, IGH_VariableParameterComponent, IExpirableComponent {
     public bool Expire { get; set; } = true;

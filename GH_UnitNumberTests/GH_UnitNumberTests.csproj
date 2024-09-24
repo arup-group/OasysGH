@@ -2,15 +2,22 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <PlatformTarget>x64</PlatformTarget>
-    <Platforms>x64</Platforms>
-    <SignAssembly>True</SignAssembly>
+    <Platforms>x64;AnyCPU</Platforms>
     <AssemblyOriginatorKeyFile>..\OasysGH.snk</AssemblyOriginatorKeyFile>
+    <Configurations>Debug;Release;ReleaseForTesting</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <NoWarn>1701;1702;CS8002</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <NoWarn>1701;1702;CS8002</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseForTesting|x64' ">
+    <NoWarn>1701;1702;CS8002</NoWarn>
+    <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'ReleaseForTesting' ">
+    <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Rhino.Inside" Version="7.0.0" />

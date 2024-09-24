@@ -1,6 +1,13 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+
 using Grasshopper.Kernel;
+
 using OasysGH;
+
+#if RELEASEFORTESTING || DEBUG
+[assembly: InternalsVisibleToAttribute("GH_UnitNumberTests")]
+#endif
 
 namespace GH_UnitNumber {
   public class AddReferencePriority : GH_AssemblyPriority {
@@ -16,7 +23,8 @@ namespace GH_UnitNumber {
 
     public override string AuthorName => Company;
 
-    public override string Description => "A small plugin enabling use of units in Grasshopper through UnitsNet and OasysUnits";
+    public override string Description
+      => "A small plugin enabling use of units in Grasshopper through UnitsNet and OasysUnits";
 
     public override Guid Id => gUID;
 
@@ -44,13 +52,8 @@ namespace GH_UnitNumber {
   internal sealed class GH_UnitNumberPluginInfo {
     public static OasysPluginInfo Instance => lazy.Value;
 
-    private static readonly Lazy<OasysPluginInfo> lazy =
-            new Lazy<OasysPluginInfo>(() => new OasysPluginInfo(
-          GH_UnitNumberInfo.ProductName,
-          GH_UnitNumberInfo.PluginName,
-          GH_UnitNumberInfo.Vers,
-          GH_UnitNumberInfo.isBeta,
-          "phc_QjmqOoe8GqTMi3u88ynRR3WWvrJA9zAaqcQS1FDVnJD"
-          ));
+    private static readonly Lazy<OasysPluginInfo> lazy = new Lazy<OasysPluginInfo>(()
+      => new OasysPluginInfo(GH_UnitNumberInfo.ProductName, GH_UnitNumberInfo.PluginName, GH_UnitNumberInfo.Vers,
+        GH_UnitNumberInfo.isBeta, "phc_QjmqOoe8GqTMi3u88ynRR3WWvrJA9zAaqcQS1FDVnJD"));
   }
 }

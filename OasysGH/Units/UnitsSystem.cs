@@ -1,5 +1,11 @@
-﻿using OasysUnits.Units;
+﻿using System.Runtime.CompilerServices;
 
+using OasysUnits.Units;
+
+#if RELEASEFORTESTING || DEBUG
+[assembly: InternalsVisibleTo("GH_UnitNumberTests")]
+[assembly: InternalsVisibleTo("OasysGHTests")]
+#endif
 namespace OasysGH.Units {
   internal class UnitSystem {
     internal AccelerationUnit AccelerationUnit { get; }
