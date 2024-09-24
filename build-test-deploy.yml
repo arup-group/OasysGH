@@ -22,6 +22,26 @@ steps:
   inputs:
       command: 'restore'
       restoreSolution: 'OasysGH.sln'
+      
+- template: install-azure-sign-tool.yml
+- powershell: |
+      AzureSignTool sign `
+        --description-url "https://oasys-software.com" `
+        --azure-key-vault-url "https://oasysevkv.vault.azure.net/" `
+        --azure-key-vault-tenant-id "4ae48b41-0137-4599-8661-fc641fe77bea" `
+        --azure-key-vault-client-id "$(AZURE_CLIENT_ID)" `
+        --azure-key-vault-client-secret "$(AZURE_CLIENT_SECRET)" `
+        --azure-key-vault-certificate "OasysCodeSigning" `
+        --timestamp-rfc3161 "http://timestamp.digicert.com" `
+        --verbose `
+        $(Build.SourcesDirectory).\lib\Oasys.Taxonomy.Geometry.dll `
+        $(Build.SourcesDirectory).\lib\Oasys.Taxonomy.IGeometry.dll `
+        $(Build.SourcesDirectory).\lib\Oasys.Taxonomy.Profiles.dll `
+        $(Build.SourcesDirectory).\lib\Oasys.Taxonomy.IProfiles.dll 
+  displayName: Sign taxonomy lib files
+  env:
+   AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
+   AZURE_CLIENT_SECRET : $(AZURE_CLIENT_SECRET)
 
 - task: VSBuild@1
   displayName: 'Building project in $(configuration)'
@@ -145,6 +165,23 @@ steps:
     errorActionPreference: 'continue'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     ignoreLASTEXITCODE: true
+    
+- powershell: |
+      AzureSignTool sign `
+        --description-url "https://oasys-software.com" `
+        --azure-key-vault-url "https://oasysevkv.vault.azure.net/" `
+        --azure-key-vault-tenant-id "4ae48b41-0137-4599-8661-fc641fe77bea" `
+        --azure-key-vault-client-id "$(AZURE_CLIENT_ID)" `
+        --azure-key-vault-client-secret "$(AZURE_CLIENT_SECRET)" `
+        --azure-key-vault-certificate "OasysCodeSigning" `
+        --timestamp-rfc3161 "http://timestamp.digicert.com" `
+        --verbose `
+        $(Build.SourcesDirectory).\OasysGH\bin\x64\Release\net48\OasysGH.dll `
+        $(Build.SourcesDirectory).\GH_UnitNumber\bin\x64\Release\net48\GH_UnitNumber.dll 
+  displayName: Sign GH output file before adding to Nuget installer
+  env:
+   AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
+   AZURE_CLIENT_SECRET : $(AZURE_CLIENT_SECRET)
 
 - powershell: |
     cd GH_UnitNumber\bin\x64\Release
@@ -161,9 +198,10 @@ steps:
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
   displayName: Package yak
 
+
 - powershell: |
     cd OasysGH
-    & 'C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\amd64\MSBuild.exe' OasysGH.csproj /t:pack /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:DebugType=portable /property:Configuration=Debug
+    & 'C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\amd64\MSBuild.exe' OasysGH.csproj /t:pack /p:NoBuild=true /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:DebugType=portable /property:Configuration=Release
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
   displayName: Package NuGet
 

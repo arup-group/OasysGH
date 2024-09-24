@@ -13,6 +13,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <BaseOutputPath>bin\</BaseOutputPath>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\OasysGH.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
