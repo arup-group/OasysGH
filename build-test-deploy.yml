@@ -55,9 +55,10 @@ steps:
     MSBUILDDISABLENODEREUSE: 1
 
 - powershell: |
-    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\6.0.2\build --results-directory .\results\oasysgh .\OasysGHTests\bin\x64\Release\net48\OasysGHTests.dll
-    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\6.0.2\build --results-directory .\results\unitnumber .\GH_UnitNumberTests\bin\x64\Release\net48\GH_UnitNumberTests.dll
-    dotnet test --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\6.0.2\build --results-directory .\results\integration .\IntegrationTests\bin\x64\Release\net48\IntegrationTests.dll
+    dotnet build -c Debug
+    dotnet test -c Debug --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\6.0.2\build --results-directory .\results\oasysgh .\OasysGHTests\bin\x64\Debug\net48\OasysGHTests.dll
+    dotnet test -c Debug --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\6.0.2\build --results-directory .\results\unitnumber .\GH_UnitNumberTests\bin\x64\Debug\net48\GH_UnitNumberTests.dll
+    dotnet test -c Debug --collect:"XPlat Code Coverage" /TestAdapterPath:$env:UserProfile\.nuget\packages\coverlet.collector\6.0.2\build --results-directory .\results\integration .\IntegrationTests\bin\x64\Debug\net48\IntegrationTests.dll
   displayName: dotnet test
   failOnStderr: true
 
