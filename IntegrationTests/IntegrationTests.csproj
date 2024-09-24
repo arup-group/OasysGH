@@ -6,6 +6,12 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\OasysGH.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <NoWarn>1701;1702;CS8002</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <NoWarn>1701;1702;CS8002</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.3" />
     <PackageReference Include="Rhino.Inside" Version="7.0.0" />

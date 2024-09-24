@@ -6,6 +6,12 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\OasysGH.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <NoWarn>1701;1702;CS8002</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <NoWarn>1701;1702;CS8002</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Rhino.Inside" Version="7.0.0" />
     <PackageReference Include="xunit" Version="2.6.6" />

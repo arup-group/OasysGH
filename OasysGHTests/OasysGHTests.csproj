@@ -50,4 +50,12 @@
   <PropertyGroup>
     <PostBuildEvent>Copy "$(TargetDir)OasysGH.dll" "$(TargetDir)OasysGH.gha"</PostBuildEvent>
   </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <NoWarn>1701;1702;CS8002</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <NoWarn>1701;1702;CS8002</NoWarn>
+  </PropertyGroup>
 </Project>
