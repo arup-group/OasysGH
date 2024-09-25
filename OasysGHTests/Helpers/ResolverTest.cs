@@ -12,6 +12,7 @@ namespace OasysGHTests.Helpers {
     [Fact]
     public void ResolverReturnLatestInstalledRhinoPath() {
       string name = "SOFTWARE\\McNeel\\Rhinoceros";
+      int initialRhinoMajorVersion = RhinoResolver.RhinoMajorVersion;
       double rhinoMajorVersion = -1;
       using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(name)) {
         string[] subKeyNames = registryKey.GetSubKeyNames();
@@ -21,14 +22,18 @@ namespace OasysGHTests.Helpers {
       RhinoResolver.Initialize();
       string expectedPath = "C:\\Program Files\\Rhino " + rhinoMajorVersion.ToString() + "\\System";
       Assert.Equal(RhinoResolver.RhinoSystemDirectory, expectedPath);
+      RhinoResolver.RhinoMajorVersion = initialRhinoMajorVersion;
+      RhinoResolver.RhinoSystemDirectory = "";
     }
 
     [Fact]
     public void ResolverReturnNoRhinoPathWhenRequestedVersionNotInstalled() {
-      RhinoResolver.RhinoSystemDirectory = "";
+      int initialRhinoMajorVersion = RhinoResolver.RhinoMajorVersion;
       RhinoResolver.Initialize();
       RhinoResolver.RhinoMajorVersion = 1;
       Assert.Null(RhinoResolver.RhinoSystemDirectory);
+      RhinoResolver.RhinoMajorVersion = initialRhinoMajorVersion;
+      RhinoResolver.RhinoSystemDirectory = "";
     }
   }
 }
