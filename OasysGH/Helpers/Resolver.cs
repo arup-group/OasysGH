@@ -24,7 +24,7 @@ public class RhinoResolver {
 
   public static void Initialize() {
     if (IntPtr.Size != 8) {
-      throw new Exception("Only 64 bit applications can use RhinoInside");
+      throw new Exception("Only 64 bit applications can use Rhino");
     }
     RhinoMajorVersion = -1;
     AppDomain.CurrentDomain.AssemblyResolve += ResolveForRhinoAssemblies;
