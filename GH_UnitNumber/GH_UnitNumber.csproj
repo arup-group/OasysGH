@@ -4,16 +4,20 @@
     <PlatformTarget>x64</PlatformTarget>
     <Platforms>x64</Platforms>
     <Title>GH_UnitNumber</Title>
-	   <Company>Oasys</Company>
+    <Company>Oasys</Company>
     <Copyright>Copyright © Oasys 2024</Copyright>
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>UnitNumberLogo64.png</PackageIcon>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <BaseOutputPath>bin\</BaseOutputPath>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\OasysGH.snk</AssemblyOriginatorKeyFile>
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
@@ -39,6 +43,7 @@
     <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="4.6.0"/>
     <PackageReference Include="Grasshopper" Version="6.27.20176.5001" IncludeAssets="compile;build">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -46,7 +51,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>compile;build</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OasysUnits" Version="1.1.1" />
+    <PackageReference Include="OasysUnits" Version="1.2.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
@@ -61,10 +66,10 @@
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>OasysGHTests</_Parameter1>
+      <_Parameter1>OasysGHTests, PublicKey = "0024000004800000940000000602000000240000525341310004000001000100855504d173eb0943b266d08dfbdf80eb534e98dd6442bfa6f83b57f3928a3622d6175d9445e40a55f50105c916aababb3225656808be08231ef8562457a450116a07f3fd1d1c49b2c81117f9c7db8c92fc25f01425a74f56b066f0a1d34237d59c9ad0c2bd7e6c6ad72aebf150746aaf4c38d65dd292aa47e15bd96670a393c8" </_Parameter1>
     </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>GH_UnitNumberTests</_Parameter1>
+      <_Parameter1>GH_UnitNumberTests, PublicKey = "0024000004800000940000000602000000240000525341310004000001000100855504d173eb0943b266d08dfbdf80eb534e98dd6442bfa6f83b57f3928a3622d6175d9445e40a55f50105c916aababb3225656808be08231ef8562457a450116a07f3fd1d1c49b2c81117f9c7db8c92fc25f01425a74f56b066f0a1d34237d59c9ad0c2bd7e6c6ad72aebf150746aaf4c38d65dd292aa47e15bd96670a393c8" </_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

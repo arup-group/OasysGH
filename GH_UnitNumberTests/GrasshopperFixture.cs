@@ -4,7 +4,6 @@ using Grasshopper.Plugin;
 using OasysGH.Units;
 using Rhino;
 using Rhino.Runtime.InProcess;
-using RhinoInside;
 using Xunit;
 
 namespace GH_UnitNumberTests {
@@ -44,8 +43,8 @@ namespace GH_UnitNumberTests {
       // This MUST be included in a static constructor to ensure that no Rhino DLLs
       // are loaded before the resolver is set up. Avoid creating other static functions
       // and members which may reference Rhino assemblies, as that may cause those
-      // assemblies to be loaded before this is called.
-      Resolver.Initialize();
+      // assemblies to be loaded before this is called
+      RhinoResolver.Initialize();
     }
 
     public GrasshopperFixture() {
