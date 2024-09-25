@@ -24,7 +24,7 @@ namespace OasysGH.Helpers {
       string codeBasePath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
 
       try {
-        var SQLiteInterop = Assembly.LoadFile(codeBasePath + @"\Microsoft.Data.Sqlite.dll");
+        // var SQLiteInterop = Assembly.LoadFile(codeBasePath + @"\Microsoft.Data.Sqlite.dll");
 
         return new SqlReader();
       }
