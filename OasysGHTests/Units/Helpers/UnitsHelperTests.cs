@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using OasysGH.Units.Helpers;
+using OasysUnits;
 using OasysUnits.Units;
 using Xunit;
 
@@ -14,12 +16,16 @@ namespace OasysGHTests.Units.Helpers {
     [InlineData(AreaMomentOfInertiaUnit.MeterToTheFourth, LengthUnit.Meter)]
     [InlineData(AreaMomentOfInertiaUnit.FootToTheFourth, LengthUnit.Foot)]
     [InlineData(AreaMomentOfInertiaUnit.InchToTheFourth, LengthUnit.Inch)]
+    [InlineData(AreaMomentOfInertiaUnit.InchToTheFourth, LengthUnit.Kiloyard)]
     public void GetAreaMomentOfInertiaUnitTest(AreaMomentOfInertiaUnit expected, LengthUnit lengthUnit) {
-      // Act
-      AreaMomentOfInertiaUnit unit = UnitsHelper.GetAreaMomentOfInertiaUnit(lengthUnit);
-
       // Assert
-      Assert.Equal(expected, unit);
+      if(lengthUnit== LengthUnit.Kiloyard) {
+        Assert.Throws<OasysUnitsException>(() => UnitsHelper.GetAreaMomentOfInertiaUnit(lengthUnit));
+      }
+      else {
+        AreaMomentOfInertiaUnit unit = UnitsHelper.GetAreaMomentOfInertiaUnit(lengthUnit);
+        Assert.Equal(expected, unit);
+      }
     }
 
     [Theory]
@@ -141,6 +147,7 @@ namespace OasysGHTests.Units.Helpers {
     [InlineData(PressureUnit.NewtonPerSquareMillimeter, ForceUnit.Newton, LengthUnit.Millimeter)]
     [InlineData(PressureUnit.NewtonPerSquareCentimeter, ForceUnit.Newton, LengthUnit.Centimeter)]
     [InlineData(PressureUnit.NewtonPerSquareMeter, ForceUnit.Newton, LengthUnit.Meter)]
+    [InlineData(PressureUnit.NewtonPerSquareMeter, ForceUnit.Newton, LengthUnit.Kilometer)]
     [InlineData(PressureUnit.KilonewtonPerSquareMillimeter, ForceUnit.Kilonewton, LengthUnit.Millimeter)]
     [InlineData(PressureUnit.KilonewtonPerSquareCentimeter, ForceUnit.Kilonewton, LengthUnit.Centimeter)]
     [InlineData(PressureUnit.KilonewtonPerSquareMeter, ForceUnit.Kilonewton, LengthUnit.Meter)]
@@ -150,11 +157,13 @@ namespace OasysGHTests.Units.Helpers {
     [InlineData(PressureUnit.PoundForcePerSquareInch, ForceUnit.PoundForce, LengthUnit.Inch)]
     [InlineData(PressureUnit.PoundForcePerSquareFoot, ForceUnit.PoundForce, LengthUnit.Foot)]
     public void GetForcePerAreaUnitTest(PressureUnit expected, ForceUnit forceUnit, LengthUnit lengthUnit) {
-      // Act
-      PressureUnit unit = UnitsHelper.GetForcePerAreaUnit(forceUnit, lengthUnit);
-
-      // Assert
-      Assert.Equal(expected, unit);
+      if(lengthUnit== LengthUnit.Kilometer && forceUnit== ForceUnit.Newton) {
+        Assert.Throws<OasysUnitsException>(() => UnitsHelper.GetForcePerAreaUnit(forceUnit, lengthUnit));
+      }
+      else {
+        PressureUnit unit = UnitsHelper.GetForcePerAreaUnit(forceUnit, lengthUnit);
+        Assert.Equal(expected, unit);
+      }
     }
 
     [Theory]
@@ -183,17 +192,21 @@ namespace OasysGHTests.Units.Helpers {
     [InlineData(LinearDensityUnit.KilogramPerMillimeter, MassUnit.Kilogram, LengthUnit.Millimeter)]
     [InlineData(LinearDensityUnit.KilogramPerCentimeter, MassUnit.Kilogram, LengthUnit.Centimeter)]
     [InlineData(LinearDensityUnit.KilogramPerMeter, MassUnit.Kilogram, LengthUnit.Meter)]
+    [InlineData(LinearDensityUnit.KilogramPerMeter, MassUnit.Kilogram, LengthUnit.Kilometer)]
     [InlineData(LinearDensityUnit.PoundPerFoot, MassUnit.Pound, LengthUnit.Foot)]
     [InlineData(LinearDensityUnit.PoundPerInch, MassUnit.Pound, LengthUnit.Inch)]
     public void GetLinearDensityUnitTest(LinearDensityUnit expected, MassUnit massUnit, LengthUnit lengthUnit) {
-      // Act
-      LinearDensityUnit unit = UnitsHelper.GetLinearDensityUnit(massUnit, lengthUnit);
-
-      // Assert
-      Assert.Equal(expected, unit);
+      if (lengthUnit == LengthUnit.Kilometer && massUnit == MassUnit.Kilogram) {
+        Assert.Throws<OasysUnitsException>(() => UnitsHelper.GetLinearDensityUnit(massUnit, lengthUnit));
+      }
+      else {
+        LinearDensityUnit unit = UnitsHelper.GetLinearDensityUnit(massUnit, lengthUnit);
+        Assert.Equal(expected, unit);
+      }
     }
 
     [Theory]
+    [InlineData(MomentUnit.NewtonMillimeter, ForceUnit.Newton, LengthUnit.Kilometer)]
     [InlineData(MomentUnit.NewtonMillimeter, ForceUnit.Newton, LengthUnit.Millimeter)]
     [InlineData(MomentUnit.NewtonCentimeter, ForceUnit.Newton, LengthUnit.Centimeter)]
     [InlineData(MomentUnit.NewtonMeter, ForceUnit.Newton, LengthUnit.Meter)]
@@ -208,11 +221,13 @@ namespace OasysGHTests.Units.Helpers {
     [InlineData(MomentUnit.PoundForceInch, ForceUnit.PoundForce, LengthUnit.Inch)]
     [InlineData(MomentUnit.PoundForceFoot, ForceUnit.PoundForce, LengthUnit.Foot)]
     public void GetMomentUnitTest(MomentUnit expected, ForceUnit forceUnit, LengthUnit lengthUnit) {
-      // Act
-      MomentUnit unit = UnitsHelper.GetMomentUnit(forceUnit, lengthUnit);
-
-      // Assert
-      Assert.Equal(expected, unit);
+      if (lengthUnit == LengthUnit.Kilometer && forceUnit == ForceUnit.Newton) {
+        Assert.Throws<OasysUnitsException>(() => UnitsHelper.GetMomentUnit(forceUnit, lengthUnit));
+      }
+      else {
+        MomentUnit unit = UnitsHelper.GetMomentUnit(forceUnit, lengthUnit);
+        Assert.Equal(expected, unit);
+      }
     }
 
     [Theory]
@@ -236,11 +251,13 @@ namespace OasysGHTests.Units.Helpers {
     [InlineData(VolumeUnit.CubicFoot, LengthUnit.Foot)]
     [InlineData(VolumeUnit.CubicInch, LengthUnit.Inch)]
     public void GetVolumeUnitTest(VolumeUnit expected, LengthUnit lengthUnit) {
-      // Act
-      VolumeUnit unit = UnitsHelper.GetVolumeUnit(lengthUnit);
-
-      // Assert
-      Assert.Equal(expected, unit);
+      if (lengthUnit == LengthUnit.Kilometer) {
+        Assert.Throws<OasysUnitsException>(() => UnitsHelper.GetVolumeUnit(lengthUnit));
+      }
+      else {
+        VolumeUnit unit = UnitsHelper.GetVolumeUnit(lengthUnit);
+        Assert.Equal(expected, unit);
+      }
     }
 
     [Fact]
