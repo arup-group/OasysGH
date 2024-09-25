@@ -37,7 +37,7 @@
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Yak.Core">
-      <HintPath>..\..\..\..\..\..\Program Files\Rhino 7\System\Yak.Core.dll</HintPath>
+      <HintPath>C:\Program Files\Rhino 7\System\Yak.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
 
