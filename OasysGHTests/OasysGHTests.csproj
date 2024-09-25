@@ -12,7 +12,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Rhino.Inside" Version="7.0.0" />
+    <PackageReference Include="Grasshopper" Version="7.0.20314.3001" />
+    <PackageReference Include="RhinoCommon" Version="7.0.20314.3001" />
+    <PackageReference Include="RhinoWindows" Version="7.0.20314.3001" />
     <PackageReference Include="xunit" Version="2.6.6" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
       <PrivateAssets>all</PrivateAssets>

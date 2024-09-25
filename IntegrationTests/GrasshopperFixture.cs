@@ -4,7 +4,6 @@ using Grasshopper.Plugin;
 using OasysGH.Units;
 using Rhino;
 using Rhino.Runtime.InProcess;
-using RhinoInside;
 using Xunit;
 
 namespace IntegrationTests {
@@ -45,7 +44,7 @@ namespace IntegrationTests {
       // are loaded before the resolver is set up. Avoid creating other static functions
       // and members which may reference Rhino assemblies, as that may cause those
       // assemblies to be loaded before this is called.
-      Resolver.Initialize();
+      RhinoResolver.Initialize();
     }
 
     public GrasshopperFixture() {
