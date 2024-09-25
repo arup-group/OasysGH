@@ -25,6 +25,7 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void ResolverReturnNoRhinoPathWhenRequestedVersionNotInstalled() {
+      RhinoResolver.RhinoSystemDirectory = "";
       RhinoResolver.Initialize();
       RhinoResolver.RhinoMajorVersion = 1;
       Assert.Null(RhinoResolver.RhinoSystemDirectory);
