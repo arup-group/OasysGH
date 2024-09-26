@@ -14,7 +14,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>8.0</LangVersion>
     <Description>OasysGH is a library with shared content for Oasys Grasshopper plugins.</Description>
-    <PackageReleaseNotes>This is a release of OasysGH 1.1.0.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a release of OasysGH 1.2.0.</PackageReleaseNotes>
     <PackageTags>oasys;grasshopper</PackageTags>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\OasysGH.snk</AssemblyOriginatorKeyFile>
