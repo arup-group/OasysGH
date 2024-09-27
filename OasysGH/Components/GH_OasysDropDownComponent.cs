@@ -10,6 +10,30 @@ namespace OasysGH.Components {
     protected internal List<string> _selectedItems;
     protected internal List<string> _spacerDescriptions;
 
+    public List<List<string>> DropDownItems {
+      get {
+        return _dropDownItems;
+      }
+    }
+
+    public List<string> SelectedItems {
+      get {
+        return _selectedItems;
+      }
+    }
+
+    public List<string> SpacerDescriptions {
+      get {
+        return _spacerDescriptions;
+      }
+    }
+
+    public bool IsInitialised {
+      get {
+        return _isInitialised;
+      }
+    }
+
     public GH_OasysDropDownComponent(string name, string nickname, string description, string category, string subCategory) : base(name, nickname, description, category, subCategory) {
     }
 
