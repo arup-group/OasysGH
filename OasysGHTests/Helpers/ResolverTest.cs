@@ -6,14 +6,16 @@ using Xunit;
 using Rhino.Runtime;
 using Microsoft.Win32;
 using System.Globalization;
+using Xunit.Abstractions;
 
 namespace OasysGHTests.Helpers {
   public class ResolverTest {
+
     [Fact]
     public void ShouldReturnAValidPath() {
       RhinoResolver.RhinoMajorVersion = -1;
       string directory = RhinoResolver.FindRhinoSystemDirectory();
-      Assert.True(File.Exists(directory));
+      Assert.True(Directory.Exists(directory));
     }
 
     [Fact]
