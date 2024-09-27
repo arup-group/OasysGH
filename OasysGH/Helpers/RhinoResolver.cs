@@ -5,7 +5,9 @@ using System.Reflection;
 using System;
 
 public class RhinoResolver {
-  private static string rhinoSystemDirectory;
+  private const string Coredllpath = "CoreDllPath";
+  private static string rhinoSystemDirectory = string.Empty;
+  const string RhinoKey = "SOFTWARE\\McNeel\\Rhinoceros";
 
   public static string RhinoSystemDirectory {
     get {
@@ -15,17 +17,17 @@ public class RhinoResolver {
 
       return rhinoSystemDirectory;
     }
-    set {
-      rhinoSystemDirectory = value;
-    }
+    set { rhinoSystemDirectory = value; }
   }
 
   public static int RhinoMajorVersion { get; set; }
+
 
   public static void Initialize() {
     if (IntPtr.Size != 8) {
       throw new Exception("Only 64 bit applications can use Rhino");
     }
+
     RhinoMajorVersion = -1;
     AppDomain.CurrentDomain.AssemblyResolve += ResolveForRhinoAssemblies;
   }
@@ -40,25 +42,28 @@ public class RhinoResolver {
     return null;
   }
 
-  private static string FindRhinoSystemDirectory() {
-    bool UseLatest = false;
-    if (RhinoMajorVersion< 0) {
-      UseLatest = true;
-    }
-   
-    string name = "SOFTWARE\\McNeel\\Rhinoceros";
-    using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(name)) {
-      string[] subKeyNames = registryKey.GetSubKeyNames();
-      Array.Sort(subKeyNames);
-      string text = "";
+  public static string FindRhinoSystemDirectory() {
+    bool useLatest = RhinoMajorVersion < 0;
+
+    string[] subKeyNames = GetSubKeys(RhinoKey);
+
+    using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(RhinoKey)) {
+      string text = string.Empty;
       for (int num = subKeyNames.Length - 1; num >= 0; num--) {
         if (double.TryParse(subKeyNames[num], NumberStyles.Any, CultureInfo.InvariantCulture, out double result)) {
           text = subKeyNames[num];
-          if (UseLatest || (int)Math.Floor(result) == RhinoMajorVersion) {
+          if (useLatest || (int)Math.Floor(result) == RhinoMajorVersion) {
             using RegistryKey registryKey2 = registryKey.OpenSubKey(text + "\\Install");
-            string path = registryKey2.GetValue("CoreDllPath") as string;
-            if (File.Exists(path)) {
-              return Path.GetDirectoryName(path);
+            try {
+              object value = registryKey2.GetValue(Coredllpath);
+              if (value == null)
+                continue;
+              if (value is string path && File.Exists(path)) {
+                return Path.GetDirectoryName(path);
+              }
+            }
+            catch (Exception e) {
+              Console.WriteLine(e);
             }
           }
         }
@@ -66,5 +71,17 @@ public class RhinoResolver {
     }
 
     return null;
+  }
+
+  public string[] GetRhinoSubKeys() {
+    return GetSubKeys(RhinoKey);
+  }
+
+  public static string[] GetSubKeys(string rhinoKey) {
+    using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(rhinoKey)) {
+      string[] subKeyNames = registryKey.GetSubKeyNames();
+      Array.Sort(subKeyNames);
+      return subKeyNames;
+    }
   }
 }

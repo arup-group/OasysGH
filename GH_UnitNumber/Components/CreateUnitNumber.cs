@@ -30,7 +30,7 @@ namespace GH_UnitNumber.Components {
     }
 
     public override void SetSelected(int i, int j) {
-      _selectedItems[i] = _dropDownItems[i][j];
+      _selectedItems[i] = DropDownItems[i][j];
 
       // if change is made to first (unit type) list we have to update lists
       if (i == 0) {
@@ -166,13 +166,13 @@ namespace GH_UnitNumber.Components {
     protected override void InitialiseDropdowns() {
       _spacerDescriptions = new List<string>(new string[] { "Unit type", "Measure" });
 
-      _dropDownItems = new List<List<string>>();
+      DropDownItems = new List<List<string>>();
       _selectedItems = new List<string>();
 
-      _dropDownItems.Add(Enum.GetNames(typeof(EngineeringUnits)).ToList());
-      _selectedItems.Add(_dropDownItems[0][1]);
+      DropDownItems.Add(Enum.GetNames(typeof(EngineeringUnits)).ToList());
+      _selectedItems.Add(DropDownItems[0][1]);
 
-      _dropDownItems.Add(Enum.GetNames(typeof(LengthUnit)).ToList());
+      DropDownItems.Add(Enum.GetNames(typeof(LengthUnit)).ToList());
       _selectedItems.Add(DefaultUnits.LengthUnitGeometry.ToString());
 
       _quantity = new Length(0, DefaultUnits.LengthUnitGeometry);
@@ -326,7 +326,7 @@ namespace GH_UnitNumber.Components {
       _measureDictionary = new Dictionary<string, Enum>();
       foreach (UnitInfo unitype in _quantity.QuantityInfo.UnitInfos)
         _measureDictionary.Add(unitype.Name, unitype.Value);
-      _dropDownItems[1] = _measureDictionary.Keys.ToList();
+      DropDownItems[1] = _measureDictionary.Keys.ToList();
     }
 
     private void UpdateQuantityUnitTypeFromUnitString(EngineeringUnits unit) {

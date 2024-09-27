@@ -26,7 +26,7 @@ namespace OasysGH.Components.Tests {
         InitialiseDropdowns();
       }
 
-      m_attributes = new DropDownSliderComponentAttributes(this, SetSelected, _dropDownItems,
+      m_attributes = new DropDownSliderComponentAttributes(this, SetSelected, DropDownItems,
         _selectedItems, true, SetVal, SetMaxMin, _value, _maxValue, _minValue, 3,
         _spacerDescriptions);
     }
@@ -45,16 +45,16 @@ namespace OasysGH.Components.Tests {
         "Slider",
       });
 
-      _dropDownItems = new List<List<string>>();
+      DropDownItems = new List<List<string>>();
       _selectedItems = new List<string>();
 
-      _dropDownItems.Add(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
+      DropDownItems.Add(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
       _selectedItems.Add(Length.GetAbbreviation(_lengthUnit));
 
       _isInitialised = true;
     }
     public override void SetSelected(int i, int j) {
-      _selectedItems[i] = _dropDownItems[i][j];
+      _selectedItems[i] = DropDownItems[i][j];
       _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), _selectedItems[i]);
       base.UpdateUI();
     }

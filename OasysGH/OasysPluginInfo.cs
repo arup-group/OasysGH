@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 
 namespace OasysGH {
   public static class OasysGHVersion {
     public const bool IsBeta = false;
     // this is the one place to set the version in VS:
     // also update the version manually in OasysGH.csproj
-    public const string Version = "1.2.1";
+    public const string Version = "1.2.3";
   }
 
   public class OasysPluginInfo {

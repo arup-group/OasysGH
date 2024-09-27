@@ -6,17 +6,17 @@ namespace GH_UnitNumberTests.Helpers {
     internal static void ChangeDropDownDeserializeTest(
       GH_OasysDropDownComponent comp) {
       Assert.True(comp._isInitialised);
-      Assert.Equal(comp._dropDownItems.Count, comp._spacerDescriptions.Count);
+      Assert.Equal(comp.DropDownItems.Count, comp._spacerDescriptions.Count);
 
-      Assert.Equal(comp._dropDownItems.Count, comp._selectedItems.Count);
+      Assert.Equal(comp.DropDownItems.Count, comp._selectedItems.Count);
 
-      for (int i = 0; i < comp._dropDownItems.Count; i++) {
+      for (int i = 0; i < comp.DropDownItems.Count; i++) {
         comp.SetSelected(i, 0);
 
-        for (int j = 0; j < comp._dropDownItems[i].Count; j++) {
+        for (int j = 0; j < comp.DropDownItems[i].Count; j++) {
           comp.SetSelected(i, j);
           Deserialize.TestDeserialize(comp);
-          Assert.Equal(comp._selectedItems[i], comp._dropDownItems[i][j]);
+          Assert.Equal(comp._selectedItems[i], comp.DropDownItems[i][j]);
         }
       }
     }

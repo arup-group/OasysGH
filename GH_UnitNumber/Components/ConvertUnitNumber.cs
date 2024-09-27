@@ -122,14 +122,14 @@ namespace GH_UnitNumber.Components {
       if (Params.Output.Count == 1) {
         Params.RegisterOutputParam(param);
       }
-      
+
       return flag;
     }
 
     public override void SetSelected(int i, int j) {
       if (_unitDictionary != null) {
-        _selectedItems[i] = _dropDownItems[i][j];
-        _dropDownItems[0] = _unitDictionary.Keys.ToList();
+        _selectedItems[i] = DropDownItems[i][j];
+        DropDownItems[0] = _unitDictionary.Keys.ToList();
       }
       base.UpdateUI();
     }
@@ -137,10 +137,10 @@ namespace GH_UnitNumber.Components {
     protected override void InitialiseDropdowns() {
       _spacerDescriptions = new List<string>(new string[] { "Select output unit" });
 
-      _dropDownItems = new List<List<string>>();
+      DropDownItems = new List<List<string>>();
       _selectedItems = new List<string>();
 
-      _dropDownItems.Add(new List<string>(new string[] { " " }));
+      DropDownItems.Add(new List<string>(new string[] { " " }));
       _selectedItems.Add("   ");
 
       _isInitialised = true;
@@ -176,7 +176,7 @@ namespace GH_UnitNumber.Components {
                 _unitDictionary.Add(abbr, unit.Value);
             }
 
-            _dropDownItems[0] = _unitDictionary.Keys.ToList();
+            DropDownItems[0] = _unitDictionary.Keys.ToList();
             if (!_comingFromSave) {
               IQuantity quantity = Quantity.From(0, inUnitNumber.Value.Unit);
               string abbr = quantity.ToString().Replace("0", string.Empty).Trim();
