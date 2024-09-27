@@ -20,7 +20,7 @@ namespace OasysGHTests.Helpers {
         double.TryParse(subKeyNames[subKeyNames.Length - 1], NumberStyles.Any, CultureInfo.InvariantCulture, out rhinoMajorVersion);
       }
       RhinoResolver.Initialize();
-      string expectedPath = "C:\\Program Files\\Rhino " + rhinoMajorVersion.ToString() + "\\System";
+      string expectedPath = $"C:\\Program Files\\Rhino {rhinoMajorVersion}\\System";
       Assert.Equal(RhinoResolver.RhinoSystemDirectory, expectedPath);
       RhinoResolver.RhinoMajorVersion = initialRhinoMajorVersion;
       RhinoResolver.RhinoSystemDirectory = "";
