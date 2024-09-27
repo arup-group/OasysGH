@@ -147,23 +147,23 @@ namespace OasysGH.Components {
       // input -1 to force update of catalogue sections to include/exclude superseeded
       bool updateCat = false;
       if (i == -1) {
-        SelectedItems[0] = "Catalogue";
+        _selectedItems[0] = "Catalogue";
         updateCat = true;
         i = 0;
       } else {
         // change selected item
-        SelectedItems[i] = DropDownItems[i][j];
+        _selectedItems[i] = _dropDownItems[i][j];
       }
 
-      if (SelectedItems[0] == "Catalogue") {
+      if (_selectedItems[0] == "Catalogue") {
         // update spacer description to match catalogue dropdowns
-        SpacerDescriptions[1] = "Catalogue";
+        _spacerDescriptions[1] = "Catalogue";
 
         // if FoldMode is not currently catalogue state, then we update all lists
         if (_mode != FoldMode.Catalogue | updateCat) {
           // remove any existing selections
-          while (SelectedItems.Count > 1)
-            SelectedItems.RemoveAt(1);
+          while (_selectedItems.Count > 1)
+            _selectedItems.RemoveAt(1);
 
           // set catalogue selection to all
           _catalogueIndex = -1;
@@ -177,27 +177,27 @@ namespace OasysGH.Components {
           _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(_typeNumbers, DataSource, _inclSS);
 
           // update displayed selections to all
-          SelectedItems.Add(_catalogueNames[0]);
-          SelectedItems.Add(_typeNames[0]);
-          SelectedItems.Add(_sectionList[0]);
+          _selectedItems.Add(_catalogueNames[0]);
+          _selectedItems.Add(_typeNames[0]);
+          _selectedItems.Add(_sectionList[0]);
 
           // call graphics update
           Mode1Clicked();
         }
 
         // update dropdown lists
-        while (DropDownItems.Count > 1)
-          DropDownItems.RemoveAt(1);
+        while (_dropDownItems.Count > 1)
+          _dropDownItems.RemoveAt(1);
 
         // add catalogues (they will always be the same so no need to rerun sql call)
-        DropDownItems.Add(_catalogueNames);
+        _dropDownItems.Add(_catalogueNames);
 
         // type list
         // if second list (i.e. catalogue list) is changed, update types list to account for that catalogue
         if (i == 1) {
           // update catalogue index with the selected catalogue
           _catalogueIndex = _catalogueNumbers[j];
-          SelectedItems[1] = _catalogueNames[j];
+          _selectedItems[1] = _catalogueNames[j];
 
           // update typelist with selected input catalogue
           _typeData = SqlReader.Instance.GetTypesDataFromSQLite(_catalogueIndex, DataSource, _inclSS);
@@ -216,17 +216,17 @@ namespace OasysGH.Components {
           _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
 
           // update selections to display first item in new list
-          SelectedItems[2] = _typeNames[0];
-          SelectedItems[3] = _sectionList[0];
+          _selectedItems[2] = _typeNames[0];
+          _selectedItems[3] = _sectionList[0];
         }
-        DropDownItems.Add(_typeNames);
+        _dropDownItems.Add(_typeNames);
 
         // section list
         // if third list (i.e. types list) is changed, update sections list to account for these section types
         if (i == 2) {
           // update catalogue index with the selected catalogue
           _typeIndex = _typeNumbers[j];
-          SelectedItems[2] = _typeNames[j];
+          _selectedItems[2] = _typeNames[j];
 
           // create type list
           List<int> types;
@@ -241,15 +241,15 @@ namespace OasysGH.Components {
           _sectionList = SqlReader.Instance.GetSectionsDataFromSQLite(types, DataSource, _inclSS);
 
           // update selected section to be all
-          SelectedItems[3] = _sectionList[0];
+          _selectedItems[3] = _sectionList[0];
         }
-        DropDownItems.Add(_sectionList);
+        _dropDownItems.Add(_sectionList);
 
         // selected profile
         // if fourth list (i.e. section list) is changed, updated the sections list to only be that single profile
         if (i == 3) {
           // update displayed selected
-          SelectedItems[3] = _sectionList[j];
+          _selectedItems[3] = _sectionList[j];
         }
 
         if (_search == "")
@@ -258,27 +258,27 @@ namespace OasysGH.Components {
         base.UpdateUI();
       } else {
         // update spacer description to match none-catalogue dropdowns
-        SpacerDescriptions[1] = "Measure";// = new List<string>(new string[]
+        _spacerDescriptions[1] = "Measure";// = new List<string>(new string[]
 
         if (_mode != FoldMode.Other) {
           // remove all catalogue dropdowns
-          while (DropDownItems.Count > 1)
-            DropDownItems.RemoveAt(1);
+          while (_dropDownItems.Count > 1)
+            _dropDownItems.RemoveAt(1);
 
           // add length measure dropdown list
-          DropDownItems.Add(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
+          _dropDownItems.Add(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
 
           // set selected length
-          SelectedItems[1] = _lengthUnit.ToString();
+          _selectedItems[1] = _lengthUnit.ToString();
         }
 
         if (i == 0) {
           // update profile type if change is made to first dropdown menu
-          _type = profileTypes[SelectedItems[0]];
+          _type = profileTypes[_selectedItems[0]];
           Mode2Clicked();
         } else {
           // change unit
-          _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), SelectedItems[i]);
+          _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), _selectedItems[i]);
 
           base.UpdateUI();
         }
@@ -830,25 +830,25 @@ namespace OasysGH.Components {
     }
 
     protected internal override void InitialiseDropdowns() {
-      SpacerDescriptions = new List<string>(new string[] {
+      _spacerDescriptions = new List<string>(new string[] {
         "Profile type",
         "Measure",
         "Type",
         "Profile"
       });
 
-      DropDownItems = new List<List<string>>();
-      SelectedItems = new List<string>();
+      _dropDownItems = new List<List<string>>();
+      _selectedItems = new List<string>();
 
       // Profile type
-      DropDownItems.Add(profileTypes.Keys.ToList());
-      SelectedItems.Add("Rectangle");
+      _dropDownItems.Add(profileTypes.Keys.ToList());
+      _selectedItems.Add("Rectangle");
 
       // Length
-      DropDownItems.Add(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
-      SelectedItems.Add(Length.GetAbbreviation(_lengthUnit));
+      _dropDownItems.Add(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
+      _selectedItems.Add(Length.GetAbbreviation(_lengthUnit));
 
-      IsInitialised = true;
+      _isInitialised = true;
     }
 
     protected virtual int GetNumberOfGenericInputs() {
@@ -982,11 +982,11 @@ namespace OasysGH.Components {
           _typeIndex = -1;
           UpdateSecionList();
 
-          SelectedItems[2] = "All";
-          DropDownItems[2] = _typeNames;
+          _selectedItems[2] = "All";
+          _dropDownItems[2] = _typeNames;
 
-          SelectedItems[3] = "All";
-          DropDownItems[3] = _sectionList;
+          _selectedItems[3] = "All";
+          _dropDownItems[3] = _sectionList;
 
           base.UpdateUI();
         }
@@ -1016,8 +1016,8 @@ namespace OasysGH.Components {
 
         // filter by search pattern
         var filteredlist = new List<string>();
-        if (SelectedItems[3] != "All") {
-          if (!MatchAndAdd(SelectedItems[3], _search, ref filteredlist, tryHard)) {
+        if (_selectedItems[3] != "All") {
+          if (!MatchAndAdd(_selectedItems[3], _search, ref filteredlist, tryHard)) {
             _profileDescriptions = new List<string>();
             AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No profile found that matches selected profile and search!");
           }
@@ -1362,9 +1362,9 @@ namespace OasysGH.Components {
     }
 
     protected override void UpdateUIFromSelectedItems() {
-      if (SelectedItems[0] == "Catalogue") {
+      if (_selectedItems[0] == "Catalogue") {
         // update spacer description to match catalogue dropdowns
-        SpacerDescriptions = new List<string>(new string[]
+        _spacerDescriptions = new List<string>(new string[]
         {
           "Profile type", "Catalogue", "Type", "Profile"
         });
@@ -1375,15 +1375,15 @@ namespace OasysGH.Components {
 
         Mode1Clicked();
 
-        _profileDescriptions = new List<string>() { "CAT " + SelectedItems[3] };
+        _profileDescriptions = new List<string>() { "CAT " + _selectedItems[3] };
       } else {
         // update spacer description to match none-catalogue dropdowns
-        SpacerDescriptions = new List<string>(new string[]
+        _spacerDescriptions = new List<string>(new string[]
         {
           "Profile type", "Measure", "Type", "Profile"
         });
 
-        _type = profileTypes[SelectedItems[0]];
+        _type = profileTypes[_selectedItems[0]];
         Mode2Clicked();
       }
 
@@ -1415,7 +1415,7 @@ namespace OasysGH.Components {
     }
 
     private void UpdateProfileDescriptions() {
-      if (SelectedItems[3] == "All") {
+      if (_selectedItems[3] == "All") {
         _profileDescriptions = new List<string>();
         foreach (string profile in _sectionList) {
           if (profile == "All")
@@ -1423,7 +1423,7 @@ namespace OasysGH.Components {
           _profileDescriptions.Add("CAT " + profile);
         }
       } else
-        _profileDescriptions = new List<string>() { "CAT " + SelectedItems[3] };
+        _profileDescriptions = new List<string>() { "CAT " + _selectedItems[3] };
     }
 
     private void UpdateSecionList() {
