@@ -40,8 +40,7 @@ namespace OasysGHTests.Components {
     [Fact]
     public void NoSelectionsTest() {
       var comp = new DropDownComponent();
-      comp._selectedItems = null;
-      comp._isInitialised = true;
+      comp.Unselect();
       comp.CreateAttributes();
       Assert.NotNull(comp.Attributes);
     }

@@ -25,12 +25,12 @@ namespace OasysGH.Components.Tests {
       : base("DropDownCheckBoxes", "DDC", "A DropDown and CheckBoxes component", "OasysGH", "Test") { }
 
     public override void CreateAttributes() {
-      if (!_isInitialised) {
+      if (!IsInitialised) {
         InitialiseDropdowns();
       }
 
-      m_attributes = new DropDownCheckBoxesComponentAttributes(this, SetSelected, _dropDownItems,
-        _selectedItems, CheckBox, _initialCheckState, _checkboxTexts, _spacerDescriptions);
+      m_attributes = new DropDownCheckBoxesComponentAttributes(this, SetSelected, DropDownItems,
+        SelectedItems, CheckBox, _initialCheckState, _checkboxTexts, SpacerDescriptions);
     }
 
     public void CheckBox(List<bool> value) {
@@ -38,22 +38,22 @@ namespace OasysGH.Components.Tests {
     }
 
     protected override void InitialiseDropdowns() {
-      _spacerDescriptions = new List<string>(new[] {
+      SpacerDescriptions = new List<string>(new[] {
         "Dropdown",
         "CheckBox",
       });
 
-      _dropDownItems = new List<List<string>>();
-      _selectedItems = new List<string>();
+      DropDownItems = new List<List<string>>();
+      SelectedItems = new List<string>();
 
-      _dropDownItems.Add(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
-      _selectedItems.Add(Length.GetAbbreviation(_lengthUnit));
+      DropDownItems.Add(UnitsHelper.GetFilteredAbbreviations(EngineeringUnits.Length));
+      SelectedItems.Add(Length.GetAbbreviation(_lengthUnit));
 
-      _isInitialised = true;
+      IsInitialised = true;
     }
     public override void SetSelected(int i, int j) {
-      _selectedItems[i] = _dropDownItems[i][j];
-      _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), _selectedItems[i]);
+      SelectedItems[i] = DropDownItems[i][j];
+      _lengthUnit = (LengthUnit)UnitsHelper.Parse(typeof(LengthUnit), SelectedItems[i]);
       base.UpdateUI();
     }
     protected override void RegisterInputParams(GH_InputParamManager pManager) {

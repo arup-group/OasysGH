@@ -122,28 +122,28 @@ namespace GH_UnitNumber.Components {
       if (Params.Output.Count == 1) {
         Params.RegisterOutputParam(param);
       }
-      
+
       return flag;
     }
 
     public override void SetSelected(int i, int j) {
       if (_unitDictionary != null) {
-        _selectedItems[i] = _dropDownItems[i][j];
-        _dropDownItems[0] = _unitDictionary.Keys.ToList();
+        SelectedItems[i] = DropDownItems[i][j];
+        DropDownItems[0] = _unitDictionary.Keys.ToList();
       }
       base.UpdateUI();
     }
 
     protected override void InitialiseDropdowns() {
-      _spacerDescriptions = new List<string>(new string[] { "Select output unit" });
+      SpacerDescriptions = new List<string>(new string[] { "Select output unit" });
 
-      _dropDownItems = new List<List<string>>();
-      _selectedItems = new List<string>();
+      DropDownItems = new List<List<string>>();
+      SelectedItems = new List<string>();
 
-      _dropDownItems.Add(new List<string>(new string[] { " " }));
-      _selectedItems.Add("   ");
+      DropDownItems.Add(new List<string>(new string[] { " " }));
+      SelectedItems.Add("   ");
 
-      _isInitialised = true;
+      IsInitialised = true;
     }
 
     protected override void RegisterInputParams(GH_InputParamManager pManager) {
@@ -176,11 +176,11 @@ namespace GH_UnitNumber.Components {
                 _unitDictionary.Add(abbr, unit.Value);
             }
 
-            _dropDownItems[0] = _unitDictionary.Keys.ToList();
+            DropDownItems[0] = _unitDictionary.Keys.ToList();
             if (!_comingFromSave) {
               IQuantity quantity = Quantity.From(0, inUnitNumber.Value.Unit);
               string abbr = quantity.ToString().Replace("0", string.Empty).Trim();
-              _selectedItems[0] = abbr;
+              SelectedItems[0] = abbr;
             } else
               _comingFromSave = false;
           }
@@ -202,14 +202,14 @@ namespace GH_UnitNumber.Components {
           _selectedUnit = quantity.Unit;
           IQuantity quantity2 = Quantity.From(0, _selectedUnit);
           string abbr = quantity2.ToString().Replace("0", string.Empty).Trim();
-          _selectedItems[0] = abbr;
+          SelectedItems[0] = abbr;
         } else {
           AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to parse input parameter u to a recognisable unit");
           return;
         }
       } else {
         // update selected unit from dropdown
-        _selectedUnit = _unitDictionary[_selectedItems.Last()];
+        _selectedUnit = _unitDictionary[SelectedItems.Last()];
       }
 
       // convert unit to selected output

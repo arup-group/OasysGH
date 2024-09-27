@@ -30,17 +30,17 @@ namespace GH_UnitNumber.Components {
     }
 
     public override void SetSelected(int i, int j) {
-      _selectedItems[i] = _dropDownItems[i][j];
+      SelectedItems[i] = DropDownItems[i][j];
 
       // if change is made to first (unit type) list we have to update lists
       if (i == 0) {
-        var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
+        var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
         UpdateQuantityUnitTypeFromUnitString(unit);
         UpdateMeasureDictionary();
-        _selectedItems[1] = _selectedMeasure.ToString();
+        SelectedItems[1] = _selectedMeasure.ToString();
       } else // if change is made to the measure of a unit
         {
-        _selectedMeasure = _measureDictionary[_selectedItems.Last()];
+        _selectedMeasure = _measureDictionary[SelectedItems.Last()];
         UpdateUnitMeasureAndAbbreviation();
       }
 
@@ -48,7 +48,7 @@ namespace GH_UnitNumber.Components {
     }
 
     public override void VariableParameterMaintenance() {
-      var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
+      var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
       string unitAbbreviation;
       switch (unit) {
         case EngineeringUnits.Angle:
@@ -164,16 +164,16 @@ namespace GH_UnitNumber.Components {
     }
 
     protected override void InitialiseDropdowns() {
-      _spacerDescriptions = new List<string>(new string[] { "Unit type", "Measure" });
+      SpacerDescriptions = new List<string>(new string[] { "Unit type", "Measure" });
 
-      _dropDownItems = new List<List<string>>();
-      _selectedItems = new List<string>();
+      DropDownItems = new List<List<string>>();
+      SelectedItems = new List<string>();
 
-      _dropDownItems.Add(Enum.GetNames(typeof(EngineeringUnits)).ToList());
-      _selectedItems.Add(_dropDownItems[0][1]);
+      DropDownItems.Add(Enum.GetNames(typeof(EngineeringUnits)).ToList());
+      SelectedItems.Add(DropDownItems[0][1]);
 
-      _dropDownItems.Add(Enum.GetNames(typeof(LengthUnit)).ToList());
-      _selectedItems.Add(DefaultUnits.LengthUnitGeometry.ToString());
+      DropDownItems.Add(Enum.GetNames(typeof(LengthUnit)).ToList());
+      SelectedItems.Add(DefaultUnits.LengthUnitGeometry.ToString());
 
       _quantity = new Length(0, DefaultUnits.LengthUnitGeometry);
       _selectedMeasure = _quantity.Unit;
@@ -182,7 +182,7 @@ namespace GH_UnitNumber.Components {
       foreach (UnitInfo unit in _quantity.QuantityInfo.UnitInfos)
         _measureDictionary.Add(unit.Name, unit.Value);
 
-      _isInitialised = true;
+      IsInitialised = true;
     }
 
     protected override void RegisterInputParams(GH_InputParamManager pManager) {
@@ -195,7 +195,7 @@ namespace GH_UnitNumber.Components {
 
     protected override void SolveInternal(IGH_DataAccess DA) {
       if (DA.GetData(0, ref _value)) {
-        var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
+        var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
 
         switch (unit) {
           case EngineeringUnits.Angle:
@@ -314,11 +314,11 @@ namespace GH_UnitNumber.Components {
     }
 
     protected override void UpdateUIFromSelectedItems() {
-      var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
+      var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
       UpdateQuantityUnitTypeFromUnitString(unit);
       UpdateMeasureDictionary();
       UpdateUnitMeasureAndAbbreviation();
-      _selectedMeasure = _measureDictionary[_selectedItems.Last()];
+      _selectedMeasure = _measureDictionary[SelectedItems.Last()];
       base.UpdateUIFromSelectedItems();
     }
 
@@ -326,7 +326,7 @@ namespace GH_UnitNumber.Components {
       _measureDictionary = new Dictionary<string, Enum>();
       foreach (UnitInfo unitype in _quantity.QuantityInfo.UnitInfos)
         _measureDictionary.Add(unitype.Name, unitype.Value);
-      _dropDownItems[1] = _measureDictionary.Keys.ToList();
+      DropDownItems[1] = _measureDictionary.Keys.ToList();
     }
 
     private void UpdateQuantityUnitTypeFromUnitString(EngineeringUnits unit) {
@@ -443,7 +443,7 @@ namespace GH_UnitNumber.Components {
     }
 
     private void UpdateUnitMeasureAndAbbreviation() {
-      var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), _selectedItems[0]);
+      var unit = (EngineeringUnits)Enum.Parse(typeof(EngineeringUnits), SelectedItems[0]);
 
       switch (unit) {
         case EngineeringUnits.Angle:
