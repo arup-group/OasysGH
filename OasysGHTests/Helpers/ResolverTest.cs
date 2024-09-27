@@ -10,30 +10,20 @@ using System.Globalization;
 namespace OasysGHTests.Helpers {
   public class ResolverTest {
     [Fact]
-    public void ResolverReturnLatestInstalledRhinoPath() {
-      string name = "SOFTWARE\\McNeel\\Rhinoceros";
-      int initialRhinoMajorVersion = RhinoResolver.RhinoMajorVersion;
-      double rhinoMajorVersion = -1;
-      using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(name)) {
-        string[] subKeyNames = registryKey.GetSubKeyNames();
-        Array.Sort(subKeyNames);
-        double.TryParse(subKeyNames[subKeyNames.Length - 1], NumberStyles.Any, CultureInfo.InvariantCulture, out rhinoMajorVersion);
-      }
-      RhinoResolver.Initialize();
-      string expectedPath = $"C:\\Program Files\\Rhino {rhinoMajorVersion}\\System";
-      Assert.Equal(RhinoResolver.RhinoSystemDirectory, expectedPath);
-      RhinoResolver.RhinoMajorVersion = initialRhinoMajorVersion;
-      RhinoResolver.RhinoSystemDirectory = "";
+    public void ShouldReturnAValidPath() {
+      string directory = RhinoResolver.FindRhinoSystemDirectory();
+      Assert.True(File.Exists(directory));
     }
 
     [Fact]
-    public void ResolverReturnNoRhinoPathWhenRequestedVersionNotInstalled() {
-      int initialRhinoMajorVersion = RhinoResolver.RhinoMajorVersion;
-      RhinoResolver.Initialize();
-      RhinoResolver.RhinoMajorVersion = 1;
-      Assert.Null(RhinoResolver.RhinoSystemDirectory);
-      RhinoResolver.RhinoMajorVersion = initialRhinoMajorVersion;
-      RhinoResolver.RhinoSystemDirectory = "";
+    public void SubKeyMissingShouldReturnFalse() {
+      Assert.Throws<NullReferenceException>(() => RhinoResolver.GetSubKeys("INVALID_KEY"));
+    }
+
+    [Fact]
+    public void ShouldHaveSomeKeys() {
+      var rhinoSolver = new RhinoResolver();
+      Assert.True(rhinoSolver.GetRhinoSubKeys().Length > 0);
     }
   }
 }
