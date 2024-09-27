@@ -6,7 +6,7 @@ using System;
 
 public class RhinoResolver {
   private const string Coredllpath = "CoreDllPath";
-  private static string rhinoSystemDirectory;
+  private static string rhinoSystemDirectory = string.Empty;
   const string RhinoKey = "SOFTWARE\\McNeel\\Rhinoceros";
 
   public static string RhinoSystemDirectory {

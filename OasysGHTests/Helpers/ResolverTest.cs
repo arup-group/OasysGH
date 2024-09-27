@@ -11,6 +11,7 @@ namespace OasysGHTests.Helpers {
   public class ResolverTest {
     [Fact]
     public void ShouldReturnAValidPath() {
+      RhinoResolver.RhinoMajorVersion = -1;
       string directory = RhinoResolver.FindRhinoSystemDirectory();
       Assert.True(File.Exists(directory));
     }
