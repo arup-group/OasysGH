@@ -9,12 +9,11 @@
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.2.1</Version>
+    <Version>1.2.3</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>8.0</LangVersion>
     <Description>OasysGH is a library with shared content for Oasys Grasshopper plugins.</Description>
-    <PackageReleaseNotes>This is a release of OasysGH 1.2.1.</PackageReleaseNotes>
     <PackageTags>oasys;grasshopper</PackageTags>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\OasysGH.snk</AssemblyOriginatorKeyFile>
