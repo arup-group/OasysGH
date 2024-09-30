@@ -9,7 +9,7 @@
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.2.3</Version>
+    <Version>1.2.4</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>8.0</LangVersion>
@@ -21,7 +21,7 @@
 
   </PropertyGroup>
   <ItemGroup>
-    <None Include="readme.md" Pack="true" PackagePath=""/>
+    <None Include="README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Oasys.Taxonomy.IGeometry">
@@ -86,10 +86,6 @@
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
     <None Include="Properties\Icons\Units.ico" />
   </ItemGroup>
   <ItemGroup>
