@@ -201,8 +201,8 @@ steps:
 
 - powershell: |
     cd OasysGH
-    & 'C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\amd64\MSBuild.exe' OasysGH.csproj /t:pack /p:NoBuild=true /p:Platform=x64 /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:DebugType=portable /property:Configuration=Release
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables.TAG_EXISTS, 'true'))
+    & 'C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\amd64\MSBuild.exe' .\OasysGH\OasysGH.csproj /t:pack /p:NoBuild=true /p:Platform=x64 /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:DebugType=portable /property:Configuration=Release
+  condition: and(succeeded())
   displayName: Package NuGet
 
 - task: GitHubRelease@1
