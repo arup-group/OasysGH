@@ -201,7 +201,7 @@ steps:
 
 - powershell: |
     cd OasysGH
-    & 'C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\amd64\MSBuild.exe' .\OasysGH\OasysGH.csproj /t:pack /p:NoBuild=true /p:Platform=x64 /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:DebugType=portable /property:Configuration=Release
+    & 'C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\amd64\MSBuild.exe' $(Build.SourcesDirectory).\OasysGH\OasysGH.csproj /t:pack /p:NoBuild=true /p:Platform=x64 /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:DebugType=portable /property:Configuration=Release
   condition: and(succeeded())
   displayName: Package NuGet
 
