@@ -1,7 +1,9 @@
 name: Check Jira key in branch exists and is valid
+permissions:
+  contents: read
 
 # Runs on every push to non develop or main branch
-on: 
+on:
  push:
    branches:
     - '**'

@@ -1,12 +1,14 @@
 name: Check Jira key in PR title exists and is valid
+permissions:
+  contents: read
 
 # Runs when opening or changing a PR
-on: 
+on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
     branches:
       - main
-    
+
 jobs:
   # This workflow contains a single job called "check-jira"
   check-jira:
