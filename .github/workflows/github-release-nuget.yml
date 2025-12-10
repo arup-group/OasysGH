@@ -1,4 +1,6 @@
 name: Push OasysGH NuGet
+permissions:
+  contents: read
 
 # On run when release is published
 on:
@@ -26,7 +28,7 @@ jobs:
           tag: ${{ github.event.release.tag_name }}
           file: /.*\.snupkg/
           token: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - name: Push nupkg file to nuget.org
         run: |
           dotnet nuget push "*.nupkg" --api-key ${{ SECRETS.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
