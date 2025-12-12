@@ -33,10 +33,30 @@ public class RhinoResolver {
   }
 
   private static Assembly ResolveForRhinoAssemblies(object sender, ResolveEventArgs args) {
-    string name = new AssemblyName(args.Name).Name;
-    string text = Path.Combine(RhinoSystemDirectory, name + ".dll");
-    if (File.Exists(text)) {
-      return Assembly.LoadFrom(text);
+    var assemblyName = new AssemblyName(args.Name);
+    string name = assemblyName.Name;
+    
+    // First try to load from Rhino System directory
+    string systemPath = Path.Combine(RhinoSystemDirectory, name + ".dll");
+    if (File.Exists(systemPath)) {
+      return Assembly.LoadFrom(systemPath);
+    }
+
+    // Special handling for Grasshopper - try to find it in the Plug-ins folder
+    if (name.Equals("Grasshopper", StringComparison.OrdinalIgnoreCase)) {
+      string rhinoPath = Path.GetDirectoryName(RhinoSystemDirectory);
+      string grasshopperPath = Path.Combine(rhinoPath, "Plug-ins", "Grasshopper", name + ".dll");
+      if (File.Exists(grasshopperPath)) {
+        return Assembly.LoadFrom(grasshopperPath);
+      }
+    }
+
+    // Try to load from already loaded assemblies that match by name (version-agnostic)
+    Assembly[] loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+    foreach (Assembly loadedAssembly in loadedAssemblies) {
+      if (loadedAssembly.GetName().Name.Equals(name, StringComparison.OrdinalIgnoreCase)) {
+        return loadedAssembly;
+      }
     }
 
     return null;

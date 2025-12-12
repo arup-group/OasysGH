@@ -11,34 +11,69 @@ namespace OasysGH.Helpers {
   /// Class containing functions to interface with SQLite db files.
   /// In case of problems loading SQLite the singleton is executed in a separate AppDomain.
   /// </summary>
-  public class SqlReader : MarshalByRefObject {
+  public class SqlReader : MarshalByRefObject, IDisposable {
     public static SqlReader Instance => lazy.Value;
     private static readonly Lazy<SqlReader> lazy = new Lazy<SqlReader>(() => Initialize());
+    private static AppDomain _sqliteAppDomain;
+    private static readonly object _lockObject = new object();
+    private bool _disposed = false;
+
+    static SqlReader() {
+      // Initialize SQLitePCLRaw to ensure native dependencies are loaded
+      try {
+        SQLitePCL.Batteries.Init();
+      }
+      catch {
+        // If batteries initialization fails, it might still work with the bundle
+      }
+    }
 
     public SqlReader() {
     }
 
     public static SqlReader Initialize() {
-      string codeBase = Assembly.GetCallingAssembly().CodeBase;
-      var uri = new UriBuilder(codeBase);
-      string codeBasePath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
-
       try {
-        var SQLiteInterop = Assembly.LoadFile(codeBasePath + @"\Microsoft.Data.Sqlite.dll");
-
+        // Try to create a simple connection to test if SQLite is available
+        using (var testConnection = new SqliteConnection("Data Source=:memory:")) {
+          testConnection.Open();
+          testConnection.Close();
+        }
+        
         return new SqlReader();
       }
-      // try using a second AppDomain
-      catch (Exception) {
-        // Get the full name of the EXE assembly.
-        string exeAssembly = Assembly.GetCallingAssembly().FullName;
+      catch (Exception ex) {
+        // If basic SQLite functionality fails, try the AppDomain approach
+        try {
+          lock (_lockObject) {
+            string codeBase = Assembly.GetCallingAssembly().CodeBase;
+            var uri = new UriBuilder(codeBase);
+            string codeBasePath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
+            
+            // Get the full name of the EXE assembly.
+            string exeAssembly = Assembly.GetCallingAssembly().FullName;
 
-        AppDomain appDomain = CreateSecondAppDomain(codeBasePath);
+            // Clean up any existing AppDomain first
+            if (_sqliteAppDomain != null) {
+              try {
+                AppDomain.Unload(_sqliteAppDomain);
+              }
+              catch { }
+              _sqliteAppDomain = null;
+            }
 
-        // Create an instance of MarshalbyRefType in the second AppDomain.
-        // A proxy to the object is returned.
-        var reader = (SqlReader)appDomain.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
-        return reader;
+            _sqliteAppDomain = CreateSecondAppDomain(codeBasePath);
+
+            // Create an instance of MarshalbyRefType in the second AppDomain.
+            // A proxy to the object is returned.
+            var reader = (SqlReader)_sqliteAppDomain.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
+            return reader;
+          }
+        }
+        catch (Exception innerEx) {
+          throw new InvalidOperationException(
+            $"Failed to initialize SqlReader. SQLite dependencies may be missing. " +
+            $"Original error: {ex.Message}. AppDomain error: {innerEx.Message}", ex);
+        }
       }
     }
 
@@ -321,6 +356,61 @@ namespace OasysGH.Helpers {
       var appDomain = AppDomain.CreateDomain("SQLite AppDomain", null, ads);
 
       return appDomain;
+    }
+
+    public void Dispose() {
+      Dispose(true);
+      GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing) {
+      if (!_disposed) {
+        if (disposing) {
+          // Cleanup managed resources
+        }
+        
+        // Cleanup AppDomain if it exists
+        lock (_lockObject) {
+          if (_sqliteAppDomain != null) {
+            try {
+              AppDomain.Unload(_sqliteAppDomain);
+            }
+            catch { 
+              // Ignore unload errors during disposal
+            }
+            _sqliteAppDomain = null;
+          }
+        }
+        
+        _disposed = true;
+      }
+    }
+
+    ~SqlReader() {
+      Dispose(false);
+    }
+
+    /// <summary>
+    /// Cleanup method to safely unload the SQLite AppDomain.
+    /// Should be called during test cleanup to prevent stuck processes.
+    /// </summary>
+    public static void Cleanup() {
+      lock (_lockObject) {
+        if (_sqliteAppDomain != null) {
+          try {
+            AppDomain.Unload(_sqliteAppDomain);
+          }
+          catch { 
+            // Ignore unload errors during cleanup
+          }
+          _sqliteAppDomain = null;
+        }
+      }
+      
+      // Force garbage collection to clean up any remaining references
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
+      GC.Collect();
     }
   }
 }

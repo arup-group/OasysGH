@@ -8,7 +8,18 @@ using Xunit;
 namespace OasysGHTests.Helpers {
   [Collection("GrasshopperFixture collection")]
   public class SqlReaderTests {
-    private static readonly string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "lib", "sectlib.db3");
+    private static readonly string filePath = GetDatabaseFilePath();
+    
+    private static string GetDatabaseFilePath() {
+      // First check if the database file is in the current directory (copied during build)
+      string currentDirFile = Path.Combine(Directory.GetCurrentDirectory(), "sectlib.db3");
+      if (File.Exists(currentDirFile)) {
+        return currentDirFile;
+      }
+      
+      // Fall back to the original logic
+      return Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "lib", "sectlib.db3");
+    }
 
     [Theory]
     [InlineData("IPE100", new double[5] { 0.1, 0.055, 0.0041, 0.0057, 0.007 })]
