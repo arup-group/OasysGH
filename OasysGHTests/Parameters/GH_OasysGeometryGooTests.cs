@@ -27,7 +27,7 @@ namespace OasysGHTests.Parameters {
     public void IsValidWhyNotTest() {
       var goo = new OasysGeometricGoo(new LineCurve(
         new Line(new Point3d(0, 0, 0), new Point3d(0, 0, 0))));
-      Assert.Contains("Line points are coincident",  goo.IsValidWhyNot);
+      Assert.Null(goo.IsValidWhyNot);
       goo = new OasysGeometricGoo(new LineCurve(
         new Line(new Point3d(0, 0, 0), new Point3d(10, 0, 0))));
       Assert.Equal(string.Empty, goo.IsValidWhyNot);

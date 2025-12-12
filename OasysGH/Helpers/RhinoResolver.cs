@@ -14,7 +14,6 @@ public class RhinoResolver {
       if (string.IsNullOrWhiteSpace(rhinoSystemDirectory)) {
         rhinoSystemDirectory = FindRhinoSystemDirectory();
       }
-
       return rhinoSystemDirectory;
     }
     set { rhinoSystemDirectory = value; }
@@ -32,10 +31,28 @@ public class RhinoResolver {
     AppDomain.CurrentDomain.AssemblyResolve += ResolveForRhinoAssemblies;
   }
 
+  private static string GetExpectedRhinoPath() {
+    var currentAssembly = Assembly.GetExecutingAssembly();
+    AssemblyName[] referencedAssemblies = currentAssembly.GetReferencedAssemblies();
+
+    foreach (AssemblyName assemblyName in referencedAssemblies) {
+      if (assemblyName.Name.Equals("RhinoCommon", StringComparison.OrdinalIgnoreCase)) {
+        if (assemblyName.Version != null) {
+          int majorVersion = assemblyName.Version.Major;
+          string expectedPath = $@"C:\Program Files\Rhino {majorVersion}\System";
+          if (Directory.Exists(expectedPath)) {
+            return expectedPath;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   private static Assembly ResolveForRhinoAssemblies(object sender, ResolveEventArgs args) {
     var assemblyName = new AssemblyName(args.Name);
     string name = assemblyName.Name;
-    
+
     // First try to load from Rhino System directory
     string systemPath = Path.Combine(RhinoSystemDirectory, name + ".dll");
     if (File.Exists(systemPath)) {
@@ -63,33 +80,60 @@ public class RhinoResolver {
   }
 
   public static string FindRhinoSystemDirectory() {
-    bool useLatest = RhinoMajorVersion < 0;
+    // First check if the expected Rhino path exists based on referenced NuGet version
+    // else fall back to latest
+    string expectedPath = GetExpectedRhinoPath();
+    if (!string.IsNullOrEmpty(expectedPath)) {
+      return expectedPath;
+    }
 
+    return GetRhinoSystemDir(-1);
+  }
+
+  private static string GetRhinoSystemDir(int preferredMajorVersion) {
     string[] subKeyNames = GetSubKeys(RhinoKey);
 
     using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(RhinoKey)) {
-      string text = string.Empty;
-      for (int num = subKeyNames.Length - 1; num >= 0; num--) {
-        if (double.TryParse(subKeyNames[num], NumberStyles.Any, CultureInfo.InvariantCulture, out double result)) {
-          text = subKeyNames[num];
-          if (useLatest || (int)Math.Floor(result) == RhinoMajorVersion) {
-            using RegistryKey registryKey2 = registryKey.OpenSubKey(text + "\\Install");
-            try {
-              object value = registryKey2.GetValue(Coredllpath);
-              if (value == null)
-                continue;
-              if (value is string path && File.Exists(path)) {
-                return Path.GetDirectoryName(path);
+      if (registryKey == null) return null;
+
+      // If preferredMajorVersion is specified, look for that version first
+      if (preferredMajorVersion > 0) {
+        foreach (string keyName in subKeyNames) {
+          if (double.TryParse(keyName, NumberStyles.Any, CultureInfo.InvariantCulture, out double version)) {
+            int majorVersion = (int)Math.Floor(version);
+            if (majorVersion == preferredMajorVersion) {
+              string path = GetRhinoPathFromRegistry(registryKey, keyName);
+              if (!string.IsNullOrEmpty(path)) {
+                return path;
               }
             }
-            catch (Exception e) {
-              Console.WriteLine(e);
-            }
+          }
+        }
+      }
+
+      // Fall back to latest version (highest version number)
+      for (int i = subKeyNames.Length - 1; i >= 0; i--) {
+        if (double.TryParse(subKeyNames[i], NumberStyles.Any, CultureInfo.InvariantCulture, out double version)) {
+          string path = GetRhinoPathFromRegistry(registryKey, subKeyNames[i]);
+          if (!string.IsNullOrEmpty(path)) {
+            return path;
           }
         }
       }
     }
 
+    return null;
+  }
+
+  private static string GetRhinoPathFromRegistry(RegistryKey baseKey, string versionKey) {
+    using (RegistryKey installKey = baseKey.OpenSubKey(versionKey + "\\Install")) {
+      if (installKey == null) return null;
+
+      object value = installKey.GetValue(Coredllpath);
+      if (value is string path && File.Exists(path)) {
+        return Path.GetDirectoryName(path);
+      }
+    }
     return null;
   }
 
