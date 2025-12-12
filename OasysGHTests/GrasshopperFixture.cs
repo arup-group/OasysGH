@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
 using Grasshopper.Plugin;
-using OasysGH.Helpers;
 using OasysGH.Units;
-using OasysGHTests.TestHelpers;
 using Rhino;
 using Rhino.Runtime.InProcess;
 using Xunit;
@@ -101,22 +99,6 @@ namespace OasysGHTests {
         _ghPlugin = null;
         if (_core != null) {
           Core.Dispose();
-        }
-        
-        // Cleanup SqlReader AppDomains to prevent stuck processes
-        try {
-          SqlReader.Cleanup();
-        }
-        catch {
-          // Ignore cleanup errors during disposal
-        }
-        
-        // Cleanup any stuck processes
-        try {
-          ProcessCleanupHelper.CleanupStuckProcesses();
-        }
-        catch {
-          // Ignore cleanup errors during disposal
         }
       }
 
