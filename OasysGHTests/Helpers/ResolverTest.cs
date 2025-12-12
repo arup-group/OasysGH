@@ -175,5 +175,18 @@ namespace OasysGHTests.Helpers {
         method.Invoke(null, new object[] { null, new ResolveEventArgs("NonExistentAssembly") });
       }
     }
+
+    
+    [Fact]
+    public void GetRhinoSystemDirTest() {
+      MethodInfo method = typeof(RhinoResolver).GetMethod("GetRhinoSystemDir", 
+        BindingFlags.NonPublic | BindingFlags.Static);
+      
+      if (method != null) {
+        method.Invoke(null, new object[] { 7 });
+        method.Invoke(null, new object[] { 8 });
+        method.Invoke(null, new object[] { 1000 });
+      }
+    }
   }
 }
