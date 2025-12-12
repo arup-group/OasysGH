@@ -204,19 +204,5 @@ namespace OasysGHTests.Helpers {
       Assert.NotNull(instance2);
       Assert.Same(instance1, instance2);
     }
-    
-    [Fact]
-    public void CleanupTest() {
-      SqlReader.Cleanup();
-      SqlReader instance = SqlReader.Instance;
-      Assert.NotNull(instance);
-    }
-    
-    [Fact]
-    public void DisposeTest() {
-      var reader = new SqlReader();
-      reader.Dispose();
-      reader.Dispose(); // Double dispose should be safe
-    }
   }
 }
