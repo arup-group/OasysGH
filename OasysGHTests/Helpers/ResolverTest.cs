@@ -154,5 +154,26 @@ namespace OasysGHTests.Helpers {
         }
       }
     }
+
+   
+    [Fact]
+    public void ResolveForRhinoAssembliesTest() {
+      MethodInfo method = typeof(RhinoResolver).GetMethod("ResolveForRhinoAssemblies", 
+        BindingFlags.NonPublic | BindingFlags.Static);
+      
+      if (method != null) {
+        // Hit the Grasshopper special case path
+        method.Invoke(null, new object[] { null, new ResolveEventArgs("Grasshopper") });
+        
+        // Hit the normal assembly resolution path
+        method.Invoke(null, new object[] { null, new ResolveEventArgs("RhinoCommon") });
+        
+        // Hit the loaded assembly check path
+        method.Invoke(null, new object[] { null, new ResolveEventArgs("mscorlib") });
+        
+        // Hit the not found path
+        method.Invoke(null, new object[] { null, new ResolveEventArgs("NonExistentAssembly") });
+      }
+    }
   }
 }
