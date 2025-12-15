@@ -6,28 +6,19 @@ using System;
 
 public class RhinoResolver {
   private const string Coredllpath = "CoreDllPath";
-  private static string rhinoSystemDirectory = string.Empty;
   const string RhinoKey = "SOFTWARE\\McNeel\\Rhinoceros";
+  private static Lazy<string> rhinoSystemDirectoryLazy = new Lazy<string>(FindRhinoSystemDirectory);
 
   public static string RhinoSystemDirectory {
     get {
-      if (string.IsNullOrWhiteSpace(rhinoSystemDirectory)) {
-        rhinoSystemDirectory = FindRhinoSystemDirectory();
-      }
-      return rhinoSystemDirectory;
+      return rhinoSystemDirectoryLazy.Value;
     }
-    set { rhinoSystemDirectory = value; }
   }
-
-  public static int RhinoMajorVersion { get; set; }
-
 
   public static void Initialize() {
     if (IntPtr.Size != 8) {
       throw new Exception("Only 64 bit applications can use Rhino");
     }
-
-    RhinoMajorVersion = -1;
     AppDomain.CurrentDomain.AssemblyResolve += ResolveForRhinoAssemblies;
   }
 

@@ -26,13 +26,8 @@ namespace OasysGHTests.Helpers {
     [InlineData("IPE100", new double[5] { 0.1, 0.055, 0.0041, 0.0057, 0.007 })]
     [InlineData("CHS457x12.5", new double[2] { 0.457, 0.0125 })]
     public void GetCatalogueProfileValuesTest(string profileString, double[] expectedValues) {
-      if (!File.Exists(filePath)) {
-        // Skip test if database file doesn't exist
-        return;
-      }
-      
       List<double> values = SqlReader.Instance.GetCatalogueProfileValues(profileString, filePath);
-      Assert.Equal(expectedValues, values);
+      Assert.Equal(expectedValues, values); 
     }
   
     [Fact]
@@ -43,10 +38,6 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void GetCataloguesDataFromSQLiteTest() {
-      if (!File.Exists(filePath)) {
-        return;
-      }
-
       Tuple<List<string>, List<int>> result = SqlReader.Instance.GetCataloguesDataFromSQLite(filePath);
       
       Assert.NotNull(result);
@@ -66,10 +57,6 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void GetTypesDataFromSQLiteTest() {
-      if (!File.Exists(filePath)) {
-        return;
-      }
-
       Tuple<List<string>, List<int>> result = SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath);
       
       Assert.NotNull(result);
@@ -83,10 +70,6 @@ namespace OasysGHTests.Helpers {
     
     [Fact]
     public void GetTypesDataFromSQLite_WithSuperseeded_ReturnsMoreResults() {
-      if (!File.Exists(filePath)) {
-        return;
-      }
-
       Tuple<List<string>, List<int>> resultWithoutSuperseeded = SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, false);
       Tuple<List<string>, List<int>> resultWithSuperseeded = SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, true);
       
@@ -95,9 +78,6 @@ namespace OasysGHTests.Helpers {
     
     [Fact]
     public void GetTypesDataFromSQLite_SpecificCatalogue_ReturnsFilteredResults() {
-      if (!File.Exists(filePath)) {
-        return;
-      }
       Tuple<List<string>, List<int>> catalogues = SqlReader.Instance.GetCataloguesDataFromSQLite(filePath);
       if (catalogues.Item2.Count > 1) {
         int validCatalogueNumber = catalogues.Item2[1]; // Skip "All" (-1)
@@ -111,10 +91,6 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void GetSectionsDataFromSQLiteTest() {
-      if (!File.Exists(filePath)) {
-        return;
-      }
-      
       var types = new List<int> { -1 };
       List<string> result = SqlReader.Instance.GetSectionsDataFromSQLite(types, filePath);
       
@@ -125,10 +101,6 @@ namespace OasysGHTests.Helpers {
     
     [Fact]
     public void GetSectionsDataFromSQLite_SpecificTypes_ReturnsFilteredResults() {
-      if (!File.Exists(filePath)) {
-        return;
-      }
-
       Tuple<List<string>, List<int>> typesData = SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath);
       if (typesData.Item2.Count > 1) {
         var typeNumbers = new List<int> { typesData.Item2[1] }; // Skip "All" (-1)
@@ -142,10 +114,6 @@ namespace OasysGHTests.Helpers {
     
     [Fact]
     public void GetSectionsDataFromSQLite_WithSuperseeded_ReturnsMoreResults() {
-      if (!File.Exists(filePath)) {
-        return;
-      }
-      
       var types = new List<int> { -1 };
       List<string> resultWithoutSuperseeded = SqlReader.Instance.GetSectionsDataFromSQLite(types, filePath, false);
       List<string> resultWithSuperseeded = SqlReader.Instance.GetSectionsDataFromSQLite(types, filePath, true);
@@ -155,10 +123,6 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void ConnectionTest() {
-      if (!File.Exists(filePath)) {
-        return;
-      }
-      
       using (SqliteConnection connection = SqlReader.Instance.Connection(filePath)) {
         Assert.NotNull(connection);
         Assert.Contains(filePath, connection.ConnectionString);
