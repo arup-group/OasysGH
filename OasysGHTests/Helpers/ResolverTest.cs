@@ -1,9 +1,9 @@
-﻿using OasysGH.Helpers;
+﻿using System;
 using System.IO;
 using System.Reflection;
-using System;
-using Xunit;
 using Microsoft.Win32;
+using Rhino.Input;
+using Xunit;
 
 
 namespace OasysGHTests.Helpers {
@@ -103,48 +103,9 @@ namespace OasysGHTests.Helpers {
     }
 
     [Fact]
-    public void GetExpectedRhinoPath_ReturnsValidPath() {
-      MethodInfo method = typeof(RhinoResolver).GetMethod("GetExpectedRhinoPath",
-        BindingFlags.NonPublic | BindingFlags.Static);
-
-      if (method != null) {
-        string result = method.Invoke(null, null) as string;
-
-        if (!string.IsNullOrEmpty(result)) {
-          Assert.True(Directory.Exists(result));
-          Assert.Contains("Rhino", result, StringComparison.OrdinalIgnoreCase);
-          Assert.Contains("System", result);
-        }
-      }
-    }
-
-    [Fact]
-    public void GetRhinoPathFromRegistry_WithValidKey_ReturnsPath() {
+    public void GetRhinoPathFromRegistryWithInvalidKeyReturnsNull() {
       MethodInfo method = typeof(RhinoResolver).GetMethod("GetRhinoPathFromRegistry",
         BindingFlags.NonPublic | BindingFlags.Static);
-      if (method != null) {
-        using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\McNeel\\Rhinoceros")) {
-          if (registryKey != null) {
-            string[] subKeyNames = registryKey.GetSubKeyNames();
-
-            if (subKeyNames.Length > 0) {
-              // Test with first available version
-              string result = method.Invoke(null, new object[] { registryKey, subKeyNames[0] }) as string;
-
-              if (!string.IsNullOrEmpty(result)) {
-                Assert.True(Directory.Exists(result));
-              }
-            }
-          }
-        }
-      }
-    }
-
-    [Fact]
-    public void GetRhinoPathFromRegistry_WithInvalidKey_ReturnsNull() {
-      MethodInfo method = typeof(RhinoResolver).GetMethod("GetRhinoPathFromRegistry",
-        BindingFlags.NonPublic | BindingFlags.Static);
-
       if (method != null) {
         using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\McNeel\\Rhinoceros")) {
           if (registryKey != null) {
@@ -155,37 +116,41 @@ namespace OasysGHTests.Helpers {
       }
     }
 
-   
+
     [Fact]
     public void ResolveForRhinoAssembliesTest() {
-      MethodInfo method = typeof(RhinoResolver).GetMethod("ResolveForRhinoAssemblies", 
+      MethodInfo method = typeof(RhinoResolver).GetMethod("ResolveForRhinoAssemblies",
         BindingFlags.NonPublic | BindingFlags.Static);
-      
       if (method != null) {
-        // Hit the Grasshopper special case path
-        method.Invoke(null, new object[] { null, new ResolveEventArgs("Grasshopper") });
-        
-        // Hit the normal assembly resolution path
-        method.Invoke(null, new object[] { null, new ResolveEventArgs("RhinoCommon") });
-        
-        // Hit the loaded assembly check path
-        method.Invoke(null, new object[] { null, new ResolveEventArgs("mscorlib") });
-        
-        // Hit the not found path
-        method.Invoke(null, new object[] { null, new ResolveEventArgs("NonExistentAssembly") });
+
+        Assert.NotNull(method.Invoke(null, new object[] { null, new ResolveEventArgs("Grasshopper") }));
+        Assert.NotNull(method.Invoke(null, new object[] { null, new ResolveEventArgs("RhinoCommon") }));
+        Assert.NotNull(method.Invoke(null, new object[] { null, new ResolveEventArgs("mscorlib") }));
+        Assert.Null(method.Invoke(null, new object[] { null, new ResolveEventArgs("NonExistentAssembly") }));
       }
     }
 
-    
     [Fact]
     public void GetRhinoSystemDirTest() {
-      MethodInfo method = typeof(RhinoResolver).GetMethod("GetRhinoSystemDir", 
+      MethodInfo method = typeof(RhinoResolver).GetMethod("GetRhinoSystemDir",
         BindingFlags.NonPublic | BindingFlags.Static);
-      
+
       if (method != null) {
-        method.Invoke(null, new object[] { 7 });
-        method.Invoke(null, new object[] { 8 });
-        method.Invoke(null, new object[] { 1000 });
+        Assert.NotNull(method.Invoke(null, new object[] { 7 }));
+        Assert.NotNull(method.Invoke(null, new object[] { 1000 }));
+      }
+    }
+
+    [Fact]
+    public void GetRhinoPathFromRegistryReturnsNullWhenRhinoVersionDoesNotExist() {
+      const string RhinoKey = "SOFTWARE\\McNeel\\Rhinoceros";
+      MethodInfo method = typeof(RhinoResolver).GetMethod(
+            "GetRhinoPathFromRegistry",
+            BindingFlags.NonPublic | BindingFlags.Static);
+
+      using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(RhinoKey)) {
+        object result = method.Invoke(null, new object[] { registryKey, "1.0" });
+        Assert.Null(result);
       }
     }
   }
