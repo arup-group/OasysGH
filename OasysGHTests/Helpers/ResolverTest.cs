@@ -6,6 +6,7 @@ using Xunit;
 
 namespace OasysGHTests.Helpers {
   public class ResolverTest {
+    const string RhinoKey = "SOFTWARE\\McNeel\\Rhinoceros";
     [Fact]
     public void ShouldReturnAValidPath() {
       string directory = RhinoResolver.FindRhinoSystemDirectory();
@@ -40,7 +41,7 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void GetSubKeysValidKeyTest() {
-      string[] keys = RhinoResolver.GetSubKeys("SOFTWARE\\McNeel\\Rhinoceros");
+      string[] keys = RhinoResolver.GetSubKeys(RhinoKey);
       Assert.NotNull(keys);
       Assert.True(keys.Length > 0);
       for (int i = 0; i < keys.Length - 1; i++) {
@@ -53,23 +54,20 @@ namespace OasysGHTests.Helpers {
       var args = new ResolveEventArgs("NonExistentAssembly");
       MethodInfo method = typeof(RhinoResolver).GetMethod("ResolveForRhinoAssemblies",
         BindingFlags.NonPublic | BindingFlags.Static);
-
-      if (method != null) {
-        object result = method.Invoke(null, new object[] { null, args });
-        Assert.True(result == null || result is Assembly);
-      }
+      Assert.NotNull(method);
+      object result = method.Invoke(null, new object[] { null, args });
+      Assert.True(result == null || result is Assembly);
     }
 
     [Fact]
     public void GetRhinoPathFromRegistryWithInvalidKeyReturnsNull() {
       MethodInfo method = typeof(RhinoResolver).GetMethod("GetRhinoPathFromRegistry",
         BindingFlags.NonPublic | BindingFlags.Static);
-      if (method != null) {
-        using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\McNeel\\Rhinoceros")) {
-          if (registryKey != null) {
-            string result = method.Invoke(null, new object[] { registryKey, "InvalidVersionKey" }) as string;
-            Assert.Null(result);
-          }
+      Assert.NotNull(method);
+      using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(RhinoKey)) {
+        if (registryKey != null) {
+          string result = method.Invoke(null, new object[] { registryKey, "InvalidVersionKey" }) as string;
+          Assert.Null(result);
         }
       }
     }
@@ -78,29 +76,24 @@ namespace OasysGHTests.Helpers {
     public void ResolveForRhinoAssembliesTest() {
       MethodInfo method = typeof(RhinoResolver).GetMethod("ResolveForRhinoAssemblies",
         BindingFlags.NonPublic | BindingFlags.Static);
-      if (method != null) {
-
-        Assert.NotNull(method.Invoke(null, new object[] { null, new ResolveEventArgs("Grasshopper") }));
-        Assert.NotNull(method.Invoke(null, new object[] { null, new ResolveEventArgs("RhinoCommon") }));
-        Assert.NotNull(method.Invoke(null, new object[] { null, new ResolveEventArgs("mscorlib") }));
-        Assert.Null(method.Invoke(null, new object[] { null, new ResolveEventArgs("NonExistentAssembly") }));
-      }
+      Assert.NotNull(method);
+      Assert.NotNull(method.Invoke(null, new object[] { null, new ResolveEventArgs("Grasshopper") }));
+      Assert.NotNull(method.Invoke(null, new object[] { null, new ResolveEventArgs("RhinoCommon") }));
+      Assert.NotNull(method.Invoke(null, new object[] { null, new ResolveEventArgs("mscorlib") }));
+      Assert.Null(method.Invoke(null, new object[] { null, new ResolveEventArgs("NonExistentAssembly") }));
     }
 
     [Fact]
     public void GetRhinoSystemDirTest() {
       MethodInfo method = typeof(RhinoResolver).GetMethod("GetRhinoSystemDir",
         BindingFlags.NonPublic | BindingFlags.Static);
-
-      if (method != null) {
-        Assert.NotNull(method.Invoke(null, new object[] { 7 }));
-        Assert.NotNull(method.Invoke(null, new object[] { 1000 }));
-      }
+      Assert.NotNull(method);
+      Assert.NotNull(method.Invoke(null, new object[] { 7 }));
+      Assert.NotNull(method.Invoke(null, new object[] { 1000 }));
     }
 
     [Fact]
     public void GetRhinoPathFromRegistryReturnsNullWhenRhinoVersionDoesNotExist() {
-      const string RhinoKey = "SOFTWARE\\McNeel\\Rhinoceros";
       MethodInfo method = typeof(RhinoResolver).GetMethod(
             "GetRhinoPathFromRegistry",
             BindingFlags.NonPublic | BindingFlags.Static);
