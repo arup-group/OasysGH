@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Data.Sqlite;
 
@@ -64,95 +65,38 @@ namespace OasysGH.Helpers {
     /// <param name="profileString"></param>
     /// <returns></returns>
     public List<double> GetCatalogueProfileValues(string profileString, string filePath) {
-      // Create empty lists to work on:
       var values = new List<double>();
 
       using (SqliteConnection db = Connection(filePath)) {
         db.Open();
         SqliteCommand cmd = db.CreateCommand();
-        cmd.CommandText = $"Select " +
-          $"SECT_DEPTH_DIAM || ' -- ' || " +
-          $"SECT_WIDTH || ' -- ' || " +
-          $"SECT_WEB_THICK || ' -- ' || " +
-          $"SECT_FLG_THICK || ' -- ' || " +
-          $"SECT_ROOT_RAD " +
-          $"as SECT_NAME from Sect INNER JOIN Types ON Sect.SECT_TYPE_NUM = Types.TYPE_NUM where SECT_NAME = \"{profileString}\" ORDER BY SECT_DATE_ADDED";
+        cmd.CommandText =
+          $"Select SECT_DEPTH_DIAM || ' -- ' || IFNULL(SECT_WIDTH, '') || ' -- ' || IFNULL(SECT_WEB_THICK, '') || ' -- ' || IFNULL(SECT_FLG_THICK, '') || ' -- ' || IFNULL(SECT_ROOT_RAD, '') as SECT_NAME from Sect INNER JOIN Types ON Sect.SECT_TYPE_NUM = Types.TYPE_NUM where SECT_NAME = \"{profileString}\" ORDER BY SECT_DATE_ADDED;";
         cmd.CommandType = CommandType.Text;
         var data = new List<string>();
         SqliteDataReader r = cmd.ExecuteReader();
         while (r.Read()) {
-          // get data
           string sqlData = Convert.ToString(r["SECT_NAME"]);
-
-          // split text string
-          // example (IPE100): 0.1 --  0.055 -- 0.0041 -- 0.0057 -- 0.007
           data.Add(sqlData);
         }
 
         string[] vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
         r.Close();
-
-        // Welded Sections
-        if (vals.Length <= 1) {
-          cmd = db.CreateCommand();
-          cmd.CommandText = $"Select " +
-            $"SECT_DEPTH_DIAM || ' -- ' || " +
-            $"SECT_WIDTH || ' -- ' || " +
-            $"SECT_WEB_THICK || ' -- ' || " +
-            $"SECT_FLG_THICK " +
-            $"as SECT_NAME from Sect INNER JOIN Types ON Sect.SECT_TYPE_NUM = Types.TYPE_NUM where SECT_NAME = \"{profileString}\" ORDER BY SECT_DATE_ADDED";
-          cmd.CommandType = CommandType.Text;
-          data = new List<string>();
-          r = cmd.ExecuteReader();
-          while (r.Read()) {
-            string sqlData = Convert.ToString(r["SECT_NAME"]);
-            data.Add(sqlData);
-          }
-
-          vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
-          r.Close();
-        }
-
-        // CHS Sections
-        if (vals.Length <= 1) {
-          cmd.CommandText = $"Select " +
-            $"SECT_DEPTH_DIAM || ' -- ' || " +
-            $"SECT_WEB_THICK " +
-            $"as SECT_NAME from Sect INNER JOIN Types ON Sect.SECT_TYPE_NUM = Types.TYPE_NUM where SECT_NAME = \"{profileString}\" ORDER BY SECT_DATE_ADDED";
-          cmd.CommandType = CommandType.Text;
-          data = new List<string>();
-          r = cmd.ExecuteReader();
-          while (r.Read()) {
-            // get data
-            string sqlData = Convert.ToString(r["SECT_NAME"]);
-
-            // split text string
-            // example (CHS457x12.5): 0.457 -- 0.0125
-            data.Add(sqlData);
-          }
-
-          vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
-          r.Close();
-        }
-
         db.Close();
 
         NumberFormatInfo noComma = CultureInfo.InvariantCulture.NumberFormat;
-
-        foreach (string val in vals)
-          if (val != "")
-            values.Add(Convert.ToDouble(val, noComma));
+        values.AddRange(vals.Where(val => val != "").Select(val => Convert.ToDouble(val, noComma)));
       }
 
       return values;
     }
 
     /// <summary>
-    /// Get catalogue data from SQLite file (.db3). The method returns a tuple with:
-    /// Item1 = list of catalogue name (string)
-    /// where first item will be "All"
-    /// Item2 = list of catalogue number (int)
-    /// where first item will be "-1" representing All
+    ///   Get catalogue data from SQLite file (.db3). The method returns a tuple with:
+    ///   Item1 = list of catalogue name (string)
+    ///   where first item will be "All"
+    ///   Item2 = list of catalogue number (int)
+    ///   where first item will be "-1" representing All
     /// </summary>
     /// <param name="filePath">Path to SecLib.db3</param>
     /// <returns></returns>
@@ -202,8 +146,9 @@ namespace OasysGH.Helpers {
         Tuple<List<string>, List<int>> typeData = GetTypesDataFromSQLite(-1, filePath, inclSuperseeded);
         types = typeData.Item2;
         types.RemoveAt(0); // remove -1 from beginning of list
-      } else
+      } else {
         types = type_numbers;
+      }
 
       using (SqliteConnection db = Connection(filePath)) {
         // get section name
@@ -219,7 +164,7 @@ namespace OasysGH.Helpers {
 
           cmd.CommandType = CommandType.Text;
           SqliteDataReader r = cmd.ExecuteReader();
-          while (r.Read()) {
+          while (r.Read())
             if (inclSuperseeded) {
               string full = Convert.ToString(r["SECT_NAME"]);
               // BSI-IPE IPEAA80 -- 2017-09-01 00:00:00.000
@@ -233,7 +178,6 @@ namespace OasysGH.Helpers {
               // BSI-IPE IPEAA80
               sections.Add(profile);
             }
-          }
 
           db.Close();
         }
@@ -268,8 +212,9 @@ namespace OasysGH.Helpers {
         Tuple<List<string>, List<int>> catalogueData = GetCataloguesDataFromSQLite(filePath);
         catNumbers = catalogueData.Item2;
         catNumbers.RemoveAt(0); // remove -1 from beginning of list
-      } else
+      } else {
         catNumbers.Add(catalogue_number);
+      }
 
       using (SqliteConnection db = Connection(filePath)) {
         for (int i = 0; i < catNumbers.Count; i++) {

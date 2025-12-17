@@ -13,6 +13,8 @@ namespace OasysGHTests.Helpers {
     [Theory]
     [InlineData("IPE100", new double[5] { 0.1, 0.055, 0.0041, 0.0057, 0.007 })]
     [InlineData("CHS457x12.5", new double[2] { 0.457, 0.0125 })]
+    [InlineData("RHS100x50x10", new double[2] { 0.457, 0.0125 })]
+    [InlineData("RHS100x50x10.0", new double[2] { 0.457, 0.0125 })]
     public void GetCatalogueProfileValuesTest(string profileString, double[] expectedValues) {
       List<double> values = SqlReader.Instance.GetCatalogueProfileValues(profileString, filePath);
 
