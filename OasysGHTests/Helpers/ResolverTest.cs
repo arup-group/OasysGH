@@ -56,7 +56,7 @@ namespace OasysGHTests.Helpers {
         BindingFlags.NonPublic | BindingFlags.Static);
       Assert.NotNull(method);
       object result = method.Invoke(null, new object[] { null, args });
-      Assert.True(result == null || result is Assembly);
+      Assert.Null(result);
     }
 
     [Fact]
@@ -90,6 +90,7 @@ namespace OasysGHTests.Helpers {
       Assert.NotNull(method);
       Assert.NotNull(method.Invoke(null, new object[] { 7 }));
       Assert.NotNull(method.Invoke(null, new object[] { 1000 }));
+      Assert.NotNull(method.Invoke(null, new object[] { -1 }));
     }
 
     [Fact]

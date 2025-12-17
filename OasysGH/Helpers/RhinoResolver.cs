@@ -30,7 +30,7 @@ public class RhinoResolver {
     var currentAssembly = Assembly.GetExecutingAssembly();
     AssemblyName[] referencedAssemblies = currentAssembly.GetReferencedAssemblies();
     foreach (AssemblyName assemblyName in referencedAssemblies) {
-      if (assemblyName.Name.Equals("RhinoCommon", StringComparison.OrdinalIgnoreCase)||
+      if (assemblyName.Name.Equals("RhinoCommon", StringComparison.OrdinalIgnoreCase) ||
         assemblyName.Name.Equals("Grasshopper", StringComparison.OrdinalIgnoreCase)) {
         if (assemblyName.Version != null) {
           int majorVersion = assemblyName.Version.Major;
@@ -44,65 +44,82 @@ public class RhinoResolver {
   private static Assembly ResolveForRhinoAssemblies(object sender, ResolveEventArgs args) {
     var assemblyName = new AssemblyName(args.Name);
     string name = assemblyName.Name;
+    Assembly assembly;
+    if (TryLoadFromRhinoSystemDirectory(name, out assembly) || TryLoadGrasshopperAssembly(name, out assembly) || TryGetLoadedAssemblyByName(name, out assembly)) {
+      return assembly;
+    }
+    return null;
+  }
 
-    // First try to load from Rhino System directory
+  private static bool TryLoadFromRhinoSystemDirectory(string name, out Assembly assembly) {
+    assembly = null;
     string systemPath = Path.Combine(RhinoSystemDirectory, name + ".dll");
     if (File.Exists(systemPath)) {
-      return Assembly.LoadFrom(systemPath);
+      assembly = Assembly.LoadFrom(systemPath);
+      return true;
     }
+    return false;
+  }
 
-    // Special handling for Grasshopper - try to find it in the Plug-ins folder
+  private static bool TryLoadGrasshopperAssembly(string name, out Assembly assembly) {
+    assembly = null;
     if (name.Equals("Grasshopper", StringComparison.OrdinalIgnoreCase)) {
       string rhinoPath = Path.GetDirectoryName(RhinoSystemDirectory);
       string grasshopperPath = Path.Combine(rhinoPath, "Plug-ins", "Grasshopper", name + ".dll");
       if (File.Exists(grasshopperPath)) {
-        return Assembly.LoadFrom(grasshopperPath);
+        assembly = Assembly.LoadFrom(grasshopperPath);
+        return true;
       }
     }
+    return false;
+  }
 
-    // Try to load from already loaded assemblies that match by name (version-agnostic)
+  private static bool TryGetLoadedAssemblyByName(string name, out Assembly assembly) {
+    assembly = null;
     Assembly[] loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
     foreach (Assembly loadedAssembly in loadedAssemblies) {
       if (loadedAssembly.GetName().Name.Equals(name, StringComparison.OrdinalIgnoreCase)) {
-        return loadedAssembly;
+        assembly = loadedAssembly;
+        return true;
       }
     }
-
-    return null;
+    return false;
   }
 
   private static string GetRhinoSystemDir(int preferredMajorVersion) {
-    string[] subKeyNames = GetSubKeys(RhinoKey);
-
     using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(RhinoKey)) {
-      if (registryKey == null) return null;
-
-      // If preferredMajorVersion is specified, look for that version first
-      if (preferredMajorVersion > 0) {
-        foreach (string keyName in subKeyNames) {
-          if (double.TryParse(keyName, NumberStyles.Any, CultureInfo.InvariantCulture, out double version)) {
-            int majorVersion = (int)Math.Floor(version);
-            if (majorVersion == preferredMajorVersion) {
-              string path = GetRhinoPathFromRegistry(registryKey, keyName);
-              if (!string.IsNullOrEmpty(path)) {
-                return path;
-              }
-            }
-          }
-        }
+      string preferedVersionPath = FindPreferredRhinoVersionPath(preferredMajorVersion, registryKey);
+      if (!string.IsNullOrEmpty(preferedVersionPath)) {
+        return preferedVersionPath;
       }
+      return FindLatestRhinoVersionPath(registryKey);
+    }
+  }
 
-      // Fall back to latest version (highest version number)
-      for (int i = subKeyNames.Length - 1; i >= 0; i--) {
-        if (double.TryParse(subKeyNames[i], NumberStyles.Any, CultureInfo.InvariantCulture, out _)) {
-          string path = GetRhinoPathFromRegistry(registryKey, subKeyNames[i]);
-          if (!string.IsNullOrEmpty(path)) {
-            return path;
+  private static string FindLatestRhinoVersionPath(RegistryKey registryKey) {
+    if (registryKey == null) return null;
+    string[] subKeyNames = GetSubKeys(RhinoKey);
+    for (int i = subKeyNames.Length - 1; i >= 0; i--) {
+      if (double.TryParse(subKeyNames[i], NumberStyles.Any, CultureInfo.InvariantCulture, out _)) {
+        return GetRhinoPathFromRegistry(registryKey, subKeyNames[i]);
+      }
+    }
+    return null;
+  }
+
+  private static string FindPreferredRhinoVersionPath(int preferredMajorVersion, RegistryKey registryKey) {
+    if (registryKey == null) return null;
+    string[] subKeyNames = GetSubKeys(RhinoKey);
+    if (preferredMajorVersion > 0) {
+      foreach (string keyName in subKeyNames) {
+        if (double.TryParse(keyName, NumberStyles.Any, CultureInfo.InvariantCulture, out double version)) {
+          int majorVersion = (int)Math.Floor(version);
+          if (majorVersion == preferredMajorVersion) {
+            return GetRhinoPathFromRegistry(registryKey, keyName);
           }
         }
       }
     }
-
     return null;
   }
 
