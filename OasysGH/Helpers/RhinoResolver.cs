@@ -20,19 +20,17 @@ public class RhinoResolver {
   }
 
   public static string FindRhinoSystemDirectory() {
-    return GetRhinoSystemDir(GetExpectedRhinoPath());
+    return GetRhinoSystemDir(GetRhinoVersion());
   }
 
-  private static int GetExpectedRhinoPath() {
+  private static int GetRhinoVersion() {
     var currentAssembly = Assembly.GetExecutingAssembly();
     AssemblyName[] referencedAssemblies = currentAssembly.GetReferencedAssemblies();
     foreach (AssemblyName assemblyName in referencedAssemblies) {
-      if (assemblyName.Name.Equals("RhinoCommon", StringComparison.OrdinalIgnoreCase) ||
-        assemblyName.Name.Equals("Grasshopper", StringComparison.OrdinalIgnoreCase)) {
-        if (assemblyName.Version != null) {
-          int majorVersion = assemblyName.Version.Major;
-          return majorVersion;
-        }
+      if(assemblyName.Version != null &&(AssemblyNameEquals("RhinoCommon", assemblyName.Name) ||
+         AssemblyNameEquals("Grasshopper", assemblyName.Name))) {
+        int majorVersion = assemblyName.Version.Major;
+        return majorVersion;
       }
     }
     return -1;
@@ -76,7 +74,7 @@ public class RhinoResolver {
     assembly = null;
     Assembly[] loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
     foreach (Assembly loadedAssembly in loadedAssemblies) {
-      if (AssemblyNameEquals(name, loadedAssembly)) {
+      if (AssemblyNameEquals(name, loadedAssembly.GetName().Name)) {
         assembly = loadedAssembly;
         return true;
       }
@@ -84,7 +82,9 @@ public class RhinoResolver {
     return false;
   }
 
-  private static bool AssemblyNameEquals(string name, Assembly loadedAssembly) => loadedAssembly.GetName().Name.Equals(name, StringComparison.OrdinalIgnoreCase);
+  private static bool AssemblyNameEquals(string name, string assemblyName) {
+    return assemblyName.Equals(name, StringComparison.OrdinalIgnoreCase);
+  }
 
   private static string GetRhinoSystemDir(int preferredMajorVersion) {
     using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(RhinoKey)) {
