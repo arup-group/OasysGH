@@ -51,7 +51,7 @@ namespace OasysGHTests {
       AddPluginToGh();
       LoadRefs();
       InitializeCore();
-      // setup headless units
+      InitializeGrasshopperPlugin();
       Utility.SetupUnitsDuringLoad();
     }
 
@@ -92,9 +92,14 @@ namespace OasysGHTests {
       if (disposing) {
         Doc = null;
         DocIo = null;
-        GhPlugin.CloseAllDocuments();
+        if (_ghPlugin != null) {
+          var ghp = _ghPlugin as GH_RhinoScriptInterface;
+          ghp?.CloseAllDocuments();
+        }
         _ghPlugin = null;
-        Core.Dispose();
+        if (_core != null) {
+          Core.Dispose();
+        }
       }
 
       // TODO: free unmanaged resources (unmanaged objects) and override finalizer
@@ -118,8 +123,17 @@ namespace OasysGHTests {
 
     private void InitializeGrasshopperPlugin2() {
       _ghPlugin = RhinoApp.GetPlugInObject("Grasshopper");
-      var ghp = _ghPlugin as GH_RhinoScriptInterface;
-      ghp.RunHeadless();
+      if (_ghPlugin == null) {
+        // Try to load Grasshopper plugin manually
+        var grasshopperGuid = new Guid("b45a29b1-4343-4035-989e-044e8580d9cf");
+        RhinoApp.RunScript("-LoadPlugin " + grasshopperGuid.ToString(), true);
+        _ghPlugin = RhinoApp.GetPlugInObject("Grasshopper");
+      }
+      
+      if (_ghPlugin != null) {
+        var ghp = _ghPlugin as GH_RhinoScriptInterface;
+        ghp?.RunHeadless();
+      }
     }
   }
 

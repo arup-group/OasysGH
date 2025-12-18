@@ -16,6 +16,11 @@ namespace OasysGH.Helpers {
     private static readonly Lazy<SqlReader> lazy = new Lazy<SqlReader>(() => Initialize());
 
     public SqlReader() {
+      try {
+        SQLitePCL.Batteries.Init();
+      }
+      catch {
+      }
     }
 
     public static SqlReader Initialize() {
@@ -25,6 +30,12 @@ namespace OasysGH.Helpers {
 
       try {
         var SQLiteInterop = Assembly.LoadFile(codeBasePath + @"\Microsoft.Data.Sqlite.dll");
+
+        // Try to create a simple connection to test if SQLite is available
+        using (var testConnection = new SqliteConnection("Data Source=:memory:")) {
+          testConnection.Open();
+          testConnection.Close();
+        }
 
         return new SqlReader();
       }
@@ -202,7 +213,8 @@ namespace OasysGH.Helpers {
         Tuple<List<string>, List<int>> typeData = GetTypesDataFromSQLite(-1, filePath, inclSuperseeded);
         types = typeData.Item2;
         types.RemoveAt(0); // remove -1 from beginning of list
-      } else
+      }
+      else
         types = type_numbers;
 
       using (SqliteConnection db = Connection(filePath)) {
@@ -228,7 +240,8 @@ namespace OasysGH.Helpers {
               date = date.Replace("-", "");
               date = date.Substring(0, 8);
               sections.Add(profile + " " + date);
-            } else {
+            }
+            else {
               string profile = Convert.ToString(r["SECT_NAME"]);
               // BSI-IPE IPEAA80
               sections.Add(profile);
@@ -268,7 +281,8 @@ namespace OasysGH.Helpers {
         Tuple<List<string>, List<int>> catalogueData = GetCataloguesDataFromSQLite(filePath);
         catNumbers = catalogueData.Item2;
         catNumbers.RemoveAt(0); // remove -1 from beginning of list
-      } else
+      }
+      else
         catNumbers.Add(catalogue_number);
 
       using (SqliteConnection db = Connection(filePath)) {
