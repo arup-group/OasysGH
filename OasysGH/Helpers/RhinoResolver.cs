@@ -16,9 +16,6 @@ public class RhinoResolver {
   }
 
   public static void Initialize() {
-    if (IntPtr.Size != 8) {
-      throw new Exception("Only 64 bit applications can use Rhino");
-    }
     AppDomain.CurrentDomain.AssemblyResolve += ResolveForRhinoAssemblies;
   }
 
@@ -51,14 +48,18 @@ public class RhinoResolver {
     return null;
   }
 
-  private static bool TryLoadFromRhinoSystemDirectory(string name, out Assembly assembly) {
+  private static bool TryLoadFrom(string path, out Assembly assembly) {
     assembly = null;
-    string systemPath = Path.Combine(RhinoSystemDirectory, name + ".dll");
-    if (File.Exists(systemPath)) {
-      assembly = Assembly.LoadFrom(systemPath);
+    if (File.Exists(path)) {
+      assembly = Assembly.LoadFrom(path);
       return true;
     }
     return false;
+  }
+
+  private static bool TryLoadFromRhinoSystemDirectory(string name, out Assembly assembly) {
+    string systemPath = Path.Combine(RhinoSystemDirectory, name + ".dll");
+    return TryLoadFrom(systemPath, out assembly);
   }
 
   private static bool TryLoadGrasshopperAssembly(string name, out Assembly assembly) {
@@ -66,10 +67,7 @@ public class RhinoResolver {
     if (name.Equals("Grasshopper", StringComparison.OrdinalIgnoreCase)) {
       string rhinoPath = Path.GetDirectoryName(RhinoSystemDirectory);
       string grasshopperPath = Path.Combine(rhinoPath, "Plug-ins", "Grasshopper", name + ".dll");
-      if (File.Exists(grasshopperPath)) {
-        assembly = Assembly.LoadFrom(grasshopperPath);
-        return true;
-      }
+      return TryLoadFrom(grasshopperPath, out assembly);
     }
     return false;
   }
@@ -78,13 +76,15 @@ public class RhinoResolver {
     assembly = null;
     Assembly[] loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
     foreach (Assembly loadedAssembly in loadedAssemblies) {
-      if (loadedAssembly.GetName().Name.Equals(name, StringComparison.OrdinalIgnoreCase)) {
+      if (AssemblyNameEquals(name, loadedAssembly)) {
         assembly = loadedAssembly;
         return true;
       }
     }
     return false;
   }
+
+  private static bool AssemblyNameEquals(string name, Assembly loadedAssembly) => loadedAssembly.GetName().Name.Equals(name, StringComparison.OrdinalIgnoreCase);
 
   private static string GetRhinoSystemDir(int preferredMajorVersion) {
     using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(RhinoKey)) {

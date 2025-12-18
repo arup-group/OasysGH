@@ -34,9 +34,8 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void InitializeTest() {
-      if (IntPtr.Size == 8) {
-        RhinoResolver.Initialize();
-      }
+      RhinoResolver.Initialize();
+      Assert.Contains("Rhino", RhinoResolver.RhinoSystemDirectory);
     }
 
     [Fact]
