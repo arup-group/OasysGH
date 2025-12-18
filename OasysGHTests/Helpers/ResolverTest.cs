@@ -64,10 +64,9 @@ namespace OasysGHTests.Helpers {
         BindingFlags.NonPublic | BindingFlags.Static);
       Assert.NotNull(method);
       using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(RhinoKey)) {
-        if (registryKey != null) {
-          string result = method.Invoke(null, new object[] { registryKey, "InvalidVersionKey" }) as string;
-          Assert.Null(result);
-        }
+        Assert.NotNull(registryKey);
+        string result = method.Invoke(null, new object[] { registryKey, "InvalidVersionKey" }) as string;
+        Assert.Null(result);
       }
     }
 
