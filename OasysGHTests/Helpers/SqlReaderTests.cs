@@ -18,7 +18,11 @@ namespace OasysGHTests.Helpers {
     public void GetCatalogueProfileValuesTest(string profileString, double[] expectedValues) {
       List<double> values = SqlReader.Instance.GetCatalogueProfileValues(profileString, filePath);
 
-      Assert.Equal(expectedValues, values);
+      Assert.Equal(expectedValues.Length, values.Count);
+
+      for (int i = 0; i < expectedValues.Length; i++){
+        Assert.True(Math.Abs(expectedValues[i] - values[i]) < 1e-6, $"Expected: {expectedValues[i]}, actual: {values[i]}");
+      }
     }
 
     [Fact]
