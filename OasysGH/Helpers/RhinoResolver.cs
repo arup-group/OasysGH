@@ -27,7 +27,7 @@ public class RhinoResolver {
     var currentAssembly = Assembly.GetExecutingAssembly();
     AssemblyName[] referencedAssemblies = currentAssembly.GetReferencedAssemblies();
     foreach (AssemblyName assemblyName in referencedAssemblies) {
-      if(assemblyName.Version != null &&(AssemblyNameEquals("RhinoCommon", assemblyName.Name) ||
+      if (assemblyName.Version != null && (AssemblyNameEquals("RhinoCommon", assemblyName.Name) ||
          AssemblyNameEquals("Grasshopper", assemblyName.Name))) {
         int majorVersion = assemblyName.Version.Major;
         return majorVersion;
@@ -62,7 +62,7 @@ public class RhinoResolver {
 
   private static bool TryLoadGrasshopperAssembly(string name, out Assembly assembly) {
     assembly = null;
-    if (name.Equals("Grasshopper", StringComparison.OrdinalIgnoreCase)) {
+    if (AssemblyNameEquals(name, "Grasshopper")) {
       string rhinoPath = Path.GetDirectoryName(RhinoSystemDirectory);
       string grasshopperPath = Path.Combine(rhinoPath, "Plug-ins", "Grasshopper", name + ".dll");
       return TryLoadFrom(grasshopperPath, out assembly);
