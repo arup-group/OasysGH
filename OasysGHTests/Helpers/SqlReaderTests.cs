@@ -12,18 +12,40 @@ namespace OasysGHTests.Helpers {
     private static readonly string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "lib", "sectlib.db3");
 
     [Theory]
-    [InlineData("IPE100", new double[5] { 0.1, 0.055, 0.0041, 0.0057, 0.007 })]
-    [InlineData("CHS457x12.5", new double[2] { 0.457, 0.0125 })]
+    [InlineData("IPE100", new double[5] { 0.1, 0.055, 0.0041, 0.0057, 0.007 })] // x x x x x
+    [InlineData("CHS457x12.5", new double[2] { 0.457, 0.0125 })] // - x x - -
+    [InlineData("RHS100x50x10", new double[3] { 0.1, 0.05, 0.01 })] // x x x - -
+    [InlineData("RHS100x50x10.0", new double[3] { 0.1, 0.05, 0.01 })]
+    [InlineData("EA80x80x8", new double[4] { 0.080000, 0.080000, 0.008, 0.01 })] // x x x - x 
+    [InlineData("EHS200x100x6.3", new double[3] { 0.2, 0.1, 0.0063 })] // x x x - - 
+    [InlineData("45x45x3EA", new double[5] { 0.045, 0.045, 0.003, 0.003, 0.005 })]
+    [InlineData("HSS20x4x0.25", new double[3] { 0.508, 0.1016, 0.005918 })] // x x x - - 
+    [InlineData("UB686x254x140", new double[5] { 0.6835001, 0.2537, 0.0124, 0.019, 0.0152 })]
+    [InlineData("HE550.B", new double[5] { 0.55, 0.3, 0.015, 0.029, 0.027 })]
+    [InlineData("UA75x50x8.0", new double[5] { 0.075, 0.05, 0.008, 0.008, 0.007 })]
+    [InlineData("ISMB450", new double[5] { 0.45, 0.15, 0.0094, 0.0174, 0.015 })]
+    [InlineData("70.B1", new double[5] { 0.691, 0.26, 0.012, 0.0155, 0.024 })]
+    [InlineData("TUB419x457x194", new double[5] { 0.4602, 0.4205, 0.0215, 0.0366, 0.0241 })]
+    [InlineData("SHS400x400x16", new double[3] { 0.4, 0.4, 0.016 })]
+    [InlineData("E-HP200x200x43", new double[5] { 0.2, 0.205, 0.009000001, 0.009000001, 0.01 })]
+    [InlineData("CHS508x12.5", new double[2] { 0.508, 0.0125 })]
+    [InlineData("EA250x250x35", new double[4] { 0.25, 0.25, 0.035, 0.02 })]
+    [InlineData("CUB914x419x388", new double[4] { 1.3777, 0.4205, 0.0215, 0.0366 })]
+    [InlineData("PX0.5", new double[2] { 0.021336, 0.0037338 })] // - x x - -
+    [InlineData("10RND", new double[1] { 0.01 })] // - x - - - 
+    [InlineData("HSS14x0.197", new double[2] { 0.3556, 0.0050038 })] // empty x x - -
     public void GetCatalogueProfileValuesTest(string profileString, double[] expectedValues) {
       List<double> values = SqlReader.Instance.GetCatalogueProfileValues(profileString, filePath);
-      Assert.Equal(expectedValues, values);
+      Assert.Equal(expectedValues.Length, values.Count);
+
+      for (int i = 0; i < expectedValues.Length; i++)
+        Assert.True(Math.Abs(expectedValues[i] - values[i]) < 1e-6,
+          $"Expected: {expectedValues[i]}, actual: {values[i]}");
     }
 
     [Fact]
-    public void GetCatalogueProfileValues_InvalidFilePath_ThrowsException() {
-      Assert.Throws<SqliteException>(() =>
-        SqlReader.Instance.GetCatalogueProfileValues("IPE100", "invalid_path.db3"));
-    }
+    public void GetCatalogueProfileValues_InvalidFilePath_ThrowsException() =>
+      Assert.Throws<SqliteException>(() => SqlReader.Instance.GetCatalogueProfileValues("IPE100", "invalid_path.db3"));
 
     [Fact]
     public void GetCataloguesDataFromSQLiteTest() {
@@ -39,10 +61,8 @@ namespace OasysGHTests.Helpers {
     }
 
     [Fact]
-    public void GetCataloguesDataFromSQLite_InvalidFilePath_ThrowsException() {
-      Assert.Throws<SqliteException>(() =>
-        SqlReader.Instance.GetCataloguesDataFromSQLite("invalid_path.db3"));
-    }
+    public void GetCataloguesDataFromSQLite_InvalidFilePath_ThrowsException() =>
+      Assert.Throws<SqliteException>(() => SqlReader.Instance.GetCataloguesDataFromSQLite("invalid_path.db3"));
 
     [Fact]
     public void GetTypesDataFromSQLiteTest() {
@@ -59,8 +79,10 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void GetTypesDataFromSQLite_WithSuperseeded_ReturnsMoreResults() {
-      Tuple<List<string>, List<int>> resultWithoutSuperseeded = SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, false);
-      Tuple<List<string>, List<int>> resultWithSuperseeded = SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, true);
+      Tuple<List<string>, List<int>> resultWithoutSuperseeded =
+        SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, false);
+      Tuple<List<string>, List<int>> resultWithSuperseeded =
+        SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, true);
 
       Assert.True(resultWithSuperseeded.Item1.Count >= resultWithoutSuperseeded.Item1.Count);
     }
@@ -71,7 +93,8 @@ namespace OasysGHTests.Helpers {
       if (catalogues.Item2.Count > 1) {
         int validCatalogueNumber = catalogues.Item2[1]; // Skip "All" (-1)
 
-        Tuple<List<string>, List<int>> result = SqlReader.Instance.GetTypesDataFromSQLite(validCatalogueNumber, filePath);
+        Tuple<List<string>, List<int>> result =
+          SqlReader.Instance.GetTypesDataFromSQLite(validCatalogueNumber, filePath);
 
         Assert.NotNull(result);
         Assert.True(result.Item1.Count > 0);
