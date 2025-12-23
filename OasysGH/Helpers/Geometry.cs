@@ -69,14 +69,13 @@ namespace OasysGH.Helpers {
 
       List<Polyline> voids = ExtractInnerVoids(mainFace);
 
-      Plane plane = PlaneFromSurface(mainFace);
+      Plane plane = PlaneFromFace(mainFace);
 
       return new BrepPolylineResult(polyline, voids, plane);
     }
 
-    private static Plane PlaneFromSurface(BrepFace mainFace) {
-      Surface surface = mainFace.UnderlyingSurface();
-      surface.TryGetPlane(out Plane plane);
+    private static Plane PlaneFromFace(BrepFace mainFace) {
+      mainFace.TryGetPlane(out Plane plane);
       // planer normal should point upwards
       // for consistent profile creation
       if (plane.Normal.Z < 0) {
