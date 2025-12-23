@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Grasshopper.Kernel.Geometry.Delaunay;
 using Oasys.Taxonomy.Geometry;
 using Oasys.Taxonomy.Profiles;
 using OasysGH.Units;
@@ -9,6 +10,19 @@ using OasysUnits.Units;
 using Rhino.Geometry;
 
 namespace OasysGH.Helpers {
+
+  public readonly struct BrepPolylineResult {
+    public Polyline Boundary { get; }
+    public List<Polyline> Voids { get; }
+    public Plane Plane { get; }
+
+    public BrepPolylineResult(Polyline boundary, List<Polyline> voids, Plane plane) {
+      Boundary = boundary;
+      Voids = voids;
+      Plane = plane;
+    }
+  }
+
   public static class Geometry {
     public static List<IPoint2d> PointsFromRhinoPolyline(Polyline polyline, LengthUnit lengthUnit, Plane local) {
       if (polyline.First() != polyline.Last()) {
@@ -40,6 +54,51 @@ namespace OasysGH.Helpers {
         Points = PointsFromRhinoPolyline(polyline, lengthUnit, local)
       };
       return polygon;
+    }
+
+    public static BrepPolylineResult PolyLineFromBrep(Brep brep) {
+
+      BrepFace mainFace = brep.Faces.OrderByDescending(face => {
+        BoundingBox bbox = face.GetBoundingBox(true);
+        return bbox.Area;
+      }).FirstOrDefault();
+
+      if (!mainFace.OuterLoop.To3dCurve().TryGetPolyline(out Polyline polyline)) {
+        throw new Exception("Cannot extract polyline from Brep surface.");
+      }
+
+      List<Polyline> voids = ExtractInnerVoids(mainFace);
+
+      Plane plane = PlaneFromSurface(mainFace);
+
+      return new BrepPolylineResult(polyline, voids, plane);
+    }
+
+    private static Plane PlaneFromSurface(BrepFace mainFace) {
+      Surface surface = mainFace.UnderlyingSurface();
+      surface.TryGetPlane(out Plane plane);
+      // planer normal should point upwards
+      // for consistent profile creation
+      if (plane.Normal.Z < 0) {
+        plane = new Plane(plane.Origin, -plane.Normal);
+      }
+      return plane;
+    }
+
+    private static List<Polyline> ExtractInnerVoids(BrepFace mainFace) {
+      var voids = new List<Polyline>();
+      foreach (BrepLoop loop in mainFace.Loops) {
+        if (loop.LoopType == BrepLoopType.Inner) {
+          Curve voidCurve = loop.To3dCurve();
+          if (voidCurve.TryGetPolyline(out Polyline voidPolyline)) {
+            voids.Add(voidPolyline);
+          }
+          else {
+            throw new Exception("Cannot extract polyline from Brep inner loop.");
+          }
+        }
+      }
+      return voids;
     }
   }
 }
