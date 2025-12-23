@@ -1,7 +1,19 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
+using Grasshopper.Kernel;
+using Grasshopper.Kernel.Data;
+using Grasshopper.Kernel.Parameters;
+using Grasshopper.Kernel.Types;
+using GsaGHTests.Helpers;
+using Oasys.Taxonomy.Geometry;
+using Oasys.Taxonomy.Profiles;
 using OasysGH.Components.Tests;
+using OasysGH.Helpers;
+using OasysGH.Parameters;
 using OasysGH.UI;
 using OasysGHTests.TestHelpers;
+using OasysUnits.Units;
+using Rhino.Geometry;
 using Xunit;
 
 namespace OasysGHTests.Components {
@@ -73,6 +85,50 @@ namespace OasysGHTests.Components {
       Assert.True(Mouse.TestMouseClick(comp));
       var attributes = (DropDownComponentAttributes)Document.Attributes(comp);
       attributes.CustomRender(new PictureBox().CreateGraphics());
+    }
+
+    [Fact]
+    public void PerimeterProfileExpectedUsingCurve() {
+      var comp = new CreateProfile();
+      comp.SetSelected(0, 13);
+      comp.SetSelected(1, 2);
+      ComponentTestHelper.SetInput(comp, new LineCurve(new Point3d(0, 0, 0), new Point3d(2, 1, 0)));
+      var output = (OasysProfileGoo)ComponentTestHelper.GetOutput(comp);
+      Assert.NotNull(output);
+      Assert.Contains("GEO P(m) M(0|0) L(2|1)", output.ToString());
+    }
+
+    [Fact]
+    public void PerimeterProfileExpectedInXYPlane() {
+      var comp = new CreateProfile();
+      comp.SetSelected(0, 13);
+      comp.SetSelected(1, 2);
+
+      var rectangle = new Rectangle3d(Plane.WorldXY, 2.0, 1.0);
+      rectangle.ToPolyline().ToPolylineCurve();
+      Brep brep = ComponentTestHelper.CreatePlanarBrep(rectangle.ToNurbsCurve());
+
+      ComponentTestHelper.SetInput(comp, brep);
+
+      var output = (OasysProfileGoo)ComponentTestHelper.GetOutput(comp);
+      Assert.NotNull(output);
+      Assert.Contains("GEO P(m) M(0|0) L(2|0) L(2|1) L(0|1)", output.ToString());
+    }
+
+    [Fact]
+    public void PerimeterProfileExpectedInInclinedPlane() {
+      var comp = new CreateProfile();
+      comp.SetSelected(0, 13);
+      comp.SetSelected(1, 2);
+
+      var inclinedPlane = new Plane(Point3d.Origin, Vector3d.XAxis, new Vector3d(0, 0.707, 0.707));
+      var rectangle = new Rectangle3d(inclinedPlane, 2.0, 1.0);
+      Brep brep = ComponentTestHelper.CreatePlanarBrep(rectangle.ToNurbsCurve());
+      ComponentTestHelper.SetInput(comp, brep);
+
+      var output = (OasysProfileGoo)ComponentTestHelper.GetOutput(comp);
+      Assert.NotNull(output);
+      Assert.Contains("GEO P(m) M(0|0) L(2|0) L(2|1) L(0|1)", output.ToString());
     }
   }
 }
