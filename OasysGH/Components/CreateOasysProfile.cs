@@ -20,6 +20,8 @@ using Rhino.Geometry;
 
 namespace OasysGH.Components {
   public abstract class CreateOasysProfile : GH_OasysDropDownComponent {
+
+    public Plane PerimeterProfilePlane = Plane.WorldYZ;
     protected enum FoldMode {
       Catalogue,
       Other
@@ -1294,13 +1296,14 @@ namespace OasysGH.Components {
             }
 
             profile = new PerimeterProfile(perimeter, voidPolygons);
+            PerimeterProfilePlane = brepInfo.Plane;
           }
           else if (GH_Convert.ToCurve(gh_typ.Value, ref crv, GH_Conversion.Both)) {
             if (crv.TryGetPolyline(out Polyline solid)) {
               // get local plane
-              Plane.FitPlaneToPoints(solid.ToList(), out Plane plane);
+              Plane.FitPlaneToPoints(solid.ToList(), out PerimeterProfilePlane);
 
-              IPolygon perimeter = Geometry.PolygonFromRhinoPolyline(solid, _lengthUnit, plane);
+              IPolygon perimeter = Geometry.PolygonFromRhinoPolyline(solid, _lengthUnit, PerimeterProfilePlane);
               IList<IPolygon> voidPolygons = new List<IPolygon>();
 
               profile = new PerimeterProfile(perimeter, voidPolygons);

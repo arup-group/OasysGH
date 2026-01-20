@@ -95,6 +95,7 @@ namespace OasysGHTests.Components {
       ComponentTestHelper.SetInput(comp, new LineCurve(new Point3d(0, 0, 0), new Point3d(2, 1, 0)));
       var output = (OasysProfileGoo)ComponentTestHelper.GetOutput(comp);
       Assert.NotNull(output);
+      Assert.Equal(comp.PerimeterProfilePlane, Plane.WorldXY);
       Assert.Contains("GEO P(m) M(0|0) L(2|1)", output.ToString());
     }
 
@@ -112,6 +113,7 @@ namespace OasysGHTests.Components {
 
       var output = (OasysProfileGoo)ComponentTestHelper.GetOutput(comp);
       Assert.NotNull(output);
+      Assert.Equal(comp.PerimeterProfilePlane, Plane.WorldXY);
       Assert.Contains("GEO P(m) M(0|0) L(2|0) L(2|1) L(0|1)", output.ToString());
     }
 
