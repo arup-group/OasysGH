@@ -16,7 +16,6 @@ using Rhino.Geometry;
 using Rhino.NodeInCode;
 using Xunit;
 using System.Linq;
-using OasysGH;
 
 namespace GH_UnitNumberTests.Components {
   [Collection("GrasshopperFixture collection")]
