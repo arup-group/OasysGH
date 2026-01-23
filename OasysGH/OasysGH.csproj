@@ -71,16 +71,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="RhinoCommon" Version="7.38.24338.17001" />
     <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
-    <PackageReference Include="Grasshopper" Version="7.0.20314.3001" IncludeAssets="compile; build">
+    <PackageReference Include="Grasshopper" Version="7.38.24338.17001" IncludeAssets="compile; build">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.3" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.4" />
-    <PackageReference Include="RhinoCommon" Version="7.0.20314.3001">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>compile; build</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OasysUnits" Version="1.2.1" />
      <PackageReference Include="OasysUnits.Serialization.JsonNet" Version="1.2.1" />
