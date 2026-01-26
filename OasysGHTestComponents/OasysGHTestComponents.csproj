@@ -5,7 +5,7 @@
     <Platforms>x64</Platforms>
     <Title>OasysGHTestComponents</Title>
     <Company>Oasys</Company>
-    <Copyright>Copyright © Oasys 2024</Copyright>
+    <Copyright>Copyright © Oasys 2026</Copyright>
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -22,16 +22,10 @@
     <StartAction>Program</StartAction>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
+    <PackageReference Include="Grasshopper" Version="7.38.24338.17001" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Grasshopper" Version="7.0.20314.3001" IncludeAssets="compile; build">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="RhinoCommon" Version="7.0.20314.3001">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>compile; build</IncludeAssets>
-    </PackageReference>
+    <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Oasys.Taxonomy.IProfiles">
