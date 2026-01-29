@@ -20,12 +20,15 @@ namespace OasysGH.Versions {
     }
 
     internal static void CheckAndShowDialogue() {
+      bool enableFeature = false;
+      if (!enableFeature) {
+        return;
+      }
       bool isAdSecOutdated = Versions.IsPluginOutdated(Versions.AdSecGuid);
       bool isComposOutdated = Versions.IsPluginOutdated(Versions.ComposGuid);
       bool isGsaOutdated = Versions.IsPluginOutdated(Versions.GsaGuid);
       if (RhinoApp.IsRunningHeadless || (!isAdSecOutdated && !isComposOutdated && !isGsaOutdated))
         return;
-
       CreatePluginUpdateDialogue(isAdSecOutdated, isComposOutdated, isGsaOutdated).ShowDialog();
     }
 
