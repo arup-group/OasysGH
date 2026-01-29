@@ -20,8 +20,6 @@ namespace OasysGH {
               // do nothing.
             }
           }
-
-          Grasshopper.Instances.CanvasCreated += UpdateDependentPlugins.OnStartup;
         }
       }
     }
