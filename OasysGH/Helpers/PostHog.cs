@@ -5,7 +5,6 @@ using System.Text;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Grasshopper.Kernel;
 using Newtonsoft.Json;
