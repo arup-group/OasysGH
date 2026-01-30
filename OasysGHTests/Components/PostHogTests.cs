@@ -28,7 +28,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public void Sha256_ShouldReturnConsistentHash() {
+    public void Sha256ConsistentHashTest() {
       // Arrange
       string input = "test@example.com";
 
@@ -41,7 +41,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public void Sha256_ShouldReturnExpectedHashForKnownInput() {
+    public void Sha256ExpectedHashForKnownInputTest() {
       // Arrange
       string input = "test@example.com";
       // Expected SHA256 hash for "test@example.com" in lowercase hex
@@ -55,7 +55,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public void Sha256_ShouldReturnDifferentHashesForDifferentInputs() {
+    public void Sha256DifferentHashesForDifferentInputsTest() {
       // Arrange
       string input1 = "user1@example.com";
       string input2 = "user2@example.com";
@@ -69,7 +69,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public void Sha256_ShouldReturnLowercaseHexString() {
+    public void Sha256LowercaseHexFormatTest() {
       // Arrange
       string input = "TEST@EXAMPLE.COM";
 
@@ -82,19 +82,7 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
-    public void Sha256_ShouldReturn64CharacterHash() {
-      // Arrange
-      string input = "anystring";
-
-      // Act
-      string hash = User.Sha256(input);
-
-      // Assert
-      Assert.Equal(64, hash.Length);
-    }
-
-    [Fact]
-    public void Sha256_ShouldHandleEmptyString() {
+    public void Sha256HandlesEmptyStringTest() {
       // Arrange
       string input = "";
       // Expected SHA256 hash for empty string
