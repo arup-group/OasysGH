@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Security.Cryptography;
+using System.Text;
+
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Grasshopper.Kernel;
 using Newtonsoft.Json;
@@ -122,6 +124,21 @@ namespace OasysGH.Helpers {
     public string Email { get; set; }
     public string UserName { get; set; }
 
+    internal static string Sha256(string input)
+    {
+      using (var sha = SHA256.Create())
+      {
+        byte[] bytes = Encoding.UTF8.GetBytes(input);
+        byte[] hash = sha.ComputeHash(bytes);
+
+        var sb = new StringBuilder(hash.Length * 2);
+        foreach (byte b in hash)
+          sb.Append(b.ToString("x2")); // lowercase hex
+
+        return sb.ToString();
+      }
+    }
+
     internal User() {
       UserName = Environment.UserName.ToLower();
       try {
@@ -130,8 +147,8 @@ namespace OasysGH.Helpers {
           if (task.Result.EndsWith("arup.com"))
             Email = task.Result;
           else {
-            Email = task.Result.GetHashCode().ToString();
-            UserName = UserName.GetHashCode().ToString();
+            Email = Sha256(task.Result);
+            UserName = Sha256(UserName);
           }
 
           return;
@@ -141,7 +158,7 @@ namespace OasysGH.Helpers {
       if (Environment.UserDomainName.ToLower() == "global") {
         Email = UserName + "@arup.com";
       } else {
-        UserName = UserName.GetHashCode().ToString();
+        UserName = Sha256(UserName);
       }
     }
   }
