@@ -124,7 +124,7 @@ namespace OasysGH.Helpers {
     public string Email { get; set; }
     public string UserName { get; set; }
 
-    static string Sha256(string input)
+    internal static string Sha256(string input)
     {
       using (var sha = SHA256.Create())
       {
