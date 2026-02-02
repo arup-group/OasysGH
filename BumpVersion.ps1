@@ -32,20 +32,20 @@ function Update-Version {
     param (
         [string]$filePath,
         [string]$searchPattern,
-        [string]$newVersion,
         [string]$replacementPattern
     )
 
     # Read the content of the file
-    $content = Get-Content $filePath
+    $content = Get-Content $filePath -Encoding UTF8
 
     # Replace the version based on the provided pattern and replacement
-    $updatedContent = $content -replace $searchPattern, $replacementPattern
+    $updated = $content -replace $searchPattern, $replacementPattern
+    $updated = $updated -replace "`r`n", "`n"
 
     # Write the updated content back to the file
-    Set-Content $filePath -Value $updatedContent
+    Set-Content $filePath -Value $updated -Encoding UTF8 -Force
 
-    Write-Host "Updated version in $filePath to $newVersion"
+    Write-Host "Updated file '$filePath' using pattern '$searchPattern' to '$replacementPattern'"
 }
 
 # Check if the version format is valid
@@ -53,6 +53,8 @@ if (-not (Validate-VersionFormat $newVersion)) {
     Write-Host "Invalid version format. Please use the format: X.X.X where X is a number."
     exit
 }
+
+$currentYear = (Get-Date).Year
 
 # Define the paths and patterns for each file
 $filesToUpdate = @(
@@ -70,12 +72,43 @@ $filesToUpdate = @(
         FilePath = ".\OasysGH\OasysPluginInfo.cs"
         SearchPattern = 'Version = "(.*?)"'
         ReplacementPattern = 'Version = "' + $newVersion + '"'
+    },
+	# Year updates
+    @{
+        FilePath = ".\GH_UnitNumber\GH_UnitNumber.csproj"
+        SearchPattern = 'Oasys \d{4}'
+        ReplacementPattern = "Oasys $currentYear"
+    },
+    @{
+        FilePath = ".\GH_UnitNumber\GH_UnitNumberInfo.cs"
+        SearchPattern = ' 1985 - \d{4}'
+        ReplacementPattern = " 1985 - $currentYear"
+    },
+    @{
+        FilePath = ".\GH_UnitNumber\LICENSE"
+        SearchPattern = '2020-\d{4} Oasys'
+        ReplacementPattern = "2020-$currentYear Oasys"
+    },
+    @{
+        FilePath = ".\OasysGH\LICENSE"
+        SearchPattern = '2020-\d{4} Oasys'
+        ReplacementPattern = "2020-$currentYear Oasys"
+    },
+    @{
+        FilePath = ".\OasysGH\OasysGH.csproj"
+        SearchPattern = 'Oasys \d{4}'
+        ReplacementPattern = "Oasys $currentYear"
+    },
+    @{
+        FilePath = ".\OasysGHTestComponents\OasysGHTestComponents.csproj"
+        SearchPattern = ' Oasys \d{4}'
+        ReplacementPattern = " Oasys $currentYear"
     }
 )
 
 # Loop through each file and update the version
 foreach ($file in $filesToUpdate) {
-    Update-Version -filePath $file.FilePath -searchPattern $file.SearchPattern -newVersion $newVersion -replacementPattern $file.ReplacementPattern
+    Update-Version -filePath $file.FilePath -searchPattern $file.SearchPattern -replacementPattern $file.ReplacementPattern
 }
 
 Write-Host "Version update completed."
