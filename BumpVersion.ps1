@@ -32,20 +32,20 @@ function Update-Version {
     param (
         [string]$filePath,
         [string]$searchPattern,
+        [string]$newVersion,
         [string]$replacementPattern
     )
 
     # Read the content of the file
-    $content = Get-Content $filePath -Encoding UTF8
+    $content = Get-Content $filePath
 
     # Replace the version based on the provided pattern and replacement
-    $updated = $content -replace $searchPattern, $replacementPattern
-    $updated = $updated -replace "`r`n", "`n"
+    $updatedContent = $content -replace $searchPattern, $replacementPattern
 
     # Write the updated content back to the file
-    Set-Content $filePath -Value $updated -Encoding UTF8 -Force
+    Set-Content $filePath -Value $updatedContent
 
-    Write-Host "Updated file '$filePath' using pattern '$searchPattern' to '$replacementPattern'"
+    Write-Host "Updated value in $filePath. From $searchPattern to $replacementPattern"
 }
 
 # Check if the version format is valid
@@ -73,16 +73,20 @@ $filesToUpdate = @(
         SearchPattern = 'Version = "(.*?)"'
         ReplacementPattern = 'Version = "' + $newVersion + '"'
     },
-	# Year updates
     @{
-        FilePath = ".\GH_UnitNumber\GH_UnitNumber.csproj"
-        SearchPattern = 'Oasys \d{4}'
-        ReplacementPattern = "Oasys $currentYear"
+      FilePath = ".\GH_UnitNumber\GH_UnitNumber.csproj"
+      SearchPattern = "Oasys \d{4}"
+      ReplacementPattern = "Oasys $currentYear"
     },
     @{
         FilePath = ".\GH_UnitNumber\GH_UnitNumberInfo.cs"
         SearchPattern = ' 1985 - \d{4}'
         ReplacementPattern = " 1985 - $currentYear"
+    },
+    @{
+        FilePath = ".\LICENSE"
+        SearchPattern = '\d{4} Oasys'
+        ReplacementPattern = "$currentYear Oasys"
     },
     @{
         FilePath = ".\GH_UnitNumber\LICENSE"
@@ -108,8 +112,7 @@ $filesToUpdate = @(
 
 # Loop through each file and update the version
 foreach ($file in $filesToUpdate) {
-    Update-Version -filePath $file.FilePath -searchPattern $file.SearchPattern -replacementPattern $file.ReplacementPattern
+    Update-Version -filePath $file.FilePath -searchPattern $file.SearchPattern -newVersion $newVersion -replacementPattern $file.ReplacementPattern
 }
 
 Write-Host "Version update completed."
-
