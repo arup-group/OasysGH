@@ -45,7 +45,7 @@ function Update-Version {
     # Write the updated content back to the file
     Set-Content $filePath -Value $updatedContent
 
-    Write-Host "Updated version in $filePath to $newVersion"
+    Write-Host "Updated value in $filePath. From $searchPattern to $replacementPattern"
 }
 
 # Check if the version format is valid
@@ -53,6 +53,8 @@ if (-not (Validate-VersionFormat $newVersion)) {
     Write-Host "Invalid version format. Please use the format: X.X.X where X is a number."
     exit
 }
+
+$currentYear = (Get-Date).Year
 
 # Define the paths and patterns for each file
 $filesToUpdate = @(
@@ -70,6 +72,41 @@ $filesToUpdate = @(
         FilePath = ".\OasysGH\OasysPluginInfo.cs"
         SearchPattern = 'Version = "(.*?)"'
         ReplacementPattern = 'Version = "' + $newVersion + '"'
+    },
+    @{
+      FilePath = ".\GH_UnitNumber\GH_UnitNumber.csproj"
+      SearchPattern = "Oasys \d{4}"
+      ReplacementPattern = "Oasys $currentYear"
+    },
+    @{
+        FilePath = ".\GH_UnitNumber\GH_UnitNumberInfo.cs"
+        SearchPattern = ' 1985 - \d{4}'
+        ReplacementPattern = " 1985 - $currentYear"
+    },
+    @{
+        FilePath = ".\LICENSE"
+        SearchPattern = '\d{4} Oasys'
+        ReplacementPattern = "$currentYear Oasys"
+    },
+    @{
+        FilePath = ".\GH_UnitNumber\LICENSE"
+        SearchPattern = '2020-\d{4} Oasys'
+        ReplacementPattern = "2020-$currentYear Oasys"
+    },
+    @{
+        FilePath = ".\OasysGH\LICENSE"
+        SearchPattern = '2020-\d{4} Oasys'
+        ReplacementPattern = "2020-$currentYear Oasys"
+    },
+    @{
+        FilePath = ".\OasysGH\OasysGH.csproj"
+        SearchPattern = 'Oasys \d{4}'
+        ReplacementPattern = "Oasys $currentYear"
+    },
+    @{
+        FilePath = ".\OasysGHTestComponents\OasysGHTestComponents.csproj"
+        SearchPattern = ' Oasys \d{4}'
+        ReplacementPattern = " Oasys $currentYear"
     }
 )
 
@@ -79,4 +116,3 @@ foreach ($file in $filesToUpdate) {
 }
 
 Write-Host "Version update completed."
-
