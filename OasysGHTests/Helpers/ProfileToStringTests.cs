@@ -1,3 +1,4 @@
+using System;
 using Oasys.Taxonomy.Profiles;
 using OasysGH.Helpers;
 using OasysUnits;
@@ -110,6 +111,75 @@ namespace OasysGHTests.Helpers {
     public void CatalogueProfileRoundTrip(string profileString) {
       IProfile profile = ProfileHelper.ProfileFromString(profileString);
       Assert.NotNull(profile);
+    }
+
+    [Theory]
+    // GSA-style strings without an embedded unit — fallback unit supplied as LengthUnit
+    [InlineData("GSA Section (PB1 STD CB 600 200 16 40 400 800 Steel)", "STD CB(mm) 600 200 16 40 400 800")]
+    [InlineData("GSA Section (PB2 STD R 1500 500 Concrete)", "STD R(mm) 1500 500")]
+    [InlineData("GSA Section (PB3 STD R 2500 500 Concrete)", "STD R(mm) 2500 500")]
+    [InlineData("GSA Section (PB4 STD R 1500 2000 Concrete)", "STD R(mm) 1500 2000")]
+    [InlineData("GSA Section (PB5 STD R 150 900 Concrete)", "STD R(mm) 150 900")]
+    public void UnitLessGsaProfileWithFallbackUnit(string fullDescription, string expectedProfileString) {
+      IProfile profile = ProfileHelper.ProfileFromString(fullDescription, OasysUnits.Units.LengthUnit.Millimeter);
+      Assert.NotNull(profile);
+      Assert.Equal(expectedProfileString, profile.ToString());
+    }
+
+    [Theory]
+    // Same as above but fallback unit supplied as string
+    [InlineData("STD R 2500 500", "mm", "STD R(mm) 2500 500")]
+    [InlineData("STD R 2500 500", "millimeter", "STD R(mm) 2500 500")]
+    [InlineData("STD R 2500 500", "Millimeters", "STD R(mm) 2500 500")]
+    [InlineData("STD R 0.5 0.1", "m", "STD R(m) 0.5 0.1")]
+    [InlineData("STD R 0.5 0.1", "meter", "STD R(m) 0.5 0.1")]
+    [InlineData("STD R 0.5 0.1", "Meters", "STD R(m) 0.5 0.1")]
+    [InlineData("STD R 50 10", "cm", "STD R(cm) 50 10")]
+    [InlineData("STD R 50 10", "centimeter", "STD R(cm) 50 10")]
+    [InlineData("STD R 50 10", "Centimeters", "STD R(cm) 50 10")]
+    public void UnitLessProfileWithStringFallbackUnit(string profileStr, string unitName, string expectedProfileString) {
+      IProfile profile = ProfileHelper.ProfileFromString(profileStr, unitName);
+      Assert.NotNull(profile);
+      Assert.Equal(expectedProfileString, profile.ToString());
+    }
+
+    [Theory]
+    [InlineData("STD R 2500 500")]
+    public void UnitLessProfileWithoutFallbackThrows(string profileStr) {
+      Assert.Throws<FormatException>(() => ProfileHelper.ProfileFromString(profileStr));
+    }
+  }
+
+  public class ParseLengthUnitTests {
+    [Theory]
+    [InlineData("m", LengthUnit.Meter)]
+    [InlineData("meter", LengthUnit.Meter)]
+    [InlineData("meters", LengthUnit.Meter)]
+    [InlineData("Meter", LengthUnit.Meter)]
+    [InlineData("cm", LengthUnit.Centimeter)]
+    [InlineData("centimeter", LengthUnit.Centimeter)]
+    [InlineData("centimeters", LengthUnit.Centimeter)]
+    [InlineData("Centimeters", LengthUnit.Centimeter)]
+    [InlineData("mm", LengthUnit.Millimeter)]
+    [InlineData("millimeter", LengthUnit.Millimeter)]
+    [InlineData("millimeters", LengthUnit.Millimeter)]
+    [InlineData("Millimeters", LengthUnit.Millimeter)]
+    [InlineData("in", LengthUnit.Inch)]
+    [InlineData("inch", LengthUnit.Inch)]
+    [InlineData("inches", LengthUnit.Inch)]
+    [InlineData("ft", LengthUnit.Foot)]
+    [InlineData("foot", LengthUnit.Foot)]
+    [InlineData("feet", LengthUnit.Foot)]
+    public void KnownUnitsParsedCorrectly(string unitName, LengthUnit expected) {
+      Assert.Equal(expected, ProfileHelper.ParseLengthUnit(unitName));
+    }
+
+    [Theory]
+    [InlineData("km")]
+    [InlineData("parsec")]
+    [InlineData("")]
+    public void UnknownUnitThrows(string unitName) {
+      Assert.Throws<FormatException>(() => ProfileHelper.ParseLengthUnit(unitName));
     }
   }
 }
