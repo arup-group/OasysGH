@@ -11,6 +11,41 @@ namespace OasysGH.Helpers {
   /// </summary>
   public static class ProfileHelper {
     /// <summary>
+    /// Parses a length unit from a string, accepting both abbreviations and full names
+    /// (case-insensitive). For example, "cm", "centimeter" and "Centimeters" all return
+    /// <see cref="LengthUnit.Centimeter"/>.
+    /// </summary>
+    /// <param name="unitName">The unit abbreviation or full name to parse.</param>
+    /// <returns>The corresponding <see cref="LengthUnit"/>.</returns>
+    /// <exception cref="FormatException">Thrown when the unit name is not recognised.</exception>
+    public static LengthUnit ParseLengthUnit(string unitName) {
+      switch (unitName?.Trim().ToLowerInvariant()) {
+        case "m":
+        case "meter":
+        case "meters":
+          return LengthUnit.Meter;
+        case "cm":
+        case "centimeter":
+        case "centimeters":
+          return LengthUnit.Centimeter;
+        case "mm":
+        case "millimeter":
+        case "millimeters":
+          return LengthUnit.Millimeter;
+        case "in":
+        case "inch":
+        case "inches":
+          return LengthUnit.Inch;
+        case "ft":
+        case "foot":
+        case "feet":
+          return LengthUnit.Foot;
+        default:
+          throw new FormatException($"Unknown length unit: '{unitName}'");
+      }
+    }
+
+    /// <summary>
     /// Creates an IProfile from a profile description string.
     /// Accepts the standard IProfile.ToString() format ("STD R(m) 0.3 0.3"),
     /// catalogue format ("CAT HE HE200.B"), and strings that contain an
@@ -18,11 +53,16 @@ namespace OasysGH.Helpers {
     /// Perimeter (GEO) profiles are not supported.
     /// </summary>
     /// <param name="description">Profile description string.</param>
+    /// <param name="fallbackUnit">
+    /// Optional unit to use when the profile string does not contain an explicit unit
+    /// (e.g. "STD R 2500 500"). When <c>null</c> (the default) the unit must be present
+    /// in the string, e.g. "STD R(mm) 2500 500".
+    /// </param>
     /// <returns>An IProfile corresponding to the description.</returns>
     /// <exception cref="ArgumentException">Thrown when description is null or empty.</exception>
     /// <exception cref="FormatException">Thrown when the string cannot be parsed.</exception>
     /// <exception cref="NotSupportedException">Thrown for GEO (perimeter) profiles.</exception>
-    public static IProfile ProfileFromString(string description) {
+    public static IProfile ProfileFromString(string description, LengthUnit? fallbackUnit = null) {
       if (string.IsNullOrWhiteSpace(description))
         throw new ArgumentException("Profile description cannot be null or empty.", nameof(description));
 
@@ -35,9 +75,24 @@ namespace OasysGH.Helpers {
         throw new NotSupportedException("Perimeter (GEO) profiles cannot be reconstructed from a string.");
 
       if (profileStr.StartsWith("STD ", StringComparison.OrdinalIgnoreCase))
-        return ParseStdProfile(profileStr);
+        return ParseStdProfile(profileStr, fallbackUnit);
 
       throw new FormatException($"Unrecognised profile description: \"{description}\"");
+    }
+
+    /// <summary>
+    /// Creates an IProfile from a profile description string using a unit specified as a string.
+    /// The unit name is parsed with <see cref="ParseLengthUnit"/>, which accepts abbreviations
+    /// and full names (case-insensitive), e.g. "mm", "millimeter", "Millimeters".
+    /// </summary>
+    /// <param name="description">Profile description string.</param>
+    /// <param name="fallbackUnit">
+    /// Unit name to use when the profile string does not contain an explicit unit.
+    /// Accepts abbreviations and full names, e.g. "mm", "millimeter", "Millimeters".
+    /// </param>
+    /// <returns>An IProfile corresponding to the description.</returns>
+    public static IProfile ProfileFromString(string description, string fallbackUnit) {
+      return ProfileFromString(description, ParseLengthUnit(fallbackUnit));
     }
 
     private static string ExtractProfileString(string input) {
@@ -49,29 +104,33 @@ namespace OasysGH.Helpers {
       return input.Trim();
     }
 
-    private static LengthUnit ParseUnit(string abbrev) {
-      switch (abbrev.ToLowerInvariant()) {
-        case "m": return LengthUnit.Meter;
-        case "cm": return LengthUnit.Centimeter;
-        case "mm": return LengthUnit.Millimeter;
-        case "in": return LengthUnit.Inch;
-        case "ft": return LengthUnit.Foot;
-        default: throw new FormatException($"Unknown length unit abbreviation: '{abbrev}'");
-      }
-    }
-
-    private static IProfile ParseStdProfile(string profileStr) {
-      // Format: STD {type}({unit}) {val1} {val2} ...
+    private static IProfile ParseStdProfile(string profileStr, LengthUnit? fallbackUnit) {
+      // Format with explicit unit:    STD {type}({unit}) {val1} {val2} ...
+      // Format without explicit unit: STD {type} {val1} {val2} ...  (requires fallbackUnit)
       var match = Regex.Match(profileStr,
         @"^STD\s+(\w+)\((\w+)\)\s+(.+)$",
         RegexOptions.IgnoreCase);
 
-      if (!match.Success)
-        throw new FormatException($"Could not parse STD profile string: \"{profileStr}\"");
+      LengthUnit unit;
+      string valuesStr;
+      if (match.Success) {
+        unit = ParseLengthUnit(match.Groups[2].Value);
+        valuesStr = match.Groups[3].Value;
+      } else {
+        var matchNoUnit = Regex.Match(profileStr,
+          @"^STD\s+(\w+)\s+(.+)$",
+          RegexOptions.IgnoreCase);
+        if (!matchNoUnit.Success || fallbackUnit == null)
+          throw new FormatException($"Could not parse STD profile string: \"{profileStr}\". " +
+            "If the string has no unit, supply a fallbackUnit.");
+        unit = fallbackUnit.Value;
+        valuesStr = matchNoUnit.Groups[2].Value;
+        // rewrite match groups to reuse typeAbbrev extraction below
+        match = matchNoUnit;
+      }
 
       string typeAbbrev = match.Groups[1].Value.ToUpperInvariant();
-      LengthUnit unit = ParseUnit(match.Groups[2].Value);
-      string[] parts = match.Groups[3].Value
+      string[] parts = valuesStr
         .Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
       Length L(int i) => new Length(
