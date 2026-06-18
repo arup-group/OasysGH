@@ -100,6 +100,17 @@ namespace OasysGHTests.Components {
     }
 
     [Fact]
+    public void PrifileDidNotFindInSearchWillReported() {
+      var comp = new CreateProfile();
+      comp.SetSelected(0, 1);
+      ComponentTestHelper.SetInput(comp,"W44x335s");
+      var output = (OasysProfileGoo)ComponentTestHelper.GetOutput(comp);
+      Assert.NotNull(output);
+      Assert.Contains("CAT profile not found", output.ToString());
+      Assert.Single(comp.RuntimeMessages(Grasshopper.Kernel.GH_RuntimeMessageLevel.Warning));
+    }
+
+    [Fact]
     public void PerimeterProfileExpectedInXYPlane() {
       var comp = new CreateProfile();
       comp.SetSelected(0, 13);
