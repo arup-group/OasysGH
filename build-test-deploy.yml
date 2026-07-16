@@ -5,7 +5,7 @@ trigger:
 
 variables:
   - group: s3PushInstallers
-  - group: grasshopper-public-repos
+  - group: pipeline-tokens
   - name: configuration
     value: Release
 
