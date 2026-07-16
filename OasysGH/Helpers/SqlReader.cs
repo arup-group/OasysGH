@@ -81,19 +81,29 @@ namespace OasysGH.Helpers {
       using (SqliteConnection db = Connection(filePath)) {
         db.Open();
         SqliteCommand cmd = db.CreateCommand();
+
         cmd.CommandText =
-          $"Select SECT_DEPTH_DIAM || ' -- ' || IFNULL(SECT_WIDTH, '') || ' -- ' || IFNULL(SECT_WEB_THICK, '') || ' -- ' || IFNULL(SECT_FLG_THICK, '') || ' -- ' || IFNULL(SECT_ROOT_RAD, '') as SECT_NAME from Sect INNER JOIN Types ON Sect.SECT_TYPE_NUM = Types.TYPE_NUM where SECT_NAME = \"{profileString}\" ORDER BY SECT_DATE_ADDED;";
+          "Select SECT_DEPTH_DIAM || ' -- ' || IFNULL(SECT_WIDTH, '') || ' -- ' || IFNULL(SECT_WEB_THICK, '') || ' -- ' || IFNULL(SECT_FLG_THICK, '') || ' -- ' || IFNULL(SECT_ROOT_RAD, '') as SECT_NAME from Sect INNER JOIN Types ON Sect.SECT_TYPE_NUM = Types.TYPE_NUM where SECT_NAME = @profile ORDER BY SECT_DATE_ADDED;";
+
         cmd.CommandType = CommandType.Text;
+
+        cmd.Parameters.AddWithValue("@profile", profileString);
+
         var data = new List<string>();
-        SqliteDataReader r = cmd.ExecuteReader();
-        while (r.Read()) {
-          string sqlData = Convert.ToString(r["SECT_NAME"]);
-          data.Add(sqlData);
+
+        using (SqliteDataReader r = cmd.ExecuteReader()) {
+          while (r.Read()) {
+            string sqlData = Convert.ToString(r["SECT_NAME"]);
+            data.Add(sqlData);
+          }
         }
 
-        string[] vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
-        r.Close();
         db.Close();
+
+        // Guard statement to prevent data[0] crash if something goes wrong
+        if (data.Count == 0) return values;
+
+        string[] vals = data[0].Split(new string[] { " -- " }, StringSplitOptions.None);
 
         NumberFormatInfo noComma = CultureInfo.InvariantCulture.NumberFormat;
         values.AddRange(vals.Where(val => val != "").Select(val => Convert.ToDouble(val, noComma)));
@@ -101,6 +111,7 @@ namespace OasysGH.Helpers {
 
       return values;
     }
+
 
     /// <summary>
     ///   Get catalogue data from SQLite file (.db3). The method returns a tuple with:
