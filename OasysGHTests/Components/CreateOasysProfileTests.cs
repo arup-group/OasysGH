@@ -106,7 +106,7 @@ namespace OasysGHTests.Components {
       ComponentTestHelper.SetInput(comp,"W44x335s");
       var output = (OasysProfileGoo)ComponentTestHelper.GetOutput(comp);
       Assert.NotNull(output);
-      Assert.Contains("CAT profile not found", output.ToString());
+      Assert.Contains("Catalogue profile not found", output.ToString());
       Assert.Single(comp.RuntimeMessages(Grasshopper.Kernel.GH_RuntimeMessageLevel.Warning));
     }
 
