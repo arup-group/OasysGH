@@ -141,7 +141,6 @@ namespace OasysGHTests.Units {
         DefaultUnits.TimeShortUnit);
 
       Assert.False(DefaultUnits.UseRhinoTolerance);
-
       Assert.Equal(
         new Length(0.01, LengthUnit.Meter),
         DefaultUnits.Tolerance);
