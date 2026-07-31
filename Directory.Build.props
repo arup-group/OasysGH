@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'OasysGH' or '$(MSBuildProjectName)' == 'GH_UnitNumber' or '$(MSBuildProjectName)' == 'OasysGHTestComponents' or '$(MSBuildProjectName)' == 'OasysGHTests' or '$(MSBuildProjectName)' == 'GH_UnitNumberTests' or '$(MSBuildProjectName)' == 'IntegrationTests'">
+    <Platform>x64</Platform>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'OasysGH' or '$(MSBuildProjectName)' == 'OasysGHTests' or '$(MSBuildProjectName)' == 'GH_UnitNumberTests' or '$(MSBuildProjectName)' == 'IntegrationTests'">
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.4" />
+  </ItemGroup>
+</Project>
