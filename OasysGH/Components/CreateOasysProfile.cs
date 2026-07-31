@@ -1068,12 +1068,13 @@ namespace OasysGH.Components {
           }
         }
 
+
+        _profileDescriptions = new List<string>();
         if (filteredlist.Count == 0) {
-          filteredlist.Add("profile not found");
+          _profileDescriptions.Add("Catalogue profile not found");
           AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No profile found that matches selection and search!");
         }
 
-        _profileDescriptions = new List<string>();
         foreach (string profileDescription in filteredlist) {
           _profileDescriptions.Add("CAT " + profileDescription);
         }
