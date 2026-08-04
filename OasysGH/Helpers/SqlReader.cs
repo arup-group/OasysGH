@@ -25,14 +25,13 @@ namespace OasysGH.Helpers {
     }
 
     public static SqlReader Initialize() {
-      string codeBase = Assembly.GetCallingAssembly().CodeBase;
-      var uri = new UriBuilder(codeBase);
-      string codeBasePath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
+      string codeBasePath = Path.GetDirectoryName(typeof(SqlReader).Assembly.Location);
+      if (string.IsNullOrEmpty(codeBasePath)) {
+        codeBasePath = AppDomain.CurrentDomain.BaseDirectory;
+      }
 
       try {
-        var SQLiteInterop = Assembly.LoadFile(codeBasePath + @"\Microsoft.Data.Sqlite.dll");
-
-        // Try to create a simple connection to test if SQLite is available
+        Assembly.LoadFile(Path.Combine(codeBasePath, "Microsoft.Data.Sqlite.dll"));
         using (var testConnection = new SqliteConnection("Data Source=:memory:")) {
           testConnection.Open();
           testConnection.Close();
@@ -42,13 +41,8 @@ namespace OasysGH.Helpers {
       }
       // try using a second AppDomain
       catch (Exception) {
-        // Get the full name of the EXE assembly.
-        string exeAssembly = Assembly.GetCallingAssembly().FullName;
-
+        string exeAssembly = typeof(SqlReader).Assembly.FullName;
         AppDomain appDomain = CreateSecondAppDomain(codeBasePath);
-
-        // Create an instance of MarshalbyRefType in the second AppDomain.
-        // A proxy to the object is returned.
         var reader = (SqlReader)appDomain.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
         return reader;
       }
@@ -278,8 +272,7 @@ namespace OasysGH.Helpers {
     internal static AppDomain CreateSecondAppDomain(string codeBasePath) {
       // Construct and initialize settings for a second AppDomain.
       var ads = new AppDomainSetup {
-        ApplicationBase = Path.GetDirectoryName(codeBasePath),
-        PrivateBinPath = @"x64",
+        ApplicationBase = codeBasePath,
         DisallowBindingRedirects = false,
         DisallowCodeDownload = true,
         ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile
