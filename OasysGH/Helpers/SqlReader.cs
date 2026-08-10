@@ -16,6 +16,10 @@ namespace OasysGH.Helpers {
     public static SqlReader Instance => lazy.Value;
     private static readonly Lazy<SqlReader> lazy = new Lazy<SqlReader>(() => Initialize());
 
+    static SqlReader() {
+      AppDomain.CurrentDomain.AssemblyResolve += ResolveSQLitePCLRaw;
+    }
+
     public SqlReader() {
       try {
         SQLitePCL.Batteries.Init();
@@ -24,28 +28,44 @@ namespace OasysGH.Helpers {
       }
     }
 
+    // Handles any assembly version mismatch: loads whatever version is present on disk.
+    private static Assembly ResolveSQLitePCLRaw(object sender, ResolveEventArgs args) {
+      string dir = Path.GetDirectoryName(typeof(SqlReader).Assembly.Location)
+                   ?? AppDomain.CurrentDomain.BaseDirectory;
+      string path = Path.Combine(dir, new AssemblyName(args.Name).Name + ".dll");
+      return File.Exists(path) ? Assembly.LoadFrom(path) : null;
+    }
+
     public static SqlReader Initialize() {
       string codeBasePath = Path.GetDirectoryName(typeof(SqlReader).Assembly.Location);
       if (string.IsNullOrEmpty(codeBasePath)) {
         codeBasePath = AppDomain.CurrentDomain.BaseDirectory;
       }
 
-      try {
-        Assembly.LoadFile(Path.Combine(codeBasePath, "Microsoft.Data.Sqlite.dll"));
-        using (var testConnection = new SqliteConnection("Data Source=:memory:")) {
-          testConnection.Open();
-          testConnection.Close();
-        }
+      // In a Rhino/Grasshopper process other plugins may have registered AssemblyResolve
+      // handlers that fire before ours and return a conflicting SQLitePCLRaw.core version.
+      // Skip the shared-domain path entirely and use the isolated AppDomain instead.
+      bool inPluginHost = AppDomain.CurrentDomain.GetAssemblies()
+        .Any(a => a.GetName().Name == "Grasshopper" || a.GetName().Name == "RhinoCommon");
 
-        return new SqlReader();
+      if (!inPluginHost) {
+        try {
+          Assembly.LoadFile(Path.Combine(codeBasePath, "Microsoft.Data.Sqlite.dll"));
+          using (var testConnection = new SqliteConnection("Data Source=:memory:")) {
+            testConnection.Open();
+            testConnection.Close();
+          }
+
+          return new SqlReader();
+        }
+        catch (Exception) { }
       }
-      // try using a second AppDomain
-      catch (Exception) {
-        string exeAssembly = typeof(SqlReader).Assembly.FullName;
-        AppDomain appDomain = CreateSecondAppDomain(codeBasePath);
-        var reader = (SqlReader)appDomain.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
-        return reader;
-      }
+
+      // Run in an isolated AppDomain whose ApplicationBase is codeBasePath so
+      // only GsaGH's own assemblies (3.x) are probed — other plugins' versions are invisible.
+      string exeAssembly = typeof(SqlReader).Assembly.FullName;
+      AppDomain appDomain = CreateSecondAppDomain(codeBasePath);
+      return (SqlReader)appDomain.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
     }
 
     /// <summary>
@@ -270,18 +290,19 @@ namespace OasysGH.Helpers {
     }
 
     internal static AppDomain CreateSecondAppDomain(string codeBasePath) {
-      // Construct and initialize settings for a second AppDomain.
+      // Use a config scoped to codeBasePath so Rhino's config (which may add other
+      // plugin directories to probing) does not pollute this AppDomain's resolver.
+      string isolatedConfig = Path.Combine(codeBasePath, "OasysGH.dll.config");
       var ads = new AppDomainSetup {
         ApplicationBase = codeBasePath,
         DisallowBindingRedirects = false,
         DisallowCodeDownload = true,
-        ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile
+        ConfigurationFile = File.Exists(isolatedConfig)
+          ? isolatedConfig
+          : AppDomain.CurrentDomain.SetupInformation.ConfigurationFile,
       };
 
-      // Create the second AppDomain.
-      var appDomain = AppDomain.CreateDomain("SQLite AppDomain", null, ads);
-
-      return appDomain;
+      return AppDomain.CreateDomain("SQLite AppDomain", null, ads);
     }
   }
 }
