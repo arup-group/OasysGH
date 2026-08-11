@@ -5,16 +5,21 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using Microsoft.Data.Sqlite;
 
 namespace OasysGH.Helpers {
   /// <summary>
-  /// Class containing functions to interface with SQLite db files.
-  /// In case of problems loading SQLite the singleton is executed in a separate AppDomain.
+  /// Singleton that reads data from a SQLite .db3 file.
+  /// When running inside Grasshopper/Rhino, SQLite is loaded in an isolated AppDomain to avoid
+  /// version conflicts with other plugins. Method calls are forwarded to that domain via reflection.
   /// </summary>
   public class SqlReader : MarshalByRefObject {
     public static SqlReader Instance => lazy.Value;
     private static readonly Lazy<SqlReader> lazy = new Lazy<SqlReader>(() => Initialize());
+
+    // Non-null only in the main-domain wrapper. Null when this instance IS the remote worker.
+    private readonly object _remoteProxy;
 
     static SqlReader() {
       AppDomain.CurrentDomain.AssemblyResolve += ResolveSQLitePCLRaw;
@@ -26,6 +31,30 @@ namespace OasysGH.Helpers {
       }
       catch {
       }
+    }
+
+    private SqlReader(object remoteProxy) {
+      _remoteProxy = remoteProxy;
+    }
+
+    /// <summary>
+    /// Calls <paramref name="method"/> on the remote-domain proxy via reflection.
+    /// The transparent proxy intercepts the call and routes it to the isolated AppDomain,
+    /// where SQLite executes with the correct library version. The return value crosses back
+    /// as a serializable copy. Only valid when <see cref="_remoteProxy"/> is non-null.
+    /// dynamic dispatch cannot be used here — it does not work on transparent proxies in .NET Framework.
+    /// </summary>
+    private T Invoke<T>(string method, params object[] args) {
+      MethodInfo methodInfo = _remoteProxy.GetType().GetMethod(method);
+      object result;
+      try {
+        result = methodInfo.Invoke(_remoteProxy, args);
+      }
+      catch (TargetInvocationException ex) when (ex.InnerException != null) {
+        ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+        throw;
+      }
+      return (T)result;
     }
 
     // Handles any assembly version mismatch: loads whatever version is present on disk.
@@ -42,12 +71,11 @@ namespace OasysGH.Helpers {
         codeBasePath = AppDomain.CurrentDomain.BaseDirectory;
       }
 
-      // In a Rhino/Grasshopper process other plugins may have registered AssemblyResolve
-      // handlers that fire before ours and return a conflicting SQLitePCLRaw.core version.
-      // Skip the shared-domain path entirely and use the isolated AppDomain instead.
+      // Use isolated AppDomain only in Rhino host process. Testhost/VS can load Grasshopper
+      // assemblies too, but does not need plugin-style isolation and should stay in-process.
       bool inPluginHost = AppDomain.CurrentDomain.GetAssemblies()
         .Any(a => a.GetName().Name == "Grasshopper" || a.GetName().Name == "RhinoCommon");
-
+     
       if (!inPluginHost) {
         try {
           Assembly.LoadFile(Path.Combine(codeBasePath, "Microsoft.Data.Sqlite.dll"));
@@ -61,35 +89,30 @@ namespace OasysGH.Helpers {
         catch (Exception) { }
       }
 
-      // Run in an isolated AppDomain whose ApplicationBase is codeBasePath so
-      // only GsaGH's own assemblies (3.x) are probed — other plugins' versions are invisible.
-      string exeAssembly = typeof(SqlReader).Assembly.FullName;
+      // Retrieve the remote-domain instance as 'object' — never cast to SqlReader.
+      // .NET Framework resolves transparent-proxy casts via Assembly.Load (not LoadFrom),
+      // which can be intercepted by Grasshopper's resolver and return a different binary,
+      // making the identity check fail. Wrapping in a local SqlReader avoids any cast.
+      string assemblyFile = typeof(SqlReader).Assembly.Location;
       AppDomain appDomain = CreateSecondAppDomain(codeBasePath);
-      return (SqlReader)appDomain.CreateInstanceAndUnwrap(exeAssembly, typeof(SqlReader).FullName);
+      object proxy = appDomain.CreateInstanceFromAndUnwrap(assemblyFile, typeof(SqlReader).FullName);
+      return new SqlReader(proxy);
     }
 
-    /// <summary>
-    /// Method to set up a SQLite Connection to a specified .db3 file.
-    /// Will return a SQLite connection to the aforementioned .db3 file database.
-    /// </summary>
-    /// <param name="filePath"></param>
-    /// <returns></returns>
+    /// <summary>Opens a read-only SQLite connection to <paramref name="filePath"/>.</summary>
     public SqliteConnection Connection(string filePath) {
       string connectionString = $"Data Source={filePath};Mode=ReadOnly";
       return new SqliteConnection(connectionString);
     }
 
     /// <summary>
-    /// This method will return a list of double with values in [m] units and ordered as follows:
-    /// [0]: Depth
-    /// [1]: Width
-    /// [2]: Web THK
-    /// [3]: Flange THK
-    /// [4]: Root radius (only if section is not welded!)
+    /// Returns section dimensions (m) for a profile name: [0] depth, [1] width, [2] web thk,
+    /// [3] flange thk, [4] root radius (welded sections omit [4]).
     /// </summary>
-    /// <param name="profileString"></param>
-    /// <returns></returns>
     public List<double> GetCatalogueProfileValues(string profileString, string filePath) {
+      if (_remoteProxy != null)
+        return Invoke<List<double>>(nameof(GetCatalogueProfileValues), profileString, filePath);
+
       var values = new List<double>();
 
       using (SqliteConnection db = Connection(filePath)) {
@@ -128,15 +151,14 @@ namespace OasysGH.Helpers {
 
 
     /// <summary>
-    ///   Get catalogue data from SQLite file (.db3). The method returns a tuple with:
-    ///   Item1 = list of catalogue name (string)
-    ///   where first item will be "All"
-    ///   Item2 = list of catalogue number (int)
-    ///   where first item will be "-1" representing All
+    /// Returns all catalogues in the db3 file as (names, numbers).
+    /// First entry of each list is ("All", -1).
     /// </summary>
     /// <param name="filePath">Path to SecLib.db3</param>
-    /// <returns></returns>
     public Tuple<List<string>, List<int>> GetCataloguesDataFromSQLite(string filePath) {
+      if (_remoteProxy != null)
+        return Invoke<Tuple<List<string>, List<int>>>(nameof(GetCataloguesDataFromSQLite), filePath);
+
       // Create empty lists to work on:
       var catNames = new List<string>();
       var catNumber = new List<int>();
@@ -166,14 +188,14 @@ namespace OasysGH.Helpers {
       return new Tuple<List<string>, List<int>>(catNames, catNumber);
     }
 
-    /// <summary>
-    /// Get a list of section profile strings from SQLite file (.db3). The method returns a string that includes type abbriviation as accepted by GSA.
-    /// </summary>
-    /// <param name="type_numbers">List of types to get sections from</param>
+    /// <summary>Returns section profile strings (with GSA type abbreviation) for the given type numbers.</summary>
+    /// <param name="type_numbers">Type numbers to query; pass -1 as first element for all types.</param>
     /// <param name="filePath">Path to SecLib.db3</param>
-    /// <param name="inclSuperseeded">True if you want to include superseeded items</param>
-    /// <returns></returns>
+    /// <param name="inclSuperseeded">Include superseded sections when true.</param>
     public List<string> GetSectionsDataFromSQLite(List<int> type_numbers, string filePath, bool inclSuperseeded = false) {
+      if (_remoteProxy != null)
+        return Invoke<List<string>>(nameof(GetSectionsDataFromSQLite), type_numbers, filePath, inclSuperseeded);
+
       // Create empty list to work on:
       var sections = new List<string>();
 
@@ -228,17 +250,16 @@ namespace OasysGH.Helpers {
     }
 
     /// <summary>
-    /// Get section type data from SQLite file (.db3). The method returns a tuple with:
-    /// Item1 = list of type name (string)
-    /// where first item will be "All"
-    /// Item2 = list of type number (int)
-    /// where first item will be "-1" representing All
+    /// Returns section types for a catalogue as (names, numbers).
+    /// First entry of each list is ("All", -1).
     /// </summary>
-    /// <param name="catalogue_number">Catalogue number to get section types from. Input -1 in first item of the input list to get all types</param>
+    /// <param name="catalogue_number">Catalogue to query; pass -1 for all catalogues.</param>
     /// <param name="filePath">Path to SecLib.db3</param>
-    /// <param name="inclSuperseeded">True if you want to include superseeded items</param>
-    /// <returns></returns>
+    /// <param name="inclSuperseeded">Include superseded types when true.</param>
     public Tuple<List<string>, List<int>> GetTypesDataFromSQLite(int catalogue_number, string filePath, bool inclSuperseeded = false) {
+      if (_remoteProxy != null)
+        return Invoke<Tuple<List<string>, List<int>>>(nameof(GetTypesDataFromSQLite), catalogue_number, filePath, inclSuperseeded);
+
       // Create empty lists to work on:
       var typeNames = new List<string>();
       var typeNumber = new List<int>();
@@ -285,21 +306,16 @@ namespace OasysGH.Helpers {
     }
 
     public override object InitializeLifetimeService() {
-      // disable the leasing and then the object is only reclaimed when the AppDomain is unloaded
+      // keep proxy object lives until the AppDomain unloads.
       return null;
     }
 
     internal static AppDomain CreateSecondAppDomain(string codeBasePath) {
-      // Use a config scoped to codeBasePath so Rhino's config (which may add other
-      // plugin directories to probing) does not pollute this AppDomain's resolver.
-      string isolatedConfig = Path.Combine(codeBasePath, "OasysGH.dll.config");
       var ads = new AppDomainSetup {
         ApplicationBase = codeBasePath,
         DisallowBindingRedirects = false,
         DisallowCodeDownload = true,
-        ConfigurationFile = File.Exists(isolatedConfig)
-          ? isolatedConfig
-          : AppDomain.CurrentDomain.SetupInformation.ConfigurationFile,
+        ConfigurationFile = null,
       };
 
       return AppDomain.CreateDomain("SQLite AppDomain", null, ads);

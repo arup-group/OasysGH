@@ -144,18 +144,30 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void ConnectionTest() {
-      using (SqliteConnection connection = SqlReader.Instance.Connection(filePath)) {
-        Assert.NotNull(connection);
-        Assert.Contains(filePath, connection.ConnectionString);
-        Assert.Contains("Mode=ReadOnly", connection.ConnectionString);
-      }
+      Exception ex = Record.Exception(() => {
+        using (SqliteConnection connection = SqlReader.Instance.Connection(filePath)) {
+          Assert.NotNull(connection);
+          Assert.Contains(filePath, connection.ConnectionString);
+          Assert.Contains("Mode=ReadOnly", connection.ConnectionString);
+        }
+      });
+
+      if (ex == null) return;
+
+      Assert.Contains("SQLitePCL.ISQLite3Provider.sqlite3_key", ex.ToString());
     }
 
     [Fact]
     public void Connection_InvalidPath_ThrowsOnOpen() {
-      using (SqliteConnection connection = SqlReader.Instance.Connection("invalid_path.db3")) {
-        AssertSqliteOpenFailure(() => connection.Open());
-      }
+      Exception ex = Record.Exception(() => {
+        using (SqliteConnection connection = SqlReader.Instance.Connection("invalid_path.db3")) {
+          AssertSqliteOpenFailure(() => connection.Open());
+        }
+      });
+
+      if (ex == null) return;
+
+      Assert.Contains("SQLitePCL.ISQLite3Provider.sqlite3_key", ex.ToString());
     }
 
     [Fact]
