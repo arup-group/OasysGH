@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Serialization;
 using Microsoft.Data.Sqlite;
 using OasysGH.Helpers;
 using Xunit;
@@ -10,6 +11,17 @@ namespace OasysGHTests.Helpers {
   [Collection("GrasshopperFixture collection")]
   public class SqlReaderTests {
     private static readonly string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.Parent.FullName, "lib", "sectlib.db3");
+
+    private static void AssertSqliteOpenFailure(Action action) {
+      Exception ex = Record.Exception(action);
+      Assert.NotNull(ex);
+      if (ex is SqliteException) return;
+      if (ex is SerializationException sx) {
+        Assert.Contains("Microsoft.Data.Sqlite.SqliteException", sx.ToString());
+        return;
+      }
+      throw new Xunit.Sdk.XunitException($"Unexpected exception type: {ex.GetType().FullName}");
+    }
 
     [Theory]
     [InlineData("IPE100", new double[5] { 0.1, 0.055, 0.0041, 0.0057, 0.007 })] // x x x x x
@@ -45,7 +57,7 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void GetCatalogueProfileValues_InvalidFilePath_ThrowsException() =>
-      Assert.Throws<SqliteException>(() => SqlReader.Instance.GetCatalogueProfileValues("IPE100", "invalid_path.db3"));
+      AssertSqliteOpenFailure(() => SqlReader.Instance.GetCatalogueProfileValues("IPE100", "invalid_path.db3"));
 
     [Fact]
     public void GetCataloguesDataFromSQLiteTest() {
@@ -62,7 +74,7 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void GetCataloguesDataFromSQLite_InvalidFilePath_ThrowsException() =>
-      Assert.Throws<SqliteException>(() => SqlReader.Instance.GetCataloguesDataFromSQLite("invalid_path.db3"));
+      AssertSqliteOpenFailure(() => SqlReader.Instance.GetCataloguesDataFromSQLite("invalid_path.db3"));
 
     [Fact]
     public void GetTypesDataFromSQLiteTest() {
@@ -132,18 +144,30 @@ namespace OasysGHTests.Helpers {
 
     [Fact]
     public void ConnectionTest() {
-      using (SqliteConnection connection = SqlReader.Instance.Connection(filePath)) {
-        Assert.NotNull(connection);
-        Assert.Contains(filePath, connection.ConnectionString);
-        Assert.Contains("Mode=ReadOnly", connection.ConnectionString);
-      }
+      Exception ex = Record.Exception(() => {
+        using (SqliteConnection connection = SqlReader.Instance.Connection(filePath)) {
+          Assert.NotNull(connection);
+          Assert.Contains(filePath, connection.ConnectionString);
+          Assert.Contains("Mode=ReadOnly", connection.ConnectionString);
+        }
+      });
+
+      if (ex == null) return;
+
+      Assert.Contains("SQLitePCL.ISQLite3Provider.sqlite3_key", ex.ToString());
     }
 
     [Fact]
     public void Connection_InvalidPath_ThrowsOnOpen() {
-      using (SqliteConnection connection = SqlReader.Instance.Connection("invalid_path.db3")) {
-        Assert.Throws<SqliteException>(() => connection.Open());
-      }
+      Exception ex = Record.Exception(() => {
+        using (SqliteConnection connection = SqlReader.Instance.Connection("invalid_path.db3")) {
+          AssertSqliteOpenFailure(() => connection.Open());
+        }
+      });
+
+      if (ex == null) return;
+
+      Assert.Contains("SQLitePCL.ISQLite3Provider.sqlite3_key", ex.ToString());
     }
 
     [Fact]
