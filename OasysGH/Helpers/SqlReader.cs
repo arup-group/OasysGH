@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -71,32 +72,47 @@ namespace OasysGH.Helpers {
         codeBasePath = AppDomain.CurrentDomain.BaseDirectory;
       }
 
-      // Use isolated AppDomain only in Rhino host process. Testhost/VS can load Grasshopper
-      // assemblies too, but does not need plugin-style isolation and should stay in-process.
-      bool inPluginHost = AppDomain.CurrentDomain.GetAssemblies()
-        .Any(a => a.GetName().Name == "Grasshopper" || a.GetName().Name == "RhinoCommon");
-     
-      if (!inPluginHost) {
+      bool isCompatibleWithSecondAppDomain = IsRhinoProcess() && IsRhinoVersionLessThan8();
+
+      if (!isCompatibleWithSecondAppDomain) {
         try {
-          Assembly.LoadFile(Path.Combine(codeBasePath, "Microsoft.Data.Sqlite.dll"));
-          using (var testConnection = new SqliteConnection("Data Source=:memory:")) {
+          var reader = new SqlReader();
+          using (SqliteConnection testConnection = reader.Connection(":memory:")) {
             testConnection.Open();
-            testConnection.Close();
           }
 
-          return new SqlReader();
+          return reader;
         }
-        catch (Exception) { }
+        catch (Exception ex) {
+          throw new InvalidOperationException(
+            "SqlReader could not initialize SQLite in the current process.", ex);
+        }
       }
 
-      // Retrieve the remote-domain instance as 'object' — never cast to SqlReader.
-      // .NET Framework resolves transparent-proxy casts via Assembly.Load (not LoadFrom),
-      // which can be intercepted by Grasshopper's resolver and return a different binary,
-      // making the identity check fail. Wrapping in a local SqlReader avoids any cast.
-      string assemblyFile = typeof(SqlReader).Assembly.Location;
-      AppDomain appDomain = CreateSecondAppDomain(codeBasePath);
-      object proxy = appDomain.CreateInstanceFromAndUnwrap(assemblyFile, typeof(SqlReader).FullName);
-      return new SqlReader(proxy);
+      // Rhino 7 uses .NET Framework AppDomain isolation; keep the remote object as a proxy
+      // to avoid cross-AppDomain SqlReader cast errors. Rhino 8 does not support this feature.
+      try {
+        string assemblyFile = typeof(SqlReader).Assembly.Location;
+        AppDomain appDomain = CreateSecondAppDomain(codeBasePath);
+        object proxy = appDomain.CreateInstanceFromAndUnwrap(assemblyFile, typeof(SqlReader).FullName);
+        return new SqlReader(proxy);
+      }
+      catch (Exception ex) {
+        throw new AggregateException(
+          "SqlReader could not initialize SQLite in the Rhino 7 AppDomain.",
+          ex);
+      }
+    }
+
+    public static bool IsRhinoVersionLessThan8() {
+      return AppDomain.CurrentDomain.GetAssemblies()
+             .Where(assembly => assembly.GetName().Name == "RhinoCommon")
+             .Select(assembly => assembly.GetName().Version)
+             .Any(version => version != null && version.Major <= 7);
+    }
+    public static bool IsRhinoProcess() {
+      return AppDomain.CurrentDomain.GetAssemblies()
+        .Any(a => a.GetName().Name == "Grasshopper" || a.GetName().Name == "RhinoCommon");
     }
 
     /// <summary>Opens a read-only SQLite connection to <paramref name="filePath"/>.</summary>
@@ -204,7 +220,8 @@ namespace OasysGH.Helpers {
         Tuple<List<string>, List<int>> typeData = GetTypesDataFromSQLite(-1, filePath, inclSuperseeded);
         types = typeData.Item2;
         types.RemoveAt(0); // remove -1 from beginning of list
-      } else {
+      }
+      else {
         types = type_numbers;
       }
 
@@ -270,7 +287,8 @@ namespace OasysGH.Helpers {
         Tuple<List<string>, List<int>> catalogueData = GetCataloguesDataFromSQLite(filePath);
         catNumbers = catalogueData.Item2;
         catNumbers.RemoveAt(0); // remove -1 from beginning of list
-      } else {
+      }
+      else {
         catNumbers.Add(catalogue_number);
       }
 
