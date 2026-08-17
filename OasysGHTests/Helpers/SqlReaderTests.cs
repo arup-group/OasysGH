@@ -201,5 +201,16 @@ namespace OasysGHTests.Helpers {
       Assert.NotNull(instance2);
       Assert.Same(instance1, instance2);
     }
+
+    [Fact]
+    public void CheckRhinoVersion() {
+      //make flase when server is running Rhino 8 or higher
+      Assert.True(SqlReader.IsRhinoVersionLessThan8());
+    }
+
+    [Fact]
+    public void CheckRhinoProcess() {
+      Assert.True(SqlReader.IsRhinoProcess());
+    }
   }
 }
