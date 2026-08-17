@@ -142,7 +142,7 @@ namespace OasysGH.Helpers {
     internal User() {
       UserName = Environment.UserName.ToLower();
       try {
-        var task = Task.Run(() => UserPrincipal.Current.EmailAddress);
+        Task<string> task = Task.Run(() => UserPrincipal.Current.EmailAddress);
         if (task.Wait(TimeSpan.FromSeconds(2))) {
           if (task.Result.EndsWith("arup.com"))
             Email = task.Result;
