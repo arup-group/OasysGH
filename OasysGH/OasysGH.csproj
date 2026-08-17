@@ -7,7 +7,7 @@
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.2.5</Version>
+    <Version>1.2.6</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>8.0</LangVersion>
