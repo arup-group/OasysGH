@@ -1,12 +1,13 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Runtime.Serialization;
-using System.Data.SQLite;
 using OasysGH.Helpers;
 using Xunit;
 
+using SQLiteConnection = System.Data.SQLite.SQLiteConnection;
+using SQLiteException = System.Data.SQLite.SQLiteException;
 namespace OasysGHTests.Helpers {
   [Collection("GrasshopperFixture collection")]
   public class SqlReaderTests {
@@ -62,7 +63,6 @@ namespace OasysGHTests.Helpers {
     [Fact]
     public void GetCataloguesDataFromSQLiteTest() {
       Tuple<List<string>, List<int>> result = SqlReader.Instance.GetCataloguesDataFromSQLite(filePath);
-
       Assert.NotNull(result);
       Assert.NotNull(result.Item1);
       Assert.NotNull(result.Item2);
@@ -92,9 +92,9 @@ namespace OasysGHTests.Helpers {
     [Fact]
     public void GetTypesDataFromSQLite_WithSuperseeded_ReturnsMoreResults() {
       Tuple<List<string>, List<int>> resultWithoutSuperseeded =
-        SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, false);
+       SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, false);
       Tuple<List<string>, List<int>> resultWithSuperseeded =
-        SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, true);
+      SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, true);
 
       Assert.True(resultWithSuperseeded.Item1.Count >= resultWithoutSuperseeded.Item1.Count);
     }
@@ -106,7 +106,7 @@ namespace OasysGHTests.Helpers {
         int validCatalogueNumber = catalogues.Item2[1]; // Skip "All" (-1)
 
         Tuple<List<string>, List<int>> result =
-          SqlReader.Instance.GetTypesDataFromSQLite(validCatalogueNumber, filePath);
+        SqlReader.Instance.GetTypesDataFromSQLite(validCatalogueNumber, filePath);
 
         Assert.NotNull(result);
         Assert.True(result.Item1.Count > 0);
@@ -165,7 +165,7 @@ namespace OasysGHTests.Helpers {
       Assert.Null(ex);
     }
 
- 
+
     [Fact]
     public void SingletonInstanceTest() {
       SqlReader instance1 = SqlReader.Instance;

@@ -22,9 +22,8 @@
   <ItemGroup>
     <ProjectReference Include="..\GH_UnitNumber\GH_UnitNumber.csproj" />
     <ProjectReference Include="..\OasysGHTestComponents\OasysGHTestComponents.csproj" />
-    <ProjectReference Include="..\OasysGH\OasysGH.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Reference Include="Oasys.Taxonomy.IGeometry">
       <HintPath>..\lib\Oasys.Taxonomy.IGeometry.dll</HintPath>

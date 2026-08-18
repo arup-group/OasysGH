@@ -69,7 +69,24 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Stub.System.Data.SQLite.Core.NetFramework" Version="1.0.119" />
+    <PackageReference Include="System.Data.SQLite" Version="2.0.4">
+      <!-- Force the compiler to partition the raw NuGet package under a private alias nickname -->
+      <Aliases>OasysSQLite</Aliases>
+    </PackageReference>
+    <PackageReference Include="SQLite" Version="3.53.4" />
+  </ItemGroup>
+
+  <!-- Tells the compiler to use our isolated 'OasysSqLite' assembly 
+       instead of the standard SQLite library. This prevents name clashes 
+       with other Rhino plugins without changing our query code. -->
+  <Target Name="ConfigureSQLiteTypeForwarding" BeforeTargets="CoreCompile">
+    <PropertyGroup>
+      <DefineConstants>$(DefineConstants);ISOLATED_SQLITE</DefineConstants>
+    </PropertyGroup>
+  </Target>
+
+
+  <ItemGroup>
     <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
     <PackageReference Include="Grasshopper" Version="7.38.24338.17001" IncludeAssets="compile; build">
       <PrivateAssets>all</PrivateAssets>

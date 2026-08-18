@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+
 using System.Linq;
-using System.Data.SQLite;
 
 namespace OasysGH.Helpers {
-  /// <summary>
-  /// Singleton that reads data from a SQLite .db3 file.
-  /// When running inside Grasshopper/Rhino, SQLite is loaded in an isolated AppDomain to avoid
-  /// version conflicts with other plugins. Method calls are forwarded to that domain via reflection.
-  /// </summary>
+
+  extern alias OasysSQLite;
+
+#if ISOLATED_SQLITE
+  using SQLiteConnection = OasysSQLite::System.Data.SQLite.SQLiteConnection;
+  using SQLiteCommand = OasysSQLite::System.Data.SQLite.SQLiteCommand;
+  using SQLiteDataReader = OasysSQLite::System.Data.SQLite.SQLiteDataReader;
+#else
+  using SQLiteConnection = System.Data.SQLite.SQLiteConnection;
+  using SQLiteCommand = System.Data.SQLite.SQLiteCommand;
+  using SQLiteDataReader = System.Data.SQLite.SQLiteDataReader;
+#endif
+
   public class SqlReader {
     public static SqlReader Instance => lazy.Value;
     private static readonly Lazy<SqlReader> lazy = new Lazy<SqlReader>(() => new SqlReader());
@@ -18,8 +26,6 @@ namespace OasysGH.Helpers {
     private SqlReader() {
     }
 
-    
-    /// <summary>Opens a read-only SQLite connection to <paramref name="filePath"/>.</summary>
     public SQLiteConnection Connection(string filePath) {
       string connectionString = $"Data Source={filePath};Version=3;Read Only=True;";
       return new SQLiteConnection(connectionString);
@@ -30,7 +36,7 @@ namespace OasysGH.Helpers {
     /// [3] flange thk, [4] root radius (welded sections omit [4]).
     /// </summary>
     public List<double> GetCatalogueProfileValues(string profileString, string filePath) {
-       var values = new List<double>();
+      var values = new List<double>();
 
       using (SQLiteConnection db = Connection(filePath)) {
         db.Open();
@@ -169,7 +175,7 @@ namespace OasysGH.Helpers {
     /// <param name="filePath">Path to SecLib.db3</param>
     /// <param name="inclSuperseeded">Include superseded types when true.</param>
     public Tuple<List<string>, List<int>> GetTypesDataFromSQLite(int catalogue_number, string filePath, bool inclSuperseeded = false) {
-       // Create empty lists to work on:
+      // Create empty lists to work on:
       var typeNames = new List<string>();
       var typeNumber = new List<int>();
 
