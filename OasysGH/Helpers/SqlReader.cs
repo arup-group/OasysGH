@@ -7,18 +7,6 @@ using System.Linq;
 
 namespace OasysGH.Helpers {
 
-  extern alias OasysSQLite;
-
-#if ISOLATED_SQLITE
-  using SQLiteConnection = OasysSQLite::System.Data.SQLite.SQLiteConnection;
-  using SQLiteCommand = OasysSQLite::System.Data.SQLite.SQLiteCommand;
-  using SQLiteDataReader = OasysSQLite::System.Data.SQLite.SQLiteDataReader;
-#else
-  using SQLiteConnection = System.Data.SQLite.SQLiteConnection;
-  using SQLiteCommand = System.Data.SQLite.SQLiteCommand;
-  using SQLiteDataReader = System.Data.SQLite.SQLiteDataReader;
-#endif
-
   public class SqlReader {
     public static SqlReader Instance => lazy.Value;
     private static readonly Lazy<SqlReader> lazy = new Lazy<SqlReader>(() => new SqlReader());
