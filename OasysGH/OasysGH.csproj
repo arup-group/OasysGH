@@ -7,7 +7,7 @@
     <PackageProjectUrl>https://github.com/arup-group/OasysGH</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arup-group/OasysGH</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.2.5</Version>
+    <Version>1.2.6</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>10.0</LangVersion>
@@ -71,7 +71,7 @@
   <ItemGroup>
     <PackageReference Include="System.Data.SQLite" Version="2.0.4">
       <!-- Force the compiler to partition the raw NuGet package under a private alias nickname -->
-      <Aliases>OasysGhSQLite_1_2_5</Aliases>
+      <Aliases>OasysGhSQLite_1_2_6</Aliases>
     </PackageReference>
     <PackageReference Include="SQLite" Version="3.53.4" />
   </ItemGroup>
