@@ -1,12 +1,13 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Runtime.Serialization;
-using Microsoft.Data.Sqlite;
 using OasysGH.Helpers;
 using Xunit;
 
+using SQLiteConnection = System.Data.SQLite.SQLiteConnection;
+using SQLiteException = System.Data.SQLite.SQLiteException;
 namespace OasysGHTests.Helpers {
   [Collection("GrasshopperFixture collection")]
   public class SqlReaderTests {
@@ -15,9 +16,9 @@ namespace OasysGHTests.Helpers {
     private static void AssertSqliteOpenFailure(Action action) {
       Exception ex = Record.Exception(action);
       Assert.NotNull(ex);
-      if (ex is SqliteException) return;
+      if (ex is SQLiteException) return;
       if (ex is SerializationException sx) {
-        Assert.Contains("Microsoft.Data.Sqlite.SqliteException", sx.ToString());
+        Assert.Contains("System.Data.SQLite.SQLiteException", sx.ToString());
         return;
       }
       throw new Xunit.Sdk.XunitException($"Unexpected exception type: {ex.GetType().FullName}");
@@ -62,7 +63,6 @@ namespace OasysGHTests.Helpers {
     [Fact]
     public void GetCataloguesDataFromSQLiteTest() {
       Tuple<List<string>, List<int>> result = SqlReader.Instance.GetCataloguesDataFromSQLite(filePath);
-
       Assert.NotNull(result);
       Assert.NotNull(result.Item1);
       Assert.NotNull(result.Item2);
@@ -92,9 +92,9 @@ namespace OasysGHTests.Helpers {
     [Fact]
     public void GetTypesDataFromSQLite_WithSuperseeded_ReturnsMoreResults() {
       Tuple<List<string>, List<int>> resultWithoutSuperseeded =
-        SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, false);
+       SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, false);
       Tuple<List<string>, List<int>> resultWithSuperseeded =
-        SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, true);
+      SqlReader.Instance.GetTypesDataFromSQLite(-1, filePath, true);
 
       Assert.True(resultWithSuperseeded.Item1.Count >= resultWithoutSuperseeded.Item1.Count);
     }
@@ -106,7 +106,7 @@ namespace OasysGHTests.Helpers {
         int validCatalogueNumber = catalogues.Item2[1]; // Skip "All" (-1)
 
         Tuple<List<string>, List<int>> result =
-          SqlReader.Instance.GetTypesDataFromSQLite(validCatalogueNumber, filePath);
+        SqlReader.Instance.GetTypesDataFromSQLite(validCatalogueNumber, filePath);
 
         Assert.NotNull(result);
         Assert.True(result.Item1.Count > 0);
@@ -145,52 +145,26 @@ namespace OasysGHTests.Helpers {
     [Fact]
     public void ConnectionTest() {
       Exception ex = Record.Exception(() => {
-        using (SqliteConnection connection = SqlReader.Instance.Connection(filePath)) {
+        using (SQLiteConnection connection = SqlReader.Instance.Connection(filePath)) {
           Assert.NotNull(connection);
           Assert.Contains(filePath, connection.ConnectionString);
-          Assert.Contains("Mode=ReadOnly", connection.ConnectionString);
+          Assert.Contains("Read Only=True", connection.ConnectionString);
         }
       });
-
-      if (ex == null) return;
-
-      Assert.Contains("SQLitePCL.ISQLite3Provider.sqlite3_key", ex.ToString());
+      Assert.Null(ex);
     }
 
     [Fact]
     public void Connection_InvalidPath_ThrowsOnOpen() {
       Exception ex = Record.Exception(() => {
-        using (SqliteConnection connection = SqlReader.Instance.Connection("invalid_path.db3")) {
+        using (SQLiteConnection connection = SqlReader.Instance.Connection("invalid_path.db3")) {
           AssertSqliteOpenFailure(() => connection.Open());
         }
       });
 
-      if (ex == null) return;
-
-      Assert.Contains("SQLitePCL.ISQLite3Provider.sqlite3_key", ex.ToString());
+      Assert.Null(ex);
     }
 
-    [Fact]
-    public void AppDomainTest() {
-      string codeBase = Assembly.GetCallingAssembly().CodeBase;
-      var uri = new UriBuilder(codeBase);
-      string codeBasePath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
-
-      AppDomain appDomain = SqlReader.CreateSecondAppDomain(codeBasePath);
-
-      Assert.NotNull(appDomain);
-    }
-
-    [Fact]
-    public void InitializeLifetimeServiceTest() {
-      Assert.Null(SqlReader.Instance.InitializeLifetimeService());
-    }
-
-    [Fact]
-    public void InitializeTest() {
-      var reader = SqlReader.Initialize();
-      Assert.NotNull(reader);
-    }
 
     [Fact]
     public void SingletonInstanceTest() {
@@ -200,17 +174,6 @@ namespace OasysGHTests.Helpers {
       Assert.NotNull(instance1);
       Assert.NotNull(instance2);
       Assert.Same(instance1, instance2);
-    }
-
-    [Fact]
-    public void CheckRhinoVersion() {
-      //make flase when server is running Rhino 8 or higher
-      Assert.True(SqlReader.IsRhinoVersionLessThan8());
-    }
-
-    [Fact]
-    public void CheckRhinoProcess() {
-      Assert.True(SqlReader.IsRhinoProcess());
     }
   }
 }
