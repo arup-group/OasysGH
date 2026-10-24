@@ -62,7 +62,7 @@ namespace OasysGH.Helpers {
       string eventName = "PluginLoaded";
 
       var properties = new Dictionary<string, object>() {
-        { "rhinoVersion", Rhino.RhinoApp.Version.ToString().Split('.')
+        { "rhinoVersion", Rhino.RhinoApp.Version.ToString().Split('.')[0]
                           + "." + Rhino.RhinoApp.Version.ToString().Split('.')[1] },
         { "rhinoMajorVersion", Rhino.RhinoApp.ExeVersion },
         { "rhinoServiceRelease", Rhino.RhinoApp.ExeServiceRelease },

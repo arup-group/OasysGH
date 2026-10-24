@@ -92,7 +92,7 @@ namespace GH_UnitNumber {
         }
       }
 
-      AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to cast " + txt + " to any know quantity. Input a string like '15 mm' or '12.4 slug'");
+      AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to cast " + txt + " to any known quantity. Input a string like '15 mm' or '12.4 slug'");
       return base.PreferredCast(data);
     }
 

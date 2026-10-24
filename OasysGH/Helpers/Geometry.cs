@@ -35,8 +35,8 @@ namespace OasysGH.Helpers {
       var xform = Transform.PlaneToPlane(local, Plane.WorldXY);
 
       for (int i = 0; i < polyline.Count - 1; i++)
-      // -1 on count because the profile is always closed and thus doesn´t
-      // need the last point being equal to first as a rhino polyline needs
+      // -1 on count because the profile is always closed and thus doesn't
+      // need the last point to be equal to first as a rhino polyline needs
       {
         Point3d point3d = polyline[i];
         point3d.Transform(xform);
@@ -76,7 +76,7 @@ namespace OasysGH.Helpers {
 
     private static Plane PlaneFromFace(BrepFace mainFace) {
       mainFace.TryGetPlane(out Plane plane);
-      // planer normal should point upwards
+      // plane normal should point upwards
       // for consistent profile creation
       if (plane.Normal.Z < 0) {
         plane = new Plane(plane.Origin, -plane.Normal);
